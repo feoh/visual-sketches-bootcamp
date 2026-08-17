@@ -1,0 +1,72 @@
+---
+title: Research and source notes
+weight: 40
+draft: false
+---
+
+# Research and source notes
+
+## Visual vocabulary
+
+The curriculum draws from recurring, transferable technique families visible in Zach Lieberman’s public practice:
+
+- sampled gesture and expressive polylines;
+- repeated geometry, oscillation, phase, and interference;
+- particles, forces, springs, and coherent flow;
+- typography and images treated as geometry;
+- camera/sound/body input mapped into immediate visual feedback; and
+- time used as material through trails, delay, frame history, and feedback.
+
+These are mechanisms, not recipes for reproducing individual works. Lessons should cite precedents, identify collaborations, and require learners to choose original inputs, mappings, geometry, palettes, and compositions.
+
+Primary or creator-owned starting points:
+
+- [Zach Lieberman’s X feed](https://x.com/zachlieberman)
+- [Official portfolio](https://zach.li/)
+- [`ofZach/dailySketches`](https://github.com/ofZach/dailySketches)
+- [`ofZach/gestureMachine`](https://github.com/ofZach/gestureMachine)
+- [`ofZach/ofxCv`](https://github.com/ofZach/ofxCv)
+- [The EyeWriter](http://www.eyewriter.org/)
+- [Land Lines](https://experiments.withgoogle.com/land-lines)
+- [Messa di Voce](https://www.flong.com/archive/projects/messa/)
+
+Several named works are collaborative. They are evidence of techniques in Lieberman’s practice, not claims of sole authorship.
+
+## openFrameworks baseline
+
+The initial curriculum baseline is [openFrameworks 0.12.1](https://github.com/openframeworks/openFrameworks/releases/tag/0.12.1), released 2025-05-02.
+
+Relevant official sources:
+
+- [Download and setup](https://openframeworks.cc/download/)
+- [Learning portal](https://openframeworks.cc/learning/)
+- [Create a new project](https://openframeworks.cc/learning/01_basics/create_a_new_project/)
+- [C++ language basics](https://openframeworks.cc/ofBook/chapters/cplusplus_basics.html)
+- [GLM syntax](https://openframeworks.cc/learning/02_graphics/how_to_use_glm/)
+- [`ofxUnitTests` source](https://github.com/openframeworks/openFrameworks/tree/0.12.1/addons/ofxUnitTests)
+- [Unit-test template](https://github.com/openframeworks/openFrameworks/tree/0.12.1/scripts/templates/unittest)
+- [0.12.1 CI workflows](https://github.com/openframeworks/openFrameworks/tree/0.12.1/.github/workflows)
+
+The framework’s platform configurations may enable newer language modes. Shared lesson code will remain within a conservative C++17 subset until the cross-platform matrix proves any broader contract.
+
+## Pedagogy
+
+The design combines constructionist, spiral, worked-example, retrieval-practice, and faded-guidance ideas:
+
+- [Papert, “Situating Constructionism”](http://www.papert.org/articles/SituatingConstructionism.html)
+- [Bruner, *The Process of Education*](https://www.hup.harvard.edu/books/9780674710016)
+- [National Academies, *How People Learn II*](https://nap.nationalacademies.org/catalog/24783/how-people-learn-ii-learners-contexts-and-cultures)
+- [Dunlosky et al., learning-technique review](https://journals.sagepub.com/doi/10.1177/1529100612453266)
+- [Atkinson et al., worked-example review](https://doi.org/10.3102/00346543070002181)
+- [Ashcraft and Kirk, math anxiety and working memory](https://doi.org/10.1037/0096-3445.130.2.224)
+- [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
+
+The recommended 12–16-week pace, accelerated 8+2-week option, and lesson ordering are curriculum judgments to be adjusted after pilot checkpoints; they are not claimed as research-established optima.
+
+## Evidence limitations
+
+- The X/Instagram feeds have not been exhaustively sampled or frequency-coded. Technique recurrence is qualitative and triangulated with creator-owned repositories and project pages.
+- Native openFrameworks render variance has not yet been measured across the course’s three target platforms.
+- Official CI proves broad build coverage, but the course must independently prove exact no-window test commands on macOS and Windows.
+- Links and API documentation may drift; pinned 0.12.1 headers and examples take precedence when web docs disagree.
+- Addons, fonts, media, codecs, and live-device APIs require separate platform and license review before becoming required content.
