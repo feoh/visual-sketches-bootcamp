@@ -19,6 +19,9 @@ This repository currently contains the curriculum specification and implementati
 - [Curriculum map](docs/curriculum-map.md)
 - [Exercise and testing strategy](docs/testing-strategy.md)
 - [Repository and delivery plan](docs/implementation-roadmap.md)
+- [Pinned platform matrix](docs/platform-matrix.md)
+- [Standalone Project Generator architecture](docs/project-generator-architecture.md)
+- [Foundation spike evidence](docs/foundation-spike.md)
 - [Research and source notes](docs/source-notes.md)
 
 ## Design constraints
@@ -38,7 +41,7 @@ The work is tracked in Witan as project `wp-visual-sketches-bootcamp-9c2c95`, wi
 
 ## Baseline
 
-The initial implementation targets openFrameworks **0.12.1** and a deliberately conservative **C++17 language subset** for lesson code, even where individual platform toolchains enable newer language modes.
+The initial implementation targets openFrameworks **0.12.1** and a deliberately conservative **C++17 language subset** for lesson code, even where individual platform toolchains enable newer language modes. A disposable Linux fixture proves the standalone architecture can generate and compile shared source; no tracked foundation target is build-proven yet. macOS, Windows, graphical runtime, and no-window test support remain implementation gates rather than completed support claims.
 
 ## License
 

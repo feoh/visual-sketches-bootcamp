@@ -68,7 +68,7 @@ visual_sketches_bootcamp/
 └── .github/workflows/     # separate build and unit-test statuses
 ```
 
-The exact placement of generated Xcode, Visual Studio, and Make project metadata depends on the cross-platform spike. Project Generator remains authoritative for native project files.
+The repository remains standalone, with openFrameworks installed separately. Project Generator remains authoritative for native project files, which are regenerated per host and kept out of version control because they contain machine-local `OF_ROOT` references. See the [platform matrix](platform-matrix.md) and [Project Generator architecture](project-generator-architecture.md).
 
 ## Delivery phases
 
@@ -78,13 +78,13 @@ Deliver:
 
 - pinned openFrameworks/toolchain matrix;
 - clean-machine setup guides for macOS, Linux, and Windows;
-- one generated sketch project that builds on all three;
-- one `ofxUnitTests`/`ofAppNoWindow` project that runs where supported;
+- one generated sketch project that builds on all three and renders one bundled, licensed asset in the manual probe;
+- one `ofxUnitTests`/`ofAppNoWindow` project that builds and runs on all three;
 - scripts that report actionable failures;
 - CI with separate build/test statuses; and
-- a decision on standalone repository placement versus installation under an openFrameworks `apps/` tree.
+- the accepted standalone-repository and clean-regeneration architecture.
 
-**Exit gate:** a contributor can clone the repository, follow one platform guide, run a sketch, and run deterministic tests without undocumented manual edits.
+**Exit gate:** on every selected lane, a contributor can clone the repository, follow the platform guide, generate and run the sketch (including its bundled-asset probe), and run deterministic tests without undocumented manual edits. Every lane must be both `build-proven` and `unit-proven`. An `unsupported` result remains visible with a reason and follow-up criterion, but blocks this phase rather than being silently skipped or shown as green.
 
 ### Phase 1 — Authoring system and Unit 0
 

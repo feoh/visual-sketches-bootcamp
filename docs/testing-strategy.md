@@ -117,7 +117,7 @@ CI should distinguish compilation from test execution:
 - `windows-build`
 - `windows-unit` after the no-window runner is proven
 
-The initial harness should use openFrameworks’ shipped `ofxUnitTests` and `ofAppNoWindow` pattern. Exact generated project/scheme/executable commands must be proven on clean machines for all three platforms before lessons claim support.
+The initial harness should use openFrameworks’ shipped `ofxUnitTests` and `ofAppNoWindow` pattern. Exact generated project/scheme/executable commands must be proven on clean machines for all three platforms before lessons claim support. The 0.12.1 Linux spike found that the packaged Project Generator's `unittest` template logs an error, omits build metadata, and still reports success, so the course owns the no-window runner source and `addons.make`, uses the normal platform template, rejects generator error output, and validates generated files.
 
 ### 5. Deterministic render probes — sparse and pinned
 
@@ -162,12 +162,12 @@ Every exercise also asks the learner to inspect:
 
 Before authoring Unit 0, implementation must prove:
 
-1. openFrameworks 0.12.1 Project Generator output can be reproduced on macOS, Linux, and Windows;
+1. openFrameworks 0.12.1 Project Generator output can be cleanly regenerated on macOS, Linux, and Windows from tracked `src`, `addons.make`, data, and relative shared-source arguments; reproducibility means correct source membership and a successful build, not byte-identical UUIDs or ordering;
 2. the same conservative C++17 lesson source compiles on each platform;
-3. the no-window unit test executable builds and runs on each platform, or unsupported lanes are clearly labeled;
+3. the no-window unit test executable builds and runs on each platform; an `unsupported` result must be clearly labeled while work is in progress and blocks the Phase 0 exit gate;
 4. a standalone clone can reliably locate a separately installed openFrameworks tree;
 5. paths are relative and case-correct;
 6. bundled fonts/assets render without depending on system installation; and
 7. CI statuses report build and runtime-test evidence separately.
 
-Until this spike passes, cross-platform support is a project requirement—not a completed claim.
+Until this spike passes, cross-platform support is a project requirement—not a completed claim. The [platform matrix](platform-matrix.md) defines the evidence statuses, and the [Project Generator architecture](project-generator-architecture.md) defines canonical inputs, generated outputs, root discovery, and regeneration rules.

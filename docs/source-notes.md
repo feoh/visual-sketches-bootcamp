@@ -46,8 +46,11 @@ Relevant official sources:
 - [`ofxUnitTests` source](https://github.com/openframeworks/openFrameworks/tree/0.12.1/addons/ofxUnitTests)
 - [Unit-test template](https://github.com/openframeworks/openFrameworks/tree/0.12.1/scripts/templates/unittest)
 - [0.12.1 CI workflows](https://github.com/openframeworks/openFrameworks/tree/0.12.1/.github/workflows)
+- [Project Generator 0.103.0 source bundled by 0.12.1](https://github.com/openframeworks/projectGenerator/tree/74afcd48555ba9b3d0c430b2853ddad306a89b63)
+- [Pinned course platform matrix](platform-matrix.md)
+- [Standalone Project Generator architecture and spike evidence](project-generator-architecture.md)
 
-The framework’s platform configurations may enable newer language modes. Shared lesson code will remain within a conservative C++17 subset until the cross-platform matrix proves any broader contract.
+The framework’s platform configurations enable C++20 on the selected Linux compiler family, C++23 in the `osx` template, and the latest available C++ mode in the Visual Studio template. Shared lesson code deliberately remains within the enumerated conservative C++17 contract in the platform matrix.
 
 ## Pedagogy
 
@@ -67,6 +70,7 @@ The recommended 12–16-week pace, accelerated 8+2-week option, and lesson order
 
 - The X/Instagram feeds have not been exhaustively sampled or frequency-coded. Technique recurrence is qualitative and triangulated with creator-owned repositories and project pages.
 - Native openFrameworks render variance has not yet been measured across the course’s three target platforms.
-- Official CI proves broad build coverage, but the course must independently prove exact no-window test commands on macOS and Windows.
+- The standalone Project Generator path and a Release build have been reproduced only in a disposable Ubuntu 24.04 environment. macOS and Windows generation/builds, graphical launch, and all no-window course test lanes remain unproven.
+- Official CI and release-adjacent runner manifests document broad build environments, but the course must independently prove its exact generated projects and no-window test commands on all three lanes.
 - Links and API documentation may drift; pinned 0.12.1 headers and examples take precedence when web docs disagree.
 - Addons, fonts, media, codecs, and live-device APIs require separate platform and license review before becoming required content.
