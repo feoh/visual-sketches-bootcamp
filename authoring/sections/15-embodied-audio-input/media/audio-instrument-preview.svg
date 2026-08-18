@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">Louder input makes the instrument larger and denser</title>
+  <desc id="desc">Two dark panels compare quiet and loud amplitude. Quiet has a small outlined circle with four rays and a short level bar. A right arrow labeled louder points to a large circle with sixteen rays and a long bar. Keyboard fallback and recorded fixture badges show that a microphone is optional.</desc>
+  <rect width="960" height="420" fill="#f7f4eb"/>
+  <rect x="40" y="54" width="350" height="278" rx="18" fill="#182534"/>
+  <rect x="570" y="54" width="350" height="278" rx="18" fill="#182534"/>
+  <g fill="none" stroke="#a8c0cc" stroke-width="5">
+    <circle cx="215" cy="176" r="42"/>
+    <path d="M215 113v-18 M215 239v18 M152 176h-18 M278 176h18"/>
+  </g>
+  <rect x="173" y="267" width="25" height="10" fill="#a8c0cc"/>
+  <text x="170" y="308" fill="#fff" font-family="sans-serif" font-size="22">QUIET</text>
+  <g fill="none" stroke="#ffbe5c" stroke-width="5">
+    <circle cx="745" cy="176" r="94"/>
+    <path d="M745 66v-20 M745 286v20 M635 176h-20 M855 176h20 M667 98l-14-14 M823 254l14 14 M823 98l14-14 M667 254l-14 14 M703 73l-8-19 M787 279l8 19 M638 134l-19-8 M852 218l19 8 M787 73l8-19 M703 279l-8 19 M852 134l19-8 M638 218l-19 8"/>
+  </g>
+  <rect x="651" y="267" width="166" height="10" fill="#ffbe5c"/>
+  <text x="713" y="308" fill="#fff" font-family="sans-serif" font-size="22">LOUD</text>
+  <path d="M425 176h88l-20-20m20 20-20 20" fill="none" stroke="#c2374a" stroke-width="8"/>
+  <text x="434" y="143" fill="#2a3744" font-family="sans-serif" font-size="20" font-weight="bold">LOUDER</text>
+  <g font-family="sans-serif" font-size="19" fill="#2a3744">
+    <rect x="120" y="356" width="285" height="42" rx="8" fill="#dce8ec"/>
+    <text x="139" y="383">F: recorded amplitude fixture</text>
+    <rect x="555" y="356" width="285" height="42" rx="8" fill="#f2dfba"/>
+    <text x="576" y="383">↑/↓: no-device fallback</text>
+  </g>
+</svg>

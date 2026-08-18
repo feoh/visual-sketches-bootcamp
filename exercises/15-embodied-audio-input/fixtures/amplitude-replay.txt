@@ -1,0 +1,7 @@
+# id amplitude expected-smoothed expected-normalized expected-radius expected-rays expected-active
+silence 0.0 0.0 0.0 20.0 4 0
+room-floor 0.05 0.025 0.0 20.0 4 0
+voice-rise 0.4 0.2125 0.125 32.5 7 1
+clap 1.0 0.60625 0.5625 76.25 15 1
+release 0.0 0.303125 0.2256944444 42.56944444 9 1
+soft-return 0.2 0.2515625 0.1684027778 36.84027778 7 1

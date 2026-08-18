@@ -1,0 +1,9 @@
+assets:
+  - id: audio-instrument-preview
+    path: media/audio-instrument-preview.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: Two panels show a quiet amplitude as a small four-ray circle and short meter, then a louder amplitude as a large sixteen-ray circle and long meter; badges identify recorded-fixture and keyboard fallback routes.
+    caption: Louder input visibly makes one mark larger and denser; recorded and keyboard routes keep the mapping available without a microphone.

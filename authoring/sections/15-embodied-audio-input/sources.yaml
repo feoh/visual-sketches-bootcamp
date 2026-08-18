@@ -1,0 +1,19 @@
+sources:
+  - id: sound-stream-reference
+    title: ofSoundStream documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/sound/ofSoundStream/
+    accessed: 2026-08-18
+    note: Primary framework reference for optional portable sound input setup, callbacks, stop, and close.
+  - id: sound-buffer-reference
+    title: ofSoundBuffer documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/sound/ofSoundBuffer/
+    accessed: 2026-08-18
+    note: Primary framework reference for callback buffer frames, channels, and sample access.
+  - id: media-privacy-reference
+    title: Media Capture and Streams privacy and security considerations
+    creator: World Wide Web Consortium
+    url: https://www.w3.org/TR/mediacapture-streams/#privacy-and-security-considerations
+    accessed: 2026-08-18
+    note: Supports explicit consent, visible active-input state, and minimizing retained microphone-derived information.
