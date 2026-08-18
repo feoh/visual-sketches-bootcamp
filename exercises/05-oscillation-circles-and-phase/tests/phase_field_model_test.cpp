@@ -186,7 +186,7 @@ void periodicityAndDeterminismCases() {
 void geometryExtremaCases() {
     using namespace phasefield;
     const Viewport viewport{64, 64};
-    for (const auto parameters : {std::pair<float, float>{0.0f, 2.0f},
+    for (const auto& parameters : {std::pair<float, float>{0.0f, 2.0f},
                                   {0.0f, 8.0f},
                                   {16.0f, 2.0f},
                                   {16.0f, 8.0f}}) {
