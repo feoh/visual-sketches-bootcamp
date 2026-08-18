@@ -59,7 +59,7 @@ the source format and separate instructional/synthesis definitions of done.
 
 ## Section exercises
 
-Sections 00–06 use thin platform wrappers around the shared, containment-checked
+Sections 00–07 use thin platform wrappers around the shared, containment-checked
 `course-project` implementation. Their starter and solution projects
 use the same pinned root but remain separate Project Generator targets.
 Generation and compilation are separate; each renderer-independent C++17 test
@@ -77,7 +77,7 @@ tests/run-section-00-tests.sh
 .\tests\run-section-00-tests.ps1
 ```
 
-For sections 01–06, substitute the matching two-digit section number in those
+For sections 01–07, substitute the matching two-digit section number in those
 command names; tests follow `tests/run-section-NN-tests.sh` or `.ps1`.
 
 Use `--of-root`/`-OfRoot` or `OF_ROOT` exactly as for the foundation. Generated

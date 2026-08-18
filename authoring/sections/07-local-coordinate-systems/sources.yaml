@@ -1,0 +1,25 @@
+sources:
+  - id: of-graphics-matrix
+    title: ofGraphics matrix transformations
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/graphics/ofGraphics/
+    accessed: 2026-08-18
+    note: Supports push/pop matrix, translate, rotate, and scale usage in the native adapter.
+  - id: cpp-scope
+    title: Scope
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/language/scope.html
+    accessed: 2026-08-18
+    note: Supports lexical block scope and local lifetime discussion.
+  - id: cpp-destructor
+    title: Destructors
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/language/destructor.html
+    accessed: 2026-08-18
+    note: Supports the narrow RAII intuition used by MatrixScope.
+  - id: mdn-transform-order
+    title: Using CSS transforms
+    creator: MDN contributors
+    url: https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_transforms/Using_CSS_transforms
+    accessed: 2026-08-18
+    note: An additional visual reference for transform composition and order.

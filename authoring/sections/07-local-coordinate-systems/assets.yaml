@@ -1,0 +1,9 @@
+assets:
+  - id: local-sculpture-preview
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    path: media/local-sculpture-preview.svg
+    alt: Three bordered frames show a two-arm kinetic sculpture at different phases; each dark parent arm carries an orange child arm and outlined ring, demonstrating inherited position and rotation without relying on color alone.
+    caption: "One hierarchy at three times: each child anchor inherits its parent's local coordinate system."

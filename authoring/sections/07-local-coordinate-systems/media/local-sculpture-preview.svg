@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360" role="img" aria-labelledby="title desc">
+  <title id="title">Three-frame local-coordinate kinetic sculpture</title>
+  <desc id="desc">Three cream panels show a dark parent arm and orange child arm at different rotations. Each child carries an outlined ring, making inherited parent and child transforms visible by shape and position.</desc>
+  <rect width="960" height="360" fill="#f1ebdb"/>
+  <g fill="none" stroke="#1e2b3a" stroke-width="3">
+    <rect x="12" y="12" width="296" height="336"/><rect x="332" y="12" width="296" height="336"/><rect x="652" y="12" width="296" height="336"/>
+  </g>
+  <g stroke-linecap="round" stroke-width="9" fill="none">
+    <g transform="translate(160 180)"><path d="M0 0 H82" stroke="#1e2b3a"/><g transform="translate(82) rotate(55)"><path d="M0 0 H58" stroke="#da5d49"/><circle cx="58" cy="0" r="15" stroke="#da5d49" stroke-width="5"/></g><circle r="7" fill="#1e2b3a" stroke="none"/></g>
+    <g transform="translate(480 180) rotate(28)"><path d="M0 0 H82" stroke="#1e2b3a"/><g transform="translate(82)"><path d="M0 0 H58" stroke="#da5d49"/><circle cx="58" cy="0" r="15" stroke="#da5d49" stroke-width="5"/></g><circle r="7" fill="#1e2b3a" stroke="none"/></g>
+    <g transform="translate(800 180)"><path d="M0 0 H82" stroke="#1e2b3a"/><g transform="translate(82) rotate(-55)"><path d="M0 0 H58" stroke="#da5d49"/><circle cx="58" cy="0" r="15" stroke="#da5d49" stroke-width="5"/></g><circle r="7" fill="#1e2b3a" stroke="none"/></g>
+  </g>
+</svg>
