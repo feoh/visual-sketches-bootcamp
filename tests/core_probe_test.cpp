@@ -17,8 +17,8 @@ int main() {
     }
     assert(a.position.x == b.position.x && a.position.y == b.position.y);
     assert(a.stepCount == 120);
-    const auto near = course::test::expectNear(1000000.1, 1000000.0, 0.0, 1e-6);
-    assert(near.passed);
+    const auto nearResult = course::test::expectNear(1000000.1, 1000000.0, 0.0, 1e-6);
+    assert(nearResult.passed);
     const auto fail = course::test::expectNear(1.0, 2.0, 0.01, 0.0);
     assert(!fail.passed && fail.message.find("actual=1") != std::string::npos);
 

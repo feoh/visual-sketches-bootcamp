@@ -251,6 +251,9 @@ function Invoke-Generate {
     $embeddedRoot = (& git -C $RepoRoot grep -F -- $script:ResolvedOfRoot -- foundation shared scripts tests .github 2>$null | Out-String)
     if ($LASTEXITCODE -eq 0) { Fail "tracked implementation files embed the selected OF_ROOT: $embeddedRoot" }
     if ($LASTEXITCODE -gt 1) { Fail "could not scan tracked files for embedded OF_ROOT" }
+    # A handled grep no-match is success for this wrapper; do not leak its native
+    # exit code as the PowerShell process status.
+    $global:LASTEXITCODE = 0
     Info "generation passed for $Project"
 }
 

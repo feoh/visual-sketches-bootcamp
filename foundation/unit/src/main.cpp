@@ -16,8 +16,8 @@ class FoundationTests final : public ofxUnitTestsApp {
 
         const auto first = fixture.freshModel();
         const auto replay = fixture.freshModel();
-        auto near = course::test::expectNear(first.position.x, replay.position.x, 0.0, 0.0);
-        ofxTest(near.passed, "same seed reproduces initial x", near.message);
+        auto nearResult = course::test::expectNear(first.position.x, replay.position.x, 0.0, 0.0);
+        ofxTest(nearResult.passed, "same seed reproduces initial x", nearResult.message);
 
         const auto other = course::makeModel(fixture.seed + 1U, fixture.viewport);
         ofxTest(first.position.x != other.position.x || first.position.y != other.position.y,
@@ -38,8 +38,8 @@ class FoundationTests final : public ofxUnitTestsApp {
             course::update(runA, fixture.input, fixture.dt, fixture.viewport);
             course::update(runB, fixture.input, fixture.dt, fixture.viewport);
         }
-        near = course::test::expectNear(runA.position.y, runB.position.y, 0.0, 0.0);
-        ofxTest(near.passed, "fixed input replay is deterministic", near.message);
+        nearResult = course::test::expectNear(runA.position.y, runB.position.y, 0.0, 0.0);
+        ofxTest(nearResult.passed, "fixed input replay is deterministic", nearResult.message);
 
         course::Model wrapping;
         wrapping.position = {639.0f, 1.0f};
@@ -53,8 +53,8 @@ class FoundationTests final : public ofxUnitTestsApp {
         clamped.position = {10.0f, 10.0f};
         clamped.velocity = {4.0f, 0.0f};
         course::update(clamped, {{0.0f, 0.0f}}, 10.0f, fixture.viewport);
-        near = course::test::expectNear(clamped.position.x, 11.0, 1e-6, 1e-6);
-        ofxTest(near.passed, "extreme dt is clamped to 0.25 seconds", near.message);
+        nearResult = course::test::expectNear(clamped.position.x, 11.0, 1e-6, 1e-6);
+        ofxTest(nearResult.passed, "extreme dt is clamped to 0.25 seconds", nearResult.message);
 
         const auto invalidDtLeavesState = [&fixture](float dt) {
             auto before = fixture.freshModel();
