@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">Spatial-temporal collage from newest to oldest</title>
+  <desc id="desc">Twenty vertical time slices cross a navy field. On the left, newest amber circles sit high; toward the right, progressively older mint circles descend and fade. Horizontal ticks inside circles and labels NOW and THEN make age readable without color.</desc>
+  <rect width="960" height="420" fill="#111727"/>
+  <g stroke="#dce7df" stroke-opacity=".18">
+    <path d="M60 62V360M102 62V360M144 62V360M186 62V360M228 62V360M270 62V360M312 62V360M354 62V360M396 62V360M438 62V360M480 62V360M522 62V360M564 62V360M606 62V360M648 62V360M690 62V360M732 62V360M774 62V360M816 62V360M858 62V360"/>
+  </g>
+  <path d="M60 145 C180 90 260 265 396 216 S610 106 858 300" fill="none" stroke="#f7bb53" stroke-width="3" stroke-dasharray="8 8"/>
+  <g fill="none" stroke-width="5">
+    <g stroke="#f7bb53"><circle cx="60" cy="145" r="18"/><path d="M47 145H73"/></g>
+    <g stroke="#e9b963" opacity=".9"><circle cx="186" cy="130" r="18"/><path d="M173 130H199"/></g>
+    <g stroke="#b5d19f" opacity=".78"><circle cx="354" cy="235" r="18"/><path d="M341 235H367"/></g>
+    <g stroke="#73d5b8" opacity=".62"><circle cx="522" cy="166" r="18"/><path d="M509 166H535"/></g>
+    <g stroke="#73d5b8" opacity=".42"><circle cx="690" cy="190" r="18"/><path d="M677 190H703"/></g>
+    <g stroke="#73d5b8" opacity=".25"><circle cx="858" cy="300" r="18"/><path d="M845 300H871"/></g>
+  </g>
+  <g fill="#f4f0df" font-family="sans-serif" font-size="22" font-weight="bold">
+    <text x="42" y="40">NOW · AGE 0</text><text x="774" y="40">THEN · OLDEST</text>
+    <text x="310" y="397" font-size="18" font-weight="normal">horizontal position selects a stored moment</text>
+  </g>
+  <path d="M205 32H748" stroke="#f4f0df" stroke-width="2" marker-end="url(#arrow)"/>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#f4f0df"/></marker></defs>
+</svg>

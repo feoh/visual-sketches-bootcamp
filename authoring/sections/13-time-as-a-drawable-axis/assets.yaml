@@ -1,0 +1,9 @@
+assets:
+  - id: time-axis-preview
+    path: media/time-axis-preview.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: Twenty vertical time slices cross a navy field; newest amber circles begin high at the left, progressively older mint circles descend and fade to the right, and horizontal ticks plus NOW and THEN labels communicate age without color.
+    caption: A bounded history turns horizontal position into age zero through the oldest retained sample.

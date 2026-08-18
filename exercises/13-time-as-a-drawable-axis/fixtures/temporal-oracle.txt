@@ -1,0 +1,6 @@
+motion-origin motion 0 0 100 100 84 50 0
+newest selection 5 0.0 0
+near-new selection 5 0.24 1
+middle selection 5 0.5 2
+near-old selection 5 0.76 3
+oldest selection 5 1.0 4

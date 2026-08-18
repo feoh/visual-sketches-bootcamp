@@ -1,0 +1,19 @@
+sources:
+  - id: vector-reference
+    title: std::vector reference
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/container/vector.html
+    accessed: 2026-08-18
+    note: Supports the fixed-capacity contiguous storage used behind the indexed ring buffer.
+  - id: exponential-reference
+    title: std::exp reference
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/numeric/math/exp.html
+    accessed: 2026-08-18
+    note: Supports the exponential age-decay function used to derive opacity from selected sample age.
+  - id: fbo-reference
+    title: ofFbo documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/gl/ofFbo/
+    accessed: 2026-08-18
+    note: Defines the optional GPU framebuffer boundary discussed in the remix and manual validation notes; the delivered adapters intentionally render directly.
