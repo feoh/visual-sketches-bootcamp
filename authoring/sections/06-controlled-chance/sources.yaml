@@ -1,0 +1,25 @@
+sources:
+  - id: cpp-mt19937
+    title: std::mersenne_twister_engine and std::mt19937
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine.html
+    accessed: 2026-08-18
+    note: Supports the standard engine, seed, state sequence, and replay discussion.
+  - id: cpp-uniform-real
+    title: std::uniform_real_distribution
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution.html
+    accessed: 2026-08-18
+    note: Supports the distribution object used to map engine output to bounded real parameters.
+  - id: cpp-uniform-int
+    title: std::uniform_int_distribution
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html
+    accessed: 2026-08-18
+    note: Supports bounded integer tickets used by the explicit weighted-choice table.
+  - id: of-buffer-file
+    title: ofBuffer and file utilities
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/utils/ofFileUtils/
+    accessed: 2026-08-18
+    note: Supports saving canonical generated model parameters for portable replay.

@@ -1,0 +1,9 @@
+assets:
+  - id: seeded-edition-preview
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    path: media/seeded-edition-preview.svg
+    alt: Six bordered panels contain related but nonidentical arrangements of dark dots, horizontal orange dashes, and outlined rings; a small key labels the seed, weighted motif tickets, and center-biased position shape.
+    caption: One seed generates six related editions; shape and position distinguish motifs without relying on color.
