@@ -9,7 +9,7 @@ $Compiler = Get-Command cl.exe -ErrorAction SilentlyContinue
 if (-not $Compiler) { throw "Visual Studio cl.exe is required; run from a Developer PowerShell" }
 $Output = Join-Path ([IO.Path]::GetTempPath()) ("first-cpp-test-" + [guid]::NewGuid().ToString("N") + ".exe")
 try {
-    & $Compiler.Source /nologo /std:c++17 /DNDEBUG /W4 /WX /EHsc `
+    & $Compiler.Source /nologo /std:c++17 /Zc:__cplusplus /DNDEBUG /W4 /WX /EHsc `
         "/I$(Join-Path $Root 'shared\core')" `
         "/I$(Join-Path $Root 'shared\test-support')" `
         "/I$(Join-Path $Root "exercises\00-first-cpp-test\$Variant")" `

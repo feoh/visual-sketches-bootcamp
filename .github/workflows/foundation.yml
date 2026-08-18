@@ -50,6 +50,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+        if: runner.os == 'Windows'
       - name: Restore checksum-addressed openFrameworks archive
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -76,7 +78,15 @@ jobs:
         shell: bash
         run: |
           for attempt in 1 2; do
-            if printf 'y\n' | timeout --kill-after=30s 10m sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y; then
+            for _ in {1..24}; do
+              sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 || break
+              sleep 5
+            done
+            if sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; then
+              echo "dpkg lock remained busy before attempt $attempt" >&2
+              continue
+            fi
+            if printf 'y\n' | sudo timeout --kill-after=30s 10m "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y; then
               exit 0
             fi
             echo "dependency installation attempt $attempt failed; retrying" >&2
@@ -183,6 +193,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+        if: runner.os == 'Windows'
       - name: Restore checksum-addressed openFrameworks archive
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
@@ -209,7 +221,15 @@ jobs:
         shell: bash
         run: |
           for attempt in 1 2; do
-            if printf 'y\n' | timeout --kill-after=30s 10m sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y; then
+            for _ in {1..24}; do
+              sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 || break
+              sleep 5
+            done
+            if sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1; then
+              echo "dpkg lock remained busy before attempt $attempt" >&2
+              continue
+            fi
+            if printf 'y\n' | sudo timeout --kill-after=30s 10m "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y; then
               exit 0
             fi
             echo "dependency installation attempt $attempt failed; retrying" >&2
