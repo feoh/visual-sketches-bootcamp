@@ -18,10 +18,12 @@ bool sampleIsFinite(const Sample& sample) {
 }
 
 bool shapeIsValid(const History& history) {
-    return !history.storage.empty() &&
-           history.storage.size() <= maximum_samples &&
-           history.next < history.storage.size() &&
-           history.count <= history.storage.size();
+    if (history.storage.empty() || history.storage.size() > maximum_samples ||
+        history.next >= history.storage.size() ||
+        history.count > history.storage.size()) return false;
+    // Before the first wrap, the next write follows the initialized prefix.
+    // A full ring may point anywhere because every slot has been written.
+    return history.count == history.storage.size() || history.next == history.count;
 }
 
 }  // namespace

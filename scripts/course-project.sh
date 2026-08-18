@@ -17,6 +17,10 @@ case "$SECTION" in
   09) EXERCISE=09-particles-with-memory; DESIGN=particle_design; SHARED=particle_model ;;
   10) EXERCISE=10-forces-steering-and-springs; DESIGN=force_design; SHARED=force_model ;;
   11) EXERCISE=11-noise-and-flow-fields; DESIGN=flow_field_design; SHARED=flow_field_model ;;
+  12) EXERCISE=12-color-blending-and-trails; DESIGN=trail_design; SHARED=color_trail_model ;;
+  13) EXERCISE=13-time-as-a-drawable-axis; DESIGN=temporal_design; SHARED=temporal_history ;;
+  14) EXERCISE=14-images-and-type-as-geometry; DESIGN=image_geometry_design; SHARED=image_geometry_model ;;
+  15) EXERCISE=15-embodied-audio-input; DESIGN=audio_instrument_design; SHARED=audio_input_model ;;
   *) echo "course-project: unsupported section $SECTION" >&2; exit 2 ;;
 esac
 LABEL="section-$SECTION"
@@ -53,8 +57,9 @@ exercises/$EXERCISE/shared/$SHARED.cpp
 exercises/$EXERCISE/shared/$SHARED.h
 EOF
   find "$PROJECT_PATH/src" "$source_root/shared" -type f \
-    \( -name '*.c' -o -name '*.cc' -o -name '*.cpp' -o -name '*.cxx' -o \
-       -name '*.h' -o -name '*.hh' -o -name '*.hpp' \) -print |
+    \( -iname '*.c' -o -iname '*.cc' -o -iname '*.cpp' -o -iname '*.cxx' -o \
+       -iname '*.m' -o -iname '*.mm' -o -iname '*.h' -o -iname '*.hh' -o \
+       -iname '*.hpp' -o -iname '*.hxx' \) -print |
     while IFS= read -r file; do printf '%s\n' "${file#"$ROOT"/}"; done >"$actual"
   LC_ALL=C sort -o "$expected" "$expected"; LC_ALL=C sort -o "$actual" "$actual"
   if ! cmp -s "$expected" "$actual"; then
@@ -113,7 +118,11 @@ doctor() {
 }
 
 clean_generated() {
-  [[ "$PROJECT_PATH" == "$ROOT/exercises/$EXERCISE/"* && ! -L "$PROJECT_PATH" && ! -L "$PROJECT_PATH/bin" ]] || fail 'unsafe project path'
+  local resolved_project
+  resolved_project=$(cd "$PROJECT_PATH" && pwd -P) || fail 'canonical project directory is missing'
+  [[ "$resolved_project" == "$PROJECT_PATH" &&
+     "$PROJECT_PATH" == "$ROOT/exercises/$EXERCISE/"* &&
+     ! -L "$PROJECT_PATH" && ! -L "$PROJECT_PATH/bin" ]] || fail 'unsafe project path'
   if [[ -d "$PROJECT_PATH/bin" ]]; then find "$PROJECT_PATH/bin" -mindepth 1 -maxdepth 1 ! -name data -exec rm -rf -- {} +; fi
   rm -rf -- "$PROJECT_PATH/Makefile" "$PROJECT_PATH/config.make" "$PROJECT_PATH/.vscode" "$PROJECT_PATH/$PROJECT.code-workspace" \
     "$PROJECT_PATH/$PROJECT.xcodeproj" "$PROJECT_PATH/Project.xcconfig" "$PROJECT_PATH/of.entitlements" \
@@ -171,7 +180,8 @@ EOF
   awk '
     /^[[:space:]]*"path"[[:space:]]*:/ {
       value=$0; sub(/^[^:]*:[[:space:]]*"/, "", value); sub(/",?[[:space:]]*$/, "", value)
-      if (value ~ /^(src|\.\.\/shared)\/.*\.(c|cc|cpp|cxx|h|hh|hpp)$/) print value
+      lower=tolower(value)
+      if (lower ~ /^(src|\.\.\/shared)\/.*\.(c|cc|cpp|cxx|m|mm|h|hh|hpp|hxx)$/) print value
     }
   ' "$project_file" >"$actual"
   LC_ALL=C sort -o "$expected" "$expected"; LC_ALL=C sort -o "$actual" "$actual"
@@ -184,6 +194,21 @@ EOF
     assert_xcode_compiled_once "$project_file" "$source"
   done
   rm -f "$expected" "$actual"
+}
+
+ensure_microphone_privacy_description() {
+  [[ "$SECTION" == 15 && "$PLATFORM" == osx ]] || return 0
+  local plist="$PROJECT_PATH/openFrameworks-Info.plist"
+  local buddy=/usr/libexec/PlistBuddy
+  local purpose='This sketch uses microphone amplitude only after the learner presses L; it stores no audio.'
+  [[ -f "$plist" && -x "$buddy" ]] || fail 'macOS microphone privacy metadata tools are missing'
+  if "$buddy" -c 'Print :NSMicrophoneUsageDescription' "$plist" >/dev/null 2>&1; then
+    "$buddy" -c "Set :NSMicrophoneUsageDescription '$purpose'" "$plist"
+  else
+    "$buddy" -c "Add :NSMicrophoneUsageDescription string '$purpose'" "$plist"
+  fi
+  "$buddy" -c 'Print :NSMicrophoneUsageDescription' "$plist" | grep -Fq 'stores no audio' ||
+    fail 'macOS microphone privacy description was not written'
 }
 
 validate_generated() {
@@ -224,6 +249,7 @@ generate() {
   status=$?; set -e
   [[ $status -eq 0 ]] || { cat "$log" >&2; fail "Project Generator exited $status"; }
   ! grep -Eiq '\[[[:space:]]*error[[:space:]]*\]' "$log" || { cat "$log" >&2; fail 'Project Generator reported an error'; }
+  ensure_microphone_privacy_description
   validate_generated
   git -C "$ROOT" diff --binary --no-ext-diff HEAD -- >"$after"
   canonical_snapshot >"$after_inputs"

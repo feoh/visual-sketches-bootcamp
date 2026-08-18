@@ -41,7 +41,7 @@ void ofApp::moveOrigin(float x, float y) {
 
 void ofApp::update() {
     if (!paused_) {
-        phase_ += std::clamp(ofGetLastFrameTime(), 0.0f, 0.05f) * 1.7f;
+        phase_ += std::clamp(static_cast<float>(ofGetLastFrameTime()), 0.0f, 0.05f) * 1.7f;
         const float reach = std::max(0.0f,
             std::min(ofGetWidth(), ofGetHeight()) * 0.31f - design_.maximum_radius);
         const colortrail::TrailSample first{
@@ -54,10 +54,10 @@ void ofApp::update() {
             0.5f + 0.5f * std::cos(phase_ * 0.61f), 1};
         colortrail::appendSample(trails_[0], first, design_.maximum_history);
         colortrail::appendSample(trails_[1], second, design_.maximum_history);
-        if (reduced_motion_) {
-            for (auto& trail : trails_) {
-                if (trail.size() > 1) trail.erase(trail.begin(), trail.end() - 1);
-            }
+    }
+    if (reduced_motion_) {
+        for (auto& trail : trails_) {
+            if (trail.size() > 1) trail.erase(trail.begin(), trail.end() - 1);
         }
     }
     colortrail::buildTrailMarks(trails_[0], design_, marks_[0]);

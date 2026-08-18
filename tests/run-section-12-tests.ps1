@@ -31,6 +31,15 @@ try {
     }
     Write-Host "section-12-fixture-safety: malformed over/decay rows failed cleanly before indexing"
 } finally { Remove-Item -LiteralPath $BuildDirectory -Recurse -Force -ErrorAction SilentlyContinue }
+foreach ($Section in @("12-color-blending-and-trails", "13-time-as-a-drawable-axis", "14-images-and-type-as-geometry", "15-embodied-audio-input")) {
+    foreach ($Variant in @("starter", "solution")) {
+        $Main = Get-Content -Raw -LiteralPath (Join-Path $Root "exercises\$Section\$Variant\src\main.cpp")
+        foreach ($Needle in @("ofCreateWindow(settings)", "ofRunApp(window, std::make_shared<ofApp>())", "ofRunMainLoop()")) {
+            if (-not $Main.Contains($Needle)) { throw "$Section/$Variant main.cpp is missing window contract: $Needle" }
+        }
+    }
+}
+Write-Host "unit-4-window-contract: every entry point creates and runs its configured window"
 $FakeOf = Join-Path ([IO.Path]::GetTempPath()) ("section-12-incomplete-of-" + [guid]::NewGuid().ToString("N"))
 $SentinelDirectory = Join-Path $Root "exercises\12-color-blending-and-trails\starter\bin"
 $Sentinel = Join-Path $SentinelDirectory ("wrapper-safety-sentinel-" + [guid]::NewGuid().ToString("N"))

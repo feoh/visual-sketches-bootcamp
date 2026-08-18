@@ -200,6 +200,32 @@ void testMemoryFiniteAndOverflowRejection() {
             "invalid decay rejected");
 }
 
+void testMalformedHistoryShapeRejection() {
+    temporal::History history;
+    require(temporal::configure(history, 3), "malformed-shape configure");
+    require(temporal::push(history, numbered(1)), "malformed-shape initial push");
+
+    history.next = 2;
+    const temporal::History before = history;
+    require(!temporal::valid(history), "non-full ring rejects a gap before next write");
+    require(!temporal::push(history, numbered(2)) &&
+            history.next == before.next && history.count == before.count,
+            "push rejects malformed ring transactionally");
+    require(!temporal::resize(history, 4) &&
+            history.storage.size() == before.storage.size() &&
+            history.next == before.next && history.count == before.count,
+            "resize rejects malformed ring transactionally");
+
+    require(temporal::configure(history, 3), "zero-count malformed configure");
+    history.next = 1;
+    require(!temporal::valid(history), "empty ring requires next zero");
+
+    require(temporal::configure(history, 3), "full-ring configure");
+    for (std::uint64_t frame = 1; frame <= 3; ++frame)
+        require(temporal::push(history, numbered(frame)), "full-ring fill");
+    require(temporal::valid(history), "full ring permits wrapped next index");
+}
+
 void testMonotoneSelectionProperty() {
     for (std::size_t count = 1; count <= 64; ++count) {
         std::size_t previous = 0;
@@ -231,6 +257,7 @@ int main(int argc, char** argv) {
         testSelectionAndDecay();
         testResizeResetAndReplay();
         testMemoryFiniteAndOverflowRejection();
+        testMalformedHistoryShapeRejection();
         testMonotoneSelectionProperty();
         testDesignSeam();
         std::cout << "section-13-tests: order wrap length selection resize reset replay memory finite overflow property design PASS\n";

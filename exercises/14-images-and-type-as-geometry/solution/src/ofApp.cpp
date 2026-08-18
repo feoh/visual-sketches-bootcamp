@@ -4,7 +4,11 @@
 #include <cmath>
 
 namespace {
-ofColor color(DisplayColor value) { return {value.r, value.g, value.b}; }
+ofColor color(DisplayColor value) {
+    return ofColor(static_cast<unsigned char>(value.r),
+                   static_cast<unsigned char>(value.g),
+                   static_cast<unsigned char>(value.b));
+}
 constexpr float tau = 6.28318530718f;
 }
 
@@ -16,7 +20,7 @@ void ofApp::setup() {
 }
 
 void ofApp::loadAsset() {
-    error_.clear(); source_ = {}; frame_ = {};
+    error_.clear(); source_ = {}; frame_ = {}; time_ = 0.0f;
     if (!image_.load("seed-mask.png")) {
         error_ = "Asset load failed: bin/data/seed-mask.png is missing or unreadable.";
         return;
@@ -31,8 +35,10 @@ void ofApp::loadAsset() {
 }
 
 void ofApp::update() {
-    if (!paused_ && !reduced_motion_ && error_.empty())
-        time_ += std::min(ofGetLastFrameTime(), 0.1f);
+    if (paused_ || reduced_motion_ || !error_.empty()) return;
+    const float frame_time = static_cast<float>(ofGetLastFrameTime());
+    if (std::isfinite(frame_time) && frame_time > 0.0f)
+        time_ += std::min(frame_time, 0.1f);
 }
 
 void ofApp::draw() {

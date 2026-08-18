@@ -36,6 +36,8 @@ for adapter in \
   grep -Fq "key == 'n'" "$adapter"
   grep -Fq 'sound_stream_.setup(settings)' "$adapter"
   grep -Fq 'sound_stream_.close()' "$adapter"
+  grep -Fq 'pending_amplitude_.exchange(-1.0f)' "$adapter"
+  grep -Fq 'ACTIVITY: ACTIVE' "$adapter"
 done
 printf '%s\n' 'section-15-adapter-contract: safe default, N/F/L routes, and live open/close hooks are discoverable'
 

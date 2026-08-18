@@ -185,20 +185,23 @@ without capture permission or hardware.
 
 Only after consent and selecting the intended OS default input, press L. A
 successful setup labels itself `LIVE MICROPHONE`; louder input should enlarge
-the same geometry. N closes the stream and restores keyboard control. If L
-returns to `NO DEVICE`, use N/F/Up/Down and diagnose permissions or device
-selection outside the sketch. Unit tests and compilation do not prove that an
+the same geometry. N closes the stream and restores keyboard control. On macOS,
+the section wrapper adds the required microphone-purpose string to generated
+application metadata; the app still opens no device until L. If L returns to
+`NO DEVICE`, use N/F/Up/Down and diagnose permissions or device selection
+outside the sketch. Unit tests and compilation do not prove that an
 actual device opened, that OS permission UI appeared, or that the graphics
 launched.
 
 ## Break and repair
 
 In `exercises/15-embodied-audio-input/shared/audio_input_model.cpp`, temporarily
-change the quiet comparison from `smoothed <= design.dead_zone` to
-`smoothed < design.dead_zone`. Add or temporarily substitute an exact-boundary
-case with smoothing 1 and input 0.1, then run the section tests. Predict why the
-normalized value may still be zero while `active` and boundary intent become
-ambiguous. Restore `<=`, rerun, and record the failure and repair. To discard
+change the final activity expression from `normalized > 0.0f` to
+`smoothed >= design.dead_zone`. Run the section tests. The exact-boundary case
+uses smoothing 1 and an input equal to the dead zone: its geometry must remain
+quiet, so the planted `>=` makes the test fail even though normalized level is
+still zero. Restore `normalized > 0.0f`, rerun, and record the failure and
+repair. To discard
 only that file's uncommitted changes:
 
 ```sh

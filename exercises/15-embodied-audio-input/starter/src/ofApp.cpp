@@ -22,7 +22,7 @@ void ofApp::stopMicrophone() {
         sound_stream_.close();
         microphone_open_ = false;
     }
-    pending_live_value_.store(false);
+    pending_amplitude_.store(-1.0f);
 }
 
 void ofApp::chooseNoDevice() {
@@ -66,9 +66,10 @@ void ofApp::update() {
             embodied::consumeAmplitude(state_, kRecordedAmplitudes[fixture_index_], design_);
             fixture_index_ = (fixture_index_ + 1) % kRecordedAmplitudes.size();
         }
-    } else if (state_.source == embodied::InputSource::live_microphone &&
-               pending_live_value_.exchange(false)) {
-        embodied::consumeAmplitude(state_, pending_amplitude_.load(), design_);
+    } else if (state_.source == embodied::InputSource::live_microphone) {
+        const float amplitude = pending_amplitude_.exchange(-1.0f);
+        if (amplitude >= 0.0f)
+            embodied::consumeAmplitude(state_, amplitude, design_);
     }
 }
 
@@ -82,7 +83,6 @@ void ofApp::audioIn(ofSoundBuffer& input) {
         sum += static_cast<double>(sample) * sample;
     }
     pending_amplitude_.store(static_cast<float>(std::sqrt(sum / frames)));
-    pending_live_value_.store(true);
 }
 
 const char* ofApp::sourceLabel() const {
@@ -120,6 +120,7 @@ void ofApp::draw() {
     ofSetColor(asColor(design_.quiet_color));
     ofDrawBitmapString("LOUDER  ->  BIGGER CIRCLE + MORE RAYS", 24, 30);
     ofDrawBitmapString(sourceLabel(), 24, 54);
+    ofDrawBitmapString(geometry.active ? "ACTIVITY: ACTIVE" : "ACTIVITY: QUIET", 24, 78);
     ofDrawBitmapString("N no-device | Up/Down set fallback | F replay fixture | L ask for microphone", 24, ofGetHeight() - 42);
     ofDrawBitmapString("P pause | R reset source | M reduce repeated marks | no sound is stored", 24, ofGetHeight() - 20);
 }

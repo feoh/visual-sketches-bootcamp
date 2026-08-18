@@ -27,8 +27,8 @@ private:
     embodied::Design design_{};
     embodied::State state_{};
     ofSoundStream sound_stream_{};
-    std::atomic<float> pending_amplitude_{0.0f};
-    std::atomic<bool> pending_live_value_{false};
+    // A negative value means no callback sample is pending; valid RMS is >= 0.
+    std::atomic<float> pending_amplitude_{-1.0f};
     float fallback_amplitude_ = 0.35f;
     std::size_t fixture_index_ = 0;
     int fixture_hold_ = 0;

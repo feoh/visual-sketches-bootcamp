@@ -102,6 +102,18 @@ void testBoundariesAndProperties(const embodied::Design& design) {
     check(!boundary.geometry.active && near(boundary.geometry.normalized_level, 0.0f),
           "exact dead-zone boundary remains quiet");
 
+    auto largest = immediate;
+    largest.maximum_radius = embodied::kMaximumRadius;
+    embodied::State largest_state;
+    embodied::reset(largest_state, largest, embodied::InputSource::recorded);
+    check(embodied::designIsValid(largest) &&
+          embodied::consumeAmplitude(largest_state, 1.0f, largest) &&
+          std::isfinite(largest_state.geometry.radius * 2.0f),
+          "largest valid radius keeps adapter diameter finite");
+    largest.maximum_radius = std::nextafter(
+        embodied::kMaximumRadius, std::numeric_limits<float>::infinity());
+    check(!embodied::designIsValid(largest), "oversize radius design rejects");
+
     check(embodied::consumeAmplitude(state, 2.0f, design), "amplitudes above one clamp");
     check(near(state.raw_amplitude, 1.0f), "raw amplitude clamp is inspectable");
     const embodied::State before_invalid = state;

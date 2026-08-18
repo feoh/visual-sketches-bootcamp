@@ -14,7 +14,7 @@ The visual vocabulary is informed by recurring techniques in [Zach Lieberman’s
 
 ## Status
 
-This repository contains the curriculum specification, implementation roadmap, and the tracked foundation probe: a windowed openFrameworks adapter plus a deterministic `ofxUnitTests`/`ofAppNoWindow` suite. Lesson prose, starter projects, and reference solutions will be added incrementally.
+This repository contains the curriculum specification, implementation roadmap, tracked foundation probe, and complete instructional sections 00–15. Each published section pairs portable lesson prose with a tested deterministic model, learner starter, explained reference solution, and Linux/macOS/Windows build wrappers. Unit 4 culminates in an embodied-audio elective whose core replays recorded input and falls back safely when no device is available.
 
 - [Curriculum map](docs/curriculum-map.md)
 - [Exercise and testing strategy](docs/testing-strategy.md)

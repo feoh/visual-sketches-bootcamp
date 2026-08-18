@@ -45,6 +45,7 @@ bool designIsValid(const Design& design) {
            finite(design.minimum_radius) && design.minimum_radius >= 0.0f &&
            finite(design.maximum_radius) &&
            design.maximum_radius >= design.minimum_radius &&
+           design.maximum_radius <= kMaximumRadius &&
            design.minimum_rays >= 0 &&
            design.maximum_rays >= design.minimum_rays &&
            design.maximum_rays <= 128 && colorValid(design.background) &&

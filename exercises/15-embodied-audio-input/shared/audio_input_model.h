@@ -8,6 +8,7 @@ namespace embodied {
 
 constexpr std::size_t kMaximumBatchSize = 256;
 constexpr std::size_t kMaximumFixtureSamples = 4096;
+constexpr float kMaximumRadius = 1'000'000.0f;
 
 enum class InputSource {
     recorded,

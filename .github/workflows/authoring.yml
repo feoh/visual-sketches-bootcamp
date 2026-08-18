@@ -9,31 +9,9 @@ on:
       - scripts/check-authoring.*
       - scripts/setup-of.*
       - scripts/course-project.*
-      - scripts/section-00.*
-      - scripts/section-01.*
-      - scripts/section-02.*
-      - scripts/section-03.*
-      - scripts/section-04.*
-      - scripts/section-05.*
-      - scripts/section-06.*
-      - scripts/section-07.*
-      - scripts/section-08.*
-      - scripts/section-09.*
-      - scripts/section-10.*
-      - scripts/section-11.*
+      - scripts/section-*.*
       - tests/run-authoring-check-tests.*
-      - tests/run-section-00-tests.*
-      - tests/run-section-01-tests.*
-      - tests/run-section-02-tests.*
-      - tests/run-section-03-tests.*
-      - tests/run-section-04-tests.*
-      - tests/run-section-05-tests.*
-      - tests/run-section-06-tests.*
-      - tests/run-section-07-tests.*
-      - tests/run-section-08-tests.*
-      - tests/run-section-09-tests.*
-      - tests/run-section-10-tests.*
-      - tests/run-section-11-tests.*
+      - tests/run-section-*-tests.*
       - tests/run-first-cpp-test.*
   pull_request:
     paths:
@@ -43,31 +21,9 @@ on:
       - scripts/check-authoring.*
       - scripts/setup-of.*
       - scripts/course-project.*
-      - scripts/section-00.*
-      - scripts/section-01.*
-      - scripts/section-02.*
-      - scripts/section-03.*
-      - scripts/section-04.*
-      - scripts/section-05.*
-      - scripts/section-06.*
-      - scripts/section-07.*
-      - scripts/section-08.*
-      - scripts/section-09.*
-      - scripts/section-10.*
-      - scripts/section-11.*
+      - scripts/section-*.*
       - tests/run-authoring-check-tests.*
-      - tests/run-section-00-tests.*
-      - tests/run-section-01-tests.*
-      - tests/run-section-02-tests.*
-      - tests/run-section-03-tests.*
-      - tests/run-section-04-tests.*
-      - tests/run-section-05-tests.*
-      - tests/run-section-06-tests.*
-      - tests/run-section-07-tests.*
-      - tests/run-section-08-tests.*
-      - tests/run-section-09-tests.*
-      - tests/run-section-10-tests.*
-      - tests/run-section-11-tests.*
+      - tests/run-section-*-tests.*
       - tests/run-first-cpp-test.*
   workflow_dispatch:
 
@@ -113,12 +69,20 @@ jobs:
         run: tests/run-section-10-tests.sh
       - name: Test section 11 flow-field model
         run: tests/run-section-11-tests.sh
+      - name: Test section 12 color-trail model
+        run: tests/run-section-12-tests.sh
+      - name: Test section 13 temporal-history model
+        run: tests/run-section-13-tests.sh
+      - name: Test section 14 image-geometry model
+        run: tests/run-section-14-tests.sh
+      - name: Test section 15 audio-input model
+        run: tests/run-section-15-tests.sh
       - name: Test starter and solution C++ known cases
         run: |
           tests/run-first-cpp-test.sh starter
           tests/run-first-cpp-test.sh solution
       - name: Lint POSIX authoring scripts
-        run: shellcheck scripts/check-authoring.sh scripts/course-project.sh scripts/section-00.sh scripts/section-01.sh scripts/section-02.sh scripts/section-03.sh scripts/section-04.sh scripts/section-05.sh scripts/section-06.sh scripts/section-07.sh scripts/section-08.sh scripts/section-09.sh scripts/section-10.sh scripts/section-11.sh tests/run-authoring-check-tests.sh tests/run-section-00-tests.sh tests/run-section-01-tests.sh tests/run-section-02-tests.sh tests/run-section-03-tests.sh tests/run-section-04-tests.sh tests/run-section-05-tests.sh tests/run-section-06-tests.sh tests/run-section-07-tests.sh tests/run-section-08-tests.sh tests/run-section-09-tests.sh tests/run-section-10-tests.sh tests/run-section-11-tests.sh tests/run-first-cpp-test.sh
+        run: shellcheck scripts/check-authoring.sh scripts/course-project.sh scripts/section-*.sh tests/run-authoring-check-tests.sh tests/run-section-*-tests.sh tests/run-first-cpp-test.sh
 
   windows-contract:
     runs-on: windows-2022
@@ -171,6 +135,18 @@ jobs:
       - name: Test section 11 flow-field model
         shell: pwsh
         run: tests/run-section-11-tests.ps1
+      - name: Test section 12 color-trail model
+        shell: pwsh
+        run: tests/run-section-12-tests.ps1
+      - name: Test section 13 temporal-history model
+        shell: pwsh
+        run: tests/run-section-13-tests.ps1
+      - name: Test section 14 image-geometry model
+        shell: pwsh
+        run: tests/run-section-14-tests.ps1
+      - name: Test section 15 audio-input model
+        shell: pwsh
+        run: tests/run-section-15-tests.ps1
       - name: Test starter and solution C++ known cases
         shell: pwsh
         run: |
@@ -360,6 +336,66 @@ jobs:
             archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
           - status: section-11-windows-build
             section: '11'
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+          - status: section-12-linux-build
+            section: '12'
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: section-12-macos-build
+            section: '12'
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: section-12-windows-build
+            section: '12'
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+          - status: section-13-linux-build
+            section: '13'
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: section-13-macos-build
+            section: '13'
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: section-13-windows-build
+            section: '13'
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+          - status: section-14-linux-build
+            section: '14'
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: section-14-macos-build
+            section: '14'
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: section-14-windows-build
+            section: '14'
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+          - status: section-15-linux-build
+            section: '15'
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: section-15-macos-build
+            section: '15'
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: section-15-windows-build
+            section: '15'
             os: windows-2022
             platform: vs
             archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8

@@ -37,7 +37,7 @@ try {
         (Join-Path $Root "exercises\15-embodied-audio-input\solution\src\ofApp.cpp")
     )) {
         $Text = Get-Content -Raw -LiteralPath $Adapter
-        foreach ($Needle in @("chooseNoDevice();  // Safe default", "key == 'f'", "key == 'l'", "key == 'n'", "sound_stream_.setup(settings)", "sound_stream_.close()")) {
+        foreach ($Needle in @("chooseNoDevice();  // Safe default", "key == 'f'", "key == 'l'", "key == 'n'", "sound_stream_.setup(settings)", "sound_stream_.close()", "pending_amplitude_.exchange(-1.0f)", "ACTIVITY: ACTIVE")) {
             if (-not $Text.Contains($Needle)) { throw "$Adapter is missing adapter contract: $Needle" }
         }
     }

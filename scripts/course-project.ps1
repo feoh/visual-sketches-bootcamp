@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11")]
+    [ValidateSet("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15")]
     [string]$Section,
     [Parameter(Position = 0, Mandatory = $true)]
     [ValidateSet("doctor", "generate", "build")]
@@ -25,7 +25,11 @@ elseif ($Section -eq "07") { $Exercise = "07-local-coordinate-systems"; $Design 
 elseif ($Section -eq "08") { $Exercise = "08-gesture-as-geometry"; $Design = "gesture_design"; $Shared = "gesture_model" }
 elseif ($Section -eq "09") { $Exercise = "09-particles-with-memory"; $Design = "particle_design"; $Shared = "particle_model" }
 elseif ($Section -eq "10") { $Exercise = "10-forces-steering-and-springs"; $Design = "force_design"; $Shared = "force_model" }
-else { $Exercise = "11-noise-and-flow-fields"; $Design = "flow_field_design"; $Shared = "flow_field_model" }
+elseif ($Section -eq "11") { $Exercise = "11-noise-and-flow-fields"; $Design = "flow_field_design"; $Shared = "flow_field_model" }
+elseif ($Section -eq "12") { $Exercise = "12-color-blending-and-trails"; $Design = "trail_design"; $Shared = "color_trail_model" }
+elseif ($Section -eq "13") { $Exercise = "13-time-as-a-drawable-axis"; $Design = "temporal_design"; $Shared = "temporal_history" }
+elseif ($Section -eq "14") { $Exercise = "14-images-and-type-as-geometry"; $Design = "image_geometry_design"; $Shared = "image_geometry_model" }
+else { $Exercise = "15-embodied-audio-input"; $Design = "audio_instrument_design"; $Shared = "audio_input_model" }
 $Label = "section-$Section"
 $ProjectPath = Join-Path $Root "exercises\$Exercise\$Project"
 function Fail([string]$Message) { throw "${Label}: $Message" }
@@ -43,7 +47,7 @@ function Assert-SourceInventory {
     $actual = @()
     foreach ($sourceRoot in @((Join-Path $ProjectPath "src"), (Join-Path $Root "exercises\$Exercise\shared"))) {
         $actual += Get-ChildItem -LiteralPath $sourceRoot -Recurse -File | Where-Object {
-            $_.Extension -in @(".c", ".cc", ".cpp", ".cxx", ".h", ".hh", ".hpp")
+            $_.Extension -in @(".c", ".cc", ".cpp", ".cxx", ".m", ".mm", ".h", ".hh", ".hpp", ".hxx")
         } | ForEach-Object { $_.FullName.Substring($Root.Length + 1).Replace('\', '/') }
     }
     $difference = @(Compare-Object -ReferenceObject $expected -DifferenceObject @($actual | Sort-Object) -CaseSensitive)
