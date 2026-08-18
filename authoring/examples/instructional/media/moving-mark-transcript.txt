@@ -1,0 +1,6 @@
+Motion transcript
+
+Over four seconds, a filled blue circle moves once from the left endpoint of a
+dashed horizontal path to the outlined right endpoint, then remains there. The
+change is communicated by position, not color. The still fallback shows both
+endpoints and the connecting path.

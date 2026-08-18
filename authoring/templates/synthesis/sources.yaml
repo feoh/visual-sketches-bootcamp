@@ -1,0 +1,7 @@
+sources:
+  - id: precedent-source-id
+    title: Full precedent or technical source title
+    creator: Person, collaborators, or organization
+    url: https://example.org/source
+    accessed: 2026-08-18
+    note: Identify the transferable principle and any collaboration context.

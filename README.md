@@ -23,6 +23,7 @@ This repository contains the curriculum specification, implementation roadmap, a
 - [Standalone Project Generator architecture](docs/project-generator-architecture.md)
 - [Foundation spike evidence](docs/foundation-spike.md)
 - [Foundation harness validation](docs/foundation-harness-evidence.md)
+- [Portable authoring templates and conventions](authoring/README.md)
 - [Research and source notes](docs/source-notes.md)
 
 ## Design constraints

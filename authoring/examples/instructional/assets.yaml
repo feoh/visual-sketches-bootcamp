@@ -1,0 +1,30 @@
+assets:
+  - id: moving-mark-still
+    path: media/moving-mark-still.svg
+    kind: image
+    creator: Course authors
+    source: original
+    license: CC-BY-4.0
+    alt: A filled blue circle at the left of a dashed path ending at an outlined circle.
+    caption: The start and destination are visible without motion.
+
+  - id: moving-mark-motion
+    path: media/moving-mark.svg
+    kind: animation
+    creator: Course authors
+    source: original
+    license: CC-BY-4.0
+    alt: A filled circle travels once between the endpoints of a dashed horizontal path.
+    caption: Position changes at an even rate over four seconds.
+    poster: moving-mark-still
+    transcript: moving-mark-transcript
+    reduced_motion: moving-mark-still
+
+  - id: moving-mark-transcript
+    path: media/moving-mark-transcript.txt
+    kind: transcript
+    creator: Course authors
+    source: original
+    license: CC-BY-4.0
+    alt: Text description of the moving mark sequence.
+    caption: Read the timing and meaningful position changes in text.

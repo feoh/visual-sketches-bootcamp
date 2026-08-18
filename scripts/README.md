@@ -37,3 +37,22 @@ Generation removes only the documented native outputs within each canonical
 project and never compiles implicitly. It checks the exact course source
 inventory and generated membership before returning success. Test execution
 never builds implicitly and requires the exact `12/12 tests passed` contract.
+
+## Authoring checks
+
+The dependency-free authoring check validates portable leaf-bundle front
+matter, source citations, asset licenses, relative links, and accessible media
+companions. When Hugo is installed it also builds the complete fixture in an
+isolated temporary site; require that proof explicitly in CI or release checks:
+
+```sh
+scripts/check-authoring.sh --require-hugo
+```
+
+```powershell
+.\scripts\check-authoring.ps1 -RequireHugo
+```
+
+Without the require flag, structural checks still run and a missing Hugo binary
+is reported as a skip. See [`../authoring/README.md`](../authoring/README.md) for
+the source format and separate instructional/synthesis definitions of done.

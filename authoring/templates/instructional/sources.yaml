@@ -1,0 +1,7 @@
+sources:
+  - id: primary-source-id
+    title: Full source title
+    creator: Person or organization
+    url: https://example.org/source
+    accessed: 2026-08-18
+    note: State the claim, API, or transferable technique this source supports.

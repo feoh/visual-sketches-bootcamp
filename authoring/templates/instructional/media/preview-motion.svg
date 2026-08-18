@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title description">
+  <title id="title">Lesson motion preview</title>
+  <desc id="description">A blue circle travels once from left to right along a horizontal dashed path, then remains at the destination.</desc>
+  <rect width="640" height="360" fill="#f7f3e8"/>
+  <path d="M150 180 H490" stroke="#334155" stroke-width="6" stroke-dasharray="14 12"/>
+  <circle cx="150" cy="180" r="42" fill="#1261a0">
+    <animate attributeName="cx" values="150;490" dur="4s" repeatCount="1" fill="freeze"/>
+  </circle>
+</svg>

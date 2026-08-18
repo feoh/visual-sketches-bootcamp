@@ -1,0 +1,30 @@
+assets:
+  - id: preview-still
+    path: media/preview-still.svg
+    kind: image
+    creator: Course authors
+    source: original
+    license: CC-BY-4.0
+    alt: Describe the meaningful geometry, spatial relationship, and state.
+    caption: Explain what the learner should notice.
+
+  - id: preview-motion
+    path: media/preview-motion.svg
+    kind: animation
+    creator: Course authors
+    source: original
+    license: CC-BY-4.0
+    alt: Describe the motion's meaningful start, change, and end state.
+    caption: Explain the timing or mapping the learner should notice.
+    poster: preview-still
+    transcript: preview-motion-transcript
+    reduced_motion: preview-still
+
+  - id: preview-motion-transcript
+    path: media/preview-motion-transcript.txt
+    kind: transcript
+    creator: Course authors
+    source: original
+    license: CC-BY-4.0
+    alt: Text description of the preview motion.
+    caption: Read the timing and meaningful changes in text.

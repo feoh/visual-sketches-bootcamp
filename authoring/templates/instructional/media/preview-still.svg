@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="360" viewBox="0 0 640 360" role="img" aria-labelledby="title description">
+  <title id="title">Lesson preview still</title>
+  <desc id="description">A blue circle rests left of a dashed path ending at an outlined circle.</desc>
+  <rect width="640" height="360" fill="#f7f3e8"/>
+  <path d="M150 180 H490" stroke="#334155" stroke-width="6" stroke-dasharray="14 12"/>
+  <circle cx="150" cy="180" r="42" fill="#1261a0"/>
+  <circle cx="490" cy="180" r="42" fill="none" stroke="#1261a0" stroke-width="6"/>
+</svg>

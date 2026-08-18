@@ -1,0 +1,9 @@
+assets:
+  - id: process-still
+    path: media/process-still.svg
+    kind: image
+    creator: Course authors
+    source: original
+    license: CC-BY-4.0
+    alt: Describe the composition and the evidence this capture contributes.
+    caption: State the milestone and choice illustrated by this capture.

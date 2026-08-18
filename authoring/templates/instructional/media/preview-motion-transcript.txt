@@ -1,0 +1,4 @@
+Motion transcript
+
+Describe the sequence, timing, and meaningful changes. State where motion ends,
+which non-color cues communicate the change, and what the still fallback shows.
