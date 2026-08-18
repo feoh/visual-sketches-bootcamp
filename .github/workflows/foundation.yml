@@ -10,6 +10,8 @@ on:
       - scripts/setup-of.*
       - tests/core_probe_test.cpp
       - tests/run-core-tests.sh
+      - tests/run-first-cpp-test.*
+      - exercises/00-first-cpp-test/**
   pull_request:
     paths:
       - .github/workflows/foundation.yml
@@ -19,6 +21,8 @@ on:
       - scripts/setup-of.*
       - tests/core_probe_test.cpp
       - tests/run-core-tests.sh
+      - tests/run-first-cpp-test.*
+      - exercises/00-first-cpp-test/**
   workflow_dispatch:
 
 permissions:
@@ -256,6 +260,18 @@ jobs:
         if: runner.os == 'Linux'
         shell: bash
         run: tests/run-core-tests.sh
+      - name: Validate starter and solution known cases (POSIX)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          tests/run-first-cpp-test.sh starter
+          tests/run-first-cpp-test.sh solution
+      - name: Validate starter and solution known cases (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          tests/run-first-cpp-test.ps1 -Variant starter
+          tests/run-first-cpp-test.ps1 -Variant solution
       - name: Generate, build, and separately execute unit suite
         if: runner.os != 'Windows'
         shell: bash

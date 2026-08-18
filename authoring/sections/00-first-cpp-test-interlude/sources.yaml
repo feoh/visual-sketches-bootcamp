@@ -1,0 +1,31 @@
+sources:
+  - id: ofx-unit-tests-implementation
+    title: ofxUnitTests implementation at openFrameworks 0.12.1
+    creator: openFrameworks contributors
+    url: https://github.com/openframeworks/openFrameworks/blob/0.12.1/addons/ofxUnitTests/src/ofxUnitTests.h
+    accessed: 2026-08-18
+    note: Pinned source for setup running the tests, reporting the summary, and requesting exit with the failure count.
+  - id: of-no-window
+    title: ofAppNoWindow header
+    creator: openFrameworks contributors
+    url: https://github.com/openframeworks/openFrameworks/blob/0.12.1/libs/openFrameworks/app/ofAppNoWindow.h
+    accessed: 2026-08-18
+    note: Primary source for the no-window application type used by the test executable.
+  - id: of-main-loop-implementation
+    title: ofMainLoop implementation at openFrameworks 0.12.1
+    creator: openFrameworks contributors
+    url: https://github.com/openframeworks/openFrameworks/blob/0.12.1/libs/openFrameworks/app/ofMainLoop.cpp
+    accessed: 2026-08-18
+    note: Pinned source for synchronous setup notification, close-state handling, cleanup, and returned status.
+  - id: of-app-runner-implementation
+    title: ofAppRunner implementation at openFrameworks 0.12.1
+    creator: openFrameworks contributors
+    url: https://github.com/openframeworks/openFrameworks/blob/0.12.1/libs/openFrameworks/app/ofAppRunner.cpp
+    accessed: 2026-08-18
+    note: Pinned source showing the window-and-app overload delegates to main-loop run and ofRunMainLoop returns loop status.
+  - id: cpp-floating
+    title: Floating-point environment
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/types/fenv.html
+    accessed: 2026-08-18
+    note: Supports the caution that floating-point calculations require deliberate comparison policy rather than assumed decimal identity.

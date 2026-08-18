@@ -16,6 +16,7 @@ on:
       - tests/run-section-00-tests.*
       - tests/run-section-01-tests.*
       - tests/run-section-02-tests.*
+      - tests/run-first-cpp-test.*
   pull_request:
     paths:
       - .github/workflows/authoring.yml
@@ -31,6 +32,7 @@ on:
       - tests/run-section-00-tests.*
       - tests/run-section-01-tests.*
       - tests/run-section-02-tests.*
+      - tests/run-first-cpp-test.*
   workflow_dispatch:
 
 permissions:
@@ -57,8 +59,12 @@ jobs:
         run: tests/run-section-01-tests.sh
       - name: Test section 02 mark-family model
         run: tests/run-section-02-tests.sh
+      - name: Test starter and solution C++ known cases
+        run: |
+          tests/run-first-cpp-test.sh starter
+          tests/run-first-cpp-test.sh solution
       - name: Lint POSIX authoring scripts
-        run: shellcheck scripts/check-authoring.sh scripts/course-project.sh scripts/section-00.sh scripts/section-01.sh scripts/section-02.sh tests/run-authoring-check-tests.sh tests/run-section-00-tests.sh tests/run-section-01-tests.sh tests/run-section-02-tests.sh
+        run: shellcheck scripts/check-authoring.sh scripts/course-project.sh scripts/section-00.sh scripts/section-01.sh scripts/section-02.sh tests/run-authoring-check-tests.sh tests/run-section-00-tests.sh tests/run-section-01-tests.sh tests/run-section-02-tests.sh tests/run-first-cpp-test.sh
 
   windows-contract:
     runs-on: windows-2022
@@ -84,6 +90,11 @@ jobs:
       - name: Test section 02 mark-family model
         shell: pwsh
         run: tests/run-section-02-tests.ps1
+      - name: Test starter and solution C++ known cases
+        shell: pwsh
+        run: |
+          tests/run-first-cpp-test.ps1 -Variant starter
+          tests/run-first-cpp-test.ps1 -Variant solution
 
   section-native:
     name: ${{ matrix.status }}

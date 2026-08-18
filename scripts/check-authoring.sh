@@ -212,6 +212,7 @@ if [ "$run_hugo" -eq 1 ]; then
   cp -R "$root/authoring/templates/instructional" "$site/content/course/instructional-template"
   cp -R "$root/authoring/templates/synthesis" "$site/content/course/synthesis-template"
   cp -R "$root/authoring/sections/00-cross-platform-setup" "$site/content/course/section-00"
+  cp -R "$root/authoring/sections/00-first-cpp-test-interlude" "$site/content/course/first-cpp-test-interlude"
   cat > "$site/hugo.toml" <<'EOF'
 baseURL = "https://example.invalid/"
 title = "Authoring smoke check"
@@ -220,8 +221,8 @@ EOF
   printf '%s\n' '<!doctype html><html><body><main>{{ .Content }}</main></body></html>' > "$site/layouts/_default/single.html"
   printf '%s\n' '<!doctype html><html><body><main>{{ range .Pages }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</main></body></html>' > "$site/layouts/_default/list.html"
   hugo --quiet --buildDrafts --source "$site" --destination "$site/public" || fail 'isolated Hugo smoke build failed'
-  for page in portable-moving-mark-example stable-section-slug stable-project-slug 00-cross-platform-setup-and-first-frame; do [ -f "$site/public/course/$page/index.html" ] || fail "Hugo did not emit fixture $page"; done
-  for spec in 'portable-moving-mark-example:moving-mark.svg moving-mark-still.svg moving-mark-transcript.txt' 'stable-section-slug:preview-motion.svg preview-still.svg preview-motion-transcript.txt' 'stable-project-slug:process-still.svg' '00-cross-platform-setup-and-first-frame:five-primitive-preview.svg'; do
+  for page in portable-moving-mark-example stable-section-slug stable-project-slug 00-cross-platform-setup-and-first-frame 00-first-cpp-test-interlude; do [ -f "$site/public/course/$page/index.html" ] || fail "Hugo did not emit fixture $page"; done
+  for spec in 'portable-moving-mark-example:moving-mark.svg moving-mark-still.svg moving-mark-transcript.txt' 'stable-section-slug:preview-motion.svg preview-still.svg preview-motion-transcript.txt' 'stable-project-slug:process-still.svg' '00-cross-platform-setup-and-first-frame:five-primitive-preview.svg' '00-first-cpp-test-interlude:test-flow.svg'; do
     page=${spec%%:*}; names=${spec#*:}; rendered="$site/public/course/$page/index.html"
     for name in $names; do grep -Fq "$name" "$rendered" || fail "Hugo output omitted reference to $name"; [ -f "$site/public/course/$page/media/$name" ] || fail "Hugo did not publish $name"; done
   done

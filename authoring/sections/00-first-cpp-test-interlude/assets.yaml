@@ -1,0 +1,9 @@
+assets:
+  - id: test-flow
+    path: media/test-flow.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: Arrange fixes seed 17 and a 640 by 480 viewport, act calls makeModel, and assert compares x position 0.6848907471 within tolerance.
+    caption: A useful test separates fixed inputs, one behavior, and an observable claim.
