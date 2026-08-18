@@ -1,0 +1,4 @@
+# case expected force_x on the first endpoint
+at-rest 0
+stretched 20
+stretched-damped 10

@@ -1,0 +1,9 @@
+assets:
+  - id: force-preview
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    path: media/force-preview.svg
+    alt: A teal circle swarm converges on a ring target above a coral chain of diamond-shaped agents hanging from a square anchor; dark arrows show paired spring forces in opposite directions, and shape, links, and vertical placement distinguish the two behavior modes without color alone.
+    caption: "The same bounded agents become a seeking swarm or an elastic chain by composing small forces."

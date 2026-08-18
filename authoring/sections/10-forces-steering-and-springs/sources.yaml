@@ -1,0 +1,25 @@
+sources:
+  - id: cpp-enum
+    title: Enumeration declaration
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/language/enum.html
+    accessed: 2026-08-18
+    note: Supports scoped BehaviorMode enumeration syntax and semantics.
+  - id: hookes-law
+    title: 16.1 Hooke's Law: Stress and Strain Revisited
+    creator: OpenStax
+    url: https://openstax.org/books/physics/pages/16-1-hookes-law-stress-and-strain-revisited
+    accessed: 2026-08-18
+    note: Supports proportional restoring-force and equilibrium discussion.
+  - id: fixed-timestep
+    title: Fix Your Timestep!
+    creator: Glenn Fiedler
+    url: https://gafferongames.com/post/fix_your_timestep/
+    accessed: 2026-08-18
+    note: Supports fixed-step accumulation and bounded catch-up discussion.
+  - id: of-events
+    title: ofEvents
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/events/ofEvents/
+    accessed: 2026-08-18
+    note: Supports pointer and keyboard event adapter routes.

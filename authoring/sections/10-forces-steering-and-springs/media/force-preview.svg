@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Seeking swarm and elastic spring chain</title>
+  <desc id="desc">Teal circles curve toward a ring target in the upper half. Coral diamonds form a linked hanging chain from a square anchor below. Paired dark arrows indicate symmetric spring forces.</desc>
+  <rect width="960" height="540" rx="28" fill="#f6f1e1"/>
+  <rect x="24" y="24" width="912" height="492" rx="22" fill="none" stroke="#243243" stroke-width="4"/>
+  <g fill="none" stroke="#1e7080" stroke-width="4" opacity=".72">
+    <path d="M145 170 Q330 70 488 151"/><path d="M215 245 Q360 235 488 151"/><path d="M710 95 Q610 120 488 151"/>
+  </g>
+  <g fill="#1e7080" stroke="#243243" stroke-width="3">
+    <circle cx="145" cy="170" r="13"/><circle cx="215" cy="245" r="13"/><circle cx="710" cy="95" r="13"/><circle cx="360" cy="106" r="13"/><circle cx="620" cy="218" r="13"/>
+  </g>
+  <circle cx="488" cy="151" r="24" fill="none" stroke="#cf4840" stroke-width="6"/>
+  <circle cx="488" cy="151" r="5" fill="#cf4840"/>
+  <g stroke="#cf4840" stroke-width="6" fill="none" stroke-linecap="round">
+    <path d="M300 330 L382 360 L463 342 L547 394 L626 361 L704 410"/>
+    <path d="M300 304 L300 330"/>
+  </g>
+  <rect x="285" y="289" width="30" height="30" fill="#243243"/>
+  <g fill="#cf4840" stroke="#243243" stroke-width="3">
+    <path d="M300 314 l16 16 -16 16 -16 -16z"/><path d="M382 344 l16 16 -16 16 -16 -16z"/>
+    <path d="M463 326 l16 16 -16 16 -16 -16z"/><path d="M547 378 l16 16 -16 16 -16 -16z"/>
+    <path d="M626 345 l16 16 -16 16 -16 -16z"/><path d="M704 394 l16 16 -16 16 -16 -16z"/>
+  </g>
+  <g stroke="#243243" stroke-width="4" fill="none" marker-end="url(#arrow)">
+    <path d="M420 438 L470 438"/><path d="M510 438 L460 438"/>
+  </g>
+  <defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#243243"/></marker></defs>
+  <text x="54" y="74" font-family="sans-serif" font-size="24" fill="#243243">SEEK: circles + target paths</text>
+  <text x="54" y="490" font-family="sans-serif" font-size="24" fill="#243243">SPRING: diamonds + elastic links + paired forces</text>
+</svg>
