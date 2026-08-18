@@ -6,7 +6,7 @@ work=$(mktemp -d "${TMPDIR:-/tmp}/authoring-check-tests.XXXXXX")
 trap 'rm -rf "$work"' EXIT HUP INT TERM
 "$root/scripts/check-authoring.sh" --require-hugo
 
-make_fixture(){ fixture=$1; mkdir -p "$fixture/scripts"; cp -R "$root/authoring" "$fixture/authoring"; cp "$root/scripts/check-authoring.sh" "$fixture/scripts/"; chmod +x "$fixture/scripts/check-authoring.sh"; }
+make_fixture(){ fixture=$1; mkdir -p "$fixture/scripts"; cp -R "$root/authoring" "$fixture/authoring"; cp -R "$root/exercises" "$fixture/exercises"; cp "$root/scripts/check-authoring.sh" "$fixture/scripts/"; chmod +x "$fixture/scripts/check-authoring.sh"; }
 expect_failure(){ name=$1 expected=$2; fixture="$work/$name"; shift 2; make_fixture "$fixture"; "$@" "$fixture"; if "$fixture/scripts/check-authoring.sh" >"$fixture/output.log" 2>&1; then echo "negative test unexpectedly passed: $name" >&2; exit 1; fi; grep -Fq "$expected" "$fixture/output.log" || { cat "$fixture/output.log" >&2; echo "negative test lacked diagnostic: $expected" >&2; exit 1; }; }
 remove_transcript(){ rm "$1/authoring/examples/instructional/media/moving-mark-transcript.txt"; }
 remove_license(){ sed '0,/^    license: /{/^    license: /d;}' "$1/authoring/examples/instructional/assets.yaml" > "$1/a"; mv "$1/a" "$1/authoring/examples/instructional/assets.yaml"; }

@@ -3,7 +3,9 @@
 This directory defines the course's source format without committing to a Hugo
 theme. Copy a directory from `templates/`, keep the filenames and relative
 layout, and replace its example values. `examples/instructional/` is a complete
-fixture used by the smoke checks.
+fixture used by the smoke checks. Published instructional sources live under
+`sections/`; the checker builds them with the templates and validates links
+into `exercises/`.
 
 ## Portable Markdown contract
 

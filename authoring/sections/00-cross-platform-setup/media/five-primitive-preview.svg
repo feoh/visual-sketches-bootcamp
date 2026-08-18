@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+  <title id="title">Five geometric marks arranged as a visual signature</title>
+  <desc id="desc">A navy rectangle, coral circle, yellow triangle, yellow rising diagonal, and navy ellipse occupy two uneven rows on a warm background.</desc>
+  <rect width="800" height="450" fill="#f8f5ec"/>
+  <rect x="95" y="85" width="150" height="72" fill="#152336"/>
+  <circle cx="365" cy="125" r="58" fill="#ee5b47"/>
+  <path d="M535 185 L620 65 L705 185 Z" fill="#fac441"/>
+  <path d="M220 350 L430 245" stroke="#fac441" stroke-width="16" stroke-linecap="round"/>
+  <ellipse cx="610" cy="315" rx="112" ry="48" fill="#152336"/>
+</svg>

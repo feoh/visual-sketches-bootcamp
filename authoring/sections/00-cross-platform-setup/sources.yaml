@@ -1,0 +1,25 @@
+sources:
+  - id: of-setup
+    title: openFrameworks setup guides
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/setup/
+    accessed: 2026-08-18
+    note: Primary platform dependency and IDE setup guidance for openFrameworks.
+  - id: project-generator
+    title: Project Generator documentation for openFrameworks 0.12.1
+    creator: openFrameworks contributors
+    url: https://github.com/openframeworks/openFrameworks/blob/0.12.1/docs/projectgenerator.md
+    accessed: 2026-08-18
+    note: Primary description of generated native projects and command-line Project Generator use.
+  - id: app-lifecycle
+    title: ofBaseApp reference
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/application/ofBaseApp.html
+    accessed: 2026-08-18
+    note: Primary API reference for setup, draw, and window callbacks.
+  - id: graphics-primitives
+    title: ofGraphics reference
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/graphics/ofGraphics/
+    accessed: 2026-08-18
+    note: Primary API reference for background, color, and primitive drawing functions.

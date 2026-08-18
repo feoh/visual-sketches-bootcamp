@@ -114,7 +114,7 @@ normal_markdown() {
 }
 
 bundle_number=0
-find "$root/authoring/templates" "$root/authoring/examples" -name index.md -type f | sort > "$work/bundles"
+find "$root/authoring/templates" "$root/authoring/examples" "$root/authoring/sections" -name index.md -type f | sort > "$work/bundles"
 [ -s "$work/bundles" ] || fail 'no leaf-bundle index.md files found'
 while IFS= read -r index; do
   bundle_number=$((bundle_number + 1)); dir=$(dirname -- "$index")
@@ -185,7 +185,7 @@ while IFS= read -r index; do
   while IFS= read -r path; do grep -Fq "]($path" "$body" || fail "$dir/$asset_rel: local asset '$path' is not referenced from index.md"; done < "$work/asset-paths.$bundle_number"
 done < "$work/bundles"
 
-find "$root/authoring" -name '*.md' -type f | sort > "$work/markdown"
+find "$root/authoring" "$root/exercises" -name '*.md' -type f | sort > "$work/markdown"
 markdown_number=0
 while IFS= read -r file; do
   markdown_number=$((markdown_number + 1)); clean="$work/markdown-body.$markdown_number"; normal_markdown "$file" > "$clean"
@@ -211,6 +211,7 @@ if [ "$run_hugo" -eq 1 ]; then
   cp -R "$root/authoring/examples/instructional" "$site/content/course/example"
   cp -R "$root/authoring/templates/instructional" "$site/content/course/instructional-template"
   cp -R "$root/authoring/templates/synthesis" "$site/content/course/synthesis-template"
+  cp -R "$root/authoring/sections/00-cross-platform-setup" "$site/content/course/section-00"
   cat > "$site/hugo.toml" <<'EOF'
 baseURL = "https://example.invalid/"
 title = "Authoring smoke check"
@@ -219,8 +220,8 @@ EOF
   printf '%s\n' '<!doctype html><html><body><main>{{ .Content }}</main></body></html>' > "$site/layouts/_default/single.html"
   printf '%s\n' '<!doctype html><html><body><main>{{ range .Pages }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</main></body></html>' > "$site/layouts/_default/list.html"
   hugo --quiet --buildDrafts --source "$site" --destination "$site/public" || fail 'isolated Hugo smoke build failed'
-  for page in portable-moving-mark-example stable-section-slug stable-project-slug; do [ -f "$site/public/course/$page/index.html" ] || fail "Hugo did not emit fixture $page"; done
-  for spec in 'portable-moving-mark-example:moving-mark.svg moving-mark-still.svg moving-mark-transcript.txt' 'stable-section-slug:preview-motion.svg preview-still.svg preview-motion-transcript.txt' 'stable-project-slug:process-still.svg'; do
+  for page in portable-moving-mark-example stable-section-slug stable-project-slug 00-cross-platform-setup-and-first-frame; do [ -f "$site/public/course/$page/index.html" ] || fail "Hugo did not emit fixture $page"; done
+  for spec in 'portable-moving-mark-example:moving-mark.svg moving-mark-still.svg moving-mark-transcript.txt' 'stable-section-slug:preview-motion.svg preview-still.svg preview-motion-transcript.txt' 'stable-project-slug:process-still.svg' '00-cross-platform-setup-and-first-frame:five-primitive-preview.svg'; do
     page=${spec%%:*}; names=${spec#*:}; rendered="$site/public/course/$page/index.html"
     for name in $names; do grep -Fq "$name" "$rendered" || fail "Hugo output omitted reference to $name"; [ -f "$site/public/course/$page/media/$name" ] || fail "Hugo did not publish $name"; done
   done

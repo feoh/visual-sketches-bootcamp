@@ -56,3 +56,24 @@ scripts/check-authoring.sh --require-hugo
 Without the require flag, structural checks still run and a missing Hugo binary
 is reported as a skip. See [`../authoring/README.md`](../authoring/README.md) for
 the source format and separate instructional/synthesis definitions of done.
+
+## Section 00 exercise
+
+The five-primitive starter and solution use the same pinned root but remain
+separate Project Generator targets. Generation and compilation are separate;
+the renderer-independent C++17 geometry test is a third command:
+
+```sh
+scripts/section-00.sh generate --project starter
+scripts/section-00.sh build --project starter --configuration Release
+tests/run-section-00-tests.sh
+```
+
+```powershell
+.\scripts\section-00.ps1 generate -Project starter
+.\scripts\section-00.ps1 build -Project starter -Configuration Release
+.\tests\run-section-00-tests.ps1
+```
+
+Use `--of-root`/`-OfRoot` or `OF_ROOT` exactly as for the foundation. Generated
+native metadata and build products remain ignored.

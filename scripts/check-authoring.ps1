@@ -90,7 +90,7 @@ function Assert-ContainedLocalLink([string]$File,[string]$Destination){
     if($resolved-ne$Root-and-not$resolved.StartsWith($prefix,[StringComparison]::OrdinalIgnoreCase)){Fail "$File`: local link '$Destination' escapes the repository root"}
 }
 
-$bundles=@(Get-ChildItem -LiteralPath (Join-Path $Authoring "templates"),(Join-Path $Authoring "examples") -Filter index.md -File -Recurse)
+$bundles=@(Get-ChildItem -LiteralPath (Join-Path $Authoring "templates"),(Join-Path $Authoring "examples"),(Join-Path $Authoring "sections") -Filter index.md -File -Recurse)
 if($bundles.Count-eq0){Fail "no leaf-bundle index.md files found"}
 $linkPattern=[regex]'\]\(([^)]+)\)'
 foreach($bundle in $bundles){
@@ -133,7 +133,7 @@ foreach($bundle in $bundles){
     foreach($path in $paths){if($text-notmatch[regex]::Escape("]($path")){Fail "$dir`: local asset '$path' is not referenced from index.md"}}
 }
 
-foreach($file in Get-ChildItem -LiteralPath $Authoring -Filter '*.md' -File -Recurse){
+foreach($file in Get-ChildItem -LiteralPath $Authoring,(Join-Path $Root 'exercises') -Filter '*.md' -File -Recurse){
     $lines=@(Get-NormalMarkdownLines $file.FullName);$text=$lines-join"`n"
     if($text.Contains(']]')){Fail "$($file.FullName)`: Obsidian wikilinks are not portable"}
     if($text-match'\{\{[<%]'){Fail "$($file.FullName)`: Hugo shortcodes are not allowed"}
@@ -150,15 +150,17 @@ try{
     Copy-Item -Recurse -LiteralPath (Join-Path $Authoring 'examples/instructional') -Destination (Join-Path $content 'example')
     Copy-Item -Recurse -LiteralPath (Join-Path $Authoring 'templates/instructional') -Destination (Join-Path $content 'instructional-template')
     Copy-Item -Recurse -LiteralPath (Join-Path $Authoring 'templates/synthesis') -Destination (Join-Path $content 'synthesis-template')
+    Copy-Item -Recurse -LiteralPath (Join-Path $Authoring 'sections/00-cross-platform-setup') -Destination (Join-Path $content 'section-00')
     "baseURL = `"https://example.invalid/`"`ntitle = `"Authoring smoke check`"`ndisableKinds = [`"taxonomy`", `"term`", `"rss`", `"sitemap`", `"robotsTXT`", `"404`"]"|Set-Content -LiteralPath (Join-Path $site 'hugo.toml') -Encoding utf8
     '<!doctype html><html><body><main>{{ .Content }}</main></body></html>'|Set-Content -LiteralPath (Join-Path $layouts 'single.html') -Encoding utf8
     '<!doctype html><html><body><main>{{ range .Pages }}<a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</main></body></html>'|Set-Content -LiteralPath (Join-Path $layouts 'list.html') -Encoding utf8
     &$hugo.Source --quiet --buildDrafts --source $site --destination (Join-Path $site 'public');if($LASTEXITCODE-ne0){Fail 'isolated Hugo smoke build failed'}
-    foreach($page in @('portable-moving-mark-example','stable-section-slug','stable-project-slug')){if(-not(Test-Path -LiteralPath (Join-Path $site "public/course/$page/index.html") -PathType Leaf)){Fail "Hugo did not emit fixture $page"}}
+    foreach($page in @('portable-moving-mark-example','stable-section-slug','stable-project-slug','00-cross-platform-setup-and-first-frame')){if(-not(Test-Path -LiteralPath (Join-Path $site "public/course/$page/index.html") -PathType Leaf)){Fail "Hugo did not emit fixture $page"}}
     $published = @{
         'portable-moving-mark-example' = @('moving-mark.svg','moving-mark-still.svg','moving-mark-transcript.txt')
         'stable-section-slug' = @('preview-motion.svg','preview-still.svg','preview-motion-transcript.txt')
         'stable-project-slug' = @('process-still.svg')
+        '00-cross-platform-setup-and-first-frame' = @('five-primitive-preview.svg')
     }
     foreach ($page in $published.Keys) {
         $rendered = Get-Content -Raw -LiteralPath (Join-Path $site "public/course/$page/index.html")

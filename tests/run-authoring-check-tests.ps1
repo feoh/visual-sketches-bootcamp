@@ -7,6 +7,7 @@ function Make-Fixture([string]$Name) {
     $fixture = Join-Path $Work $Name
     New-Item -ItemType Directory -Force -Path (Join-Path $fixture "scripts") | Out-Null
     Copy-Item -LiteralPath (Join-Path $Root "authoring") -Destination (Join-Path $fixture "authoring") -Recurse
+    Copy-Item -LiteralPath (Join-Path $Root "exercises") -Destination (Join-Path $fixture "exercises") -Recurse
     Copy-Item -LiteralPath (Join-Path $Root "scripts/check-authoring.ps1") -Destination (Join-Path $fixture "scripts/check-authoring.ps1")
     return $fixture
 }
