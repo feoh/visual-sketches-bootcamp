@@ -1,0 +1,9 @@
+assets:
+  - id: geometry-preview
+    path: media/geometry-preview.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: A grayscale block-letter SHAPE mask becomes a field of spaced navy dots, then curved amber bars orbit around a marked centroid; arrows label threshold sampling and transform, and distinct circle, crosshair, and bar shapes communicate each stage without color alone.
+    caption: A flat mask becomes sampled points, measured geometry, and animated marks while retaining a visible centroid.

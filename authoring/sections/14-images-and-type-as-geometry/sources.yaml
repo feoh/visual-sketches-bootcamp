@@ -1,0 +1,31 @@
+sources:
+  - id: of-image-reference
+    title: ofImage documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/graphics/ofImage/
+    accessed: 2026-08-18
+    note: Supports image loading, explicit load-result checks, and access to decoded pixels.
+  - id: of-pixels-reference
+    title: ofPixels documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/graphics/ofPixels/
+    accessed: 2026-08-18
+    note: Supports width, height, channel count, ownership, and pixel-data access in the adapter.
+  - id: of-font-reference
+    title: ofTrueTypeFont documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/graphics/ofTrueTypeFont/
+    accessed: 2026-08-18
+    note: Supports the optional type-to-contour extension and its font-loading boundary.
+  - id: of-path-reference
+    title: ofPath documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/graphics/ofPath/
+    accessed: 2026-08-18
+    note: Supports extracting and drawing outline paths and tessellated contours.
+  - id: of-mesh-reference
+    title: ofMesh documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/3d/ofMesh/
+    accessed: 2026-08-18
+    note: Supports the optional point-cloud and connected-mesh rendering extension.
