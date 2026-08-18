@@ -1,0 +1,9 @@
+assets:
+  - id: mark-family-preview
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    path: media/mark-family-preview.svg
+    alt: Seven labeled marks follow a zigzag line; radii grow symmetrically from 12 pixels at center index 3 to 21 pixels at indices 0 and 6.
+    caption: Index labels, position, and size show one parameter rule producing a family without relying on color.

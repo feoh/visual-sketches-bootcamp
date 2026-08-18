@@ -1,0 +1,37 @@
+sources:
+  - id: cpp-functions
+    title: Functions
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/language/functions.html
+    accessed: 2026-08-18
+    note: Supports function declarations, parameters, return values, and const-qualified reference parameters.
+  - id: cpp-reference
+    title: Reference declaration
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/language/reference.html
+    accessed: 2026-08-18
+    note: Supports the distinction between values, references, and const references.
+  - id: cpp-vector
+    title: std::vector
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/container/vector.html
+    accessed: 2026-08-18
+    note: Supports contiguous owned collection values, size, reserve, push_back, and element access.
+  - id: cpp-range-for
+    title: Range-based for loop
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/language/range-for.html
+    accessed: 2026-08-18
+    note: Supports iteration over each Mark by const reference.
+  - id: cpp-lifetime
+    title: Object lifetime
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/language/lifetime.html
+    accessed: 2026-08-18
+    note: Supports the scoped lifetime explanation and warning against retaining dangling references.
+  - id: cpp-new
+    title: new expression
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/language/new.html
+    accessed: 2026-08-18
+    note: Supports the decision to defer manual dynamic allocation and use value-owning standard containers.

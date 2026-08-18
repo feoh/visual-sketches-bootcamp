@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+<title id="title">Seven marks generated from one parameter family</title>
+<desc id="desc">Seven navy outlined shapes sit along a zigzag center line on a cream background. Their radii increase symmetrically from 12 pixels at the center to 21 pixels at both ends. Index labels zero through six and radius labels make the pattern readable without color.</desc>
+<rect width="900" height="300" fill="#f7f0df"/>
+<text x="450" y="34" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#172742">radius = 12 + |index − 3| × 3 pixels</text>
+<polyline points="120,135 230,165 340,135 450,165 560,135 670,165 780,135" fill="none" stroke="#197c86" stroke-width="4"/>
+<g fill="#f3b83f" stroke="#172742" stroke-width="4">
+<circle cx="120" cy="135" r="21"/><circle cx="230" cy="165" r="18"/><circle cx="340" cy="135" r="15"/><circle cx="450" cy="165" r="12"/><circle cx="560" cy="135" r="15"/><circle cx="670" cy="165" r="18"/><circle cx="780" cy="135" r="21"/>
+</g>
+<g text-anchor="middle" font-family="sans-serif" font-size="16" fill="#172742">
+<text x="120" y="220">i=0, r=21</text><text x="230" y="245">i=1, r=18</text><text x="340" y="220">i=2, r=15</text><text x="450" y="245">i=3, r=12</text><text x="560" y="220">i=4, r=15</text><text x="670" y="245">i=5, r=18</text><text x="780" y="220">i=6, r=21</text>
+</g>
+<text x="450" y="282" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#172742">One function returns seven independent Mark values; position and labels encode the family pattern.</text>
+</svg>

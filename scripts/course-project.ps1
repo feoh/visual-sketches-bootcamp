@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("00", "01")]
+    [ValidateSet("00", "01", "02")]
     [string]$Section,
     [Parameter(Position = 0, Mandatory = $true)]
     [ValidateSet("doctor", "generate", "build")]
@@ -15,7 +15,8 @@ param(
 $ErrorActionPreference = "Stop"
 $Root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 if ($Section -eq "00") { $Exercise = "00-visual-signature"; $Design = "signature_design"; $Shared = "signature_geometry" }
-else { $Exercise = "01-a-mark-that-moves"; $Design = "traveler_design"; $Shared = "traveler_model" }
+elseif ($Section -eq "01") { $Exercise = "01-a-mark-that-moves"; $Design = "traveler_design"; $Shared = "traveler_model" }
+else { $Exercise = "02-python-to-cpp-survival-kit"; $Design = "family_design"; $Shared = "mark_family" }
 $Label = "section-$Section"
 $ProjectPath = Join-Path $Root "exercises\$Exercise\$Project"
 function Fail([string]$Message) { throw "${Label}: $Message" }

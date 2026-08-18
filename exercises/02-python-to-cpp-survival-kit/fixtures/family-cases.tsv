@@ -1,0 +1,4 @@
+# name width height count spacing base_radius radius_step first_x first_y first_radius first_index middle_x middle_y middle_radius middle_index last_x last_y last_radius last_index
+wide 900 540 7 54 15 1 288 256.5 18 0 450 283.5 15 3 612 256.5 18 6
+narrow 240 180 5 80 12 0 12 75.6 12 0 120 75.6 12 2 228 75.6 12 4
+single-row-large 1280 720 12 40 8 0.5 420 350 10.75 0 660 350 8.25 6 860 370 10.75 11
