@@ -1,0 +1,25 @@
+sources:
+  - id: cpp-vector
+    title: std::vector
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/container/vector.html
+    accessed: 2026-08-18
+    note: Supports vectors of objects, storage growth, and iterator invalidation discussion.
+  - id: cpp-remove-if
+    title: std::remove, std::remove_if
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/algorithm/remove.html
+    accessed: 2026-08-18
+    note: Supports the erase-remove safe-removal pattern.
+  - id: fixed-timestep
+    title: Fix Your Timestep!
+    creator: Glenn Fiedler
+    url: https://gafferongames.com/post/fix_your_timestep/
+    accessed: 2026-08-18
+    note: Supports accumulator, frame clamping, and bounded catch-up discussion.
+  - id: of-events
+    title: ofEvents
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/events/ofEvents/
+    accessed: 2026-08-18
+    note: Supports pointer and keyboard adapter routes.

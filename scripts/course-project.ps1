@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("00", "01", "02", "03", "04", "05", "06", "07", "08")]
+    [ValidateSet("00", "01", "02", "03", "04", "05", "06", "07", "08", "09")]
     [string]$Section,
     [Parameter(Position = 0, Mandatory = $true)]
     [ValidateSet("doctor", "generate", "build")]
@@ -22,7 +22,8 @@ elseif ($Section -eq "04") { $Exercise = "04-vectors-direction-and-distance"; $D
 elseif ($Section -eq "05") { $Exercise = "05-oscillation-circles-and-phase"; $Design = "phase_field_design"; $Shared = "phase_field_model" }
 elseif ($Section -eq "06") { $Exercise = "06-controlled-chance"; $Design = "edition_design"; $Shared = "edition_model" }
 elseif ($Section -eq "07") { $Exercise = "07-local-coordinate-systems"; $Design = "sculpture_design"; $Shared = "sculpture_model" }
-else { $Exercise = "08-gesture-as-geometry"; $Design = "gesture_design"; $Shared = "gesture_model" }
+elseif ($Section -eq "08") { $Exercise = "08-gesture-as-geometry"; $Design = "gesture_design"; $Shared = "gesture_model" }
+else { $Exercise = "09-particles-with-memory"; $Design = "particle_design"; $Shared = "particle_model" }
 $Label = "section-$Section"
 $ProjectPath = Join-Path $Root "exercises\$Exercise\$Project"
 function Fail([string]$Message) { throw "${Label}: $Message" }
