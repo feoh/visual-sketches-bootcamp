@@ -2,7 +2,23 @@ name: foundation
 
 on:
   push:
+    paths:
+      - .github/workflows/foundation.yml
+      - foundation/**
+      - shared/**
+      - scripts/foundation.*
+      - scripts/setup-of.*
+      - tests/core_probe_test.cpp
+      - tests/run-core-tests.sh
   pull_request:
+    paths:
+      - .github/workflows/foundation.yml
+      - foundation/**
+      - shared/**
+      - scripts/foundation.*
+      - scripts/setup-of.*
+      - tests/core_probe_test.cpp
+      - tests/run-core-tests.sh
   workflow_dispatch:
 
 permissions:
