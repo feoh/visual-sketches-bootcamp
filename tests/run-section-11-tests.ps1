@@ -50,3 +50,8 @@ try {
     Remove-Item -LiteralPath $FakeOf -Recurse -Force -ErrorAction SilentlyContinue
     if ($OwnsSentinel) { Remove-Item -LiteralPath $Sentinel -Force -ErrorAction SilentlyContinue }
 }
+
+# The deliberately rejected native probe leaves LASTEXITCODE nonzero even
+# though every wrapper-safety assertion succeeded. Do not leak that expected
+# child-process status as this script's result.
+exit 0
