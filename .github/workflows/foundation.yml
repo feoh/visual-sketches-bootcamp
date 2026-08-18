@@ -34,20 +34,21 @@ jobs:
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
         with:
           path: |
-            .openframeworks/*.tar.gz
-            .openframeworks/*.zip
+            openframeworks/*.tar.gz
+            openframeworks/*.zip
           key: of-0.12.1-${{ matrix.platform }}-${{ matrix.archive_sha }}
       - name: Download, verify, and freshly extract openFrameworks (POSIX)
         if: runner.os != 'Windows'
         shell: bash
         run: |
-          scripts/setup-of.sh --platform '${{ matrix.platform }}' --destination "$PWD/.openframeworks" | tee /tmp/of-setup
+          # OF 0.12.1 Make filters any source path containing a hidden directory.
+          scripts/setup-of.sh --platform '${{ matrix.platform }}' --destination "$PWD/openframeworks" | tee /tmp/of-setup
           grep '^OF_ROOT=' /tmp/of-setup >> "$GITHUB_ENV"
       - name: Download, verify, and freshly extract openFrameworks (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $line = .\scripts\setup-of.ps1 -Destination "$pwd\.openframeworks"
+          $line = .\scripts\setup-of.ps1 -Destination "$pwd\openframeworks"
           $line | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
@@ -157,20 +158,21 @@ jobs:
         uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
         with:
           path: |
-            .openframeworks/*.tar.gz
-            .openframeworks/*.zip
+            openframeworks/*.tar.gz
+            openframeworks/*.zip
           key: of-0.12.1-${{ matrix.platform }}-${{ matrix.archive_sha }}
       - name: Download, verify, and freshly extract openFrameworks (POSIX)
         if: runner.os != 'Windows'
         shell: bash
         run: |
-          scripts/setup-of.sh --platform '${{ matrix.platform }}' --destination "$PWD/.openframeworks" | tee /tmp/of-setup
+          # OF 0.12.1 Make filters any source path containing a hidden directory.
+          scripts/setup-of.sh --platform '${{ matrix.platform }}' --destination "$PWD/openframeworks" | tee /tmp/of-setup
           grep '^OF_ROOT=' /tmp/of-setup >> "$GITHUB_ENV"
       - name: Download, verify, and freshly extract openFrameworks (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          $line = .\scripts\setup-of.ps1 -Destination "$pwd\.openframeworks"
+          $line = .\scripts\setup-of.ps1 -Destination "$pwd\openframeworks"
           $line | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Install Linux dependencies
         if: runner.os == 'Linux'

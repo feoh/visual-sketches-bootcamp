@@ -1,5 +1,5 @@
 [CmdletBinding()]
-param([string]$Destination = (Join-Path (Get-Location) ".openframeworks"))
+param([string]$Destination = (Join-Path (Get-Location) "openframeworks"))
 
 $ErrorActionPreference = "Stop"
 $Asset = "of_v0.12.1_vs_64_release.zip"

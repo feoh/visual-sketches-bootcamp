@@ -25,10 +25,13 @@ Windows PowerShell uses the same separate gates:
 ```
 
 `setup-of.sh` and `setup-of.ps1` download only the immutable 0.12.1 release
-assets listed in the platform matrix. On every invocation they verify SHA-256,
-extract into a fresh sibling directory, validate the expected 0.12.1 root, and
-only then replace any cached extracted tree. A partial or tampered prior tree is
-never reused merely because it exists.
+assets listed in the platform matrix. Their default destination is the
+non-hidden `openframeworks/` directory: openFrameworks 0.12.1's GNU Make source
+discovery filters every path containing a hidden directory component. On every
+invocation the wrappers verify SHA-256 with portable output parsing, extract
+into a fresh sibling directory, validate the expected 0.12.1 root, and only then
+replace any cached extracted tree. A partial or tampered prior tree is never
+reused merely because it exists.
 
 Generation removes only the documented native outputs within each canonical
 project and never compiles implicitly. It checks the exact course source

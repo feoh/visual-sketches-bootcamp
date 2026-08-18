@@ -165,10 +165,14 @@ function Assert-Generated([string]$Name) {
     }
     [xml]$xml = Get-Content -LiteralPath $projectFile -Raw
     $actualCompile = @($xml.Project.ItemGroup.ClCompile | ForEach-Object {
-        [IO.Path]::GetFullPath((Join-Path $path $_.Include)).ToLowerInvariant()
+        $include = $_.GetAttribute("Include")
+        if ([string]::IsNullOrWhiteSpace($include)) { Fail "$Name ClCompile contains an empty source path" }
+        [IO.Path]::GetFullPath((Join-Path $path $include)).ToLowerInvariant()
     })
     $actualInclude = @($xml.Project.ItemGroup.ClInclude | ForEach-Object {
-        [IO.Path]::GetFullPath((Join-Path $path $_.Include)).ToLowerInvariant()
+        $include = $_.GetAttribute("Include")
+        if ([string]::IsNullOrWhiteSpace($include)) { Fail "$Name ClInclude contains an empty source path" }
+        [IO.Path]::GetFullPath((Join-Path $path $include)).ToLowerInvariant()
     })
     if ($Name -eq "windowed") {
         $compileRelative = @("src\main.cpp", "src\ofApp.cpp", "..\..\shared\core\course_probe.cpp")

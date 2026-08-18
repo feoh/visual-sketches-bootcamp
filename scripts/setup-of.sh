@@ -3,7 +3,7 @@ set -euo pipefail
 
 fail() { printf 'setup-of: ERROR: %s\n' "$*" >&2; exit 1; }
 platform=""
-destination="${PWD}/.openframeworks"
+destination="${PWD}/openframeworks"
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --platform) [[ $# -ge 2 ]] || fail "--platform requires linux64 or osx"; platform=$2; shift 2 ;;
@@ -31,13 +31,13 @@ if [[ ! -f "$archive" ]]; then
   curl --fail --location --retry 3 --output "$archive" "$url"
 fi
 if command -v sha256sum >/dev/null; then
-  printf '%s  %s\n' "$sha" "$archive" | sha256sum --check --status || fail "openFrameworks archive checksum mismatch: $archive"
+  observed=$(sha256sum "$archive" | awk '{print $1}')
 elif command -v shasum >/dev/null; then
   observed=$(shasum -a 256 "$archive" | awk '{print $1}')
-  [[ "$observed" == "$sha" ]] || fail "openFrameworks archive checksum mismatch: $archive"
 else
   fail "sha256sum or shasum is required"
 fi
+[[ "$observed" == "$sha" ]] || fail "openFrameworks archive checksum mismatch: expected $sha, observed $observed"
 
 # Never trust a previously extracted tree. Extract the verified archive into a
 # fresh sibling, validate its identity, then replace the selected root.

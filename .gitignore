@@ -1,6 +1,7 @@
 # Harness logs and downloaded framework archives
 .harness/
 .openframeworks/
+openframeworks/
 
 # Project Generator metadata (generated inside canonical projects)
 foundation/*/Makefile
