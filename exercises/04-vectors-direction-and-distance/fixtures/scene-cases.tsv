@@ -1,0 +1,4 @@
+# name viewport_w viewport_h requested_x requested_y anchor_x anchor_y target_x target_y direction_x direction_y distance unit_x unit_y
+classic_3_4 400 300 109 112.6 106 108.6 109 112.6 3 4 5 0.6 0.8
+zero_guard 400 300 106 108.6 106 108.6 106 108.6 0 0 0 0 0
+clamped_boundary 400 300 -20 999 106 108.6 12 288 -94 179.4 202.534837 -0.464118 0.885774

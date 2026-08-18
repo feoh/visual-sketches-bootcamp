@@ -13,11 +13,13 @@ on:
       - scripts/section-01.*
       - scripts/section-02.*
       - scripts/section-03.*
+      - scripts/section-04.*
       - tests/run-authoring-check-tests.*
       - tests/run-section-00-tests.*
       - tests/run-section-01-tests.*
       - tests/run-section-02-tests.*
       - tests/run-section-03-tests.*
+      - tests/run-section-04-tests.*
       - tests/run-first-cpp-test.*
   pull_request:
     paths:
@@ -31,11 +33,13 @@ on:
       - scripts/section-01.*
       - scripts/section-02.*
       - scripts/section-03.*
+      - scripts/section-04.*
       - tests/run-authoring-check-tests.*
       - tests/run-section-00-tests.*
       - tests/run-section-01-tests.*
       - tests/run-section-02-tests.*
       - tests/run-section-03-tests.*
+      - tests/run-section-04-tests.*
       - tests/run-first-cpp-test.*
   workflow_dispatch:
 
@@ -65,12 +69,14 @@ jobs:
         run: tests/run-section-02-tests.sh
       - name: Test section 03 responsive-poster model
         run: tests/run-section-03-tests.sh
+      - name: Test section 04 constellation model
+        run: tests/run-section-04-tests.sh
       - name: Test starter and solution C++ known cases
         run: |
           tests/run-first-cpp-test.sh starter
           tests/run-first-cpp-test.sh solution
       - name: Lint POSIX authoring scripts
-        run: shellcheck scripts/check-authoring.sh scripts/course-project.sh scripts/section-00.sh scripts/section-01.sh scripts/section-02.sh scripts/section-03.sh tests/run-authoring-check-tests.sh tests/run-section-00-tests.sh tests/run-section-01-tests.sh tests/run-section-02-tests.sh tests/run-section-03-tests.sh tests/run-first-cpp-test.sh
+        run: shellcheck scripts/check-authoring.sh scripts/course-project.sh scripts/section-00.sh scripts/section-01.sh scripts/section-02.sh scripts/section-03.sh scripts/section-04.sh tests/run-authoring-check-tests.sh tests/run-section-00-tests.sh tests/run-section-01-tests.sh tests/run-section-02-tests.sh tests/run-section-03-tests.sh tests/run-section-04-tests.sh tests/run-first-cpp-test.sh
 
   windows-contract:
     runs-on: windows-2022
@@ -99,6 +105,9 @@ jobs:
       - name: Test section 03 responsive-poster model
         shell: pwsh
         run: tests/run-section-03-tests.ps1
+      - name: Test section 04 constellation model
+        shell: pwsh
+        run: tests/run-section-04-tests.ps1
       - name: Test starter and solution C++ known cases
         shell: pwsh
         run: |
@@ -168,6 +177,21 @@ jobs:
             archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
           - status: section-03-windows-build
             section: '03'
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+          - status: section-04-linux-build
+            section: '04'
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: section-04-macos-build
+            section: '04'
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: section-04-windows-build
+            section: '04'
             os: windows-2022
             platform: vs
             archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8

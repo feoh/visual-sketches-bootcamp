@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+  <title id="title">Direction and distance connector examples</title>
+  <desc id="desc">Three labeled panels show a circular anchor, square target, and arrow. The positive three, positive four diagonal points down and right in the openFrameworks coordinate convention. Horizontal and zero-length cases complete the component and distance examples; shapes and labels distinguish roles without relying on color.</desc>
+  <rect width="900" height="300" fill="#f4eddf"/>
+  <g font-family="sans-serif" fill="#1d263b" stroke="#1d263b" stroke-width="4">
+    <g transform="translate(35 42)">
+      <rect width="250" height="210" rx="10" fill="none"/>
+      <text x="18" y="30" stroke="none" font-size="17" font-weight="bold">horizontal: (120, 0)</text>
+      <line x1="55" y1="112" x2="190" y2="112"/>
+      <path d="M190 112 l-16 -10 v20 z" fill="#dd4e69" stroke="none"/>
+      <circle cx="55" cy="112" r="10" fill="#1d263b"/>
+      <rect x="186" y="102" width="20" height="20" fill="#dd4e69"/>
+      <text x="18" y="180" stroke="none" font-size="16">distance = 120</text>
+    </g>
+    <g transform="translate(325 42)">
+      <rect width="250" height="210" rx="10" fill="none"/>
+      <text x="18" y="30" stroke="none" font-size="17" font-weight="bold">down/right: (+3, +4)</text>
+      <line x1="65" y1="72" x2="176" y2="155"/>
+      <path d="M176 155 l-18 -4 8 -12 z" fill="#dd4e69" stroke="none"/>
+      <circle cx="65" cy="72" r="10" fill="#1d263b"/>
+      <rect x="168" y="147" width="20" height="20" fill="#dd4e69"/>
+      <text x="18" y="180" stroke="none" font-size="16">distance = 5; unit = (0.6, 0.8)</text>
+    </g>
+    <g transform="translate(615 42)">
+      <rect width="250" height="210" rx="10" fill="none"/>
+      <text x="18" y="30" stroke="none" font-size="17" font-weight="bold">same point: (0, 0)</text>
+      <circle cx="125" cy="112" r="15" fill="#1d263b"/>
+      <rect x="116" y="103" width="18" height="18" fill="#dd4e69" stroke="#f4eddf" stroke-width="2"/>
+      <text x="18" y="180" stroke="none" font-size="16">distance = 0; unit = (0, 0)</text>
+    </g>
+  </g>
+</svg>

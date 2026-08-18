@@ -1,0 +1,9 @@
+assets:
+  - id: vector-connector-preview
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    path: media/vector-connector-preview.svg
+    alt: Three labeled panels show horizontal, down-right positive (3,4), and zero-length anchor-to-target connectors with component, distance, and unit-vector values.
+    caption: Subtraction gives direction components; length gives distance; guarded normalization gives a unit direction or zero.

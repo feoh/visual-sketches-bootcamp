@@ -1,0 +1,25 @@
+sources:
+  - id: glm-geometric
+    title: Geometric functions
+    creator: G-Truc Creation contributors
+    url: https://glm.g-truc.net/0.9.9/api/a00212.html
+    accessed: 2026-08-18
+    note: Supports length, distance, dot product, and normalize terminology used by vector libraries.
+  - id: of-mouse-moved
+    title: ofBaseApp mouseMoved
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/application/ofBaseApp/#!show_mouseMoved
+    accessed: 2026-08-18
+    note: Supports the pointer-move callback used by the graphical adapter.
+  - id: of-key-pressed
+    title: ofBaseApp keyPressed
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/application/ofBaseApp/#!show_keyPressed
+    accessed: 2026-08-18
+    note: Supports the keyboard callback used as an equivalent input path.
+  - id: cpp-hypot
+    title: std::hypot
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/numeric/math/hypot.html
+    accessed: 2026-08-18
+    note: Supports the C++17 length implementation that avoids needless intermediate overflow.
