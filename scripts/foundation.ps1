@@ -178,9 +178,18 @@ function Assert-Generated([string]$Name) {
     # validation applies to course-owned files; shipped addon membership is
     # independently constrained by addons.make and doctor.
     $separator = [IO.Path]::DirectorySeparatorChar
-    $repoPrefix = $RepoRoot.ToLowerInvariant().TrimEnd($separator) + $separator
-    $actualCompile = @($actualCompile | Where-Object { $_.StartsWith($repoPrefix, [StringComparison]::OrdinalIgnoreCase) })
-    $actualInclude = @($actualInclude | Where-Object { $_.StartsWith($repoPrefix, [StringComparison]::OrdinalIgnoreCase) })
+    $coursePrefixes = @(
+        (Join-Path $RepoRoot "foundation\$Name\src"),
+        (Join-Path $RepoRoot "shared")
+    ) | ForEach-Object { $_.ToLowerInvariant().TrimEnd($separator) + $separator }
+    $actualCompile = @($actualCompile | Where-Object {
+        $candidate = $_
+        @($coursePrefixes | Where-Object { $candidate.StartsWith($_, [StringComparison]::OrdinalIgnoreCase) }).Count -gt 0
+    })
+    $actualInclude = @($actualInclude | Where-Object {
+        $candidate = $_
+        @($coursePrefixes | Where-Object { $candidate.StartsWith($_, [StringComparison]::OrdinalIgnoreCase) }).Count -gt 0
+    })
     if ($Name -eq "windowed") {
         $compileRelative = @("src\main.cpp", "src\ofApp.cpp", "..\..\shared\core\course_probe.cpp")
         $includeRelative = @("src\ofApp.h", "..\..\shared\core\course_probe.h")

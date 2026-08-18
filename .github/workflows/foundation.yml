@@ -52,9 +52,17 @@ jobs:
           $line | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        timeout-minutes: 15
+        timeout-minutes: 25
         shell: bash
-        run: printf 'y\n' | sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y
+        run: |
+          for attempt in 1 2; do
+            if printf 'y\n' | timeout --kill-after=30s 10m sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y; then
+              exit 0
+            fi
+            echo "dependency installation attempt $attempt failed; retrying" >&2
+            sleep 10
+          done
+          exit 1
       - name: Report and enforce POSIX compatibility band
         if: runner.os != 'Windows'
         shell: bash
@@ -177,9 +185,17 @@ jobs:
           $line | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        timeout-minutes: 15
+        timeout-minutes: 25
         shell: bash
-        run: printf 'y\n' | sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y
+        run: |
+          for attempt in 1 2; do
+            if printf 'y\n' | timeout --kill-after=30s 10m sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y; then
+              exit 0
+            fi
+            echo "dependency installation attempt $attempt failed; retrying" >&2
+            sleep 10
+          done
+          exit 1
       - name: Report and enforce POSIX compatibility band
         if: runner.os != 'Windows'
         shell: bash
