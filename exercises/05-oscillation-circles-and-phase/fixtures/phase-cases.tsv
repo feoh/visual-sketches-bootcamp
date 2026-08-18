@@ -1,0 +1,4 @@
+# name width height time row column index base_x base_y phase center_x center_y
+first_cardinal 400 300 0.0 0 0 0 15.5 15.5 0.0 23.5 15.5
+middle_opposite 400 300 0.0 1 1 5 138.5 150.0 3.141592654 130.5 150.0
+timed_last 400 300 0.5 2 3 11 384.5 284.5 9.424777961 376.5 284.5

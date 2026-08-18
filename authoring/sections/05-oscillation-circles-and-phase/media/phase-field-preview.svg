@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img" aria-labelledby="title desc">
+  <title id="title">Repeated phase field and circular coordinate inset</title>
+  <desc id="desc">At left, twelve outlined orbit paths in three rows and four columns contain crosshair centers and filled travelers at progressively shifted positions. Row and column arrows label nested-loop order. At right, a circular inset labels cosine as horizontal x and sine as vertical y, with positive y downward in screen coordinates.</desc>
+  <rect width="960" height="520" fill="#f2ede0"/>
+  <g fill="none" stroke="#1e293b" stroke-width="3">
+    <rect x="34" y="42" width="620" height="430" rx="12"/>
+    <path d="M95 100H585" marker-end="url(#arrow)"/><path d="M72 125V420" marker-end="url(#arrow)"/>
+  </g>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" fill="#1e293b"/></marker></defs>
+  <g font-family="sans-serif" font-size="18" fill="#1e293b"><text x="250" y="88">column increases →</text><text x="43" y="286" transform="rotate(-90 43 286)">row increases ↓</text></g>
+  <g fill="none" stroke="#1e293b" stroke-width="2">
+    <circle cx="145" cy="170" r="32"/><circle cx="275" cy="170" r="32"/><circle cx="405" cy="170" r="32"/><circle cx="535" cy="170" r="32"/>
+    <circle cx="145" cy="285" r="32"/><circle cx="275" cy="285" r="32"/><circle cx="405" cy="285" r="32"/><circle cx="535" cy="285" r="32"/>
+    <circle cx="145" cy="400" r="32"/><circle cx="275" cy="400" r="32"/><circle cx="405" cy="400" r="32"/><circle cx="535" cy="400" r="32"/>
+  </g>
+  <g stroke="#1e293b" stroke-width="2"><path d="M140 170h10M145 165v10M270 170h10M275 165v10M400 170h10M405 165v10M530 170h10M535 165v10M140 285h10M145 280v10M270 285h10M275 280v10M400 285h10M405 280v10M530 285h10M535 280v10M140 400h10M145 395v10M270 400h10M275 395v10M400 400h10M405 395v10M530 400h10M535 395v10"></path></g>
+  <g fill="#dc5c4b" stroke="#1e293b" stroke-width="2">
+    <circle cx="177" cy="170" r="8"/><circle cx="298" cy="193" r="8"/><circle cx="405" cy="202" r="8"/><circle cx="512" cy="193" r="8"/>
+    <circle cx="168" cy="308" r="8"/><circle cx="275" cy="317" r="8"/><circle cx="382" cy="308" r="8"/><circle cx="503" cy="285" r="8"/>
+    <circle cx="145" cy="432" r="8"/><circle cx="252" cy="423" r="8"/><circle cx="373" cy="400" r="8"/><circle cx="512" cy="377" r="8"/>
+  </g>
+  <g fill="none" stroke="#1e293b" stroke-width="3"><circle cx="795" cy="235" r="92"/><path d="M680 235H910" marker-end="url(#arrow)"/><path d="M795 120V350" marker-end="url(#arrow)"/><path d="M795 235L860 300" stroke="#dc5c4b"/></g>
+  <circle cx="860" cy="300" r="9" fill="#dc5c4b" stroke="#1e293b" stroke-width="2"/>
+  <g font-family="sans-serif" fill="#1e293b"><text x="720" y="98" font-size="22" font-weight="bold">polar → Cartesian</text><text x="824" y="225" font-size="18">x = r cos(θ)</text><text x="802" y="374" font-size="18">y = r sin(θ), down +</text><text x="700" y="420" font-size="17">phase θ chooses a point;</text><text x="700" y="444" font-size="17">amplitude r chooses its reach.</text></g>
+</svg>

@@ -1,0 +1,19 @@
+sources:
+  - id: cpp-sin
+    title: std::sin and std::cos
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/numeric/math/sin.html
+    accessed: 2026-08-18
+    note: Supports the C++ trigonometric functions and radian input used for circular motion.
+  - id: cpp-atan2
+    title: std::atan2
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/numeric/math/atan2.html
+    accessed: 2026-08-18
+    note: Supports quadrant-aware Cartesian-to-polar angle recovery and the documented zero policy layered on top.
+  - id: of-key-pressed
+    title: ofBaseApp keyPressed
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/application/ofBaseApp/#!show_keyPressed
+    accessed: 2026-08-18
+    note: Supports accessible pause and reset keyboard controls in the native adapter.

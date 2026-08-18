@@ -1,0 +1,9 @@
+assets:
+  - id: phase-field-preview
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    path: media/phase-field-preview.svg
+    alt: A four-column, three-row field uses outlined orbit paths, crosshair centers, and filled travelers at progressively shifted phases, with a labeled circular inset showing cosine on x, sine on y, and positive-down screen coordinates.
+    caption: Nested rows and columns repeat one circular rule while phase offsets create a traveling rhythm.

@@ -10,6 +10,7 @@ case "$SECTION" in
   02) EXERCISE=02-python-to-cpp-survival-kit; DESIGN=family_design; SHARED=mark_family ;;
   03) EXERCISE=03-map-clamp-and-lerp; DESIGN=poster_design; SHARED=poster_layout ;;
   04) EXERCISE=04-vectors-direction-and-distance; DESIGN=constellation_design; SHARED=constellation_model ;;
+  05) EXERCISE=05-oscillation-circles-and-phase; DESIGN=phase_field_design; SHARED=phase_field_model ;;
   *) echo "course-project: unsupported section $SECTION" >&2; exit 2 ;;
 esac
 LABEL="section-$SECTION"
