@@ -42,7 +42,7 @@ The work is tracked in Witan as project `wp-visual-sketches-bootcamp-9c2c95`, wi
 
 ## Baseline
 
-The initial implementation targets openFrameworks **0.12.1** and a deliberately conservative **C++17 language subset** for lesson code, even where individual platform toolchains enable newer language modes. Use the separate POSIX-shell and PowerShell commands documented in [`scripts/README.md`](scripts/README.md); no Python, Node, CMake, or committed native project metadata is required. Local container validation has generated and built the tracked Linux Release probes and run all 12 no-window tests, but formal support claims still require commit-addressed CI evidence. macOS, Windows, and graphical runtime remain implementation gates rather than completed support claims.
+The initial implementation targets openFrameworks **0.12.1** and a deliberately conservative **C++17 language subset** for lesson code, even where individual platform toolchains enable newer language modes. Use the separate POSIX-shell and PowerShell commands documented in [`scripts/README.md`](scripts/README.md); no Python, Node, CMake, or committed native project metadata is required. Commit-addressed CI now proves Debug/Release builds and the exact 12-test no-window suite on Linux, macOS, and Windows. Graphical appearance remains a separate manual validation claim; see the [foundation evidence ledger](docs/foundation-harness-evidence.md).
 
 ## License
 

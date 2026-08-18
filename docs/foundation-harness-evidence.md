@@ -10,6 +10,34 @@ This ledger separates implementation-time validation from support claims. A
 working-tree result without a repository commit and retained native CI logs is
 not `build-proven` or `unit-proven` evidence under the platform matrix.
 
+## 2026-08-18 — Three-platform commit-addressed proof
+
+GitHub Actions run [32094195792] validated commit
+[`f3c42f4`](https://github.com/feoh/visual_sketches_bootcamp/commit/f3c42f4a2eaa990a2a963d57d67f74a53d402c8b) with all six required statuses:
+
+- `linux-build` and `linux-unit` on `ubuntu24` image
+  `20260810.271.1`, Ubuntu 24.04 x86-64, GCC/G++ 13.3.0;
+- `macos-build` and `macos-unit` on `macos15` image
+  `20260727.0256.1`, macOS 15.7.7 arm64, Xcode 16.4, SDK 15.5, and Apple
+  Clang 17.0.0; and
+- `windows-build` and `windows-unit` on `win22` image
+  `20260802.262.1`, Windows Server build 20348.5386, Visual Studio
+  17.14.37516.0/MSBuild 17.14.51, toolset v143, and SDK 10.0.26100.0.
+
+Every build status checksum-verified a fresh official openFrameworks 0.12.1
+archive, ran doctor and clean Project Generator 0.103.0 generation, built both
+tracked projects in Debug and Release, and verified tracked inputs were
+unchanged. Every unit status independently repeated setup and generation, built
+the Release unit product, executed it from `bin`, observed process status zero,
+and required exactly one `12/12 tests passed` summary. The successful run is
+`build-proven` and `unit-proven` evidence for all three selected lanes.
+
+No CI job launched the windowed product or compared rendered pixels. Graphical
+runtime and visual appearance therefore remain separate manual evidence, and
+the render-baseline policy remains deliberately tolerant and human-reviewed.
+
+[32094195792]: https://github.com/feoh/visual_sketches_bootcamp/actions/runs/32094195792
+
 ## 2026-08-18 — Linux pre-commit harness validation
 
 The uncommitted foundation working tree was mounted at `/work` in the selected
