@@ -1,0 +1,6 @@
+# name kind inputs... expected...
+palette-start palette 0.0 0.10 0.20 0.30 1.0
+palette-middle palette 0.5 0.50 0.40 0.30 0.75
+palette-end palette 1.0 0.90 0.60 0.30 0.5
+red-over-blue over 1.0 0.0 0.0 0.5 0.0 0.0 1.0 1.0 0.5 0.0 0.5 1.0
+decay-two decay 0.75 0.8 2 0.48

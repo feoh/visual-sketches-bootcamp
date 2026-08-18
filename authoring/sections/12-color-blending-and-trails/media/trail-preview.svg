@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Two decaying palettes form luminous overlapping trails</title>
+  <desc id="desc">On a dark navy field, a cyan-to-mint trail marked by crosses and a violet-to-amber trail marked by diamonds loop through each other. Older marks are smaller and more transparent. At the center, repeated overlap becomes pale and bright. A five-step alpha key uses shrinking outlined circles and labels, so age and palette identity do not depend on color alone.</desc>
+  <rect width="960" height="540" rx="28" fill="#10162f"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M72 324C186 84 354 95 486 270S735 492 897 205" stroke="#45e2d0" stroke-width="22" opacity=".18"/>
+    <path d="M70 206C222 468 371 455 486 270S708 56 900 333" stroke="#f3a63a" stroke-width="22" opacity=".18"/>
+    <path d="M72 324C186 84 354 95 486 270S735 492 897 205" stroke="#62f0dc" stroke-width="6" stroke-dasharray="2 14" opacity=".9"/>
+    <path d="M70 206C222 468 371 455 486 270S708 56 900 333" stroke="#c75bf4" stroke-width="6" stroke-dasharray="9 13" opacity=".85"/>
+  </g>
+  <g stroke="#8ff7e5" stroke-width="4" opacity=".9">
+    <path d="M177 140l14 14m0-14l-14 14M344 150l14 14m0-14l-14 14M486 263l14 14m0-14l-14 14M648 405l14 14m0-14l-14 14M830 303l14 14m0-14l-14 14"/>
+  </g>
+  <g fill="none" stroke="#ffc063" stroke-width="4" opacity=".9">
+    <path d="M167 346l11 11-11 11-11-11zM333 416l11 11-11 11-11-11zM486 258l12 12-12 12-12-12zM650 92l11 11-11 11-11-11zM830 238l11 11-11 11-11-11z"/>
+  </g>
+  <g transform="translate(86 468)" fill="none" stroke="#e9eefc" stroke-width="3">
+    <circle cx="0" cy="0" r="4" opacity=".28"/><circle cx="42" cy="0" r="6" opacity=".4"/><circle cx="88" cy="0" r="8" opacity=".55"/><circle cx="138" cy="0" r="10" opacity=".72"/><circle cx="192" cy="0" r="12" opacity=".95"/>
+  </g>
+  <g fill="#e9eefc" font-family="sans-serif" font-size="18"><text x="70" y="513">older, lower alpha</text><text x="244" y="513">newer</text><text x="684" y="503">crosses: palette A</text><text x="684" y="526">diamonds: palette B</text></g>
+</svg>

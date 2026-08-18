@@ -1,0 +1,9 @@
+assets:
+  - id: trail-preview
+    path: media/trail-preview.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: On a dark navy field, a cyan-to-mint trail marked by crosses and a violet-to-amber trail marked by diamonds loop through each other; older marks are smaller and more transparent, central overlap is pale and bright, and a labeled five-step alpha key shows age without relying on color.
+    caption: Two palettes cross; shape identifies each path, while size and alpha reveal age and overlap.

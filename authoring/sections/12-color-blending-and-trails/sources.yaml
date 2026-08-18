@@ -1,0 +1,13 @@
+sources:
+  - id: compositing-standard
+    title: Compositing and Blending Level 1
+    creator: World Wide Web Consortium
+    url: https://www.w3.org/TR/compositing-1/
+    accessed: 2026-08-18
+    note: Primary standards reference for source-over alpha composition and the distinction between compositing and blend modes.
+  - id: openframeworks-graphics
+    title: ofGraphics documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/graphics/ofGraphics/
+    accessed: 2026-08-18
+    note: Supports the adapter's blend-mode, style-stack, color, and drawing-state boundaries.
