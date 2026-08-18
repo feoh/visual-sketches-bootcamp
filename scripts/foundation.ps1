@@ -174,6 +174,13 @@ function Assert-Generated([string]$Name) {
         if ([string]::IsNullOrWhiteSpace($include)) { Fail "$Name ClInclude contains an empty source path" }
         [IO.Path]::GetFullPath((Join-Path $path $include)).ToLowerInvariant()
     })
+    # Project Generator also adds addon headers from OF_ROOT. Exact-set
+    # validation applies to course-owned files; shipped addon membership is
+    # independently constrained by addons.make and doctor.
+    $separator = [IO.Path]::DirectorySeparatorChar
+    $repoPrefix = $RepoRoot.ToLowerInvariant().TrimEnd($separator) + $separator
+    $actualCompile = @($actualCompile | Where-Object { $_.StartsWith($repoPrefix, [StringComparison]::OrdinalIgnoreCase) })
+    $actualInclude = @($actualInclude | Where-Object { $_.StartsWith($repoPrefix, [StringComparison]::OrdinalIgnoreCase) })
     if ($Name -eq "windowed") {
         $compileRelative = @("src\main.cpp", "src\ofApp.cpp", "..\..\shared\core\course_probe.cpp")
         $includeRelative = @("src\ofApp.h", "..\..\shared\core\course_probe.h")
