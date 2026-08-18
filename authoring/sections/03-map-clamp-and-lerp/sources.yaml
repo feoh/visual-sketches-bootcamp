@@ -1,0 +1,31 @@
+sources:
+  - id: cpp-clamp
+    title: std::clamp
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/algorithm/clamp.html
+    accessed: 2026-08-18
+    note: Supports the C++17 clamp helper and its lower and upper bounds.
+  - id: of-lerp
+    title: ofLerp
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/math/ofMath/#!show_ofLerp
+    accessed: 2026-08-18
+    note: Supports linear interpolation terminology in the openFrameworks context.
+  - id: of-map
+    title: ofMap
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/math/ofMath/#!show_ofMap
+    accessed: 2026-08-18
+    note: Supports mapping a value from one range to another and optional clamping.
+  - id: easing-functions
+    title: Easing Functions Cheat Sheet
+    creator: Andrey Sitnik and Ivan Solovev
+    url: https://easings.net/
+    accessed: 2026-08-18
+    note: Supports the distinction between linear progress and shaped easing progress.
+  - id: cpp-floating-point
+    title: Fundamental types
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/language/types.html
+    accessed: 2026-08-18
+    note: Supports the finite range and precision properties of C++ floating-point types.

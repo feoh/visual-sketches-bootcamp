@@ -1,0 +1,9 @@
+assets:
+  - id: responsive-poster-preview
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    path: media/responsive-poster-preview.svg
+    alt: Three differently shaped viewport outlines each fit the same four-to-five poster; padding and focal position respond while the poster ratio remains fixed.
+    caption: One layout rule fits a fixed-aspect poster into portrait, landscape, and tall viewports without stretching.

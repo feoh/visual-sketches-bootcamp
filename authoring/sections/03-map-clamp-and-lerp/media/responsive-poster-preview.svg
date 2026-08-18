@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="430" viewBox="0 0 900 430" role="img" aria-labelledby="title desc">
+  <title id="title">One four-to-five poster fitted into three viewports</title>
+  <desc id="desc">Small portrait, wide landscape, and tall viewport outlines each contain the same four-to-five poster. Margin size changes while the poster ratio stays fixed; a label shows normalized focus from zero to one.</desc>
+  <rect width="900" height="430" fill="#f5f0e5"/>
+  <g fill="none" stroke="#24314a" stroke-width="4">
+    <rect x="35" y="45" width="210" height="330"/><rect x="55" y="75" width="168" height="210" fill="#f0c75e"/>
+    <rect x="290" y="90" width="330" height="240"/><rect x="375" y="110" width="160" height="200" fill="#f0c75e"/>
+    <rect x="665" y="45" width="200" height="330"/><rect x="685" y="75" width="160" height="200" fill="#f0c75e"/>
+  </g>
+  <g fill="#d94d62" stroke="#24314a" stroke-width="3"><circle cx="102" cy="230" r="12"/><circle cx="426" cy="260" r="16"/><circle cx="733" cy="220" r="12"/></g>
+  <g font-family="sans-serif" font-size="16" fill="#24314a"><text x="35" y="30">portrait</text><text x="290" y="75">landscape</text><text x="665" y="30">tall</text><text x="350" y="400">focus t: 0 ───────────── 1</text></g>
+</svg>
