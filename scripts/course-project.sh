@@ -16,6 +16,7 @@ case "$SECTION" in
   08) EXERCISE=08-gesture-as-geometry; DESIGN=gesture_design; SHARED=gesture_model ;;
   09) EXERCISE=09-particles-with-memory; DESIGN=particle_design; SHARED=particle_model ;;
   10) EXERCISE=10-forces-steering-and-springs; DESIGN=force_design; SHARED=force_model ;;
+  11) EXERCISE=11-noise-and-flow-fields; DESIGN=flow_field_design; SHARED=flow_field_model ;;
   *) echo "course-project: unsupported section $SECTION" >&2; exit 2 ;;
 esac
 LABEL="section-$SECTION"

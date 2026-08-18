@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Particles following a coherent flow field</title>
+  <desc id="desc">A dark blue field contains a pale grid of short direction ticks. Mint dotted ribbons curve together from left to right, ending in amber diamond heads with forward ticks. A square field-coordinate control and a small clock symbol distinguish position and time controls without color alone.</desc>
+  <rect width="960" height="540" rx="28" fill="#151b31"/>
+  <g stroke="#70809c" stroke-width="3" opacity="0.62">
+    <path d="M95 92l31-12M215 92l28 15M335 92l12 29M455 92l-13 29M575 92l-28 14M695 92l-31-4M815 92l-25-20"/>
+    <path d="M95 202l29 13M215 202l14 27M335 202l-6 31M455 202l-24 21M575 202l-31 1M695 202l-25-18M815 202l-7-30"/>
+    <path d="M95 312l16 27M215 312l-5 31M335 312l-24 20M455 312l-31-2M575 312l-23-22M695 312l-3-31M815 312l18-26"/>
+    <path d="M95 422l-6 31M215 422l-25 19M335 422l-31-3M455 422l-21-23M575 422l1-31M695 422l21-23M815 422l31-1"/>
+  </g>
+  <g fill="none" stroke="#74ccb7" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 13">
+    <path d="M42 154C198 104 279 127 374 223S571 351 740 267 850 172 905 189"/>
+    <path d="M38 276C179 226 287 242 385 326S579 434 742 352 853 260 914 282"/>
+    <path d="M49 391C194 333 295 357 397 426S610 472 757 401 852 351 913 368"/>
+  </g>
+  <g fill="#f5b34a" stroke="#f5b34a" stroke-width="4">
+    <path d="M905 171l18 18-18 18-18-18z"/><path d="M914 264l18 18-18 18-18-18z"/><path d="M913 350l18 18-18 18-18-18z"/>
+    <path d="M920 189h28M929 282h25M928 368h27"/>
+  </g>
+  <g fill="none" stroke="#f5b34a" stroke-width="5">
+    <rect x="68" y="449" width="34" height="34"/>
+    <circle cx="143" cy="466" r="17"/><path d="M143 466v-11M143 466l9 7"/>
+  </g>
+</svg>

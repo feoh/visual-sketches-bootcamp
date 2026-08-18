@@ -1,0 +1,43 @@
+sources:
+  - id: vector-reference
+    title: std::vector reference
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/container/vector.html
+    accessed: 2026-08-18
+    note: Supports the contiguous row-major scalar-grid storage mechanism.
+  - id: interpolation-reference
+    title: Bilinear Filtering
+    creator: Scratchapixel
+    url: https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/interpolation/bilinear-filtering.html
+    accessed: 2026-08-18
+    note: Supports the four-corner bilinear interpolation explanation.
+  - id: noise-reference
+    title: Improving Noise
+    creator: Ken Perlin
+    url: https://mrl.cs.nyu.edu/~perlin/noise/
+    accessed: 2026-08-18
+    note: Primary creator source for coherent lattice-noise interpolation context; the course owns a smaller value-noise implementation.
+  - id: boost-hash-combine
+    title: Combining hash values
+    creator: Boost.ContainerHash contributors
+    url: https://www.boost.org/doc/libs/1_55_0/doc/html/hash/combine.html
+    accessed: 2026-08-18
+    note: Provenance for the hash-combine expression used before the lattice finalizer; Boost source is distributed under the Boost Software License 1.0.
+  - id: lowbias32-reference
+    title: Prospector, a hash function optimizer
+    creator: Chris Wellons
+    url: https://nullprogram.com/blog/2018/07/31/
+    accessed: 2026-08-18
+    note: Provenance for the lowbias32 finalizer constants; the author's site releases its source-code examples to the public domain.
+  - id: timestep-reference
+    title: Fix Your Timestep!
+    creator: Glenn Fiedler
+    url: https://gafferongames.com/post/fix_your_timestep/
+    accessed: 2026-08-18
+    note: Supports fixed-step accumulation, capped catch-up, and explicit dropped-time policy.
+  - id: events-reference
+    title: ofEvents documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/events/ofEvents/
+    accessed: 2026-08-18
+    note: Supports the pointer, keyboard, and resize adapter boundary.

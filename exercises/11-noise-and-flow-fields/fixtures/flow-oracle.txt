@@ -1,0 +1,6 @@
+# name kind inputs... expected...
+hash-origin hash 0 0 0 1 1244833532
+hash-offset hash 3 5 7 42 1072089522
+hash-negative hash -2 4 -6 99 930434099
+bilinear-center sample 0.5 0.5 0.5
+angle-quarter angle 0.25 0.0 1.0
