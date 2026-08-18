@@ -1,7 +1,7 @@
 ---
 title: Oscillation, circles, and phase
 slug: 05-oscillation-circles-and-phase
-weight: 5
+weight: 70
 draft: false
 course_kind: instructional
 objectives:

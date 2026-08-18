@@ -1,0 +1,25 @@
+assets:
+  - id: gesture-memory-partials
+    path: media/gesture-memory-partials.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: Two unfinished gesture-memory studies: one turns a path into spaced black contour ribs, while another places shrinking square stamps into four age columns.
+    caption: Partial, non-canonical directions: contour ribs preserve adjacency, while age columns deliberately break the original path.
+  - id: repetition-partials
+    path: media/repetition-partials.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: Two unfinished repetition studies: offset open brackets form a stepped asymmetric ladder, while nested triangular frames alternate orientation around an empty center.
+    caption: Partial, non-canonical directions: a discontinuous bracket ladder and nested alternating frames avoid the radial sine-field grammar of worked examples.
+  - id: particle-partials
+    path: media/particle-partials.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: Two unfinished particle studies: sparse rectangular carriers bend through a blocky vector corridor, while dense dots settle into three spring-like horizontal queues.
+    caption: Partial, non-canonical directions: sparse oriented carriers traverse a quantized corridor; dense dots collect into damped queues.

@@ -38,8 +38,13 @@ for adapter in \
   grep -Fq 'sound_stream_.close()' "$adapter"
   grep -Fq 'pending_amplitude_.exchange(-1.0f)' "$adapter"
   grep -Fq 'ACTIVITY: ACTIVE' "$adapter"
+  grep -Fq 'viewport_width < 680 || viewport_height < 360' "$adapter"
+  grep -Fq 'ofBitmapStringGetBoundingBox' "$adapter"
+  grep -Fq 'fittedInputStatus(state_.source, viewport_width)' "$adapter"
+  grep -Fq 'viewport_height >= 12' "$adapter"
+  grep -Fq 'bitmapTextFits("RESIZE TO 680 x 360", viewport_width)' "$adapter"
 done
-printf '%s\n' 'section-15-adapter-contract: safe default, N/F/L routes, and live open/close hooks are discoverable'
+printf '%s\n' 'section-15-adapter-contract: safe default, N/F/L routes, live open/close hooks, and tiny-window fallback are discoverable'
 
 cat >"$MALFORMED" <<'EOF'
 # deliberately short and long rows

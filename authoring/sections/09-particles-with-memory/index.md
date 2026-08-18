@@ -1,7 +1,7 @@
 ---
 title: Particles with memory
 slug: 09-particles-with-memory
-weight: 9
+weight: 110
 draft: false
 course_kind: instructional
 objectives:
@@ -25,6 +25,13 @@ asset_records: assets.yaml
 *Objects carry short, bounded memories through a fixed-step world.*
 
 The still uses head size, shape, and trail spacing as well as color.
+
+## Precedent and transfer
+
+Use the course's [credited precedent notes](../../../docs/source-notes.md#visual-vocabulary)
+to identify a particle or trail mechanism without treating its final frame as a
+recipe. Credit creators and collaborators, then document deliberate changes to
+agent shape, emission, force, history, palette, and spatial composition.
 
 ## Predict
 
@@ -114,8 +121,10 @@ it does not silently pretend every elapsed second was simulated.
 A spawn clock advances inside fixed steps, not draw calls. At each cadence it
 constructs at most one particle because valid cadence is at least one fixed
 step. Capacity suppresses additional spawns without overflowing the vector.
-An explicit xorshift state makes launch directions repeat for one seed and vary
-for another; it is a design input, not global randomness.
+An explicit full-state linear-congruential generator makes launch directions
+repeat for one seed and vary for another; its odd-multiplier transition is a
+bijection over all 32-bit states, so seed zero remains valid without aliasing a
+sentinel. The seed is a design input, not global randomness.
 
 ### Pause cannot accumulate a resume spike
 

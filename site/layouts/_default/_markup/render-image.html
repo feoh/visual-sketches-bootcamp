@@ -1,0 +1,6 @@
+{{- $destination := .Destination -}}
+{{- $resourcePath := strings.TrimPrefix "./" (replaceRE `[#?].*$` "" $destination) -}}
+{{- $resource := .Page.Resources.GetMatch $resourcePath -}}
+{{- $source := $destination -}}
+{{- if $resource -}}{{- $source = $resource.RelPermalink -}}{{- end -}}
+<img src="{{ $source | safeURL }}" alt="{{ .Text }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy" decoding="async">

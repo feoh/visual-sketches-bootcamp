@@ -1,7 +1,7 @@
 ---
 title: Controlled chance
 slug: 06-controlled-chance
-weight: 6
+weight: 80
 draft: false
 course_kind: instructional
 objectives:

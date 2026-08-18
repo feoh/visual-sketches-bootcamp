@@ -95,6 +95,11 @@ Status measure(const std::vector<Vec2>& points, Bounds& bounds, Vec2& centroid) 
 
 Status sampleMask(const Pixels& pixels, const SampleDesign& design,
                   Geometry& output) {
+    if (pixels.width == 0 || pixels.height == 0 ||
+        pixels.channels == 0 || pixels.channels > 4) return Status::invalid_asset;
+    std::size_t source_pixels = 0;
+    if (!checkedProduct(pixels.width, pixels.height, source_pixels) ||
+        source_pixels > maximum_source_pixels) return Status::asset_too_large;
     if (!pixelsAreValid(pixels)) return Status::invalid_asset;
     if (design.step == 0 || design.step > 4096) return Status::invalid_design;
     const std::size_t columns = (pixels.width - 1) / design.step + 1;
@@ -153,6 +158,7 @@ const char* statusMessage(Status status) {
     switch (status) {
         case Status::ok: return "ok";
         case Status::invalid_asset: return "invalid or incomplete pixel asset";
+        case Status::asset_too_large: return "pixel asset exceeds the 4,194,304-pixel source limit";
         case Status::invalid_design: return "sampling step is outside the supported range";
         case Status::work_limit: return "source or sample count exceeds the hard work limit";
         case Status::no_samples: return "threshold selected no pixels";

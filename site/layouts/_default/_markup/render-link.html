@@ -1,0 +1,19 @@
+{{- $destination := .Destination -}}
+{{- $resourcePath := strings.TrimPrefix "./" (replaceRE `[#?].*$` "" $destination) -}}
+{{- $resource := .Page.Resources.GetMatch $resourcePath -}}
+{{- $href := $destination -}}
+{{- if $resource -}}
+  {{- $suffix := strings.TrimPrefix $resourcePath $destination -}}
+  {{- if $resource.RelPermalink -}}
+    {{- $href = printf "%s%s" $resource.RelPermalink $suffix -}}
+  {{- else -}}
+    {{- $bundle := strings.TrimSuffix "/" (strings.TrimPrefix "course/" .Page.File.Dir) -}}
+    {{- $sourcePath := printf "authoring/sections/%s/%s" $bundle $resourcePath -}}
+    {{- $href = printf "%s/blob/main/%s%s" site.Params.repositoryURL $sourcePath $suffix -}}
+  {{- end -}}
+{{- else if strings.HasPrefix $destination "../../../" -}}
+  {{- $repositoryPath := strings.TrimPrefix "../../../" $destination -}}
+  {{- $view := cond (strings.HasSuffix $repositoryPath "/") "tree" "blob" -}}
+  {{- $href = printf "%s/%s/main/%s" site.Params.repositoryURL $view $repositoryPath -}}
+{{- end -}}
+<a href="{{ $href | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>

@@ -32,9 +32,13 @@ Rules:
 - stable slugs and explicit ordering; and
 - source links and asset licenses recorded alongside the lesson.
 
-A future Hugo site may add layouts, configuration, and Markdown render hooks around these files without changing lesson prose. A minimal Hugo build plus link/media checker must prove this claim in Phase 1; the same source tree must also open as a usable Obsidian vault.
+The optional Hugo layer now adds layouts, configuration, and Markdown render
+hooks around these files without changing lesson prose; see
+[the publication guide](publication.md). The required Hugo build plus
+link/media checker proves the mounted source contract, while the same source
+tree remains usable as an Obsidian vault.
 
-## Planned repository shape
+## Implemented repository shape
 
 ```text
 visual_sketches_bootcamp/
@@ -44,20 +48,16 @@ visual_sketches_bootcamp/
 │   ├── testing-strategy.md
 │   ├── implementation-roadmap.md
 │   └── source-notes.md
-├── content/
-│   ├── _index.md
-│   ├── 00-runway/
-│   │   └── 00-first-frame/index.md
-│   ├── 01-motion/
-│   │   └── <lesson>/index.md
-│   ├── 02-composition/
-│   │   └── <lesson>/index.md
-│   ├── 03-systems/
-│   │   └── <lesson>/index.md
-│   ├── 04-time-and-media/
-│   │   └── <lesson>/index.md
-│   └── 05-capstone/
-│       └── <project>/index.md
+├── authoring/
+│   └── sections/            # canonical mounted lesson leaf bundles
+│       ├── 00-cross-platform-setup/index.md
+│       ├── ...
+│       ├── 16-three-sketch-studies/index.md
+│       └── 17-original-visual-instrument/index.md
+├── site/                    # optional Hugo config, layouts, and CSS
+│   ├── hugo.toml
+│   ├── layouts/
+│   └── static/
 ├── exercises/
 │   └── <section-slug>/
 ├── shared/

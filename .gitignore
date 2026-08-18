@@ -52,4 +52,9 @@ exercises/*/*/*.exe
 exercises/*/*/*.dll
 exercises/*/*/*.pdb
 exercises/*/*/*.ilk
+# Optional local Hugo publication output
+.hugo-public/
+.hugo_build.lock
+resources/_gen/
+
 .DS_Store

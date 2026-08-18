@@ -1,0 +1,5 @@
+case	local_x	local_y	translate_x	translate_y	angle_degrees	expected_x	expected_y
+zero	10	0	100	50	0	110	50
+quarter-turn	10	0	100	50	90	100	60
+half-turn	0	-20	100	50	180	100	70
+full-turn	10	0	100	50	360	110	50

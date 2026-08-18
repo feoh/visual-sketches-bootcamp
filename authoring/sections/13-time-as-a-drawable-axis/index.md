@@ -1,7 +1,7 @@
 ---
 title: Time as a drawable axis
 slug: 13-time-as-a-drawable-axis
-weight: 13
+weight: 150
 draft: false
 course_kind: instructional
 objectives:
@@ -26,6 +26,13 @@ asset_records: assets.yaml
 
 The labels, repeated slice boundaries, circle outlines, and interior ticks keep
 age order legible without relying on amber, mint, or opacity alone.
+
+## Precedent and transfer
+
+Use the course's [credited precedent notes](../../../docs/source-notes.md#visual-vocabulary)
+to study time as stored material rather than copy an echo or slit-scan image.
+Name creators and collaborators, isolate the history-selection principle, and
+change the source, spatial lookup, decay, geometry, palette, and interaction.
 
 ## Predict
 

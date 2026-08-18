@@ -226,7 +226,55 @@ EOF
     page=${spec%%:*}; names=${spec#*:}; rendered="$site/public/course/$page/index.html"
     for name in $names; do grep -Fq "$name" "$rendered" || fail "Hugo output omitted reference to $name"; [ -f "$site/public/course/$page/media/$name" ] || fail "Hugo did not publish $name"; done
   done
-  printf '%s\n' 'authoring check: contracts and Hugo fixture builds passed'
+  if [ -f "$root/site/hugo.toml" ]; then
+    publication="$work/publication"
+    hugo --quiet --source "$root" --config site/hugo.toml \
+      --destination "$publication" --cleanDestinationDir \
+      --panicOnWarning --printPathWarnings || fail 'checked publication build failed'
+    [ -f "$publication/index.html" ] || fail 'publication did not emit its home page'
+    [ -f "$publication/course/index.html" ] || fail 'publication did not emit course navigation'
+    [ -f "$publication/css/course.css" ] || fail 'publication did not emit its stylesheet'
+    published_count=0
+    find "$root/authoring/sections" -mindepth 2 -maxdepth 2 -name index.md -type f | sort | while IFS= read -r lesson; do
+      [ "$(frontmatter_value draft "$lesson")" = false ] || continue
+      slug=$(frontmatter_value slug "$lesson")
+      page="$publication/course/$slug/index.html"
+      [ -f "$page" ] || fail "publication did not emit lesson $slug"
+      grep -Fq 'class="lesson"' "$page" || fail "publication lesson $slug did not use the accessible lesson layout"
+      [ "$(grep -c '<h1' "$page")" -eq 1 ] || fail "publication lesson $slug must contain exactly one h1"
+      grep -Fq "href=\"/visual-sketches-bootcamp/course/$slug/\"" "$publication/index.html" || fail "publication home omitted lesson $slug"
+      grep -Fq 'href="../../../' "$page" && fail "publication retained an unresolved repository link in $slug"
+      grep -Fq 'href=""' "$page" && fail "publication emitted an empty link in $slug"
+      printf '%s\t%s\n' "$(frontmatter_value weight "$lesson")" "$slug" >> "$work/publication-weights"
+      published_count=$((published_count + 1))
+      printf '%s\n' "$published_count" > "$work/published-count"
+    done
+    expected_count=$(find "$root/authoring/sections" -mindepth 2 -maxdepth 2 -name index.md -type f -exec grep -l '^draft: false$' {} + | wc -l | tr -d ' ')
+    actual_count=$(cat "$work/published-count" 2>/dev/null || printf 0)
+    [ "$actual_count" -eq "$expected_count" ] || fail "publication emitted $actual_count of $expected_count expected lessons"
+    cut -f1 "$work/publication-weights" | sort | uniq -d | grep . >/dev/null 2>&1 && fail 'non-draft lesson weights must be unique'
+    grep -Fq 'github.com/feoh/visual_sketches_bootcamp/blob/main/exercises/' "$publication/course/01-a-mark-that-moves/index.html" || fail 'publication did not rewrite repository file links'
+    [ -f "$publication/course/01-a-mark-that-moves/media/traveler-time-preview.svg" ] || fail 'publication omitted representative bundle media'
+    section16="$publication/course/16-three-cumulative-sketch-studies/index.html"
+    section17="$publication/course/17-original-visual-instrument-capstone/index.html"
+    grep -Fq 'github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/16-three-sketch-studies/templates/model-test-contract.md' "$section16" || fail 'publication did not rewrite section 16 Markdown resource links'
+    grep -Fq 'github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/16-three-sketch-studies/fixtures/README.md' "$section16" || fail 'publication did not expose section 16 fixture provenance'
+    grep -Fq 'github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/17-original-visual-instrument/fixtures/README.md' "$section17" || fail 'publication did not expose section 17 fixture provenance'
+    grep -Fq 'CC0-1.0' "$section16" || fail 'publication omitted section 16 fixture license notice'
+    grep -Fq 'CC0-1.0' "$section17" || fail 'publication omitted section 17 fixture license notice'
+    first_lesson=$(sed -n 's|.*<li><a href="\([^"]*\)".*|\1|p' "$publication/course/index.html" | head -n 1)
+    [ "$first_lesson" = '/visual-sketches-bootcamp/course/00-cross-platform-setup-and-first-frame/' ] || fail 'publication course contents do not begin with section 00 setup'
+    setup="$publication/course/00-cross-platform-setup-and-first-frame/index.html"
+    grep -Fq '<span>Previous</span><a' "$setup" && fail 'section 00 setup unexpectedly has a previous lesson'
+    grep -Fq '<span>Next</span><a href="/visual-sketches-bootcamp/course/01-a-mark-that-moves/">' "$setup" || fail 'section 00 setup does not lead to section 01'
+    grep -Fq '<span>Next</span><a' "$section17" && fail 'section 17 unexpectedly has a next lesson'
+    pagination="$publication/course/14-images-and-type-as-geometry/index.html"
+    grep -Fq '<span>Previous</span><a href="/visual-sketches-bootcamp/course/13-time-as-a-drawable-axis/">' "$pagination" || fail 'publication Previous navigation does not follow increasing course weight'
+    grep -Fq '<span>Next</span><a href="/visual-sketches-bootcamp/course/15-embodied-audio-input/">' "$pagination" || fail 'publication Next navigation does not follow increasing course weight'
+    printf '%s\n' "authoring check: contracts, Hugo fixtures, and publication build passed ($actual_count lessons)"
+  else
+    printf '%s\n' 'authoring check: contracts and Hugo fixture builds passed (publication layer not present)'
+  fi
 else
   printf '%s\n' 'authoring check: contracts passed (Hugo not installed; smoke build skipped)'
 fi

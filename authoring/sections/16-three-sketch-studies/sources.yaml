@@ -1,0 +1,7 @@
+sources:
+  - id: wcag-non-text-content
+    title: Web Content Accessibility Guidelines 2.2 Success Criterion 1.1.1 Non-text Content
+    creator: World Wide Web Consortium
+    url: https://www.w3.org/TR/WCAG22/#non-text-content
+    accessed: 2026-08-18
+    note: Supports text alternatives that communicate the purpose and evidence carried by study captures.

@@ -120,4 +120,23 @@ bool setNoDeviceFallback(State& state,
     return true;
 }
 
+const char* compactInputStatus(InputSource source, int detail_level) {
+    if (detail_level <= 0) {
+        if (source == InputSource::recorded) return "RECORDED | N=FALLBACK";
+        if (source == InputSource::live_microphone) return "LIVE MIC | N=STOP";
+        return "NO DEVICE | N=FALLBACK";
+    }
+    if (detail_level == 1) {
+        if (source == InputSource::recorded) return "REC | N=FALLBACK";
+        if (source == InputSource::live_microphone) return "LIVE | N=STOP";
+        return "NO DEV | N=FALLBACK";
+    }
+    if (detail_level == 2) {
+        if (source == InputSource::recorded) return "REC | N";
+        if (source == InputSource::live_microphone) return "LIVE | N";
+        return "NO DEV | N";
+    }
+    return "N";
+}
+
 }  // namespace embodied

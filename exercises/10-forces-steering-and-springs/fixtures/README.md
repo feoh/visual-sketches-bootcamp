@@ -9,3 +9,8 @@ of conventional restoring notation `F = -k(x - L)`. When the second endpoint
 moves toward the first at 10 units/second, the dot
 product of relative velocity with the +x spring axis is -10, so damping reduces
 the force to `20 + 1 * -10 = 10`.
+
+Creator: Visual Sketches Bootcamp contributors. Origin: original, hand-authored
+course fixture data, independently calculated where the description says so.
+License: CC0-1.0. The public test rejects a missing file, malformed row, wrong
+field count, or incomplete fixture before treating its values as valid evidence.

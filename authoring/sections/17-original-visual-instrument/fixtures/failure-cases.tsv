@@ -1,0 +1,6 @@
+case	input	required_outcome	required_status
+missing_asset	media/absent-fixture.png	fallback_geometry	ASSET_UNAVAILABLE
+missing_device	preferred_live_input	recorded_or_keyboard_fallback	DEVICE_UNAVAILABLE
+malformed_replay	invalid-column-count	preserve_previous_valid_state	REPLAY_REJECTED
+tiny_viewport	0x0	sanitize_to_finite_minimum_layout	VIEWPORT_SANITIZED
+nonfinite_dt	NaN	preserve_model_and_pause_step	FRAME_TIME_REJECTED

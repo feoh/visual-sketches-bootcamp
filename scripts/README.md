@@ -57,6 +57,25 @@ Without the require flag, structural checks still run and a missing Hugo binary
 is reported as a skip. See [`../authoring/README.md`](../authoring/README.md) for
 the source format and separate instructional/synthesis definitions of done.
 
+## Optional publication build
+
+The no-theme Hugo layer mounts the canonical `authoring/sections/` bundles
+directly; it does not copy or rewrite lesson prose. Hugo Extended 0.164.0 or
+newer is required for the checked publication build:
+
+```sh
+scripts/build-site.sh
+```
+
+```powershell
+./scripts/build-site.ps1
+```
+
+Both commands validate authoring and fail on Hugo warnings before replacing the
+ignored `.hugo-public/` output directory. They do not deploy or publish it.
+For direct Hugo flags, accessibility/release gates, and licensing behavior, see
+[`../docs/publication.md`](../docs/publication.md).
+
 ## Section exercises
 
 Sections 00–15 use thin platform wrappers around the shared, containment-checked

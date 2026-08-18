@@ -1,0 +1,21 @@
+{{ define "main" }}
+  <section class="hero" aria-labelledby="course-title">
+    <p class="eyebrow">Markdown-first creative coding curriculum</p>
+    <h1 id="course-title">{{ site.Title }}</h1>
+    <p>{{ site.Params.description }}</p>
+    <p>The publication layer is optional: the canonical lessons remain portable Markdown leaf bundles under <code>authoring/sections/</code>.</p>
+  </section>
+  <section class="course-index" aria-labelledby="course-contents">
+    <h2 id="course-contents">Course contents</h2>
+    <ol class="course-list">
+      {{ range where site.RegularPages.ByWeight "Section" "course" }}
+        <li>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          <span>{{ delimit .Params.objectives "; " }}</span>
+        </li>
+      {{ else }}
+        <li>No published lessons were found.</li>
+      {{ end }}
+    </ol>
+  </section>
+{{ end }}

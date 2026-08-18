@@ -1,0 +1,10 @@
+{{ define "main" }}
+  <article class="page-shell">
+    <h1>Course contents</h1>
+    <ol class="course-list">
+      {{ range .Pages.ByWeight }}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+      {{ end }}
+    </ol>
+  </article>
+{{ end }}

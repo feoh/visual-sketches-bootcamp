@@ -1,7 +1,7 @@
 ---
 title: A mark that moves
 slug: 01-a-mark-that-moves
-weight: 1
+weight: 20
 draft: false
 course_kind: instructional
 objectives:

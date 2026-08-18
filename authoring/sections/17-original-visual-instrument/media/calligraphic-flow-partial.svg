@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="420" viewBox="0 0 1080 420" role="img" aria-labelledby="title desc">
+  <title id="title">Partial calligraphic flow process</title>
+  <desc id="desc">Pointer knots pass through a resampling experiment, a sparse angular field, and four short offset echoes. A dense field thumbnail is crossed out as an abandoned direction. Gesture resampling alone is marked deeper.</desc>
+  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#283b45"/></marker></defs>
+  <rect width="1080" height="420" fill="#f4f0e7"/>
+  <text x="36" y="44" font-family="sans-serif" font-size="22" font-weight="700" fill="#17262d">PARTIAL PROCESS A · CALLIGRAPHIC FLOW</text>
+  <g font-family="sans-serif" fill="#17262d">
+    <rect x="36" y="80" width="210" height="250" rx="12" fill="#fffdf7" stroke="#283b45" stroke-width="2"/>
+    <text x="54" y="110" font-size="16" font-weight="700">1 · POINTER KNOTS</text>
+    <path d="M66 270C91 124 164 312 218 143" fill="none" stroke="#283b45" stroke-width="5"/>
+    <g fill="#c04d3f"><circle cx="68" cy="261" r="6"/><circle cx="91" cy="185" r="6"/><circle cx="126" cy="190" r="6"/><circle cx="161" cy="247" r="6"/><circle cx="190" cy="215" r="6"/><circle cx="216" cy="148" r="6"/></g>
+    <rect x="279" y="80" width="230" height="250" rx="12" fill="#fffdf7" stroke="#c04d3f" stroke-width="4"/>
+    <text x="297" y="110" font-size="16" font-weight="700">2 · RESAMPLE</text><text x="297" y="134" font-size="13">DEEPEN THIS ONLY</text>
+    <path d="M310 270C335 124 408 312 476 143" fill="none" stroke="#9ba3a0" stroke-width="2" stroke-dasharray="4 5"/>
+    <g fill="#283b45"><circle cx="312" cy="259" r="5"/><circle cx="328" cy="205" r="5"/><circle cx="354" cy="172" r="5"/><circle cx="386" cy="191" r="5"/><circle cx="414" cy="236" r="5"/><circle cx="445" cy="218" r="5"/><circle cx="474" cy="149" r="5"/></g>
+    <rect x="542" y="80" width="225" height="250" rx="12" fill="#fffdf7" stroke="#283b45" stroke-width="2"/>
+    <text x="560" y="110" font-size="16" font-weight="700">3 · SPARSE FIELD</text>
+    <g stroke="#456f75" stroke-width="4"><path d="M578 155l30-20"/><path d="M653 143l24 24"/><path d="M719 151v34"/><path d="M580 224l30 18"/><path d="M652 228l28-19"/><path d="M716 230l24 24"/></g>
+    <path d="M570 290C619 200 679 305 747 183" fill="none" stroke="#c04d3f" stroke-width="5"/>
+    <rect x="800" y="80" width="244" height="250" rx="12" fill="#fffdf7" stroke="#283b45" stroke-width="2"/>
+    <text x="818" y="110" font-size="16" font-weight="700">4 · SHORT ECHOES</text>
+    <g fill="none" stroke="#283b45"><path d="M830 280C860 145 928 302 1010 145" stroke-width="6"/><path d="M830 264C860 129 928 286 1010 129" stroke-width="4"/><path d="M830 248C860 113 928 270 1010 113" stroke-width="3"/><path d="M830 232C860 97 928 254 1010 97" stroke-width="2"/></g>
+    <path d="M246 204H274M509 204H537M767 204H795" stroke="#283b45" stroke-width="3" marker-end="url(#a)"/>
+    <rect x="829" y="344" width="185" height="48" fill="#fffdf7" stroke="#9ba3a0" stroke-dasharray="5 4"/>
+    <g stroke="#9ba3a0" stroke-width="2"><path d="M842 360l20 15M872 360l20 15M902 360l20 15M932 360l20 15M962 360l20 15"/></g>
+    <path d="M821 337l201 62M1022 337L821 399" stroke="#c04d3f" stroke-width="5"/>
+    <text x="36" y="382" font-size="14">abandoned: dense field hid gesture character</text>
+  </g>
+</svg>

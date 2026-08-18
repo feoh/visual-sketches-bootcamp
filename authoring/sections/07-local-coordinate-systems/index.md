@@ -1,7 +1,7 @@
 ---
 title: Local coordinate systems
 slug: 07-local-coordinate-systems
-weight: 7
+weight: 90
 draft: false
 course_kind: instructional
 objectives:
@@ -248,7 +248,7 @@ exercises/07-local-coordinate-systems/starter/bin/starter
 On Windows Developer PowerShell, use:
 
 ```powershell
-$env:OF_ROOT = 'C:\absolute\path\to\of_v0.12.1_vs_release'
+$env:OF_ROOT = 'C:\absolute\path\to\of_v0.12.1_vs_64_release'
 .\scripts\section-07.ps1 generate --project starter
 .\scripts\section-07.ps1 build --project starter --configuration Release
 & .\exercises\07-local-coordinate-systems\starter\bin\starter.exe

@@ -1,0 +1,24 @@
+{{ define "main" }}
+  <article class="lesson">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ site.Home.RelPermalink }}">Course contents</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ .Title }}</span>
+    </nav>
+    <h1>{{ .Title }}</h1>
+    <aside class="lesson-summary" aria-labelledby="lesson-summary-title">
+      <h2 id="lesson-summary-title">Lesson summary</h2>
+      <h3>Objectives</h3>
+      <ul>{{ range .Params.objectives }}<li>{{ . }}</li>{{ end }}</ul>
+      <h3>Prerequisites</h3>
+      <ul>{{ range .Params.prerequisites }}<li>{{ . }}</li>{{ end }}</ul>
+    </aside>
+    <div class="lesson-content">
+      {{ .Content }}
+    </div>
+    <nav class="lesson-pagination" aria-label="Lesson navigation">
+      <div>{{ with .NextInSection }}<span>Previous</span><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</div>
+      <div>{{ with .PrevInSection }}<span>Next</span><a href="{{ .RelPermalink }}">{{ .Title }}</a>{{ end }}</div>
+    </nav>
+  </article>
+{{ end }}

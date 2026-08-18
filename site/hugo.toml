@@ -1,0 +1,26 @@
+baseURL = "https://example.invalid/visual-sketches-bootcamp/"
+locale = "en-US"
+title = "Visual Sketches Bootcamp"
+disableKinds = ["taxonomy", "term", "rss", "sitemap", "robotsTXT", "404"]
+enableGitInfo = false
+enableRobotsTXT = false
+
+[params]
+  description = "A Markdown-first creative coding curriculum using openFrameworks and C++."
+  repositoryURL = "https://github.com/feoh/visual_sketches_bootcamp"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+
+[module]
+  [[module.mounts]]
+    source = "authoring/sections"
+    target = "content/course"
+  [[module.mounts]]
+    source = "site/layouts"
+    target = "layouts"
+  [[module.mounts]]
+    source = "site/static"
+    target = "static"

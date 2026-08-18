@@ -30,7 +30,28 @@ Primary or creator-owned starting points:
 - [Land Lines](https://experiments.withgoogle.com/land-lines)
 - [Messa di Voce](https://www.flong.com/archive/projects/messa/)
 
-Several named works are collaborative. They are evidence of techniques in Lieberman’s practice, not claims of sole authorship.
+The named works are mechanism references, not composition targets. Credit their
+collaborative authorship precisely:
+
+- **The EyeWriter** was created with TEMPT1 by a team including Zach Lieberman,
+  Evan Roth, James Powderly, Theo Watson, and Chris Sugrue, with additional
+  contributors credited by the project. Transfer only the principle of making
+  an expressive control loop legible and accessible; do not copy its identity,
+  interface, or documentary imagery.
+- **Land Lines** credits Zach Lieberman and Google's Data Arts Team. Transfer
+  the idea of mapping a gesture to a searchable or generative geometry system,
+  not its satellite imagery, line-matching composition, or interaction copy.
+- **Messa di Voce** credits Golan Levin and Zach Lieberman as creators and Jaap
+  Blonk and Joan La Barbara as performers. Transfer the immediate mapping from
+  embodied sound to visible behavior, not its vocal gestures, silhouettes,
+  staging, or projected forms.
+
+The creator-owned pages above remain the authority if a summary conflicts with
+their full credit lists. Every lesson process note should name the specific
+precedent, all prominently credited collaborators, the transferable mechanism,
+and at least three deliberate changes. Do not bundle precedent imagery or use a
+precedent still as a target screenshot unless redistribution rights are
+separately verified.
 
 ## openFrameworks baseline
 
@@ -70,7 +91,13 @@ The recommended 12–16-week pace, accelerated 8+2-week option, and lesson order
 
 - The X/Instagram feeds have not been exhaustively sampled or frequency-coded. Technique recurrence is qualitative and triangulated with creator-owned repositories and project pages.
 - Native openFrameworks render variance has not yet been measured across the course’s three target platforms.
-- The standalone Project Generator path and a Release build have been reproduced only in a disposable Ubuntu 24.04 environment. macOS and Windows generation/builds, graphical launch, and all no-window course test lanes remain unproven.
-- Official CI and release-adjacent runner manifests document broad build environments, but the course must independently prove its exact generated projects and no-window test commands on all three lanes.
+- Commit `f3c42f4` has repository-recorded Linux, macOS, and Windows generation,
+  Debug/Release build, and foundation no-window unit proof in the
+  [foundation evidence ledger](foundation-harness-evidence.md). That dated proof
+  does not establish current-HEAD CI, graphical launch/appearance, or live-device
+  behavior; those claims require fresh commit-addressed or manual evidence.
+- Official CI and release-adjacent runner manifests document broad build
+  environments, but every release must still link its exact generated-project
+  and no-window test statuses on all three lanes.
 - Links and API documentation may drift; pinned 0.12.1 headers and examples take precedence when web docs disagree.
 - Addons, fonts, media, codecs, and live-device APIs require separate platform and license review before becoming required content.

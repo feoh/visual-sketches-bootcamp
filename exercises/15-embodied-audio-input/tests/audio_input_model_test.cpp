@@ -164,6 +164,25 @@ void testBoundedBatchAndFallback(const embodied::Design& design) {
           "rejected replay is transactional");
 }
 
+void testCompactInputStatus() {
+    using embodied::InputSource;
+    check(std::string(embodied::compactInputStatus(InputSource::recorded, 0)) ==
+              "RECORDED | N=FALLBACK",
+          "full recorded status remains distinct from no-device mode");
+    check(std::string(embodied::compactInputStatus(InputSource::live_microphone, 1)) ==
+              "LIVE | N=STOP",
+          "compact live status preserves the stop action");
+    check(std::string(embodied::compactInputStatus(InputSource::no_device, 2)) ==
+              "NO DEV | N",
+          "short no-device status remains explicit");
+    for (InputSource source : {InputSource::recorded,
+                               InputSource::live_microphone,
+                               InputSource::no_device}) {
+        check(std::string(embodied::compactInputStatus(source, 3)) == "N",
+              "smallest status preserves the essential fallback key");
+    }
+}
+
 void testDesignValidation() {
     const embodied::Design valid = makeAudioInstrumentDesign();
     check(embodied::designIsValid(valid), "learner design seam is valid");
@@ -187,10 +206,11 @@ int main(int argc, char** argv) {
     const auto design = makeAudioInstrumentDesign();
     const auto rows = readFixture(argv[1]);
     testDesignValidation();
+    testCompactInputStatus();
     testKnownReplay(rows, design);
     testBoundariesAndProperties(design);
     testBoundedBatchAndFallback(design);
     if (failures != 0) return 1;
-    std::cout << "section-15-model: recorded replay, smoothing, dead zone, geometry, bounds, and no-device fallback passed\n";
+    std::cout << "section-15-model: recorded replay, smoothing, dead zone, geometry, bounds, distinct compact statuses, and no-device fallback passed\n";
     return 0;
 }

@@ -52,6 +52,7 @@ struct State {
 };
 
 bool designIsValid(const Design& design);
+const char* compactInputStatus(InputSource source, int detail_level);
 void reset(State& state, const Design& design, InputSource source);
 bool consumeAmplitude(State& state, float amplitude, const Design& design);
 std::size_t consumeBatch(State& state,

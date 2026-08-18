@@ -1,0 +1,59 @@
+Visual Sketches Bootcamp is dual-licensed by file scope.
+
+Curriculum content — CC BY 4.0
+================================
+
+Unless a file or nearby attribution record says otherwise, original curriculum
+prose and course media are licensed under the Creative Commons Attribution 4.0
+International License (CC BY 4.0), included at:
+
+    LICENSES/CC-BY-4.0.txt
+
+This scope includes Markdown and other instructional text, authoring metadata,
+original diagrams, transcripts, images, and audiovisual course media. When
+attributing this material, identify “Visual Sketches Bootcamp contributors,”
+link to this repository when practical, link or refer to CC BY 4.0, and indicate
+whether changes were made.
+
+Software — MIT
+==============
+
+Unless a file says otherwise, source code and supporting software are licensed
+under the MIT License, included at:
+
+    LICENSES/MIT.txt
+
+This scope includes C/C++ source and headers, tests, shell and PowerShell
+scripts, CI workflow definitions, Hugo layouts, site styles/configuration, and
+build/project metadata.
+
+Original fixture data — CC0 1.0
+==============================
+
+Hand-authored numerical and synthetic test data whose nearby fixture README
+identifies CC0-1.0 is dedicated to the public domain under CC0 1.0 Universal,
+included at:
+
+    LICENSES/CC0-1.0.txt
+
+The nearby fixture README controls when it states this more specific scope.
+Fixture parser/test source code remains MIT-licensed.
+
+Exclusions and third-party material
+===================================
+
+These licenses apply only to material for which the repository contributors
+hold the necessary rights. They do not relicense:
+
+- openFrameworks, addons, tools, libraries, or other dependencies;
+- linked or quoted upstream documentation, tutorials, and source material;
+- third-party or public-domain assets identified by an `assets.yaml`,
+  `ATTRIBUTION.md`, source header, notice, or other nearby record; or
+- learner submissions and externally contributed media that state separate
+  terms.
+
+Those works remain under their respective terms. Preserve all copyright,
+license, attribution, modification, source, and notice requirements. See
+`THIRD_PARTY_NOTICES.md` for bundled code patterns with retained notices. If a
+file’s nearby notice conflicts with this top-level scope, the specific notice
+controls for that file.

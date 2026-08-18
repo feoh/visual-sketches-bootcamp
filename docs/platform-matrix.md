@@ -114,8 +114,10 @@ xcrun clang++ --version
 The official setup guide says Xcode 14.1 or newer; this project deliberately
 selects the Xcode 16 family instead of treating that broad statement as a tested
 range. The release-adjacent Xcode 16.0 (`16A242d`) value is a historical anchor,
-not an assertion about the current floating runner. These commands are not yet
-verified by a passing repository macOS job.
+not an assertion about the current floating runner. The repository recorded a
+passing macOS generation/build/unit proof at commit `f3c42f4`; see the
+[foundation evidence ledger](foundation-harness-evidence.md). That historical
+proof does not establish current-HEAD CI or graphical launch/appearance.
 
 ### Windows reference lane
 
@@ -157,8 +159,10 @@ The tagged Visual Studio template requests the latest installed Windows SDK if
 none is supplied. Repository CI must pass `WindowsTargetPlatformVersion=10.0.26100.0`
 so a changing runner image cannot silently move that SDK baseline. The UBR and
 Visual Studio patch float within the bounded Windows Server 2022 / VS 2022
-families and are printed on every run. These commands are not yet verified by a
-passing repository Windows job.
+families and are printed on every run. The repository recorded a passing
+Windows generation/build/unit proof at commit `f3c42f4`; see the
+[foundation evidence ledger](foundation-harness-evidence.md). That historical
+proof does not establish current-HEAD CI or graphical launch/appearance.
 
 ## Course-owned C++17 contract
 

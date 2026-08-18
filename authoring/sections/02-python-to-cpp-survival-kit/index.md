@@ -1,7 +1,7 @@
 ---
 title: The Python-to-C++ survival kit
 slug: 02-python-to-cpp-survival-kit
-weight: 2
+weight: 30
 draft: false
 course_kind: instructional
 objectives:

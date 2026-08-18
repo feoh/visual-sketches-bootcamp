@@ -22,13 +22,10 @@ bool valid(Color color) {
 }
 
 float unitRandom(std::uint32_t& state) {
-    if (state == 0u) {
-        state = 0x6d2b79f5u;
-    }
-    state ^= state << 13;
-    state ^= state >> 17;
-    state ^= state << 5;
-    return static_cast<float>(state & 0x00ffffffu) / 16777216.0f;
+    // This odd-multiplier LCG is a bijection over all uint32_t states. Zero is
+    // therefore a valid seed and never aliases a separately supplied seed.
+    state = state * 1664525u + 1013904223u;
+    return static_cast<float>(state >> 8) / 16777216.0f;
 }
 
 bool checkedFloat(double value, float& output) {
@@ -322,7 +319,7 @@ void setPaused(Emitter& emitter, bool paused) {
 void reset(Emitter& emitter, Vec2 origin, std::uint32_t seed) {
     emitter = Emitter{};
     emitter.origin = origin;
-    emitter.random_state = seed == 0u ? 0x6d2b79f5u : seed;
+    emitter.random_state = seed;
 }
 
 bool finiteState(const Emitter& emitter,

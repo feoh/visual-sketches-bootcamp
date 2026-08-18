@@ -10,3 +10,8 @@ The exact integer hash is part of this section's pinned implementation. Derived
 floating-point noise, interpolation, and vectors are compared with explicit
 tolerances; the fixture does not promise byte-identical rendering or results
 under arbitrary compilers and floating-point modes.
+
+Creator: Visual Sketches Bootcamp contributors. Origin: original, hand-authored
+course fixture data, independently calculated where the description says so.
+License: CC0-1.0. The public test rejects a missing file, malformed row, wrong
+field count, or incomplete fixture before treating its values as valid evidence.

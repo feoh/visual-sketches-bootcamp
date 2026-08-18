@@ -4,13 +4,14 @@ ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
 CXX=${CXX:-c++}
 command -v "$CXX" >/dev/null || { echo "section 14 tests: C++ compiler not found: $CXX" >&2; exit 1; }
 OUT=$(mktemp "${TMPDIR:-/tmp}/section-14-test.XXXXXX")
+SOLUTION_OBJECT=$(mktemp "${TMPDIR:-/tmp}/section-14-solution-design.XXXXXX.o")
 MALFORMED=$(mktemp "${TMPDIR:-/tmp}/section-14-malformed.XXXXXX")
 LOG=$(mktemp "${TMPDIR:-/tmp}/section-14-log.XXXXXX")
 FAKE_OF=$(mktemp -d "${TMPDIR:-/tmp}/section-14-incomplete-of.XXXXXX")
 SENTINEL_DIR="$ROOT/exercises/14-images-and-type-as-geometry/starter/bin"
 mkdir -p "$SENTINEL_DIR"
 SENTINEL=$(mktemp "$SENTINEL_DIR/wrapper-safety-sentinel.XXXXXX")
-trap 'rm -f "$OUT" "$MALFORMED" "$LOG" "$SENTINEL"; rm -rf "$FAKE_OF"' EXIT
+trap 'rm -f "$OUT" "$SOLUTION_OBJECT" "$MALFORMED" "$LOG" "$SENTINEL"; rm -rf "$FAKE_OF"' EXIT
 "$CXX" -std=c++17 -Wall -Wextra -Wpedantic -Werror \
  -I"$ROOT/exercises/14-images-and-type-as-geometry/shared" \
  -I"$ROOT/exercises/14-images-and-type-as-geometry/starter/src/design" \
@@ -18,6 +19,19 @@ trap 'rm -f "$OUT" "$MALFORMED" "$LOG" "$SENTINEL"; rm -rf "$FAKE_OF"' EXIT
  "$ROOT/exercises/14-images-and-type-as-geometry/starter/src/design/image_geometry_design.cpp" \
  "$ROOT/exercises/14-images-and-type-as-geometry/tests/image_geometry_model_test.cpp" -o "$OUT"
 "$OUT" "$ROOT/exercises/14-images-and-type-as-geometry/fixtures/mask-oracle.txt"
+"$CXX" -std=c++17 -Wall -Wextra -Wpedantic -Werror \
+ -I"$ROOT/exercises/14-images-and-type-as-geometry/shared" \
+ -I"$ROOT/exercises/14-images-and-type-as-geometry/solution/src/design" \
+ -c "$ROOT/exercises/14-images-and-type-as-geometry/solution/src/design/image_geometry_design.cpp" \
+ -o "$SOLUTION_OBJECT"
+printf '%s\n' 'section-14-solution-seam: divergent bounded design compiles independently'
+for adapter in \
+ "$ROOT/exercises/14-images-and-type-as-geometry/starter/src/ofApp.cpp" \
+ "$ROOT/exercises/14-images-and-type-as-geometry/solution/src/ofApp.cpp"; do
+ grep -Fq 'imageGeometryDesignIsValid(design_)' "$adapter"
+ grep -Fq 'Transform error:' "$adapter"
+done
+printf '%s\n' 'section-14-adapter-contract: invalid design and transform failures are visibly reported'
 printf '%s\n' 'broken 3 3 1' >"$MALFORMED"
 if "$OUT" "$MALFORMED" >"$LOG" 2>&1; then
  echo 'section 14 tests: malformed fixture unexpectedly passed' >&2; exit 1

@@ -40,6 +40,7 @@ struct Transform {
 enum class Status {
     ok,
     invalid_asset,
+    asset_too_large,
     invalid_design,
     work_limit,
     no_samples,

@@ -6,6 +6,17 @@ on:
       - .github/workflows/authoring.yml
       - authoring/**
       - exercises/**
+      - site/**
+      - README.md
+      - docs/publication.md
+      - docs/pilot-protocol-and-evidence.md
+      - docs/review-process.md
+      - docs/platform-matrix.md
+      - docs/source-notes.md
+      - LICENSE
+      - LICENSES/**
+      - THIRD_PARTY_NOTICES.md
+      - scripts/build-site.*
       - scripts/check-authoring.*
       - scripts/setup-of.*
       - scripts/course-project.*
@@ -18,6 +29,17 @@ on:
       - .github/workflows/authoring.yml
       - authoring/**
       - exercises/**
+      - site/**
+      - README.md
+      - docs/publication.md
+      - docs/pilot-protocol-and-evidence.md
+      - docs/review-process.md
+      - docs/platform-matrix.md
+      - docs/source-notes.md
+      - LICENSE
+      - LICENSES/**
+      - THIRD_PARTY_NOTICES.md
+      - scripts/build-site.*
       - scripts/check-authoring.*
       - scripts/setup-of.*
       - scripts/course-project.*
@@ -82,7 +104,7 @@ jobs:
           tests/run-first-cpp-test.sh starter
           tests/run-first-cpp-test.sh solution
       - name: Lint POSIX authoring scripts
-        run: shellcheck scripts/check-authoring.sh scripts/course-project.sh scripts/section-*.sh tests/run-authoring-check-tests.sh tests/run-section-*-tests.sh tests/run-first-cpp-test.sh
+        run: shellcheck scripts/build-site.sh scripts/check-authoring.sh scripts/course-project.sh scripts/section-*.sh tests/run-authoring-check-tests.sh tests/run-section-*-tests.sh tests/run-first-cpp-test.sh
 
   windows-contract:
     runs-on: windows-2022

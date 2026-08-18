@@ -1,7 +1,7 @@
 ---
 title: Interlude — reading and writing the first C++ test
 slug: 00-first-cpp-test-interlude
-weight: 3
+weight: 40
 draft: false
 course_kind: instructional
 objectives:

@@ -1,7 +1,7 @@
 ---
 title: Vectors, direction, and distance
 slug: 04-vectors-direction-and-distance
-weight: 4
+weight: 60
 draft: false
 course_kind: instructional
 objectives:

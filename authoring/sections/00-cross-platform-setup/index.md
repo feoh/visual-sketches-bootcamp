@@ -1,7 +1,7 @@
 ---
 title: Cross-platform setup and the first frame
 slug: 00-cross-platform-setup-and-first-frame
-weight: 0
+weight: 10
 draft: false
 course_kind: instructional
 objectives:

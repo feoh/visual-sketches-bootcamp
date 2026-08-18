@@ -49,7 +49,7 @@ try {
 ```
 '@; Set-Content -NoNewline -LiteralPath $p -Value ($s+$fence) }
     # Symlink escape is POSIX-only because Windows runner policy may deny link creation.
-    $positive = if ($RequireHugo) { "positive Hugo smoke" } else { "positive structural contract" }
+    $positive = if ($RequireHugo) { "positive Hugo fixture/publication builds" } else { "positive structural contract" }
     Write-Host "authoring PowerShell checker tests: $positive and 21 negative contracts passed"
 } finally {
     if (Test-Path -LiteralPath $Work) { Remove-Item -LiteralPath $Work -Recurse -Force }

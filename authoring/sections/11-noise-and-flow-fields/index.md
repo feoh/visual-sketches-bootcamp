@@ -1,7 +1,7 @@
 ---
 title: Noise and flow fields
 slug: 11-noise-and-flow-fields
-weight: 11
+weight: 130
 draft: false
 course_kind: instructional
 objectives:
@@ -64,6 +64,8 @@ distribution. Its combine step follows the permissively licensed
 [Boost hash-combine pattern](https://www.boost.org/doc/libs/1_55_0/doc/html/hash/combine.html).
 Its final avalanche credits Chris Wellons's public-domain
 [lowbias32 work](https://nullprogram.com/blog/2018/07/31/).
+The bundled expression retains its [third-party notice](../../../THIRD_PARTY_NOTICES.md)
+and the full BSL-1.0 text; the Wellons public-domain provenance remains explicit.
 The course-owned part is the explicit coordinate/seed composition and
 integer-to-value mapping used here. Integer `(x, y, z, seed)` always produces
 the same pinned hash. `hash & 0x00ffffff` maps to `[0, 1]`.

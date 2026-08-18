@@ -71,4 +71,4 @@ expect_failure fenced-only-citation "is not cited in prose" fenced_only_citation
 fixture="$work/symlink-fallback"; make_fixture "$fixture"; symlink_escape "$fixture"
 if AUTHORING_CHECK_NO_REALPATH=1 "$fixture/scripts/check-authoring.sh" >"$fixture/output.log" 2>&1; then echo 'negative test unexpectedly passed: symlink-fallback' >&2; exit 1; fi
 grep -Fq "cannot resolve local link 'outside-link.txt'" "$fixture/output.log" || { cat "$fixture/output.log" >&2; exit 1; }
-printf '%s\n' 'authoring checker tests: positive Hugo smoke and 21 negative contracts passed'
+printf '%s\n' 'authoring checker tests: positive Hugo fixture/publication builds and 21 negative contracts passed'

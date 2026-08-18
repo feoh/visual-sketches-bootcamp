@@ -1,7 +1,7 @@
 ---
 title: Map, clamp, and lerp
 slug: 03-map-clamp-and-lerp
-weight: 3
+weight: 50
 draft: false
 course_kind: instructional
 objectives:

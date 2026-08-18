@@ -1,0 +1,25 @@
+sources:
+  - id: of-last-frame-time
+    title: ofGetLastFrameTime documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/utils/ofUtils/#show_ofGetLastFrameTime
+    accessed: 2026-08-18
+    note: Primary framework reference for sampling application-boundary frame duration before passing explicit seconds to the model.
+  - id: wcag-animation-interactions
+    title: Web Content Accessibility Guidelines 2.2 Success Criterion 2.3.3 Animation from Interactions
+    creator: World Wide Web Consortium
+    url: https://www.w3.org/TR/WCAG22/#animation-from-interactions
+    accessed: 2026-08-18
+    note: Supports a mechanism to disable interaction-triggered nonessential motion.
+  - id: wcag-use-of-color
+    title: Web Content Accessibility Guidelines 2.2 Success Criterion 1.4.1 Use of Color
+    creator: World Wide Web Consortium
+    url: https://www.w3.org/TR/WCAG22/#use-of-color
+    accessed: 2026-08-18
+    note: Supports redundant shape, position, texture, and text cues rather than color-only meaning.
+  - id: spdx-license-list
+    title: SPDX License List
+    creator: SPDX Workgroup
+    url: https://spdx.org/licenses/
+    accessed: 2026-08-18
+    note: Provides precise standard license identifiers while not substituting for permission or compatibility review.

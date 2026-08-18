@@ -10,4 +10,5 @@ struct ImageGeometryDesign {
     DisplayColor background;
     DisplayColor ink;
 };
+bool imageGeometryDesignIsValid(const ImageGeometryDesign& design);
 ImageGeometryDesign makeImageGeometryDesign();

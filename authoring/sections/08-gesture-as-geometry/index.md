@@ -1,7 +1,7 @@
 ---
 title: Gesture as geometry
 slug: 08-gesture-as-geometry
-weight: 8
+weight: 100
 draft: false
 course_kind: instructional
 objectives:
@@ -25,6 +25,14 @@ asset_records: assets.yaml
 *Sampled movement becomes width, turning color, and inspectable geometry.*
 
 The preview is static and uses width, dashes, and anchor dots as well as color.
+
+## Precedent and transfer
+
+Use the course's [credited precedent notes](../../../docs/source-notes.md#visual-vocabulary)
+to study gesture as sampled geometry, not as a target composition. In your
+process note, name the creator and collaborators, state the transferable
+sampling or response principle, and change the input, mark construction,
+mapping, motion, and composition rather than reproducing a familiar still.
 
 ## Predict
 

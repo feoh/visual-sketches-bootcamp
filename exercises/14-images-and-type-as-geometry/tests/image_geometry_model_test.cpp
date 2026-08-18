@@ -79,8 +79,15 @@ void samplingBoundsAndFailureCases() {
     expect(image_geometry::sampleMask(cross,{0,127,true},output) == image_geometry::Status::invalid_design, "zero step rejected");
     expect(image_geometry::sampleMask(cross,{1,0,false},output) == image_geometry::Status::ok && output.points.size() == 9, "inclusive bright threshold boundary");
     expect(image_geometry::sampleMask(gray(2,2,{255,255,255,255}),{1,0,true},output) == image_geometry::Status::no_samples, "empty threshold result explicit");
+    const auto before_large = output.points;
     image_geometry::Pixels too_large{image_geometry::maximum_source_pixels + 1,1,1,{}};
-    expect(image_geometry::sampleMask(too_large,{1,127,true},output) == image_geometry::Status::invalid_asset, "source pixel hard limit enforced before traversal");
+    expect(image_geometry::sampleMask(too_large,{1,127,true},output) == image_geometry::Status::asset_too_large,
+           "overlarge source has an explicit status before traversal");
+    expect(output.points.size() == before_large.size() &&
+           near(output.points.front().x, before_large.front().x),
+           "overlarge source rejection is transactional");
+    expect(std::string(image_geometry::statusMessage(image_geometry::Status::asset_too_large)).find("4,194,304") != std::string::npos,
+           "overlarge source message names the supported limit");
     image_geometry::Pixels visit_limit{401,251,1,std::vector<std::uint8_t>(401*251)};
     expect(image_geometry::sampleMask(visit_limit,{1,127,true},output) == image_geometry::Status::work_limit, "sampling work limit enforced");
     expect(image_geometry::sampleMask(visit_limit,{2,127,true},output) == image_geometry::Status::ok, "density can reduce bounded work");
@@ -105,7 +112,25 @@ void transformCases() {
 
 void designSeamCase() {
     const auto design = makeImageGeometryDesign();
-    expect(design.sample.step > 0 && design.point_radius > 0 && std::isfinite(design.motion_amplitude), "learner-owned design seam is technically usable");
+    expect(imageGeometryDesignIsValid(design), "learner-owned design seam is technically usable");
+    auto invalid = design;
+    invalid.motion_rate = std::numeric_limits<float>::quiet_NaN();
+    expect(!imageGeometryDesignIsValid(invalid), "NaN motion rate rejected");
+    invalid = design;
+    invalid.sample.step = 4097;
+    expect(!imageGeometryDesignIsValid(invalid), "sampling step above model limit rejected");
+    invalid = design;
+    invalid.point_radius = 129.0f;
+    expect(!imageGeometryDesignIsValid(invalid), "excessive point radius rejected");
+    invalid = design;
+    invalid.motion_amplitude = 10001.0f;
+    expect(!imageGeometryDesignIsValid(invalid), "excessive motion amplitude rejected");
+    invalid = design;
+    invalid.background.r = -1;
+    expect(!imageGeometryDesignIsValid(invalid), "negative RGB channel rejected");
+    invalid = design;
+    invalid.ink.b = 256;
+    expect(!imageGeometryDesignIsValid(invalid), "RGB channel above 255 rejected");
 }
 }
 
@@ -117,5 +142,5 @@ int main(int argc, char** argv) {
     transformCases();
     designSeamCase();
     if (failures) { std::cerr << "image_geometry_model_test: " << failures << " failure(s)\n"; return 1; }
-    std::cout << "image_geometry_model_test: oracle counts/bounds/centroids, checked interleaved indexing, threshold boundaries, RGB luminance, explicit transactional asset failures, source/sample hard limits, sampling density, transform count/centroid/distance/bounds invariants, and learner seam passed\n";
+    std::cout << "image_geometry_model_test: oracle counts/bounds/centroids, checked interleaved indexing, threshold boundaries, RGB luminance, explicit transactional asset failures including overlarge sources, source/sample hard limits, sampling density, transform count/centroid/distance/bounds invariants, and bounded learner design seam passed\n";
 }

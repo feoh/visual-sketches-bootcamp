@@ -1,7 +1,7 @@
 ---
 title: Color, blending, and trails
 slug: 12-color-blending-and-trails
-weight: 12
+weight: 140
 draft: false
 course_kind: instructional
 objectives:

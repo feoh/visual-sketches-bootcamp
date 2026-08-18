@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360" role="img" aria-labelledby="title desc">
+  <title id="title">Two partial repetition grammars</title>
+  <desc id="desc">Left, open bracket marks follow an asymmetric staircase and alternate reflection. Right, nested triangular outlines alternate orientation around an empty center.</desc>
+  <rect width="960" height="360" fill="#eef3f0"/>
+  <rect x="24" y="24" width="438" height="312" rx="12" fill="#fcfffd" stroke="#17251e" stroke-width="2"/>
+  <rect x="498" y="24" width="438" height="312" rx="12" fill="#fcfffd" stroke="#17251e" stroke-width="2"/>
+  <text x="48" y="58" font-family="sans-serif" font-size="18" font-weight="700" fill="#17251e">PARTIAL A · BRACKET LADDER</text>
+  <path d="M70 260H145V215H230V150H330V90H420" fill="none" stroke="#a9b4ae" stroke-width="2" stroke-dasharray="5 6"/>
+  <g fill="none" stroke="#17251e" stroke-width="9" stroke-linejoin="miter">
+    <path d="M70 285h42v-48h-42"/><path d="M151 238h-42v-48h42"/>
+    <path d="M202 239h42v-48h-42"/><path d="M287 177h-42v-48h42"/>
+    <path d="M317 174h42v-48h-42"/><path d="M419 114h-42V66h42"/>
+  </g>
+  <text x="48" y="315" font-family="sans-serif" font-size="14" fill="#425149">index parity reflects each unit; gaps carry rhythm</text>
+  <text x="522" y="58" font-family="sans-serif" font-size="18" font-weight="700" fill="#17251e">PARTIAL B · NESTED FRAMES</text>
+  <g fill="none" stroke-linejoin="round">
+    <path d="M717 82L884 286H550Z" stroke="#17251e" stroke-width="8"/>
+    <path d="M717 275L580 105H854Z" stroke="#426b58" stroke-width="7"/>
+    <path d="M717 124L817 252H617Z" stroke="#17251e" stroke-width="6"/>
+    <path d="M717 238L649 149H785Z" stroke="#426b58" stroke-width="5"/>
+    <path d="M717 166L755 218H679Z" stroke="#17251e" stroke-width="4"/>
+  </g>
+  <circle cx="717" cy="199" r="11" fill="#fcfffd" stroke="#a9b4ae" stroke-width="2" stroke-dasharray="3 3"/>
+  <text x="522" y="315" font-family="sans-serif" font-size="14" fill="#425149">alternating orientation protects an empty center</text>
+</svg>

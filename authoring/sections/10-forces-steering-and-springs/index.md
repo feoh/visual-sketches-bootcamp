@@ -1,7 +1,7 @@
 ---
 title: Forces, steering, and springs
 slug: 10-forces-steering-and-springs
-weight: 10
+weight: 120
 draft: false
 course_kind: instructional
 objectives:

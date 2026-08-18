@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+  <link rel="stylesheet" href="{{ "css/course.css" | relURL }}">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-title" href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a>
+      <nav aria-label="Primary navigation">
+        <a href="{{ site.Home.RelPermalink }}">Course contents</a>
+        <a href="{{ site.Params.repositoryURL }}">Source repository</a>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content" tabindex="-1">
+    {{ block "main" . }}{{ end }}
+  </main>
+  <footer class="site-footer">
+    <p>Lessons are rendered from the repository’s Markdown authoring source. Original curriculum prose/media: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Source code and supporting software: <a href="{{ printf "%s/blob/main/LICENSE" site.Params.repositoryURL }}">MIT</a>. Third-party notices remain controlling.</p>
+  </footer>
+</body>
+</html>

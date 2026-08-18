@@ -1,0 +1,10 @@
+tick	event	a	b	expected_outcome	expected_normalized_x	expected_normalized_y	expected_status
+0	reset	4242	0	ACCEPTED	NA	NA	RESET
+0	viewport	800	600	ACCEPTED	NA	NA	VIEWPORT_CHANGED
+1	pointer_down	200	300	ACCEPTED	0.25	0.5	POINTER_DOWN
+2	pointer_move	800	600	ACCEPTED	1	1	POINTER_MOVED
+3	viewport	400	200	ACCEPTED	NA	NA	VIEWPORT_CHANGED
+4	pointer_move	200	50	ACCEPTED	0.5	0.25	POINTER_MOVED
+5	pointer_move	-20	250	ACCEPTED	0	1	POINTER_MOVED
+6	pointer_up	200	50	ACCEPTED	0.5	0.25	POINTER_UP
+7	unknown	1	1	REJECTED	NA	NA	UNKNOWN_EVENT

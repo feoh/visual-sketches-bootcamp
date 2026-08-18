@@ -1,7 +1,7 @@
 ---
 title: Images and type as geometry
 slug: 14-images-and-type-as-geometry
-weight: 14
+weight: 160
 draft: false
 course_kind: instructional
 objectives:
@@ -26,6 +26,14 @@ asset_records: assets.yaml
 
 Circle samples, a crosshair centroid, labeled arrows, and bar marks communicate
 the stages without depending on color.
+
+## Precedent and transfer
+
+Use the course's [credited precedent notes](../../../docs/source-notes.md#visual-vocabulary)
+to study the principle of treating image or type data as geometry. Credit the
+creator and collaborators, use your own phrase or licensed source asset, and
+change sampling, topology, motion, mapping, palette, and composition instead of
+reconstructing a precedent image.
 
 ## Predict
 

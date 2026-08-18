@@ -3,10 +3,22 @@
 #include <algorithm>
 #include <array>
 #include <cmath>
+#include <string>
 
 namespace {
 constexpr std::array<float, 6> kRecordedAmplitudes{{0.0f, 0.05f, 0.4f, 1.0f, 0.0f, 0.2f}};
 ofColor asColor(embodied::Color color) { return ofColor(color.r, color.g, color.b); }
+bool bitmapTextFits(const char* text, int viewport_width) {
+    return ofBitmapStringGetBoundingBox(text, 0, 0).getWidth() <=
+           std::max(0, viewport_width - 8);
+}
+const char* fittedInputStatus(embodied::InputSource source, int viewport_width) {
+    for (int detail = 0; detail <= 3; ++detail) {
+        const char* status = embodied::compactInputStatus(source, detail);
+        if (bitmapTextFits(status, viewport_width)) return status;
+    }
+    return "";
+}
 }
 
 void ofApp::setup() {
@@ -93,6 +105,23 @@ const char* ofApp::sourceLabel() const {
 
 void ofApp::draw() {
     ofBackground(asColor(design_.background));
+    const int viewport_width = ofGetWidth();
+    const int viewport_height = ofGetHeight();
+    if (viewport_width < 680 || viewport_height < 360) {
+        ofSetColor(asColor(design_.quiet_color));
+        const char* status = fittedInputStatus(state_.source, viewport_width);
+        if (viewport_height >= 12 && status[0] != '\0') {
+            if (viewport_height >= 44 && bitmapTextFits("RESIZE TO 680 x 360", viewport_width)) {
+                ofDrawBitmapString("RESIZE TO 680 x 360", 4, 18);
+                ofDrawBitmapString(status, 4, 38);
+            } else {
+                const int baseline = std::min(viewport_height - 2,
+                                              std::max(10, viewport_height / 2));
+                ofDrawBitmapString(status, 4, baseline);
+            }
+        }
+        return;
+    }
     const float center_x = ofGetWidth() * 0.5f;
     const float center_y = ofGetHeight() * 0.52f;
     const auto& geometry = state_.geometry;

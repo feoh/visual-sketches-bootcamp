@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360" role="img" aria-labelledby="title desc">
+  <title id="title">Two partial particle-influence grammars</title>
+  <desc id="desc">Left, twelve sparse rectangular carriers change orientation through a blocky arrow corridor. Right, many dark dots gather into three horizontal queues, with spacing and short ticks indicating speed.</desc>
+  <defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#6e7a91"/></marker></defs>
+  <rect width="960" height="360" fill="#f1f0f5"/>
+  <rect x="24" y="24" width="438" height="312" rx="12" fill="#fdfcff" stroke="#20232b" stroke-width="2"/>
+  <rect x="498" y="24" width="438" height="312" rx="12" fill="#fdfcff" stroke="#20232b" stroke-width="2"/>
+  <text x="48" y="58" font-family="sans-serif" font-size="18" font-weight="700" fill="#20232b">PARTIAL A · QUANTIZED CORRIDOR</text>
+  <g stroke="#b0b4c0" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <path d="M72 105h45"/><path d="M150 105l32 32"/><path d="M235 137v45"/><path d="M315 182l32 32"/><path d="M375 245h45"/>
+    <path d="M72 220h45"/><path d="M150 220l32-32"/><path d="M235 188v-45"/><path d="M315 143l32-32"/>
+  </g>
+  <g fill="#20232b">
+    <rect x="68" y="91" width="25" height="10"/><rect x="125" y="122" width="25" height="10" transform="rotate(45 138 127)"/>
+    <rect x="190" y="162" width="25" height="10" transform="rotate(90 203 167)"/><rect x="250" y="198" width="25" height="10" transform="rotate(45 263 203)"/>
+    <rect x="310" y="232" width="25" height="10"/><rect x="382" y="267" width="25" height="10"/>
+    <rect x="90" y="244" width="25" height="10"/><rect x="170" y="198" width="25" height="10" transform="rotate(-45 183 203)"/>
+  </g>
+  <text x="48" y="315" font-family="sans-serif" font-size="14" fill="#535866">sparse carriers; direction changes in 45° steps</text>
+  <text x="522" y="58" font-family="sans-serif" font-size="18" font-weight="700" fill="#20232b">PARTIAL B · DAMPED QUEUES</text>
+  <g stroke="#a9adb8" stroke-width="2"><path d="M548 120H890"/><path d="M548 196H890"/><path d="M548 272H890"/></g>
+  <g fill="#20232b">
+    <circle cx="575" cy="120" r="7"/><circle cx="610" cy="120" r="7"/><circle cx="642" cy="120" r="7"/><circle cx="670" cy="120" r="7"/><circle cx="695" cy="120" r="7"/>
+    <circle cx="590" cy="196" r="7"/><circle cx="638" cy="196" r="7"/><circle cx="680" cy="196" r="7"/><circle cx="716" cy="196" r="7"/><circle cx="748" cy="196" r="7"/><circle cx="776" cy="196" r="7"/>
+    <circle cx="610" cy="272" r="7"/><circle cx="674" cy="272" r="7"/><circle cx="732" cy="272" r="7"/><circle cx="784" cy="272" r="7"/><circle cx="830" cy="272" r="7"/>
+  </g>
+  <g stroke="#6e7a91" stroke-width="3"><path d="M575 107v-18"/><path d="M590 183v-28"/><path d="M610 259v-38"/></g>
+  <text x="522" y="315" font-family="sans-serif" font-size="14" fill="#535866">spacing and ticks, not glow, disclose speed</text>
+</svg>

@@ -1,0 +1,33 @@
+assets:
+  - id: calligraphic-flow-partial
+    path: media/calligraphic-flow-partial.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: A process diagram routes pointer knots through resampling into a sparse angular vector field and short offset echoes; a crossed-out dense field records an abandoned direction.
+    caption: Partial process exemplar A combines gesture, flow, and temporal memory; only gesture resampling is deepened, and a dense-field dead end remains visible.
+  - id: typographic-spring-partial
+    path: media/typographic-spring-partial.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: A process diagram turns three licensed glyph outlines into spring-connected anchors and repeated offset frames, with collision and audio branches explicitly excluded.
+    caption: Partial process exemplar B combines type geometry, springs, and transforms; only spring response is deepened, while collision and audio are rejected scope.
+  - id: temporal-object-partial
+    path: media/temporal-object-partial.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: A process diagram samples an everyday-object silhouette into points, writes sparse states into a ring buffer, and selects seeded time slices; a camera path is replaced by a bundled still fallback.
+    caption: Partial process exemplar C combines image geometry, bounded temporal memory, and controlled chance; only history selection is deepened, with live camera capture deliberately removed.
+  - id: replay-boundary
+    path: media/replay-boundary.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: A replay diagram shows live and fixture events entering the same normalized adapter, then fixed-step model, inspectable geometry, and renderer; reset returns model and adapter to recorded initial state.
+    caption: Replay contract: normalize once, advance with explicit fixed steps, inspect geometry before rendering, and make reset restore the recorded beginning.

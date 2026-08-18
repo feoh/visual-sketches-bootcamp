@@ -14,7 +14,7 @@ The visual vocabulary is informed by recurring techniques in [Zach Lieberman’s
 
 ## Status
 
-This repository contains the curriculum specification, implementation roadmap, tracked foundation probe, and complete instructional sections 00–15. Each published section pairs portable lesson prose with a tested deterministic model, learner starter, explained reference solution, and Linux/macOS/Windows build wrappers. Unit 4 culminates in an embodied-audio elective whose core replays recorded input and falls back safely when no device is available.
+This repository contains the curriculum specification, implementation roadmap, tracked foundation probe, authored instructional sections 00–15, and authored synthesis projects 16–17. The instructional sections pair portable lesson prose with tested deterministic models, learner starters, explained reference solutions, and Linux/macOS/Windows build wrappers; the synthesis projects provide bounded briefs, evaluator fixtures, process templates, and divergent partial exemplars rather than canonical finished answers. Human-learner pilot results and manual graphical, accessibility, and live-device evidence remain pending and are not inferred from automated checks.
 
 - [Curriculum map](docs/curriculum-map.md)
 - [Exercise and testing strategy](docs/testing-strategy.md)
@@ -24,7 +24,11 @@ This repository contains the curriculum specification, implementation roadmap, t
 - [Foundation spike evidence](docs/foundation-spike.md)
 - [Foundation harness validation](docs/foundation-harness-evidence.md)
 - [Portable authoring templates and conventions](authoring/README.md)
+- [Optional Hugo publication](docs/publication.md)
+- [Pilot protocol and evidence ledger](docs/pilot-protocol-and-evidence.md)
+- [Delivery review process](docs/review-process.md)
 - [Research and source notes](docs/source-notes.md)
+- [License scope](LICENSE) and [third-party notices](THIRD_PARTY_NOTICES.md)
 
 ## Design constraints
 
@@ -43,8 +47,8 @@ The work is tracked in Witan as project `wp-visual-sketches-bootcamp-9c2c95`, wi
 
 ## Baseline
 
-The initial implementation targets openFrameworks **0.12.1** and a deliberately conservative **C++17 language subset** for lesson code, even where individual platform toolchains enable newer language modes. Use the separate POSIX-shell and PowerShell commands documented in [`scripts/README.md`](scripts/README.md); no Python, Node, CMake, or committed native project metadata is required. Commit-addressed CI now proves Debug/Release builds and the exact 12-test no-window suite on Linux, macOS, and Windows. Graphical appearance remains a separate manual validation claim; see the [foundation evidence ledger](docs/foundation-harness-evidence.md).
+The initial implementation targets openFrameworks **0.12.1** and a deliberately conservative **C++17 language subset** for lesson code, even where individual platform toolchains enable newer language modes. Use the separate POSIX-shell and PowerShell commands documented in [`scripts/README.md`](scripts/README.md); no Python, Node, CMake, or committed native project metadata is required. Commit-addressed foundation evidence at `f3c42f4` proves Debug/Release builds and the exact 12-test no-window suite on Linux, macOS, and Windows. Current delivery-head CI and graphical appearance remain separate validation claims; see the [foundation evidence ledger](docs/foundation-harness-evidence.md) and [delivery review ledger](docs/review-process.md).
 
 ## License
 
-A license will be selected before lesson content and solutions are published. Third-party assets will be bundled only with explicit license and attribution information.
+Original curriculum prose and media are licensed under CC BY 4.0; source code, tests, and scripts are licensed under MIT; fixture data explicitly marked CC0-1.0 remains CC0. Third-party material retains its own terms. See [LICENSE](LICENSE), the full texts under [`LICENSES/`](LICENSES/), and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

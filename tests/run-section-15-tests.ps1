@@ -37,11 +37,11 @@ try {
         (Join-Path $Root "exercises\15-embodied-audio-input\solution\src\ofApp.cpp")
     )) {
         $Text = Get-Content -Raw -LiteralPath $Adapter
-        foreach ($Needle in @("chooseNoDevice();  // Safe default", "key == 'f'", "key == 'l'", "key == 'n'", "sound_stream_.setup(settings)", "sound_stream_.close()", "pending_amplitude_.exchange(-1.0f)", "ACTIVITY: ACTIVE")) {
+        foreach ($Needle in @("chooseNoDevice();  // Safe default", "key == 'f'", "key == 'l'", "key == 'n'", "sound_stream_.setup(settings)", "sound_stream_.close()", "pending_amplitude_.exchange(-1.0f)", "ACTIVITY: ACTIVE", "viewport_width < 680 || viewport_height < 360", "ofBitmapStringGetBoundingBox", "fittedInputStatus(state_.source, viewport_width)", "viewport_height >= 12", 'bitmapTextFits("RESIZE TO 680 x 360", viewport_width)')) {
             if (-not $Text.Contains($Needle)) { throw "$Adapter is missing adapter contract: $Needle" }
         }
     }
-    Write-Host "section-15-adapter-contract: safe default, N/F/L routes, and live open/close hooks are discoverable"
+    Write-Host "section-15-adapter-contract: safe default, N/F/L routes, live open/close hooks, and tiny-window fallback are discoverable"
 
     $Malformed = Join-Path $BuildDirectory "malformed-amplitudes.txt"
     @(

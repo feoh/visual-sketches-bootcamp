@@ -21,6 +21,10 @@ void ofApp::setup() {
 
 void ofApp::loadAsset() {
     error_.clear(); source_ = {}; frame_ = {}; time_ = 0.0f;
+    if (!imageGeometryDesignIsValid(design_)) {
+        error_ = "Design error: use finite bounded sampling, motion, radius, and RGB values.";
+        return;
+    }
     if (!image_.load("seed-mask.png")) {
         error_ = "Asset load failed: bin/data/seed-mask.png is missing or unreadable.";
         return;
@@ -42,10 +46,11 @@ void ofApp::update() {
 }
 
 void ofApp::draw() {
-    ofBackground(color(design_.background));
+    if (imageGeometryDesignIsValid(design_)) ofBackground(color(design_.background));
+    else ofBackground(18, 24, 38);
     if (!error_.empty()) {
         ofSetColor(255, 130, 100);
-        ofDrawBitmapString(error_ + " Press R after restoring the asset.", 18, 28);
+        ofDrawBitmapString(error_ + " Fix the issue, then press R or rebuild.", 18, 28);
         return;
     }
     const float motion = reduced_motion_ ? 0.0f : time_ * design_.motion_rate;
@@ -54,7 +59,13 @@ void ofApp::draw() {
     const image_geometry::Transform transform{
         {ofGetWidth()*0.5f-source_.centroid.x, ofGetHeight()*0.5f-source_.centroid.y},
         std::sin(motion)*0.22f, std::max(0.2f,fit)};
-    if (image_geometry::transformGeometry(source_,transform,frame_) != image_geometry::Status::ok) return;
+    const auto transform_status = image_geometry::transformGeometry(source_,transform,frame_);
+    if (transform_status != image_geometry::Status::ok) {
+        error_ = std::string("Transform error: ") + image_geometry::statusMessage(transform_status);
+        ofSetColor(255, 130, 100);
+        ofDrawBitmapString(error_, 18, 28);
+        return;
+    }
     ofSetColor(color(design_.ink));
     ofSetLineWidth(2.0f);
     for (std::size_t index=0; index<frame_.points.size(); ++index) {
