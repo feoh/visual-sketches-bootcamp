@@ -118,20 +118,20 @@ export PG_OF_PATH="$OF_ROOT"
   foundation/windowed
 ```
 
-macOS uses the same form with `-p"osx"`. The Windows PowerShell equivalent uses
-the slash-form options documented by the 0.12.1 command-line tool:
+macOS uses the same form with `-p"osx"`. The 0.12.1 command-line tool uses
+the same joined short options on Windows; slash-form aliases are not supported:
 
 ```powershell
 $env:PG_OF_PATH = $env:OF_ROOT
 & $PG `
-  "/ofPath=$env:OF_ROOT" `
-  "/platforms=vs" `
-  "/source=../../shared/core" `
+  "-o$env:OF_ROOT" `
+  "-pvs" `
+  "-s../../shared/core" `
   foundation/windowed
 ```
 
-For `foundation/unit`, supply both external directories and keep the test addon
-in tracked `addons.make`:
+For `foundation/unit`, supply their single common `shared` root and keep the test
+addon in tracked `addons.make`:
 
 ```text
 ofxUnitTests
@@ -141,7 +141,7 @@ ofxUnitTests
 "$PG" \
   -o"$OF_ROOT" \
   -p"$HOST_PLATFORM" \
-  -s"../../shared/core,../../shared/test-support" \
+  -s"../../shared" \
   foundation/unit
 ```
 
@@ -149,11 +149,19 @@ On Windows the equivalent is:
 
 ```powershell
 & $PG `
-  "/ofPath=$env:OF_ROOT" `
-  "/platforms=vs" `
-  "/source=../../shared/core,../../shared/test-support" `
+  "-o$env:OF_ROOT" `
+  "-pvs" `
+  "-s../../shared" `
   foundation/unit
 ```
+
+The unit project uses one shared root because openFrameworks 0.12.1's GNU Make
+rules apply `subst` and a pattern prerequisite to the complete space-separated
+`PROJECT_EXTERNAL_SOURCE_PATHS` value; two external roots generate an invalid
+`..shared/core` object target. One root still exposes `shared/core` and
+`shared/test-support` only to the unit project, remains relative, and works in
+all native metadata without a generated-file patch. The windowed project keeps
+the narrower `shared/core` root.
 
 The wrapper does not pass `-a`; on regeneration, Project Generator parses the
 tracked `addons.make`. Addon membership therefore has one canonical owner.
@@ -193,8 +201,10 @@ The wrapper performs these steps per project and per host platform:
    zero;
 6. assert the required generated files exist and are non-empty;
 7. verify source membership and scan tracked files for an embedded absolute
-   `OF_ROOT`; and
-8. build through the native tool.
+   `OF_ROOT`.
+
+Compilation is a subsequent explicit wrapper operation; generation never builds
+implicitly.
 
 Run clean regeneration after adding, removing, moving, or renaming source; after
 changing `addons.make`; after changing the shared-source arguments; or after an
@@ -240,8 +250,10 @@ The spike also found behavior the wrappers must not hide:
    missing `.vscode` directory, logged `[ error ]`, omitted required build
    metadata, then still printed `EXIT_OK` and returned success.
 
-Therefore the course tracks its own known-good no-window `src/main.cpp` and
-`addons.make`, uses the normal platform template, performs clean regeneration,
+Therefore the course tracks its own known-good no-window `src/main.cpp`, empty
+`src/ofApp.{h,cpp}` compatibility adapter, and `addons.make`. The adapter
+satisfies unconditional source references in the normal 0.12.1 Xcode template
+while `main.cpp` owns the test runner. The wrapper performs clean regeneration,
 parses generator diagnostics, and validates outputs. It does not depend on the
 broken 0.12.1 `unittest` template or trust exit status alone.
 
@@ -258,10 +270,13 @@ Generation and compilation are different gates.
 - Unit lanes execute the produced no-window binary separately and fail when
   zero tests are discovered.
 
-The implementation task owns the exact project names, schemes, executable
-locations, and test-count contract after the real foundation projects exist.
-This architecture owns the path, generation, and source-membership rules they
-must follow.
+The implemented products are `bin/<project>_debug` and `bin/<project>` on
+Linux, `bin/<project>Debug.app` and `bin/<project>.app` on macOS, and
+`bin\\<project>_debug.exe` and `bin\\<project>.exe` on Windows. The generated
+Xcode schemes are `<project> Debug` and `<project> Release`. The unit wrapper
+runs from `foundation/unit/bin`, propagates the process exit code, and requires
+exactly one `12/12 tests passed` summary. See `scripts/README.md` for the separate
+doctor, generate, build, and test commands.
 
 ## Alternatives rejected
 

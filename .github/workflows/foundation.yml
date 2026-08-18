@@ -1,0 +1,248 @@
+name: foundation
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: ${{ matrix.status }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - status: linux-build
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: macos-build
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: windows-build
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Restore checksum-addressed openFrameworks archive
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            .openframeworks/*.tar.gz
+            .openframeworks/*.zip
+          key: of-0.12.1-${{ matrix.platform }}-${{ matrix.archive_sha }}
+      - name: Download, verify, and freshly extract openFrameworks (POSIX)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          scripts/setup-of.sh --platform '${{ matrix.platform }}' --destination "$PWD/.openframeworks" | tee /tmp/of-setup
+          grep '^OF_ROOT=' /tmp/of-setup >> "$GITHUB_ENV"
+      - name: Download, verify, and freshly extract openFrameworks (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $line = .\scripts\setup-of.ps1 -Destination "$pwd\.openframeworks"
+          $line | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        shell: bash
+        run: sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y
+      - name: Report and enforce POSIX compatibility band
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'ImageOS=%s\nImageVersion=%s\n' "${ImageOS:-unknown}" "${ImageVersion:-unknown}"
+          uname -a
+          if [[ "$RUNNER_OS" == Linux ]]; then
+            . /etc/os-release
+            printf 'distribution=%s %s\n' "$NAME" "$VERSION_ID"
+            [[ "$VERSION_ID" == 24.04 ]]
+            [[ "$(uname -m)" == x86_64 ]]
+            gcc --version
+            g++ --version
+            [[ "$(gcc -dumpfullversion -dumpversion | cut -d. -f1)" == 13 ]]
+          else
+            sw_vers
+            [[ "$(sw_vers -productVersion)" == 15.* ]]
+            [[ "$(uname -m)" == arm64 ]]
+            xcodebuild -version
+            xcodebuild -version | sed -n '1p' | grep -Eq '^Xcode 16([.]|$)'
+            xcrun --show-sdk-version
+            [[ "$(xcrun --show-sdk-version)" == 15.* ]]
+            xcrun clang++ --version
+          fi
+      - name: Report and enforce Windows compatibility band
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Write-Host "ImageOS=$env:ImageOS ImageVersion=$env:ImageVersion"
+          $nt = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+          Write-Host "Windows build=$($nt.CurrentBuild).$($nt.UBR)"
+          if ($nt.CurrentBuild -ne '20348') { throw 'Windows Server 2022 build 20348 is required' }
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -version '[17.0,18.0)' -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -format json | ConvertFrom-Json | Select-Object -First 1
+          if (-not $vs -or $vs.installationVersion -notmatch '^17\.') { throw 'Visual Studio 2022 17.x with v143 is required' }
+          Write-Host "Visual Studio=$($vs.installationVersion) path=$($vs.installationPath)"
+          $sdk = "${env:ProgramFiles(x86)}\Windows Kits\10\Include\10.0.26100.0"
+          if (-not (Test-Path -LiteralPath $sdk -PathType Container)) { throw 'Windows SDK 10.0.26100.0 is required' }
+          & (Join-Path $vs.installationPath 'MSBuild\Current\Bin\MSBuild.exe') -version
+      - name: Pure C++17 deterministic checks
+        if: runner.os == 'Linux'
+        shell: bash
+        run: tests/run-core-tests.sh
+      - name: Doctor and generate
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          scripts/foundation.sh doctor
+          scripts/foundation.sh generate --project all
+      - name: Build Debug and Release
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          scripts/foundation.sh build --project all --configuration Debug
+          scripts/foundation.sh build --project all --configuration Release
+      - name: Doctor and generate
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          .\scripts\foundation.ps1 doctor
+          .\scripts\foundation.ps1 generate -Project all
+      - name: Build Debug and Release
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          .\scripts\foundation.ps1 build -Project all -Configuration Debug
+          .\scripts\foundation.ps1 build -Project all -Configuration Release
+      - name: Verify tracked inputs unchanged
+        shell: bash
+        run: git diff --exit-code -- . ':!.harness'
+      - name: Upload harness logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ${{ matrix.status }}-logs
+          path: .harness/logs
+          if-no-files-found: ignore
+
+  unit:
+    name: ${{ matrix.status }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - status: linux-unit
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: macos-unit
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: windows-unit
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Restore checksum-addressed openFrameworks archive
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            .openframeworks/*.tar.gz
+            .openframeworks/*.zip
+          key: of-0.12.1-${{ matrix.platform }}-${{ matrix.archive_sha }}
+      - name: Download, verify, and freshly extract openFrameworks (POSIX)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          scripts/setup-of.sh --platform '${{ matrix.platform }}' --destination "$PWD/.openframeworks" | tee /tmp/of-setup
+          grep '^OF_ROOT=' /tmp/of-setup >> "$GITHUB_ENV"
+      - name: Download, verify, and freshly extract openFrameworks (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $line = .\scripts\setup-of.ps1 -Destination "$pwd\.openframeworks"
+          $line | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        shell: bash
+        run: sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y
+      - name: Report and enforce POSIX compatibility band
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'ImageOS=%s\nImageVersion=%s\n' "${ImageOS:-unknown}" "${ImageVersion:-unknown}"
+          uname -a
+          if [[ "$RUNNER_OS" == Linux ]]; then
+            . /etc/os-release
+            printf 'distribution=%s %s\n' "$NAME" "$VERSION_ID"
+            [[ "$VERSION_ID" == 24.04 ]]
+            [[ "$(uname -m)" == x86_64 ]]
+            gcc --version
+            g++ --version
+            [[ "$(gcc -dumpfullversion -dumpversion | cut -d. -f1)" == 13 ]]
+          else
+            sw_vers
+            [[ "$(sw_vers -productVersion)" == 15.* ]]
+            [[ "$(uname -m)" == arm64 ]]
+            xcodebuild -version
+            xcodebuild -version | sed -n '1p' | grep -Eq '^Xcode 16([.]|$)'
+            xcrun --show-sdk-version
+            [[ "$(xcrun --show-sdk-version)" == 15.* ]]
+            xcrun clang++ --version
+          fi
+      - name: Report and enforce Windows compatibility band
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Write-Host "ImageOS=$env:ImageOS ImageVersion=$env:ImageVersion"
+          $nt = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion'
+          Write-Host "Windows build=$($nt.CurrentBuild).$($nt.UBR)"
+          if ($nt.CurrentBuild -ne '20348') { throw 'Windows Server 2022 build 20348 is required' }
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -version '[17.0,18.0)' -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -format json | ConvertFrom-Json | Select-Object -First 1
+          if (-not $vs -or $vs.installationVersion -notmatch '^17\.') { throw 'Visual Studio 2022 17.x with v143 is required' }
+          Write-Host "Visual Studio=$($vs.installationVersion) path=$($vs.installationPath)"
+          $sdk = "${env:ProgramFiles(x86)}\Windows Kits\10\Include\10.0.26100.0"
+          if (-not (Test-Path -LiteralPath $sdk -PathType Container)) { throw 'Windows SDK 10.0.26100.0 is required' }
+          & (Join-Path $vs.installationPath 'MSBuild\Current\Bin\MSBuild.exe') -version
+      - name: Pure C++17 deterministic checks
+        if: runner.os == 'Linux'
+        shell: bash
+        run: tests/run-core-tests.sh
+      - name: Generate, build, and separately execute unit suite
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          scripts/foundation.sh doctor
+          scripts/foundation.sh generate --project unit
+          scripts/foundation.sh build --project unit --configuration Release
+          scripts/foundation.sh test --project unit --configuration Release
+      - name: Generate, build, and separately execute unit suite
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          .\scripts\foundation.ps1 doctor
+          .\scripts\foundation.ps1 generate -Project unit
+          .\scripts\foundation.ps1 build -Project unit -Configuration Release
+          .\scripts\foundation.ps1 test -Project unit -Configuration Release
+      - name: Verify tracked inputs unchanged
+        shell: bash
+        run: git diff --exit-code -- . ':!.harness'
+      - name: Upload harness logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: ${{ matrix.status }}-logs
+          path: .harness/logs
+          if-no-files-found: ignore

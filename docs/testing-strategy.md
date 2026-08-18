@@ -79,7 +79,11 @@ Floating-point results use explicit absolute/relative tolerances.
 
 ### 2. Simulation and state tests — required where applicable
 
-Run updates with explicit `dt`, recorded input, and fixed seeds. Assert invariants such as:
+Run updates with explicit `dt`, recorded input, and fixed seeds. The foundation
+probe defines invalid time explicitly: NaN, positive infinity, negative, and
+zero `dt` increment the observable step counter but leave position and velocity
+unchanged; positive finite `dt` is capped at 0.25 seconds. Assert invariants such
+as:
 
 - particles remain finite and obey the boundary policy;
 - drag does not increase speed;

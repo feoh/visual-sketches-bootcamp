@@ -178,5 +178,7 @@ The following are deliberately not claimed by this spike:
 - any no-window test build or execution; or
 - Debug/Release parity and CI artifact retention.
 
-Those proofs belong to the foundation harness and CI tasks after the project
-moves to implementation.
+Those proofs belong to the implementation harness and native CI rather than
+this disposable spike. See [foundation harness validation](foundation-harness-evidence.md)
+for explicitly pre-commit Linux and cross-generation results; macOS, Windows,
+and graphical runtime remain unproven.

@@ -14,7 +14,7 @@ The visual vocabulary is informed by recurring techniques in [Zach Lieberman’s
 
 ## Status
 
-This repository currently contains the curriculum specification and implementation roadmap. Lesson prose, starter projects, tests, and reference solutions will be added incrementally.
+This repository contains the curriculum specification, implementation roadmap, and the tracked foundation probe: a windowed openFrameworks adapter plus a deterministic `ofxUnitTests`/`ofAppNoWindow` suite. Lesson prose, starter projects, and reference solutions will be added incrementally.
 
 - [Curriculum map](docs/curriculum-map.md)
 - [Exercise and testing strategy](docs/testing-strategy.md)
@@ -22,6 +22,7 @@ This repository currently contains the curriculum specification and implementati
 - [Pinned platform matrix](docs/platform-matrix.md)
 - [Standalone Project Generator architecture](docs/project-generator-architecture.md)
 - [Foundation spike evidence](docs/foundation-spike.md)
+- [Foundation harness validation](docs/foundation-harness-evidence.md)
 - [Research and source notes](docs/source-notes.md)
 
 ## Design constraints
@@ -41,7 +42,7 @@ The work is tracked in Witan as project `wp-visual-sketches-bootcamp-9c2c95`, wi
 
 ## Baseline
 
-The initial implementation targets openFrameworks **0.12.1** and a deliberately conservative **C++17 language subset** for lesson code, even where individual platform toolchains enable newer language modes. A disposable Linux fixture proves the standalone architecture can generate and compile shared source; no tracked foundation target is build-proven yet. macOS, Windows, graphical runtime, and no-window test support remain implementation gates rather than completed support claims.
+The initial implementation targets openFrameworks **0.12.1** and a deliberately conservative **C++17 language subset** for lesson code, even where individual platform toolchains enable newer language modes. Use the separate POSIX-shell and PowerShell commands documented in [`scripts/README.md`](scripts/README.md); no Python, Node, CMake, or committed native project metadata is required. Local container validation has generated and built the tracked Linux Release probes and run all 12 no-window tests, but formal support claims still require commit-addressed CI evidence. macOS, Windows, and graphical runtime remain implementation gates rather than completed support claims.
 
 ## License
 

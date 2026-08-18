@@ -52,15 +52,15 @@ Do not replace these URLs with the rolling openFrameworks download page.
 
 | Lane | Selected compatibility band and evidence anchor | Native project mode | Current evidence | Permitted claim |
 |---|---|---|---|---|
-| Linux | x86-64 Ubuntu 24.04 LTS; upstream 0.12.1 dependency script; GCC 13 family; GNU Make | The tagged make configuration selects C++20 for GCC 10 or newer. | `spike-proven` in Ubuntu 24.04.4 with GCC/G++ 13.3.0; PG 0.103.0 generated and compiled a disposable out-of-tree fixture. No tracked target, display launch, or unit run yet. | The standalone architecture has a Linux compile proof. Do not claim repository build, graphical runtime, or unit support. |
-| macOS | Apple Silicon, macOS 15.4.1; Xcode 16.0 (`16A242d`) as the release-adjacent hosted-runner baseline; macOS 15.0 SDK | The `osx` Project Generator template writes `CLANG_CXX_LANGUAGE_STANDARD = c++23`. | `selected`; tagged workflow declares `macos-15` and `/Applications/Xcode.app`, but this repository has not generated or built on macOS. | Implementation target only. Do not say macOS is supported yet. |
-| Windows | x64 Windows Server 2022 CI image build 20348.3561; Visual Studio Enterprise 2022 17.13.35825.156; v143 C++ tools; Windows SDK 10.0.26100.0 | The tagged solution is Visual Studio 17, uses toolset `v143`, and sets C++ to `stdcpplatest`. | `selected`; tagged upstream workflow builds `windows-2022` with v143, but this repository has not generated or built on Windows. | Implementation target only. Do not say Windows is supported yet. |
+| Linux | x86-64 Ubuntu 24.04 LTS; upstream 0.12.1 dependency script; GCC 13 family; GNU Make | The tagged make configuration selects C++20 for GCC 10 or newer. | `spike-proven` in Ubuntu 24.04.4 with GCC/G++ 13.3.0. Later uncommitted local validation generated and built both tracked Debug and Release probes and ran both unit products with `12/12` passing; see [`foundation-harness-evidence.md`](foundation-harness-evidence.md). No commit-addressed CI result or display launch yet. | The standalone architecture has a Linux compile proof and the tracked harness has pre-commit validation. Do not claim repository `build-proven`, `unit-proven`, or graphical-runtime support until retained commit-addressed evidence exists. |
+| macOS | Apple Silicon; macOS 15 family; Xcode 16 family; macOS 15 SDK family. The release-adjacent reference point was macOS 15.4.1, Xcode 16.0 (`16A242d`), SDK 15.0. | The `osx` Project Generator template writes `CLANG_CXX_LANGUAGE_STANDARD = c++23`. | `selected`; repository CI requests the floating `macos-15` image, reports exact observations, and rejects values outside the selected families. This repository has not generated or built on macOS. | Implementation target only. Do not say macOS is supported yet. |
+| Windows | x64 Windows Server 2022 build 20348 with floating UBR; Visual Studio 2022 17.x and v143 C++ tools; Windows SDK 10.0.26100.0. The release-adjacent reference point had UBR 3561 and VS 17.13.35825.156. | The tagged solution is Visual Studio 17, uses toolset `v143`, and sets C++ to `stdcpplatest`. | `selected`; repository CI requests the floating `windows-2022` image, reports exact observations, and enforces build 20348, VS 17.x/v143, and SDK 10.0.26100.0. This repository has not generated or built on Windows. | Implementation target only. Do not say Windows is supported yet. |
 
-The macOS and Windows patch versions above identify the GitHub runner images
-published immediately before the 0.12.1 release. They are reference anchors,
-not evidence that this repository passed there. Contributor machines may use a
-newer patch in the same Xcode 16 or Visual Studio 2022 family only after the
-matrix gains a separate proof row.
+The exact macOS and Windows patch versions identify release-adjacent GitHub
+runner images for historical context only. Hosted-runner aliases do not pin
+those patch images and this repository does not pretend otherwise. CI prints
+`ImageVersion` and exact native tool versions, enforces the bounded families
+above, and records an exact proof row only after a native job actually passes.
 
 The upstream source also contains MSYS2 packages and workflows. MSYS2 is not a
 course baseline: supporting two Windows compiler/runtime families would add
@@ -103,18 +103,18 @@ printf '%s  %s\n' \
   of_v0.12.1_osx_release.tar.gz | shasum -a 256 --check
 tar -xzf of_v0.12.1_osx_release.tar.gz
 export OF_ROOT="$PWD/of_v0.12.1_osx_release"
-test "$(sw_vers -productVersion)" = "15.4.1"
+test "$(sw_vers -productVersion | cut -d. -f1)" = "15"
 test "$(uname -m)" = "arm64"
-sudo xcode-select -s /Applications/Xcode_16.0.app/Contents/Developer
-xcodebuild -version | grep -Fx "Xcode 16.0"
-xcodebuild -version | grep -Fx "Build version 16A242d"
-test "$(xcrun --show-sdk-version)" = "15.0"
+xcodebuild -version | tee /dev/stderr | sed -n '1p' | grep -E '^Xcode 16([.]|$)'
+test "$(xcrun --show-sdk-version | cut -d. -f1)" = "15"
 xcrun clang++ --version
 ```
 
 The official setup guide says Xcode 14.1 or newer; this project deliberately
-selects Xcode 16.0 instead of treating that broad statement as a tested range.
-These commands are not yet locally verified.
+selects the Xcode 16 family instead of treating that broad statement as a tested
+range. The release-adjacent Xcode 16.0 (`16A242d`) value is a historical anchor,
+not an assertion about the current floating runner. These commands are not yet
+verified by a passing repository macOS job.
 
 ### Windows reference lane
 
@@ -134,16 +134,18 @@ Expand-Archive $asset -DestinationPath .
 $env:OF_ROOT = (Resolve-Path .\of_v0.12.1_vs_64_release).Path
 $nt = Get-ItemProperty `
   "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"
-if ("$($nt.CurrentBuild).$($nt.UBR)" -ne "20348.3561") {
-    throw "unexpected Windows image build or UBR"
+if ($nt.CurrentBuild -ne "20348") {
+    throw "Windows Server 2022 build 20348 is required"
 }
+Write-Host "observed Windows build=$($nt.CurrentBuild).$($nt.UBR)"
 $vs = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
-  -version "[17.13,17.14)" -products * `
+  -version "[17.0,18.0)" -products * `
   -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
   -format json | ConvertFrom-Json
-if ($vs.installationVersion -ne "17.13.35825.156") {
-    throw "unexpected Visual Studio version"
+if ($vs.installationVersion -notmatch "^17\.") {
+    throw "Visual Studio 2022 17.x is required"
 }
+Write-Host "observed Visual Studio=$($vs.installationVersion)"
 if (-not (Test-Path `
     "${env:ProgramFiles(x86)}\Windows Kits\10\Include\10.0.26100.0")) {
     throw "Windows SDK 10.0.26100.0 is missing"
@@ -152,8 +154,10 @@ if (-not (Test-Path `
 
 The tagged Visual Studio template requests the latest installed Windows SDK if
 none is supplied. Repository CI must pass `WindowsTargetPlatformVersion=10.0.26100.0`
-so a changing runner image cannot silently move the baseline. These commands are
-not yet locally verified.
+so a changing runner image cannot silently move that SDK baseline. The UBR and
+Visual Studio patch float within the bounded Windows Server 2022 / VS 2022
+families and are printed on every run. These commands are not yet verified by a
+passing repository Windows job.
 
 ## Course-owned C++17 contract
 

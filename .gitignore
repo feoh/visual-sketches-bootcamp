@@ -1,0 +1,30 @@
+# Harness logs and downloaded framework archives
+.harness/
+.openframeworks/
+
+# Project Generator metadata (generated inside canonical projects)
+foundation/*/Makefile
+foundation/*/config.make
+foundation/*/.vscode/
+foundation/*/*.code-workspace
+foundation/*/*.xcodeproj/
+foundation/*/Project.xcconfig
+foundation/*/of.entitlements
+foundation/*/openFrameworks-Info.plist
+foundation/*/*.sln
+foundation/*/*.vcxproj
+foundation/*/*.vcxproj.filters
+foundation/*/*.vcxproj.user
+foundation/*/icon.rc
+
+# Native build products; preserve foundation/*/bin/data/**
+foundation/*/obj/
+foundation/*/bin/*
+!foundation/*/bin/data/
+!foundation/*/bin/data/**
+foundation/*/*.app/
+foundation/*/*.exe
+foundation/*/*.dll
+foundation/*/*.pdb
+foundation/*/*.ilk
+.DS_Store
