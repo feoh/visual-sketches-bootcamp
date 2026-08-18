@@ -269,7 +269,7 @@ or a second elective lane.
 - No waveform, sound, identity, timestamp, or device metadata is saved or logged.
 - Size/count, meter, text, and shape provide cues independent of sound and color.
 - P pauses; R replays; M reduces repeated marks; nothing flashes.
-- Below 680×360, high-contrast resize/source/stop guidance replaces the composition. The adapter measures the bitmap text, preserves distinct recorded/live/no-device labels while they fit, and progressively shortens each to the essential `N` fallback key. A viewport too small for one glyph is not usable, but model work remains bounded.
+- Below 680×360, high-contrast resize/source/stop guidance replaces the composition. The adapter uses openFrameworks 0.12.1's fixed 8-pixel bitmap-glyph metric, preserves distinct recorded/live/no-device labels while they fit, and progressively shortens each to the essential `N` fallback key. A viewport too small for one glyph is not usable, but model work remains bounded.
 - Geometry, composition, response, and palette differ materially from both examples.
 - Capture alt text and reused code/assets are credited.
 

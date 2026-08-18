@@ -189,8 +189,8 @@ try{
             if (([regex]::Matches($rendered, '<h1')).Count -ne 1) { Fail "publication lesson $slug must contain exactly one h1" }
             if ($rendered.Contains('href="../../../')) { Fail "publication retained an unresolved repository link in $slug" }
             if ($rendered.Contains('href=""')) { Fail "publication emitted an empty link in $slug" }
-            $home = Get-Content -Raw -LiteralPath (Join-Path $publication 'index.html')
-            if (-not $home.Contains("href=`"/visual-sketches-bootcamp/course/$slug/`"")) { Fail "publication home omitted lesson $slug" }
+            $homeContent = Get-Content -Raw -LiteralPath (Join-Path $publication 'index.html')
+            if (-not $homeContent.Contains("href=`"/visual-sketches-bootcamp/course/$slug/`"")) { Fail "publication home omitted lesson $slug" }
         }
         $duplicateWeights = @($lessons | ForEach-Object { (Read-FrontMatter $_.FullName).weight } | Group-Object | Where-Object Count -gt 1)
         if ($duplicateWeights.Count -gt 0) { Fail 'non-draft lesson weights must be unique' }

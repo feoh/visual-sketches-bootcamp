@@ -39,7 +39,7 @@ for adapter in \
   grep -Fq 'pending_amplitude_.exchange(-1.0f)' "$adapter"
   grep -Fq 'ACTIVITY: ACTIVE' "$adapter"
   grep -Fq 'viewport_width < 680 || viewport_height < 360' "$adapter"
-  grep -Fq 'ofBitmapStringGetBoundingBox' "$adapter"
+  grep -Fq 'compactInputStatusForWidth(source, viewport_width)' "$adapter"
   grep -Fq 'fittedInputStatus(state_.source, viewport_width)' "$adapter"
   grep -Fq 'viewport_height >= 12' "$adapter"
   grep -Fq 'bitmapTextFits("RESIZE TO 680 x 360", viewport_width)' "$adapter"

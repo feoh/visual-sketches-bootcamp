@@ -139,4 +139,16 @@ const char* compactInputStatus(InputSource source, int detail_level) {
     return "N";
 }
 
+const char* compactInputStatusForWidth(InputSource source, int viewport_width) {
+    // openFrameworks 0.12.1's built-in bitmap font advances 8 pixels per glyph.
+    const int available = std::max(0, viewport_width - 8);
+    for (int detail = 0; detail <= 3; ++detail) {
+        const char* status = compactInputStatus(source, detail);
+        int length = 0;
+        while (status[length] != '\0') ++length;
+        if (length * 8 <= available) return status;
+    }
+    return "";
+}
+
 }  // namespace embodied

@@ -9,15 +9,12 @@ namespace {
 constexpr std::array<float, 6> kRecordedAmplitudes{{0.0f, 0.05f, 0.4f, 1.0f, 0.0f, 0.2f}};
 ofColor asColor(embodied::Color color) { return ofColor(color.r, color.g, color.b); }
 bool bitmapTextFits(const char* text, int viewport_width) {
-    return ofBitmapStringGetBoundingBox(text, 0, 0).getWidth() <=
-           std::max(0, viewport_width - 8);
+    int length = 0;
+    while (text[length] != '\0') ++length;
+    return length * 8 <= std::max(0, viewport_width - 8);
 }
 const char* fittedInputStatus(embodied::InputSource source, int viewport_width) {
-    for (int detail = 0; detail <= 3; ++detail) {
-        const char* status = embodied::compactInputStatus(source, detail);
-        if (bitmapTextFits(status, viewport_width)) return status;
-    }
-    return "";
+    return embodied::compactInputStatusForWidth(source, viewport_width);
 }
 }
 

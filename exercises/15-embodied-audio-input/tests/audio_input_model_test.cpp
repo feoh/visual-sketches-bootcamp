@@ -181,6 +181,19 @@ void testCompactInputStatus() {
         check(std::string(embodied::compactInputStatus(source, 3)) == "N",
               "smallest status preserves the essential fallback key");
     }
+    check(std::string(embodied::compactInputStatusForWidth(InputSource::recorded, 200)) ==
+              "RECORDED | N=FALLBACK",
+          "wide recorded status uses full distinct label");
+    check(std::string(embodied::compactInputStatusForWidth(InputSource::live_microphone, 120)) ==
+              "LIVE | N=STOP",
+          "measured live status shortens while retaining stop action");
+    check(std::string(embodied::compactInputStatusForWidth(InputSource::no_device, 120)) ==
+              "NO DEV | N",
+          "measured no-device status shortens without becoming recorded");
+    check(std::string(embodied::compactInputStatusForWidth(InputSource::recorded, 16)) == "N",
+          "one-glyph viewport keeps the fallback key");
+    check(std::string(embodied::compactInputStatusForWidth(InputSource::recorded, 8)).empty(),
+          "physically unusable viewport reports no fitting glyph");
 }
 
 void testDesignValidation() {
