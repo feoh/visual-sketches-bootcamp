@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="300" viewBox="0 0 720 300" role="img" aria-labelledby="title desc">
+<title id="title">Gesture rendered as changing geometry</title><desc id="desc">A sweeping, wavy blue-to-orange open path changes from a thick section to a narrow dashed section, with dark anchor dots and width differences making motion readable without color alone.</desc>
+<rect width="720" height="300" rx="18" fill="#f4efde"/><path d="M70 210 C150 65 285 70 326 177 C354 248 430 251 476 170 C520 91 600 84 660 146" fill="none" stroke="#185a80" stroke-width="17" stroke-linecap="round"/>
+<path d="M326 177 C354 248 430 251 476 170 C520 91 600 84 660 146" fill="none" stroke="#dd523e" stroke-width="6" stroke-linecap="round" stroke-dasharray="16 7"/>
+<g fill="#172b3a"><circle cx="70" cy="210" r="6"/><circle cx="326" cy="177" r="6"/><circle cx="476" cy="170" r="6"/><circle cx="660" cy="146" r="6"/></g>
+</svg>

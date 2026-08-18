@@ -17,6 +17,7 @@ on:
       - scripts/section-05.*
       - scripts/section-06.*
       - scripts/section-07.*
+      - scripts/section-08.*
       - tests/run-authoring-check-tests.*
       - tests/run-section-00-tests.*
       - tests/run-section-01-tests.*
@@ -26,6 +27,7 @@ on:
       - tests/run-section-05-tests.*
       - tests/run-section-06-tests.*
       - tests/run-section-07-tests.*
+      - tests/run-section-08-tests.*
       - tests/run-first-cpp-test.*
   pull_request:
     paths:
@@ -43,6 +45,7 @@ on:
       - scripts/section-05.*
       - scripts/section-06.*
       - scripts/section-07.*
+      - scripts/section-08.*
       - tests/run-authoring-check-tests.*
       - tests/run-section-00-tests.*
       - tests/run-section-01-tests.*
@@ -52,6 +55,7 @@ on:
       - tests/run-section-05-tests.*
       - tests/run-section-06-tests.*
       - tests/run-section-07-tests.*
+      - tests/run-section-08-tests.*
       - tests/run-first-cpp-test.*
   workflow_dispatch:
 
@@ -89,12 +93,14 @@ jobs:
         run: tests/run-section-06-tests.sh
       - name: Test section 07 local-coordinate model
         run: tests/run-section-07-tests.sh
+      - name: Test section 08 gesture model
+        run: tests/run-section-08-tests.sh
       - name: Test starter and solution C++ known cases
         run: |
           tests/run-first-cpp-test.sh starter
           tests/run-first-cpp-test.sh solution
       - name: Lint POSIX authoring scripts
-        run: shellcheck scripts/check-authoring.sh scripts/course-project.sh scripts/section-00.sh scripts/section-01.sh scripts/section-02.sh scripts/section-03.sh scripts/section-04.sh scripts/section-05.sh scripts/section-06.sh scripts/section-07.sh tests/run-authoring-check-tests.sh tests/run-section-00-tests.sh tests/run-section-01-tests.sh tests/run-section-02-tests.sh tests/run-section-03-tests.sh tests/run-section-04-tests.sh tests/run-section-05-tests.sh tests/run-section-06-tests.sh tests/run-section-07-tests.sh tests/run-first-cpp-test.sh
+        run: shellcheck scripts/check-authoring.sh scripts/course-project.sh scripts/section-00.sh scripts/section-01.sh scripts/section-02.sh scripts/section-03.sh scripts/section-04.sh scripts/section-05.sh scripts/section-06.sh scripts/section-07.sh scripts/section-08.sh tests/run-authoring-check-tests.sh tests/run-section-00-tests.sh tests/run-section-01-tests.sh tests/run-section-02-tests.sh tests/run-section-03-tests.sh tests/run-section-04-tests.sh tests/run-section-05-tests.sh tests/run-section-06-tests.sh tests/run-section-07-tests.sh tests/run-section-08-tests.sh tests/run-first-cpp-test.sh
 
   windows-contract:
     runs-on: windows-2022
@@ -135,6 +141,9 @@ jobs:
       - name: Test section 07 local-coordinate model
         shell: pwsh
         run: tests/run-section-07-tests.ps1
+      - name: Test section 08 gesture model
+        shell: pwsh
+        run: tests/run-section-08-tests.ps1
       - name: Test starter and solution C++ known cases
         shell: pwsh
         run: |
@@ -264,6 +273,21 @@ jobs:
             archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
           - status: section-07-windows-build
             section: '07'
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+          - status: section-08-linux-build
+            section: '08'
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: section-08-macos-build
+            section: '08'
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: section-08-windows-build
+            section: '08'
             os: windows-2022
             platform: vs
             archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8

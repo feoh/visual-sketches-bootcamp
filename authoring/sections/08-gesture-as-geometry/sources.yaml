@@ -1,0 +1,25 @@
+sources:
+  - id: cpp-vector
+    title: std::vector
+    creator: cppreference contributors
+    url: https://en.cppreference.com/w/cpp/container/vector.html
+    accessed: 2026-08-18
+    note: Supports size, capacity, growth, erase, and clear discussion.
+  - id: of-events
+    title: ofEvents
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/events/ofEvents/
+    accessed: 2026-08-18
+    note: Supports mouse and keyboard event adapter discussion.
+  - id: exponential-smoothing
+    title: Exponential smoothing
+    creator: Wikipedia contributors
+    url: https://en.wikipedia.org/wiki/Exponential_smoothing
+    accessed: 2026-08-18
+    note: Background for exponentially weighting new observations; this lesson states its continuous-time coefficient explicitly.
+  - id: polyline-resampling
+    title: Polyline simplification and resampling
+    creator: Dino Dini
+    url: https://www.gamedeveloper.com/programming/doing-a-good-deed-with-a-bad-feeling
+    accessed: 2026-08-18
+    note: Additional conceptual reference for distance-based polyline processing; the exercise contract and tests define exact behavior.
