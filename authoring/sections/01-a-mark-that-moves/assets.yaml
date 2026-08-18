@@ -1,0 +1,9 @@
+assets:
+  - id: traveler-time-preview
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    path: media/traveler-time-preview.svg
+    alt: Three equal panels place a yellow traveler at panel-local ruler positions 70, 100, and 130 after zero, 30, and 60 fixed steps at 120 pixels per second; a cyan trail points left.
+    caption: On identical panel-local rulers, each 30-step interval advances the mark by 30 pixels; position and ticks communicate the change without relying on color.

@@ -10,4 +10,4 @@ param(
     [string]$Configuration = "Release"
 )
 $ErrorActionPreference = "Stop"
-& (Join-Path $PSScriptRoot "course-project.ps1") -Section "00" -Command $Command -OfRoot $OfRoot -Project $Project -Configuration $Configuration
+& (Join-Path $PSScriptRoot "course-project.ps1") -Section "01" -Command $Command -OfRoot $OfRoot -Project $Project -Configuration $Configuration

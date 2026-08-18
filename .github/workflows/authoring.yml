@@ -8,9 +8,12 @@ on:
       - exercises/**
       - scripts/check-authoring.*
       - scripts/setup-of.*
+      - scripts/course-project.*
       - scripts/section-00.*
+      - scripts/section-01.*
       - tests/run-authoring-check-tests.*
       - tests/run-section-00-tests.*
+      - tests/run-section-01-tests.*
   pull_request:
     paths:
       - .github/workflows/authoring.yml
@@ -18,9 +21,12 @@ on:
       - exercises/**
       - scripts/check-authoring.*
       - scripts/setup-of.*
+      - scripts/course-project.*
       - scripts/section-00.*
+      - scripts/section-01.*
       - tests/run-authoring-check-tests.*
       - tests/run-section-00-tests.*
+      - tests/run-section-01-tests.*
   workflow_dispatch:
 
 permissions:
@@ -43,8 +49,10 @@ jobs:
         run: tests/run-authoring-check-tests.sh
       - name: Test section 00 geometry
         run: tests/run-section-00-tests.sh
+      - name: Test section 01 motion model
+        run: tests/run-section-01-tests.sh
       - name: Lint POSIX authoring scripts
-        run: shellcheck scripts/check-authoring.sh scripts/section-00.sh tests/run-authoring-check-tests.sh tests/run-section-00-tests.sh
+        run: shellcheck scripts/check-authoring.sh scripts/course-project.sh scripts/section-00.sh scripts/section-01.sh tests/run-authoring-check-tests.sh tests/run-section-00-tests.sh tests/run-section-01-tests.sh
 
   windows-contract:
     runs-on: windows-2022
@@ -64,22 +72,43 @@ jobs:
       - name: Test section 00 geometry
         shell: pwsh
         run: tests/run-section-00-tests.ps1
+      - name: Test section 01 motion model
+        shell: pwsh
+        run: tests/run-section-01-tests.ps1
 
-  section-00-native:
+  section-native:
     name: ${{ matrix.status }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - status: section-00-linux-build
+            section: '00'
             os: ubuntu-24.04
             platform: linux64
             archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
           - status: section-00-macos-build
+            section: '00'
             os: macos-15
             platform: osx
             archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
           - status: section-00-windows-build
+            section: '00'
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+          - status: section-01-linux-build
+            section: '01'
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: section-01-macos-build
+            section: '01'
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: section-01-windows-build
+            section: '01'
             os: windows-2022
             platform: vs
             archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
@@ -161,34 +190,34 @@ jobs:
         if: runner.os != 'Windows'
         shell: bash
         run: |
-          scripts/section-00.sh generate --project starter
-          scripts/section-00.sh generate --project solution
+          scripts/section-${{ matrix.section }}.sh generate --project starter
+          scripts/section-${{ matrix.section }}.sh generate --project solution
       - name: Build starter and solution in Debug and Release (POSIX)
         if: runner.os != 'Windows'
         shell: bash
         run: |
           for project in starter solution; do
-            scripts/section-00.sh build --project "$project" --configuration Debug
-            scripts/section-00.sh build --project "$project" --configuration Release
+            scripts/section-${{ matrix.section }}.sh build --project "$project" --configuration Debug
+            scripts/section-${{ matrix.section }}.sh build --project "$project" --configuration Release
           done
       - name: Generate starter and solution (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          .\scripts\section-00.ps1 generate -Project starter
-          .\scripts\section-00.ps1 generate -Project solution
+          & ".\scripts\section-${{ matrix.section }}.ps1" generate -Project starter
+          & ".\scripts\section-${{ matrix.section }}.ps1" generate -Project solution
       - name: Build starter and solution in Debug and Release (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
           foreach ($project in @('starter', 'solution')) {
-            .\scripts\section-00.ps1 build -Project $project -Configuration Debug
-            .\scripts\section-00.ps1 build -Project $project -Configuration Release
+            & ".\scripts\section-${{ matrix.section }}.ps1" build -Project $project -Configuration Debug
+            & ".\scripts\section-${{ matrix.section }}.ps1" build -Project $project -Configuration Release
           }
       - name: Verify tracked inputs unchanged
         shell: bash
         run: git diff --exit-code -- . ':!.harness'
-      - name: Upload section 00 generation logs
+      - name: Upload section generation logs
         if: always()
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:

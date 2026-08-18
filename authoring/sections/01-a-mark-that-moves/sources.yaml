@@ -1,0 +1,25 @@
+sources:
+  - id: of-events
+    title: Events documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/events/ofEvents.html
+    accessed: 2026-08-18
+    note: Defines application update, draw, pointer, and keyboard event timing used by the adapter.
+  - id: of-time
+    title: ofGetLastFrameTime reference
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/utils/ofUtils.html#show_ofGetLastFrameTime
+    accessed: 2026-08-18
+    note: Supports the claim that the adapter receives the previous frame duration in seconds.
+  - id: accumulator
+    title: Fix Your Timestep!
+    creator: Glenn Fiedler
+    url: https://gafferongames.com/post/fix_your_timestep/
+    accessed: 2026-08-18
+    note: Primary explanation of variable timestep, fixed simulation steps, accumulators, and bounded catch-up.
+  - id: cpp-types
+    title: Fundamental types
+    creator: cppreference.com contributors
+    url: https://en.cppreference.com/w/cpp/language/types.html
+    accessed: 2026-08-18
+    note: Supports the concise treatment of bool, int, and floating-point variables.
