@@ -52,8 +52,9 @@ jobs:
           $line | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
+        timeout-minutes: 15
         shell: bash
-        run: sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y
+        run: printf 'y\n' | sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y
       - name: Report and enforce POSIX compatibility band
         if: runner.os != 'Windows'
         shell: bash
@@ -176,8 +177,9 @@ jobs:
           $line | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
+        timeout-minutes: 15
         shell: bash
-        run: sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y
+        run: printf 'y\n' | sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y
       - name: Report and enforce POSIX compatibility band
         if: runner.os != 'Windows'
         shell: bash

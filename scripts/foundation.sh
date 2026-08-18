@@ -257,8 +257,14 @@ generate() {
   done < <(selected_projects)
   git -C "$REPO_ROOT" diff --binary --no-ext-diff HEAD -- >"$after"
   canonical_input_snapshot >"$after_inputs"
-  cmp -s "$before" "$after" || fail "generation changed tracked files"
-  cmp -s "$before_inputs" "$after_inputs" || fail "generation changed canonical project inputs"
+  if ! cmp -s "$before" "$after"; then
+    diff -u "$before" "$after" >&2 || true
+    fail "generation changed tracked files"
+  fi
+  if ! cmp -s "$before_inputs" "$after_inputs"; then
+    diff -u "$before_inputs" "$after_inputs" >&2 || true
+    fail "generation changed canonical project inputs"
+  fi
   if git -C "$REPO_ROOT" grep -F "$OF_ROOT" -- foundation shared scripts tests .github >/dev/null; then fail "tracked implementation files embed the selected OF_ROOT"; fi
   info "generation passed for $PROJECT"
 }

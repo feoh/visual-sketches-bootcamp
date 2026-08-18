@@ -164,12 +164,12 @@ function Assert-Generated([string]$Name) {
         Fail "$Name generation omitted Visual Studio metadata"
     }
     [xml]$xml = Get-Content -LiteralPath $projectFile -Raw
-    $actualCompile = @($xml.Project.ItemGroup.ClCompile | ForEach-Object {
+    $actualCompile = @($xml.Project.ItemGroup.ClCompile | Where-Object { $null -ne $_ } | ForEach-Object {
         $include = $_.GetAttribute("Include")
         if ([string]::IsNullOrWhiteSpace($include)) { Fail "$Name ClCompile contains an empty source path" }
         [IO.Path]::GetFullPath((Join-Path $path $include)).ToLowerInvariant()
     })
-    $actualInclude = @($xml.Project.ItemGroup.ClInclude | ForEach-Object {
+    $actualInclude = @($xml.Project.ItemGroup.ClInclude | Where-Object { $null -ne $_ } | ForEach-Object {
         $include = $_.GetAttribute("Include")
         if ([string]::IsNullOrWhiteSpace($include)) { Fail "$Name ClInclude contains an empty source path" }
         [IO.Path]::GetFullPath((Join-Path $path $include)).ToLowerInvariant()
