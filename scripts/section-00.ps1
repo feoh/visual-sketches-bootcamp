@@ -144,7 +144,7 @@ function Invoke-Generate {
     try {
         $env:PG_OF_PATH = $script:ResolvedOfRoot
         Push-Location $Root
-        try { $output = & $script:PG "-o$script:ResolvedOfRoot" "-pvs" "-ssrc/design,../shared" "exercises/00-visual-signature/$Project" 2>&1; $status = $LASTEXITCODE } finally { Pop-Location }
+        try { $output = & $script:PG "-o$script:ResolvedOfRoot" "-pvs" "-s../shared" "exercises/00-visual-signature/$Project" 2>&1; $status = $LASTEXITCODE } finally { Pop-Location }
     } finally { $env:PG_OF_PATH = $old }
     $text = $output | Out-String
     Set-Content -LiteralPath (Join-Path $logDirectory "generate-vs-section-00-$Project.log") -Value $text
