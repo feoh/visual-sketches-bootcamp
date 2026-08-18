@@ -1,4 +1,10 @@
 sources:
+  - id: glm-vec2
+    title: GLM two-component vector types
+    creator: G-Truc Creation contributors
+    url: https://glm.g-truc.net/0.9.9/api/a00246.html
+    accessed: 2026-08-18
+    note: Supports the glm::vec2 type used at the openFrameworks adapter boundary.
   - id: glm-geometric
     title: Geometric functions
     creator: G-Truc Creation contributors

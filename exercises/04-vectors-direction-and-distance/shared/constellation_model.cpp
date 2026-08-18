@@ -8,6 +8,18 @@ namespace {
 constexpr float safe_inset = 12.0f;  // 8 px half-extent + 2 px half-stroke + 2 px margin.
 bool finite(float value) { return std::isfinite(value); }
 bool finite(Vec2 value) { return finite(value.x) && finite(value.y); }
+bool finite(MotionState state) {
+    return finite(state.position) && finite(state.velocity) && finite(state.acceleration);
+}
+bool boundsValid(Bounds bounds) {
+    return finite(bounds.left) && finite(bounds.top) && finite(bounds.right) &&
+           finite(bounds.bottom) && bounds.left <= bounds.right && bounds.top <= bounds.bottom;
+}
+Vec2 limitMagnitude(Vec2 value, float maximum) {
+    if (!finite(value) || !finite(maximum) || maximum <= 0.0f) return {};
+    const float magnitude = length(value);
+    return magnitude > maximum ? scale(value, maximum / magnitude) : value;
+}
 bool colorValid(Color color) {
     return color.r >= 0 && color.r <= 255 && color.g >= 0 && color.g <= 255 &&
            color.b >= 0 && color.b <= 255;
@@ -54,6 +66,48 @@ Vec2 moveToward(Vec2 start, Vec2 target, float max_step) {
     if (!finite(target) || !finite(max_step) || max_step <= 0.0f) return start;
     const Vec2 direction = subtract(target, start);
     return add(start, scale(normalizeOrZero(direction), std::min(length(direction), max_step)));
+}
+
+Vec2 seekAcceleration(Vec2 position, Vec2 target, float max_acceleration) {
+    if (!finite(position) || !finite(target) || !finite(max_acceleration) ||
+        max_acceleration <= 0.0f) return {};
+    return scale(normalizeOrZero(subtract(target, position)), max_acceleration);
+}
+
+MotionState integrateFixed(MotionState state, float dt) {
+    if (!finite(state) || !finite(dt) || dt <= 0.0f) return state;
+    state.velocity = add(state.velocity, scale(state.acceleration, dt));
+    state.position = add(state.position, scale(state.velocity, dt));
+    return state;
+}
+
+MotionState stepSeek(MotionState state, Vec2 target, float max_acceleration,
+                     float max_speed, float dt) {
+    if (!finite(state) || !finite(target) || !finite(max_speed) || max_speed <= 0.0f ||
+        !finite(dt) || dt <= 0.0f) return state;
+    state.acceleration = seekAcceleration(state.position, target, max_acceleration);
+    state.velocity = limitMagnitude(add(state.velocity, scale(state.acceleration, dt)), max_speed);
+    state.position = add(state.position, scale(state.velocity, dt));
+    return state;
+}
+
+Vec2 orbitPoint(Vec2 center, float radius, float phase_radians) {
+    if (!finite(center) || !finite(radius) || !finite(phase_radians) || radius < 0.0f) return center;
+    return add(center, {radius * std::cos(phase_radians), radius * std::sin(phase_radians)});
+}
+
+MotionState stepBounce(MotionState state, Bounds bounds, float dt) {
+    if (!finite(state) || !boundsValid(bounds) || !finite(dt) || dt <= 0.0f) return state;
+    state = integrateFixed(state, dt);
+    if (state.position.x < bounds.left || state.position.x > bounds.right) {
+        state.position.x = std::clamp(state.position.x, bounds.left, bounds.right);
+        state.velocity.x = -state.velocity.x;
+    }
+    if (state.position.y < bounds.top || state.position.y > bounds.bottom) {
+        state.position.y = std::clamp(state.position.y, bounds.top, bounds.bottom);
+        state.velocity.y = -state.velocity.y;
+    }
+    return state;
 }
 
 bool designIsValid(const Design& design) {

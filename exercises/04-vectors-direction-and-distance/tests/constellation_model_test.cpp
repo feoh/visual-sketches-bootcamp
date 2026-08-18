@@ -99,6 +99,46 @@ void vectorCases() {
     expectVec(moveToward({2.0f, 3.0f}, {infinity, 1.0f}, 4.0f), {2.0f, 3.0f},
               "non-finite movement target preserves finite origin");
 }
+void motionStudyCases() {
+    using namespace constellation;
+    const MotionState initialized{{1.0f, 2.0f}, {3.0f, 4.0f}, {2.0f, -2.0f}};
+    const auto integrated = integrateFixed(initialized, 0.5f);
+    expectVec(integrated.velocity, {4.0f, 3.0f},
+              "fixed-step acceleration updates velocity first");
+    expectVec(integrated.position, {3.0f, 3.5f},
+              "fixed-step velocity updates position with known dt");
+    expectVec(integrateFixed(initialized, 0.0f).position, initialized.position,
+              "non-positive fixed dt preserves motion state");
+
+    expectVec(seekAcceleration({0.0f, 0.0f}, {3.0f, 4.0f}, 2.0f), {1.2f, 1.6f},
+              "seek study scales target direction into acceleration");
+    expectVec(seekAcceleration({3.0f, 4.0f}, {3.0f, 4.0f}, 2.0f), {},
+              "seek study guards coincident target zero vector");
+    const MotionState resting{{0.0f, 0.0f}, {}, {}};
+    const auto sought = stepSeek(resting, {3.0f, 4.0f}, 10.0f, 2.0f, 0.5f);
+    expectVec(sought.acceleration, {6.0f, 8.0f}, "seek acceleration known case");
+    expectVec(sought.velocity, {1.2f, 1.6f}, "seek velocity respects speed limit");
+    expectVec(sought.position, {0.6f, 0.8f}, "seek position advances by fixed dt");
+    const auto coincident = stepSeek(resting, resting.position, 10.0f, 2.0f, 0.5f);
+    expectVec(coincident.position, resting.position, "coincident seek remains still");
+    expectVec(coincident.acceleration, {}, "coincident seek acceleration remains finite zero");
+
+    constexpr float half_pi = 1.57079632679489661923f;
+    expectVec(orbitPoint({10.0f, 20.0f}, 5.0f, 0.0f), {15.0f, 20.0f},
+              "orbit study phase zero known case");
+    expectVec(orbitPoint({10.0f, 20.0f}, 5.0f, half_pi), {10.0f, 25.0f},
+              "orbit study quarter-turn known case");
+    expectVec(orbitPoint({10.0f, 20.0f}, 0.0f, half_pi), {10.0f, 20.0f},
+              "zero-radius orbit stays at center");
+
+    const MotionState approaching_edge{{9.0f, 5.0f}, {4.0f, 0.0f}, {0.0f, 0.0f}};
+    const auto bounced = stepBounce(approaching_edge, {0.0f, 0.0f, 10.0f, 10.0f}, 0.5f);
+    expectVec(bounced.position, {10.0f, 5.0f}, "bounce study clamps at right boundary");
+    expectVec(bounced.velocity, {-4.0f, 0.0f}, "bounce study reverses outward component");
+    const auto replay = stepBounce(approaching_edge, {0.0f, 0.0f, 10.0f, 10.0f}, 0.5f);
+    expectVec(replay.position, bounced.position, "fixed-step bounce replay is deterministic");
+    expectVec(replay.velocity, bounced.velocity, "fixed-step bounce velocity replay is deterministic");
+}
 void fixtureCases(const std::vector<Case>& cases) {
     for (const auto& expected : cases) {
         const auto actual = constellation::makeScene(knownDesign(), expected.viewport, expected.requested);
@@ -179,10 +219,11 @@ int main(int argc, char** argv) {
     const auto cases = argc == 2 ? readCases(argv[1]) : std::vector<Case>{};
     expect(cases.size() == 3, "fixture retains three parsed numerical scenarios");
     vectorCases();
+    motionStudyCases();
     fixtureCases(cases);
     boundaryAndDeterminismCases();
     invalidCases();
     learnerContract();
     if (failures) { std::cerr << failures << " section 04 checks failed\n"; return 1; }
-    std::cout << "constellation_model_test: components, subtraction, direction, distance, normalization and zero guard, scaling, parsed oracles, boundaries, determinism, parameter variation, and learner contract passed\n";
+    std::cout << "constellation_model_test: vector math, seek/orbit/bounce fixed-step studies, zero guards, parsed oracles, boundaries, determinism, parameter variation, and learner contract passed\n";
 }

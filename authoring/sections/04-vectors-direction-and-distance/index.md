@@ -5,9 +5,10 @@ weight: 4
 draft: false
 course_kind: instructional
 objectives:
-  - Read and reason about two-dimensional vector components
-  - Use point subtraction to obtain direction and length to obtain distance
+  - Read, initialize, and pass small vector and motion structs by value or const reference
+  - Use glm::vec2 and point subtraction to obtain direction, magnitude, and distance
   - Normalize with an explicit zero-length guard and scale a unit direction
+  - Apply velocity and acceleration in deterministic fixed-step seek, orbit, and bounce studies
   - Connect pointer and keyboard input to deterministic renderer-independent geometry
   - Test numerical oracles, boundaries, determinism, and learner parameters without pixels
 prerequisites:
@@ -37,16 +38,35 @@ what should happen when anchor and target are the same point.
 
 ### A vector is two components
 
-A two-dimensional vector stores horizontal and vertical components:
+A two-dimensional vector stores horizontal and vertical components. openFrameworks
+ships [GLM](https://glm.g-truc.net/0.9.9/api/a00246.html), so an adapter can use:
+
+```cpp
+glm::vec2 pointer{static_cast<float>(x), static_cast<float>(y)};
+glm::vec2 direction = target - anchor;
+float magnitude = glm::length(direction);
+```
+
+The braces initialize both components. Our renderer-independent core uses an
+equivalent small aggregate so tests need neither a window nor openFrameworks:
 
 ```cpp
 struct Vec2 { float x; float y; };
+Vec2 direction{3.0f, 4.0f};
 ```
 
 `(3, 4)` means three units in positive x and four in positive y. In the usual
 openFrameworks window, x increases rightward and y increases downward. Thus
 `(0, -12)` points up, not down. A vector can represent a point, displacement,
 velocity, or other paired quantity; the surrounding name supplies meaning.
+
+A two-float `Vec2` is cheap and clear to pass **by value**, as in
+`length(Vec2 value)`. A larger configuration that is only read uses a
+**const reference**, as in `designIsValid(const Design& design)`: no copy is
+made and the function cannot change the caller's design. The adapters make the
+library boundary explicit with `fromGlm(const glm::vec2& value)` and
+`toGlm(const Vec2& value)`. Do not reinterpret-cast between unrelated structs;
+copy the named `x` and `y` components.
 
 Visual, numerical, and symbolic views answer different questions:
 
@@ -132,9 +152,47 @@ next = current + step
 
 For unit `(0.6, 0.8)` and speed `10`, step is `(6, 8)` and has length `10`.
 `moveToward()` uses `min(distance, max_step)`, so a point five pixels away does
-not overshoot when maximum step is twenty. In this section `reach` is a spatial
-limit recomputed from input, not elapsed-time animation; later motion can
-multiply speed by fixed `dt`.
+not overshoot when maximum step is twenty. In the constellation exercise `reach` is a spatial limit recomputed from input.
+The three compact studies below add elapsed-time motion with an explicit fixed
+`dt`.
+
+### Velocity, acceleration, and three fixed-step studies
+
+A small aggregate keeps related motion values together and is initialized in
+one inspectable expression:
+
+```cpp
+struct MotionState { Vec2 position; Vec2 velocity; Vec2 acceleration; };
+MotionState mote{{0.0f, 0.0f}, {3.0f, 1.0f}, {0.0f, 2.0f}};
+constexpr float fixed_dt = 1.0f / 60.0f;
+mote = integrateFixed(mote, fixed_dt);
+```
+
+Velocity is position change per second; acceleration is velocity change per
+second squared. `integrateFixed()` uses semi-implicit Euler: first
+`velocity += acceleration * dt`, then `position += velocity * dt`. A caller
+uses the same `fixed_dt` every step instead of frame duration, making replay
+predictable. Non-finite or non-positive `dt` preserves the input state.
+
+The tracked pure functions in `shared/constellation_model.cpp` form three small
+studies:
+
+1. **Seek:** `seekAcceleration()` normalizes `target - position`, scales it to
+   maximum acceleration, and returns zero when target and position coincide.
+   `stepSeek()` limits velocity before its fixed-step position update.
+2. **Orbit:** `orbitPoint(center, radius, phase)` uses
+   `(cos(phase), sin(phase)) * radius`. Radius zero returns the center, an
+   intentional zero-vector case.
+3. **Bounce:** `stepBounce()` performs one fixed integration step, clamps a
+   crossing to its rectangular boundary, and reverses only the crossed
+   velocity component.
+
+These are numerical studies rather than three extra rendered apps. They keep
+one lesson project, compile in the public runner, and can be drawn by converting
+core `Vec2` values to `glm::vec2` in `ofApp`. Known cases test seek from `(0,0)`
+toward `(3,4)`, quarter-turn orbit, right-edge bounce, deterministic replay,
+and coincident/zero-radius guards. A large step that crosses a boundary more
+than once is outside this introductory bounce contract; keep fixed steps small.
 
 The model exposes `dot(a, b) = a.x*b.x + a.y*b.y` because self-dot explains
 `squared length`: `dot((3,4),(3,4)) = 25`. No angle or lighting behavior needs
@@ -254,20 +312,27 @@ On Windows Developer PowerShell:
 Fixtures parse every requested target, anchor, clamped target, direction,
 distance, and unit component. Public properties cover vector arithmetic,
 subtraction order, length/distance, normalization and zero/non-finite guards,
-scaling without overshoot, clamped boundaries, stroke-aware in-bounds geometry,
+aggregate motion initialization, fixed-step acceleration/velocity integration,
+seek speed limiting and coincidence, orbit phases and zero radius, bounce
+component reversal and replay, scaling without overshoot, clamped boundaries,
+stroke-aware in-bounds geometry,
 valid `64 x 64` and invalid smaller viewports, deterministic replay, parameter
 variation, and the learner design. Tests compile the starter design, not the
 solution. They do not inspect source style, pixels, contrast, or resemblance.
 
 Generate and compile starter and solution in Debug and Release before a release
 claim. Launch manually at narrow, square, and wide sizes; test pointer and arrow
-keys including coincident points and edges. Native CI proves compilation only,
+keys including coincident points and edges. To visualize the optional studies,
+draw their returned points with distinct shapes, keep pause/reset controls
+keyboard-accessible, and describe seek target, orbit center/path, and bounce
+bounds without relying on color. Native CI proves compilation only,
 not graphical runtime or accessibility.
 
 ## Reflect
 
 In 120–160 words, explain components, “to minus from,” distance as length,
-zero-safe normalization, and unit-direction scaling. Name the coordinate-system
+zero-safe normalization, unit-direction scaling, and how velocity differs from
+acceleration. Name one seek/orbit/bounce zero or boundary case, the coordinate-system
 y convention, test tolerance, one boundary rule, and one learner-owned visual
 decision. Include alt text for one capture.
 
