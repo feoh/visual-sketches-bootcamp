@@ -128,10 +128,10 @@ function Assert-PilotContract {
         if($row.status-ne$expectedStatus){Fail "$routePath`: lesson $($row.lesson_slug) must be $expectedStatus on route $($row.route_id)"}
     }
     foreach($routeId in $routeIds){
-        $routeRows=@($rows|Where-Object route_id-eq$routeId)
+        $routeRows=@($rows|Where-Object{$_.route_id-eq$routeId})
         if($routeRows.Count-ne19){Fail "$routePath`: route $routeId must list all 19 bundles"}
         for($i=0;$i-lt$routeRows.Count;$i++){if([int]$routeRows[$i].sequence-ne$i+1){Fail "$routePath`: route $routeId sequence must be contiguous from 1"}}
-        if(@($routeRows|Group-Object lesson_slug|Where-Object Count-gt1).Count-gt0){Fail "$routePath`: route $routeId repeats a lesson"}
+        if(@($routeRows|Group-Object lesson_slug|Where-Object{$_.Count-gt1}).Count-gt0){Fail "$routePath`: route $routeId repeats a lesson"}
     }
 
     foreach($template in @('README.md','progress-log.md','lesson-notes.md','checkpoints.md','revision-log.md','pacing-log.tsv')){
@@ -139,7 +139,7 @@ function Assert-PilotContract {
     }
     if(-not(Get-Content -Raw -LiteralPath (Join-Path $pilot 'lesson-notes.md')).Contains('Help used:')){Fail 'lesson notes template is missing help level'}
     if(-not(Get-Content -Raw -LiteralPath (Join-Path $pilot 'progress-log.md')).Contains('Complete path')){Fail 'progress log is missing complete-path checkpoint'}
-    foreach($lesson in $lessons|Where-Object Kind-eq'instructional'){
+    foreach($lesson in $lessons|Where-Object{$_.Kind-eq'instructional'}){
         $content=Get-Content -Raw -LiteralPath $lesson.Path
         if($content-notmatch'(?m)^## Manual'){Fail "$($lesson.Path)`: instructional section requires a manual-review heading"}
         if($content-notmatch'(?m)^## Pilot note\r?$'){Fail "$($lesson.Path)`: instructional section requires a Pilot note heading"}
@@ -159,10 +159,10 @@ foreach($bundle in $bundles){
     $sources=@(Read-Records (Join-Path $dir $front.source_records) source)
     $assets=@(Read-Records (Join-Path $dir $front.asset_records) asset)
     $sourceUrls=@($sources|ForEach-Object{$_.url}); $assetUrls=@($assets|Where-Object{$_.ContainsKey('url')}|ForEach-Object{$_.url})
-    if(@($sourceUrls|Group-Object|Where-Object Count-gt1).Count-gt0){Fail "$dir`: duplicate source URL"}
+    if(@($sourceUrls|Group-Object|Where-Object{$_.Count-gt1}).Count-gt0){Fail "$dir`: duplicate source URL"}
     $paths=@($assets|Where-Object{$_.ContainsKey('path')}|ForEach-Object{$_.path})
-    if(@($paths|Group-Object|Where-Object Count-gt1).Count-gt0){Fail "$dir`: duplicate asset path"}
-    if(@($assetUrls|Group-Object|Where-Object Count-gt1).Count-gt0){Fail "$dir`: duplicate asset url"}
+    if(@($paths|Group-Object|Where-Object{$_.Count-gt1}).Count-gt0){Fail "$dir`: duplicate asset path"}
+    if(@($assetUrls|Group-Object|Where-Object{$_.Count-gt1}).Count-gt0){Fail "$dir`: duplicate asset url"}
     $byId=@{}; foreach($asset in $assets){$byId[$asset.id]=$asset}
     foreach($asset in $assets){
         if($asset.ContainsKey('path')){
