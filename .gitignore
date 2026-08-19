@@ -57,4 +57,8 @@ exercises/*/*/*.ilk
 .hugo_build.lock
 resources/_gen/
 
+# Optional personal course notes; keeping them outside the checkout is safer.
+# .gitignore does not make files private or secure.
+.pilot-private/
+
 .DS_Store

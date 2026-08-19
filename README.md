@@ -26,6 +26,7 @@ This repository contains the curriculum specification, implementation roadmap, t
 - [Portable authoring templates and conventions](authoring/README.md)
 - [Optional Hugo publication](docs/publication.md)
 - [Pilot protocol and evidence ledger](docs/pilot-protocol-and-evidence.md)
+- [Operational pilot launch kit and checked routes](docs/pilot/README.md)
 - [Delivery review process](docs/review-process.md)
 - [Research and source notes](docs/source-notes.md)
 - [License scope](LICENSE) and [third-party notices](THIRD_PARTY_NOTICES.md)

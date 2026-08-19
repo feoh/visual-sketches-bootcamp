@@ -90,6 +90,63 @@ function Assert-ContainedLocalLink([string]$File,[string]$Destination){
     if($resolved-ne$Root-and-not$resolved.StartsWith($prefix,[StringComparison]::OrdinalIgnoreCase)){Fail "$File`: local link '$Destination' escapes the repository root"}
 }
 
+function Assert-PilotContract {
+    $pilot = Join-Path $Root 'docs/pilot'
+    $routePath = Join-Path $pilot 'routes.tsv'
+    if (-not (Test-Path -LiteralPath $routePath -PathType Leaf)) { Fail 'docs/pilot/routes.tsv is required' }
+    $routeLines = @(Get-Content -LiteralPath $routePath)
+    $expectedHeader = "protocol_version`troute_id`tsequence`tlesson_slug`tstatus`tcheckpoint_after"
+    if ($routeLines.Count -eq 0 -or $routeLines[0] -ne $expectedHeader) { Fail "$routePath`: invalid header" }
+    $protocol = Get-Content -Raw -LiteralPath (Join-Path $Root 'docs/pilot-protocol-and-evidence.md')
+    if (-not $protocol.Contains('**Protocol version:** 1.2')) { Fail 'pilot protocol version must agree with routes.tsv' }
+
+    $lessons = @(Get-ChildItem -LiteralPath (Join-Path $Authoring 'sections') -Filter index.md -File -Recurse |
+        ForEach-Object { $front=Read-FrontMatter $_.FullName; if($front.draft-eq'false'){[pscustomobject]@{Slug=$front.slug;Weight=[int]$front.weight;Path=$_.FullName;Kind=$front.course_kind}} } |
+        Where-Object { $null-ne$_ } | Sort-Object Weight)
+    if ($lessons.Count -ne 19) { Fail 'pilot routes require exactly 19 published lesson bundles' }
+    if (@($lessons | Group-Object Slug | Where-Object Count -gt 1).Count -gt 0) { Fail 'published lesson slugs must be unique' }
+    $sequence=@{}; for($i=0;$i-lt$lessons.Count;$i++){$sequence[$lessons[$i].Slug]=$i+1}
+
+    for($lineNumber=1;$lineNumber-lt$routeLines.Count;$lineNumber++){
+        $fields=@($routeLines[$lineNumber]-split"`t",-1)
+        if($fields.Count-ne6){Fail "$routePath`: row $($lineNumber+1) must have six tab-delimited fields"}
+        if($fields[2]-notmatch'^[0-9]+$'){Fail "$routePath`: row $($lineNumber+1) sequence must be an ASCII decimal integer"}
+    }
+    $rows = @($routeLines | ConvertFrom-Csv -Delimiter "`t")
+    $routeIds = @('complete-18','core-12','accelerated-8-plus-2')
+    foreach($row in $rows){
+        if($row.protocol_version-ne'1.2'){Fail "$routePath`: protocol version must be 1.2"}
+        if($row.route_id-notin$routeIds){Fail "$routePath`: unknown route $($row.route_id)"}
+        if($row.status-notin@('required','optional')){Fail "$routePath`: invalid status $($row.status)"}
+        if($row.checkpoint_after-notin@('none','unit-0','unit-2','complete-path')){Fail "$routePath`: invalid checkpoint $($row.checkpoint_after)"}
+        if(-not$sequence.ContainsKey($row.lesson_slug)){Fail "$routePath`: unknown lesson slug $($row.lesson_slug)"}
+        if([int]$row.sequence-ne$sequence[$row.lesson_slug]){Fail "$routePath`: lesson $($row.lesson_slug) is out of published weight order"}
+        $expectedCheckpoint=switch($row.lesson_slug){'00-first-cpp-test-interlude'{'unit-0'}'08-gesture-as-geometry'{'unit-2'}'17-original-visual-instrument-capstone'{'complete-path'}default{'none'}}
+        if($row.checkpoint_after-ne$expectedCheckpoint){Fail "$routePath`: lesson $($row.lesson_slug) must use checkpoint $expectedCheckpoint"}
+        $optional=$row.route_id-ne'complete-18'-and$row.lesson_slug-in@('13-time-as-a-drawable-axis','14-images-and-type-as-geometry','15-embodied-audio-input')
+        $expectedStatus=if($optional){'optional'}else{'required'}
+        if($row.status-ne$expectedStatus){Fail "$routePath`: lesson $($row.lesson_slug) must be $expectedStatus on route $($row.route_id)"}
+    }
+    foreach($routeId in $routeIds){
+        $routeRows=@($rows|Where-Object route_id-eq$routeId)
+        if($routeRows.Count-ne19){Fail "$routePath`: route $routeId must list all 19 bundles"}
+        for($i=0;$i-lt$routeRows.Count;$i++){if([int]$routeRows[$i].sequence-ne$i+1){Fail "$routePath`: route $routeId sequence must be contiguous from 1"}}
+        if(@($routeRows|Group-Object lesson_slug|Where-Object Count-gt1).Count-gt0){Fail "$routePath`: route $routeId repeats a lesson"}
+    }
+
+    foreach($template in @('README.md','progress-log.md','lesson-notes.md','checkpoints.md','revision-log.md','pacing-log.tsv')){
+        $path=Join-Path $pilot $template;if(-not(Test-Path -LiteralPath $path -PathType Leaf)-or(Get-Item -LiteralPath $path).Length-eq0){Fail "docs/pilot/$template is required and must not be empty"}
+    }
+    if(-not(Get-Content -Raw -LiteralPath (Join-Path $pilot 'lesson-notes.md')).Contains('Help used:')){Fail 'lesson notes template is missing help level'}
+    if(-not(Get-Content -Raw -LiteralPath (Join-Path $pilot 'progress-log.md')).Contains('Complete path')){Fail 'progress log is missing complete-path checkpoint'}
+    foreach($lesson in $lessons|Where-Object Kind-eq'instructional'){
+        $content=Get-Content -Raw -LiteralPath $lesson.Path
+        if($content-notmatch'(?m)^## Manual'){Fail "$($lesson.Path)`: instructional section requires a manual-review heading"}
+        if($content-notmatch'(?m)^## Pilot note\r?$'){Fail "$($lesson.Path)`: instructional section requires a Pilot note heading"}
+    }
+}
+
+Assert-PilotContract
 $bundles=@(Get-ChildItem -LiteralPath (Join-Path $Authoring "templates"),(Join-Path $Authoring "examples"),(Join-Path $Authoring "sections") -Filter index.md -File -Recurse)
 if($bundles.Count-eq0){Fail "no leaf-bundle index.md files found"}
 $linkPattern=[regex]'\]\(([^)]+)\)'

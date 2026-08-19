@@ -27,8 +27,12 @@ will determine which route is genuinely manageable.
 
 ## Provisional course routes
 
-All estimates below are **unobserved planning envelopes**. For each section,
-record reading, setup/build repair, exercise, reflection, and manual-review time
+All estimates below are **unobserved planning envelopes**. The route names refer
+to provisional weeks, not lesson counts: each named route has 19 ordered bundles
+including the first-C++ test interlude. The machine-checked
+[`pilot/routes.tsv`](pilot/routes.tsv) contract marks every bundle required or
+optional and is the source used on pilot records. For each section, record
+reading, setup/build repair, exercise, reflection, and manual-review time
 separately so later revisions do not confuse technical work with writing or
 installation time.
 
@@ -282,8 +286,9 @@ permission/device failure without retaining audio.
 
 **Exercise:** build a small amplitude-responsive instrument with keyboard,
 recorded-input, and no-device routes. A five-second viewer observation belongs
-to a consented human-evidence session; author review checks visible labels,
-monotonic mapping, fallback operation, and non-color cues instead.
+to a self-pilot or shared-learner run; an author technical smoke check covers
+visible labels, monotonic mapping, fallback operation, and non-color cues but
+is not pacing evidence.
 
 **Tests:** smoothing, dead zone, deterministic recorded input, explicit
 no-device fallback, bounded output, and reset behavior.

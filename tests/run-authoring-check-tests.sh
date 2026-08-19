@@ -16,7 +16,7 @@ make_fixture(){
     destination="$fixture/$relative"
     mkdir -p "$(dirname "$destination")"
     cp -P "$root/$relative" "$destination"
-  done < <(git -C "$root" ls-files -z --cached --others --exclude-standard -- authoring exercises)
+  done < <(git -C "$root" ls-files -z --cached --others --exclude-standard -- authoring exercises docs/pilot docs/pilot-protocol-and-evidence.md)
   cp "$root/scripts/check-authoring.sh" "$fixture/scripts/"
   chmod +x "$fixture/scripts/check-authoring.sh"
 }
@@ -56,6 +56,11 @@ fenced_only_citation(){ remove_source_citation "$1"; cat >> "$1/authoring/exampl
 ```
 EOF
 }
+remove_interlude_route(){ awk -F '\t' '$4!="00-first-cpp-test-interlude"' "$1/docs/pilot/routes.tsv" > "$1/r"; mv "$1/r" "$1/docs/pilot/routes.tsv"; }
+unknown_route_lesson(){ sed '0,/00-cross-platform-setup-and-first-frame/s//missing-lesson/' "$1/docs/pilot/routes.tsv" > "$1/r"; mv "$1/r" "$1/docs/pilot/routes.tsv"; }
+add_route_field(){ sed '2s/$/\textra/' "$1/docs/pilot/routes.tsv" > "$1/r"; mv "$1/r" "$1/docs/pilot/routes.tsv"; }
+invalid_route_sequence(){ sed '2s/\t1\t/\tone\t/' "$1/docs/pilot/routes.tsv" > "$1/r"; mv "$1/r" "$1/docs/pilot/routes.tsv"; }
+reorder_route_rows(){ awk 'NR==2{first=$0;next} NR==3{print;print first;next} {print}' "$1/docs/pilot/routes.tsv" > "$1/r"; mv "$1/r" "$1/docs/pilot/routes.tsv"; }
 
 expect_failure missing-transcript "missing asset 'media/moving-mark-transcript.txt'" remove_transcript
 expect_failure missing-license "missing license" remove_license
@@ -77,6 +82,11 @@ expect_failure unexpected-record-line "unexpected nonblank line" unexpected_reco
 expect_failure duplicate-source-url "duplicate source URL" duplicate_source_url
 expect_failure frontmatter-only-citation "is not cited in prose" frontmatter_only_citation
 expect_failure fenced-only-citation "is not cited in prose" fenced_only_citation
+expect_failure route-missing-interlude "must list all 19 bundles" remove_interlude_route
+expect_failure route-unknown-lesson "unknown lesson slug missing-lesson" unknown_route_lesson
+expect_failure route-extra-field "must have six tab-delimited fields" add_route_field
+expect_failure route-invalid-sequence "sequence must be an ASCII decimal integer" invalid_route_sequence
+expect_failure route-reordered-rows "sequence must be contiguous from 1" reorder_route_rows
 
 # Force the no-realpath branch and prove it conservatively rejects a final
 # symlink. Native Windows tests omit symlink creation because runner policy can
@@ -84,4 +94,4 @@ expect_failure fenced-only-citation "is not cited in prose" fenced_only_citation
 fixture="$work/symlink-fallback"; make_fixture "$fixture"; symlink_escape "$fixture"
 if AUTHORING_CHECK_NO_REALPATH=1 "$fixture/scripts/check-authoring.sh" >"$fixture/output.log" 2>&1; then echo 'negative test unexpectedly passed: symlink-fallback' >&2; exit 1; fi
 grep -Fq "cannot resolve local link 'outside-link.txt'" "$fixture/output.log" || { cat "$fixture/output.log" >&2; exit 1; }
-printf '%s\n' 'authoring checker tests: positive Hugo fixture/publication builds and 21 negative contracts passed'
+printf '%s\n' 'authoring checker tests: positive Hugo fixture/publication builds and 26 negative contracts passed'

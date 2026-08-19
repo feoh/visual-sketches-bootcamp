@@ -113,6 +113,71 @@ normal_markdown() {
   ' "$1"
 }
 
+validate_pilot_contract() {
+  routes="$root/docs/pilot/routes.tsv"
+  [ -f "$routes" ] || fail 'docs/pilot/routes.tsv is required'
+  [ "$(sed -n '1p' "$routes")" = "protocol_version	route_id	sequence	lesson_slug	status	checkpoint_after" ] || fail "$routes: invalid header"
+  grep -Fqx '**Protocol version:** 1.2' "$root/docs/pilot-protocol-and-evidence.md" || fail 'pilot protocol version must agree with routes.tsv'
+
+  : > "$work/pilot-lessons"
+  find "$root/authoring/sections" -mindepth 2 -maxdepth 2 -name index.md -type f | sort | while IFS= read -r lesson; do
+    [ "$(frontmatter_value draft "$lesson")" = false ] || continue
+    printf '%s\t%s\n' "$(frontmatter_value weight "$lesson")" "$(frontmatter_value slug "$lesson")"
+  done | sort -n | awk -F '\t' '{print $2 "\t" NR}' > "$work/pilot-lessons"
+  [ "$(wc -l < "$work/pilot-lessons" | tr -d ' ')" -eq 19 ] || fail 'pilot routes require exactly 19 published lesson bundles'
+  cut -f1 "$work/pilot-lessons" | sort | uniq -d | grep . >/dev/null 2>&1 && fail 'published lesson slugs must be unique'
+
+  awk -F '\t' -v file="$routes" '
+    NR==1 {next}
+    function die(message){print file ": " message > "/dev/stderr"; bad=1}
+    {
+      if(NF!=6){die("row " NR " must have six tab-delimited fields");next}
+      version=$1; route=$2; sequence=$3; slug=$4; status=$5; checkpoint=$6
+      if(version!="1.2")die("row " NR " protocol version must be 1.2")
+      if(route!~/^(complete-18|core-12|accelerated-8-plus-2)$/)die("row " NR " has unknown route " route)
+      if(sequence!~/^[0-9]+$/)die("row " NR " sequence must be an ASCII decimal integer")
+      else if(sequence!=++next_sequence[route])die("route " route " sequence must be contiguous from 1")
+      if(seen_slug[route SUBSEP slug]++)die("route " route " repeats lesson " slug)
+      if(status!~/^(required|optional)$/)die("row " NR " has invalid status " status)
+      if(checkpoint!~/^(none|unit-0|unit-2|complete-path)$/)die("row " NR " has invalid checkpoint " checkpoint)
+      expected_checkpoint="none"
+      if(slug=="00-first-cpp-test-interlude")expected_checkpoint="unit-0"
+      else if(slug=="08-gesture-as-geometry")expected_checkpoint="unit-2"
+      else if(slug=="17-original-visual-instrument-capstone")expected_checkpoint="complete-path"
+      if(checkpoint!=expected_checkpoint)die("lesson " slug " must use checkpoint " expected_checkpoint)
+      expected_status="required"
+      if(route!="complete-18" && slug~/^(13-time-as-a-drawable-axis|14-images-and-type-as-geometry|15-embodied-audio-input)$/)expected_status="optional"
+      if(status!=expected_status)die("lesson " slug " must be " expected_status " on route " route)
+      count[route]++
+    }
+    END {
+      split("complete-18 core-12 accelerated-8-plus-2", routes, " ")
+      for(i in routes)if(count[routes[i]]!=19)die("route " routes[i] " must list all 19 bundles")
+      exit bad
+    }
+  ' "$routes" || fail "$routes: invalid route contract"
+
+  awk -F '\t' -v file="$routes" '
+    NR==FNR {sequence[$1]=$2; next}
+    FNR==1 {next}
+    !($4 in sequence){print file ": unknown lesson slug " $4 > "/dev/stderr";bad=1;next}
+    sequence[$4]!=$3 {print file ": lesson " $4 " is out of published weight order" > "/dev/stderr";bad=1}
+    END {exit bad}
+  ' "$work/pilot-lessons" "$routes" || fail "$routes: route lessons must resolve in published order"
+
+  for template in README.md progress-log.md lesson-notes.md checkpoints.md revision-log.md pacing-log.tsv; do
+    [ -s "$root/docs/pilot/$template" ] || fail "docs/pilot/$template is required and must not be empty"
+  done
+  grep -Fq 'Help used:' "$root/docs/pilot/lesson-notes.md" || fail 'lesson notes template is missing help level'
+  grep -Fq 'Complete path' "$root/docs/pilot/progress-log.md" || fail 'progress log is missing complete-path checkpoint'
+  find "$root/authoring/sections" -mindepth 2 -maxdepth 2 -name index.md -type f | sort | while IFS= read -r lesson; do
+    [ "$(frontmatter_value course_kind "$lesson")" = instructional ] || continue
+    grep -Eq '^## Manual' "$lesson" || fail "$lesson: instructional section requires a manual-review heading"
+    grep -Fqx '## Pilot note' "$lesson" || fail "$lesson: instructional section requires a Pilot note heading"
+  done
+}
+
+validate_pilot_contract
 bundle_number=0
 find "$root/authoring/templates" "$root/authoring/examples" "$root/authoring/sections" -name index.md -type f | sort > "$work/bundles"
 [ -s "$work/bundles" ] || fail 'no leaf-bundle index.md files found'

@@ -69,7 +69,7 @@ transcript remains required.
 
 ## Definition of done: instructional section
 
-An instructional section is done only when it has:
+An instructional section is **written and ready to try** when it has:
 
 - 3–6 observable objectives, prerequisites, and an accessible visual preview;
 - the Look → Predict → Learn → Build → Break and repair → Exercise → Test →
@@ -83,7 +83,12 @@ An instructional section is done only when it has:
 - known-case, boundary, and property tests plus a manual visual/originality
   checklist;
 - complete source and asset records; and
-- a pilot note with completion time, setup friction, and points of confusion.
+- a pilot note naming the completion, setup, timing, and confusion details to
+  jot down while someone actually works through it.
+
+A section has been **tried by a learner** only after a self-pilot or shared
+learner run supplies those notes. `not observed` means exactly that; automated
+checks do not establish learner pacing.
 
 ## Definition of done: synthesis project
 

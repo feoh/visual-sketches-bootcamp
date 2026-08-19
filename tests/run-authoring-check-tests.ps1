@@ -8,6 +8,9 @@ function Make-Fixture([string]$Name) {
     New-Item -ItemType Directory -Force -Path (Join-Path $fixture "scripts") | Out-Null
     Copy-Item -LiteralPath (Join-Path $Root "authoring") -Destination (Join-Path $fixture "authoring") -Recurse
     Copy-Item -LiteralPath (Join-Path $Root "exercises") -Destination (Join-Path $fixture "exercises") -Recurse
+    New-Item -ItemType Directory -Force -Path (Join-Path $fixture "docs") | Out-Null
+    Copy-Item -LiteralPath (Join-Path $Root "docs/pilot") -Destination (Join-Path $fixture "docs/pilot") -Recurse
+    Copy-Item -LiteralPath (Join-Path $Root "docs/pilot-protocol-and-evidence.md") -Destination (Join-Path $fixture "docs/pilot-protocol-and-evidence.md")
     Copy-Item -LiteralPath (Join-Path $Root "scripts/check-authoring.ps1") -Destination (Join-Path $fixture "scripts/check-authoring.ps1")
     return $fixture
 }
@@ -48,9 +51,14 @@ try {
 [Not prose](https://openframeworks.cc/learning/01_basics/create_a_new_project/)
 ```
 '@; Set-Content -NoNewline -LiteralPath $p -Value ($s+$fence) }
+    Expect-Failure "route-missing-interlude" "must list all 19 bundles" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; @(Get-Content -LiteralPath $p | Where-Object {$_-notmatch"`t00-first-cpp-test-interlude`t"}) | Set-Content -LiteralPath $p }
+    Expect-Failure "route-unknown-lesson" "unknown lesson slug missing-lesson" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; $s=Get-Content -Raw -LiteralPath $p; Set-Content -NoNewline -LiteralPath $p -Value ([regex]::Replace($s,'00-cross-platform-setup-and-first-frame','missing-lesson',1)) }
+    Expect-Failure "route-extra-field" "must have six tab-delimited fields" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; $lines=@(Get-Content -LiteralPath $p); $lines[1]+="`textra"; $lines|Set-Content -LiteralPath $p }
+    Expect-Failure "route-invalid-sequence" "sequence must be an ASCII decimal integer" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; $s=Get-Content -Raw -LiteralPath $p; Set-Content -NoNewline -LiteralPath $p -Value ([regex]::Replace($s,"`t1`t","`tone`t",1)) }
+    Expect-Failure "route-reordered-rows" "sequence must be contiguous from 1" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; $lines=@(Get-Content -LiteralPath $p); $first=$lines[1]; $lines[1]=$lines[2]; $lines[2]=$first; $lines|Set-Content -LiteralPath $p }
     # Symlink escape is POSIX-only because Windows runner policy may deny link creation.
     $positive = if ($RequireHugo) { "positive Hugo fixture/publication builds" } else { "positive structural contract" }
-    Write-Host "authoring PowerShell checker tests: $positive and 21 negative contracts passed"
+    Write-Host "authoring PowerShell checker tests: $positive and 26 negative contracts passed"
 } finally {
     if (Test-Path -LiteralPath $Work) { Remove-Item -LiteralPath $Work -Recurse -Force }
 }

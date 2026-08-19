@@ -118,7 +118,7 @@ Deliver three sketch-study briefs, capstone brief/rubric, gallery/process-note t
 
 ## Definition of done for an instructional section
 
-An instructional section (00–15) is complete only when it has:
+An instructional section (00–15) is **written and ready to try** when it has:
 
 - YAML front matter and stable relative links;
 - stated prerequisites and 3–6 observable objectives;
@@ -132,7 +132,12 @@ An instructional section (00–15) is complete only when it has:
 - automated tests for known cases, boundaries, and at least one property;
 - a manual visual/originality checklist;
 - credits and licenses; and
-- a pilot note recording completion time and points of confusion.
+- a pilot note naming the timing and confusion details to jot down while
+  somebody actually works through it.
+
+A section has been **tried by a learner** only when a self-pilot or shared
+learner run records timing, outcome, help, confusion, completion components,
+and any checkpoint result. Automated tests do not establish learner pacing.
 
 A synthesis project is complete when its brief, milestones, deterministic evaluator fixtures, technical/creative/originality rubric, accessibility/license expectations, captures/process-note template, and multiple visually divergent partial exemplars are ready. It does not require a canonical finished answer.
 

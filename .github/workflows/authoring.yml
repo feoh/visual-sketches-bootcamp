@@ -11,6 +11,9 @@ on:
       - site/**
       - README.md
       - docs/publication.md
+      - docs/curriculum-map.md
+      - docs/implementation-roadmap.md
+      - docs/pilot/**
       - docs/pilot-protocol-and-evidence.md
       - docs/review-process.md
       - docs/platform-matrix.md
@@ -36,6 +39,9 @@ on:
       - site/**
       - README.md
       - docs/publication.md
+      - docs/curriculum-map.md
+      - docs/implementation-roadmap.md
+      - docs/pilot/**
       - docs/pilot-protocol-and-evidence.md
       - docs/review-process.md
       - docs/platform-matrix.md
