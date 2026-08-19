@@ -202,6 +202,7 @@ try{
         if (-not $section16.Contains('github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/16-three-sketch-studies/templates/model-test-contract.md')) { Fail 'publication did not rewrite section 16 Markdown resource links' }
         if (-not $section16.Contains('github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/16-three-sketch-studies/fixtures/README.md')) { Fail 'publication did not expose section 16 fixture provenance' }
         if (-not $section17.Contains('github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/17-original-visual-instrument/fixtures/README.md')) { Fail 'publication did not expose section 17 fixture provenance' }
+        if (-not $section17.Contains('href="/visual-sketches-bootcamp/course/16-three-cumulative-sketch-studies/#supported-bootstrap-before-the-timer"')) { Fail 'publication did not resolve the section 17 sibling lesson link' }
         if (-not $section16.Contains('CC0-1.0')) { Fail 'publication omitted section 16 fixture license notice' }
         if (-not $section17.Contains('CC0-1.0')) { Fail 'publication omitted section 17 fixture license notice' }
         $courseIndex = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/index.html')

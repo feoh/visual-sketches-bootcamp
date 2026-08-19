@@ -85,7 +85,7 @@ The design combines constructionist, spiral, worked-example, retrieval-practice,
 - [Ashcraft and Kirk, math anxiety and working memory](https://doi.org/10.1037/0096-3445.130.2.224)
 - [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 
-The recommended 12–16-week pace, accelerated 8+2-week option, and lesson ordering are curriculum judgments to be adjusted after pilot checkpoints; they are not claimed as research-established optima.
+The provisional 12–18-week routes, accelerated 8+2-week option, and lesson ordering are curriculum judgments to be adjusted after pilot checkpoints; they are not claimed as research-established optima.
 
 ## Evidence limitations
 

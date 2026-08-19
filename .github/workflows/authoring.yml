@@ -445,7 +445,7 @@ jobs:
           $line | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Install Linux dependencies
         if: runner.os == 'Linux'
-        timeout-minutes: 25
+        timeout-minutes: 40
         shell: bash
         run: |
           for attempt in 1 2; do
@@ -457,7 +457,12 @@ jobs:
               echo "dpkg lock remained busy before attempt $attempt" >&2
               continue
             fi
-            if printf 'y\n' | sudo timeout --kill-after=30s 10m "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y; then
+            if (( attempt > 1 )); then
+              echo "repairing package state after the interrupted dependency attempt" >&2
+              sudo dpkg --configure -a || continue
+              sudo apt-get --fix-broken install -y || continue
+            fi
+            if printf 'y\n' | sudo timeout --kill-after=1m 15m "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y; then
               exit 0
             fi
             echo "dependency installation attempt $attempt failed; retrying" >&2

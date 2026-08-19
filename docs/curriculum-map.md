@@ -18,16 +18,44 @@ This course is for an experienced Python programmer who remembers some C or C++ 
 - create and document an original, visually compelling sketch; and
 - explain how its code, mathematics, and visual behavior correspond.
 
-The recommended pace is **12–16 weeks including synthesis**, normally one substantial section per week with shorter interludes paired where appropriate. An **accelerated 8+2-week track** may cover sections 00–12 at roughly two sections per week, choose one extension from sections 13–15, and spend two further weeks on synthesis. Pilot evidence, not the calendar, determines whether the accelerated path is genuinely manageable.
+The course is designed for a **12–18 week planning envelope including
+synthesis**. This is an author planning assumption, not observed learner pace.
+The complete route is deliberately longer than the core route; the accelerated
+8+2 route is a scope-reduction option, not a promise that every learner can
+sustain two substantial sections per week. Pilot evidence, not the calendar,
+will determine which route is genuinely manageable.
+
+## Provisional course routes
+
+All estimates below are **unobserved planning envelopes**. For each section,
+record reading, setup/build repair, exercise, reflection, and manual-review time
+separately so later revisions do not confuse technical work with writing or
+installation time.
+
+| Route | Provisional schedule | Scope and consequence |
+|---|---|---|
+| Complete, about 18 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4–13: one of 03–12 each week; 14: 13; 15: 14; 16: 15; 17: section 16 studies; 18: section 17 capstone milestone sequence, with extra capstone weeks permitted | Includes every currently authored lesson. One week is only a planning slot for the capstone; do not compress unfinished milestones merely to meet it. |
+| Core, about 12 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4: 03–04; 5: 05–06; 6: 07–08; 7: 09–10; 8: 11; 9: 12; 10: section 16; 11–12: section 17 | Omits extensions 13–15. Pairings require shorter sessions or multiple work periods within the named week. |
+| Accelerated, 8+2 weeks | 1: 00–01; 2: 02 + test interlude; 3: 03–04; 4: 05–06; 5: 07–08; 6: 09–10; 7: 11; 8: 12; synthesis weeks 1–2: sections 16–17 | Omits 13–15 and is explicitly experimental until human evidence supports it. Extend rather than skip deterministic evidence or accessibility work. |
+
+Sections 00–12 are the core prerequisite chain. Sections 13 and 14 are
+extensions; section 15 is an elective. Section 16 requires the mechanisms from
+06–12 but does not require section 13: “temporal memory” may use the bounded
+histories introduced in sections 09 and 12. Section 17 requires section 16 or
+equivalent synthesis work. The only delivered section 15 lane is recorded
+microphone amplitude with no-device fallback.
 
 ## Recurring lesson shape
 
-Every instructional section (00–15) follows the same scaffold. The synthesis projects (16–17) use a separate project contract rather than pretending to be ordinary lessons:
+Instructional sections 00–15 use the stages below as a recurring scaffold, but
+may combine **Try** and **Build** or use one complete worked sequence where that
+better preserves visual momentum. The synthesis projects (16–17) use a separate
+project contract rather than pretending to be ordinary lessons:
 
 1. **Look:** a short visual goal and animated/still reference.
 2. **Predict:** a no-notes question about what a small code fragment will draw or how it will move.
 3. **Learn:** one mathematical model and at most one substantial C++ mechanism.
-4. **Build:** two or three small, complete example programs.
+4. **Try/Build:** one to three runnable examples or one complete progressive program.
 5. **Break and repair:** one planted bug or misleading implementation.
 6. **Exercise:** a constrained but open-ended C++ sketch.
 7. **Test:** supplied tests for deterministic behavior and edge cases.
@@ -242,17 +270,23 @@ Run one `ofxUnitTests`/`ofAppNoWindow` executable, repair one failed assertion, 
 
 **Tests:** sample counts, indices, bounding boxes, centroids, asset-failure behavior, and transform invariants. Font raster pixels are not a cross-platform gate.
 
-### 15. Elective: depth **or** embodied input
+### 15. Elective: embodied audio input
 
-**Visual goal:** add one new dimension **or** one live input without losing a clear cause-and-effect loop. The learner chooses one lane; this is not a combined 3D/audio/camera survey.
+**Visual goal:** add microphone amplitude as one live input without losing a
+clear cause-and-effect loop. This is the only currently delivered elective
+lane; 3D, spectrum, and camera alternatives are deferred rather than implied.
 
-**3D lane:** `glm::vec3`, camera and perspective intuition, one mesh-topology rule, depth, and projection. The primary C++ mechanism is building validated mesh data.
+**C++:** a recorded-amplitude input adapter, exponential smoothing, a
+single-atomic latest-value mailbox for the callback boundary, and graceful
+permission/device failure without retaining audio.
 
-**Embodied-input lane:** choose microphone amplitude/spectrum **or** camera threshold/contours. The primary C++ mechanism is an input adapter with recorded fixtures and graceful device failure. Camera work includes consent and no frame retention.
+**Exercise:** build a small amplitude-responsive instrument with keyboard,
+recorded-input, and no-device routes. A five-second viewer observation belongs
+to a consented human-evidence session; author review checks visible labels,
+monotonic mapping, fallback operation, and non-color cues instead.
 
-**Exercise:** build a small instrument in which the input mapping can be inferred within five seconds.
-
-**Tests:** the chosen lane tests either mesh index/coordinate validity or smoothing, dead zones, deterministic recorded input, and explicit no-device fallback.
+**Tests:** smoothing, dead zone, deterministic recorded input, explicit
+no-device fallback, bounded output, and reset behavior.
 
 ## Unit 5 — Synthesis projects
 
@@ -264,7 +298,7 @@ Create three compact studies, each combining two technique families:
 2. **repetition + oscillation or transforms**; and
 3. **particles + forces or flow**.
 
-Each study gets one weeknight-sized constraint, one automated model test, one capture, and a 100-word explanation. At least one must use a visual grammar substantially different from the worked examples.
+Each study gets one weeknight-sized constraint, one automated model test, one capture, and an 80–120-word explanation. At least one must use a visual grammar substantially different from the worked examples.
 
 ### 17. Project: an original visual instrument
 

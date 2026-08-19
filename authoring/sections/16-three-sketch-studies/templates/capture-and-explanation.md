@@ -1,4 +1,4 @@
-# Study capture and 100-word explanation
+# Study capture and mechanism explanation
 
 ## Capture record
 
@@ -15,12 +15,11 @@
 
 ## Explanation
 
-Write exactly 100 words below. Count hyphenated compounds consistently and
-state the counter used. Cover mechanism pair, deterministic evidence,
+Write 80–120 words below. Cover the mechanism pair, deterministic evidence,
 composition choice, and limitation. Do not include the heading or caption in
-the count.
+the count; record the count only to confirm the range, not as an editing target.
 
-[Exactly 100 words.]
+[80–120 words.]
 
 Word-count method:
 

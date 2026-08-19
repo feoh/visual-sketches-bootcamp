@@ -101,3 +101,17 @@ command names; tests follow `tests/run-section-NN-tests.sh` or `.ps1`.
 
 Use `--of-root`/`-OfRoot` or `OF_ROOT` exactly as for the foundation. Generated
 native metadata and build products remain ignored.
+
+## Synthesis projects
+
+Sections 16–17 intentionally do not add unproven generic Project Generator
+wrappers. A learner keeps the checked build boundary by repurposing distinct
+existing starter directories on a learner branch: section 08 for gesture
+memory, section 05 or 07 for repetition, and section 10 or 11 for particles.
+The capstone then evolves one completed study on a separate capstone branch.
+See the [section 16 supported bootstrap](../authoring/sections/16-three-sketch-studies/index.md#supported-bootstrap-before-the-timer)
+and [section 17 capstone bootstrap](../authoring/sections/17-original-visual-instrument/index.md#supported-capstone-bootstrap)
+for the required baseline test, generation, build, launch, and checkpoint steps.
+The selected section's existing shell/PowerShell runner remains the public test
+command; synthesis adds its pure model contract and fixtures to that checked
+path rather than committing machine-local native metadata.

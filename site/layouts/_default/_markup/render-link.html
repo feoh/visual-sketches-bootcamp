@@ -16,5 +16,12 @@
   {{- $repositoryPath := strings.TrimPrefix "../../../" $destination -}}
   {{- $view := cond (strings.HasSuffix $repositoryPath "/") "tree" "blob" -}}
   {{- $href = printf "%s/%s/main/%s" site.Params.repositoryURL $view $repositoryPath -}}
+{{- else if strings.HasSuffix $resourcePath ".md" -}}
+  {{- $contentPath := path.Clean (path.Join .Page.File.Dir $resourcePath) -}}
+  {{- $pageRef := strings.TrimSuffix "/index.md" $contentPath -}}
+  {{- with site.GetPage $pageRef -}}
+    {{- $suffix := strings.TrimPrefix $resourcePath $destination -}}
+    {{- $href = printf "%s%s" .RelPermalink $suffix -}}
+  {{- end -}}
 {{- end -}}
 <a href="{{ $href | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>

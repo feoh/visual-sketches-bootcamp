@@ -8,7 +8,7 @@ objectives:
   - Complete three bounded studies that each combine two named technique families
   - Specify and test one deterministic model contract for each study
   - Compare divergent visual grammars without treating an exemplar as a target
-  - Document each study with an accessible capture and a 100-word mechanism explanation
+  - Document each study with an accessible capture and an 80–120-word mechanism explanation
 prerequisites:
   - Completion of sections 06 through 12 or equivalent work with seeded models, transforms, gestures, particles, forces, and flow
   - Ability to separate deterministic state and geometry from openFrameworks input and rendering adapters
@@ -26,11 +26,11 @@ composition, palette, mark vocabulary, and interaction choices to you.
 
 | Study | Required families | Weeknight constraint | Required evidence |
 |---|---|---|---|
-| A | gesture + temporal memory | 75 minutes; one pointer; at most 96 retained samples; no particles | one model test, one capture, exactly 100 words |
-| B | repetition + oscillation or transforms | 75 minutes; one repeated unit; 8–64 instances; at most two animated parameters | one model test, one capture, exactly 100 words |
-| C | particles + forces or flow | 90 minutes; at most 256 particles; one force or one sampled field; fixed simulation step | one model test, one capture, exactly 100 words |
+| A | gesture + temporal memory | 75 minutes; one pointer; at most 96 retained samples; no particles | one model test, one capture, 80–120 words |
+| B | repetition + oscillation or transforms | 75 minutes; one repeated unit; 8–64 instances; at most two animated parameters | one model test, one capture, 80–120 words |
+| C | particles + forces or flow | 90 minutes; at most 256 particles; one force or one sampled field; fixed simulation step | one model test, one capture, 80–120 words |
 
-Time starts after a project builds and its empty test target runs. At the limit,
+Time starts after the selected starter builds and its baseline test target runs. At the limit,
 stop adding features, preserve a working reset, and document what is incomplete.
 Do not spend the study window polishing deployment.
 
@@ -40,9 +40,57 @@ needed to reproduce the automated result. Test state or geometry, never a
 cross-platform screenshot.
 
 Use the [model-test contract template](templates/model-test-contract.md) before
-coding and the [capture and 100-word template](templates/capture-and-explanation.md)
+coding and the [capture and explanation template](templates/capture-and-explanation.md)
 afterward. The fixtures are evaluator inputs and expected values, not starter
 implementations.
+
+## Supported bootstrap before the timer
+
+Do not invent an untracked Project Generator layout for synthesis. On your
+learner branch, repurpose three **different existing starter directories** so
+the course's checked generation/build/test boundary remains available:
+
+| Study | Supported bases | Baseline wrapper |
+|---|---|---|
+| A | section 08 gesture starter | `section-08` |
+| B | section 05 oscillation or section 07 transform starter | `section-05` or `section-07` |
+| C | section 10 force or section 11 flow starter | `section-10` or `section-11` |
+
+For each selected `NN`, run from the repository root:
+
+```sh
+NN=08  # replace with the base chosen from the table
+CXX=g++ "tests/run-section-${NN}-tests.sh"
+"scripts/section-${NN}.sh" generate --project starter
+"scripts/section-${NN}.sh" build --project starter --configuration Release
+```
+
+On Windows Developer PowerShell:
+
+```powershell
+$NN = "08" # replace with the base chosen from the table
+& ".\tests\run-section-$NN-tests.ps1"
+& ".\scripts\section-$NN.ps1" generate -Project starter
+& ".\scripts\section-$NN.ps1" build -Project starter -Configuration Release
+```
+
+Launch the generated starter by
+the platform pattern in that exercise README and confirm reset works. Then
+commit or tag this clean baseline; the study timer begins only after that
+checkpoint. Preserve the base's public declarations and extend its existing
+`shared/*.h` and `shared/*.cpp` model pair with the study's pure operation;
+the fixed-inventory project wrappers reject additional source files by design.
+Add the study fixture under the existing exercise's `fixtures/` directory and
+extend the existing `tests/*.cpp` contract (and both fixed-file-list runners if
+the fixture needs a new argument) so the same section runner executes inherited
+and study-specific checks. Record the exact chosen
+paths and commands in the model-test template.
+
+This is a build/test bootstrap, not a visual starting point. Remove or replace
+the base composition rather than presenting the earlier exercise as one layer
+of the study. The three different starter directories remain three separate
+native sketches, and Git preserves the pre-synthesis solutions if recovery is
+needed.
 
 ## Shared acceptance contract
 
@@ -53,7 +101,7 @@ A study is complete when:
 - the evaluator can run without a window, clock, pointer, audio device, or network;
 - one known case, one boundary, and one invariant are named, with at least one encoded in the supplied fixture;
 - the capture has descriptive alt text and does not rely on color alone;
-- the explanation contains exactly 100 words, excluding its heading and caption; and
+- the explanation contains 80–120 words, excluding its heading and caption, so editing to an exact count does not consume the study window; and
 - borrowed code, visual precedents, type, images, audio, and addons are either credited and licensed or explicitly recorded as absent.
 
 The supplied section 16 TSV fixtures are original course evaluator data by
@@ -94,7 +142,7 @@ Required checks:
 
 Capture one gesture after enough input to reveal memory order. Alt text must
 name the newest and oldest visible structures, the non-color cue for age, and
-the interaction state. In exactly 100 words, connect the sampling boundary,
+the interaction state. In 80–120 words, connect the sampling boundary,
 retention policy, temporal mapping, one composition decision, the fixture
 result, and one limitation.
 
@@ -145,7 +193,7 @@ second family is oscillation, or vice versa.
 
 Capture a frame where index and local rule are both inferable. Alt text must
 state the repeated unit, count or density, ordering cue, and whether time is
-paused. In exactly 100 words, connect index to placement, explain transform
+paused. In 80–120 words, connect index to placement, explain transform
 order or phase, report the fixture tolerance, identify the two animated
 parameters or say only one is used, and name one rejected embellishment.
 
@@ -190,7 +238,7 @@ Required checks:
 
 Capture a seeded or replayed checkpoint, not a hand-selected unrecorded moment.
 Alt text must name population shape, direction cue, boundary behavior, and a
-non-color encoding of motion. In exactly 100 words, connect influence to update
+non-color encoding of motion. In 80–120 words, connect influence to update
 order, fixed step to replay, seed or spawn event to composition, the population
 cap to frame budget, the fixture result, and one manual observation.
 
@@ -206,7 +254,7 @@ cap to frame budget, the fixture result, and one manual observation.
 ## Evaluation and handoff
 
 For each study, submit source, build command, test command and output, fixture
-copy, capture, 100-word explanation, controls, seed/replay values, and credits.
+copy, capture, 80–120-word explanation, controls, seed/replay values, and credits.
 Use this 10-point review independently for each study:
 
 | Dimension | 0 | 1 | 2 |
@@ -215,7 +263,7 @@ Use this 10-point review independently for each study:
 | Deterministic model | no isolated contract | contract runs but misses a required edge | fixture plus known, boundary, and invariant checks pass |
 | Bounded behavior | unbounded or frame-dependent | cap or time policy is incomplete | stated cap, reset, and time policy hold |
 | Visual authorship | copies a worked grammar | some choices change | structure and mapping materially differ |
-| Evidence | missing/inaccessible | capture or prose is incomplete | accessible capture and exact 100-word explanation connect intent to evidence |
+| Evidence | missing/inaccessible | capture or prose is incomplete | accessible capture and 80–120-word explanation connect intent to evidence |
 
 A similar still triggers a mechanism conversation; it is not an automatic
 failure or proof of originality. Compare geometry, density, mapping,
@@ -226,7 +274,7 @@ interaction, motion, and temporal behavior. Record which choices are yours.
 - [ ] Three separate sketches use all three named family pairs.
 - [ ] Each fits its 75/75/90-minute scope or reports where work stopped.
 - [ ] Each has one deterministic, headless model-test contract and fixture result.
-- [ ] Each has one accessible capture and exactly 100 explanatory words.
+- [ ] Each has one accessible capture and 80–120 explanatory words.
 - [ ] At least one visual grammar substantially differs from worked examples.
 - [ ] Reset, caps, explicit time, seeds/replay inputs, controls, and limitations are recorded.
 - [ ] All borrowed material has source, creator, and license; absent borrowing is stated.

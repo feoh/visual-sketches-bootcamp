@@ -45,6 +45,32 @@ Start with the [capstone plan](templates/capstone-plan.md). It freezes the three
 or more concept roles, the one deepening, exclusions, input vocabulary, replay
 schema, budgets, fallback, and evidence before polish begins.
 
+## Supported capstone bootstrap
+
+Create a `learner/capstone` branch from the commit that contains all three
+section 16 studies. Select the one study whose existing model seam is closest
+to the declared deepening and evolve **that one native starter** into the
+capstone; do not merge three `ofApp` implementations or generated project
+directories. Keep the selected section wrapper as the native generation/build
+entry point and preserve its public model/design declarations.
+
+Before milestone 1, rerun the selected section's baseline test, generation,
+build, and launch commands from the [section 16 bootstrap](../16-three-sketch-studies/index.md#supported-bootstrap-before-the-timer).
+Record the selected section number, starter path, executable path, and clean
+commit in `capstone-plan.md`. Extend the selected exercise's existing model
+header/source pair with capstone types and operations—the wrapper rejects extra
+source files by design—and add project fixtures under its existing `fixtures/`
+directory. Extend its existing framework-free test source and both platform
+runners when needed so the original section contract and capstone evaluator run
+through one checked command. The generated Xcode/Visual Studio/Make metadata remains ignored and
+must not be submitted.
+
+This path supplies build plumbing, not capstone content. The completed study is
+process evidence; the capstone must still satisfy three-concept coherence,
+exactly-one deepening, divergent thumbnail, originality, and publication gates.
+If no completed study offers an honest model seam, record that as a curriculum
+blocker rather than creating undocumented native metadata.
+
 ## Non-canonical orientation
 
 The diagrams below are unfinished process slices, not final compositions,
