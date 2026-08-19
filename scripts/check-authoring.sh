@@ -318,13 +318,13 @@ EOF
     actual_count=$(cat "$work/published-count" 2>/dev/null || printf 0)
     [ "$actual_count" -eq "$expected_count" ] || fail "publication emitted $actual_count of $expected_count expected lessons"
     cut -f1 "$work/publication-weights" | sort | uniq -d | grep . >/dev/null 2>&1 && fail 'non-draft lesson weights must be unique'
-    grep -Fq 'github.com/feoh/visual_sketches_bootcamp/blob/main/exercises/' "$publication/course/01-a-mark-that-moves/index.html" || fail 'publication did not rewrite repository file links'
+    grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/exercises/' "$publication/course/01-a-mark-that-moves/index.html" || fail 'publication did not rewrite repository file links'
     [ -f "$publication/course/01-a-mark-that-moves/media/traveler-time-preview.svg" ] || fail 'publication omitted representative bundle media'
     section16="$publication/course/16-three-cumulative-sketch-studies/index.html"
     section17="$publication/course/17-original-visual-instrument-capstone/index.html"
-    grep -Fq 'github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/16-three-sketch-studies/templates/model-test-contract.md' "$section16" || fail 'publication did not rewrite section 16 Markdown resource links'
-    grep -Fq 'github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/16-three-sketch-studies/fixtures/README.md' "$section16" || fail 'publication did not expose section 16 fixture provenance'
-    grep -Fq 'github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/17-original-visual-instrument/fixtures/README.md' "$section17" || fail 'publication did not expose section 17 fixture provenance'
+    grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/templates/model-test-contract.md' "$section16" || fail 'publication did not rewrite section 16 Markdown resource links'
+    grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/fixtures/README.md' "$section16" || fail 'publication did not expose section 16 fixture provenance'
+    grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/17-original-visual-instrument/fixtures/README.md' "$section17" || fail 'publication did not expose section 17 fixture provenance'
     grep -Fq 'href="/visual-sketches-bootcamp/course/16-three-cumulative-sketch-studies/#supported-bootstrap-before-the-timer"' "$section17" || fail 'publication did not resolve the section 17 sibling lesson link'
     grep -Fq 'CC0-1.0' "$section16" || fail 'publication omitted section 16 fixture license notice'
     grep -Fq 'CC0-1.0' "$section17" || fail 'publication omitted section 17 fixture license notice'

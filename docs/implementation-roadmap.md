@@ -41,7 +41,7 @@ tree remains usable as an Obsidian vault.
 ## Implemented repository shape
 
 ```text
-visual_sketches_bootcamp/
+visual-sketches-bootcamp/
 ├── README.md
 ├── docs/
 │   ├── curriculum-map.md
@@ -186,7 +186,7 @@ Pilot checkpoints after Units 0 and 2 should adjust pacing from observed setup t
 Witan is the system of record for execution:
 
 - Workflow project: `wp-visual-sketches-bootcamp-9c2c95`
-- Repository: <https://github.com/feoh/visual_sketches_bootcamp>
+- Repository: <https://github.com/feoh/visual-sketches-bootcamp>
 - Tasks are repository-scoped and roll up through foundation, curriculum-unit, synthesis, and publication epics.
 - Dependencies enforce “toolchain first,” then progressively authored units, then capstone/publication.
 - Sessions should record changed files, validation evidence, remaining work, and curriculum decisions.

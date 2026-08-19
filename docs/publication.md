@@ -31,8 +31,36 @@ hugo --source . --config site/hugo.toml \
 ```
 
 Do not point `--destination` at a directory containing anything you need:
-`--cleanDestinationDir` removes stale output. No command in this repository
-pushes, deploys, or publishes the result.
+`--cleanDestinationDir` removes stale output. Only the `pages` workflow below
+publishes the result; no script in this repository deploys anything.
+
+## GitHub Pages deployment
+
+The site is published at <https://feoh.github.io/visual-sketches-bootcamp/>,
+which is also the `baseURL` in `site/hugo.toml`, so local and deployed builds
+emit identical links. The path segment must stay equal to the repository name;
+the authoring checker asserts it.
+
+`.github/workflows/pages.yml` builds and deploys:
+
+- It runs `scripts/build-site.sh`, so a deployment cannot skip the authoring
+  contract, the Hugo fixtures, or the fatal-warning publication build.
+- The build job holds only `contents: read`. Only the deploy job receives
+  `pages: write` and `id-token: write`, and it runs no repository code.
+- Deployment is guarded on `refs/heads/main`, so a `workflow_dispatch` from a
+  branch builds but does not publish.
+- Repository Pages source is `build_type: workflow`; no `gh-pages` branch
+  exists and nothing commits generated output.
+
+### Rollback and disablement
+
+- Republish a known-good commit: re-run that commit's `pages` workflow run, or
+  dispatch `pages` from `main` after reverting.
+- Stop publishing without losing history: disable the `pages` workflow in the
+  Actions tab. The last deployment stays live.
+- Take the site down: `gh api -X DELETE repos/feoh/visual-sketches-bootcamp/pages`.
+  This removes the public site; re-enable with a `POST` of
+  `{"build_type":"workflow"}` and a workflow run.
 
 ## What the layer does
 

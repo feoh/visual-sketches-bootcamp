@@ -2,7 +2,7 @@ assets:
   - id: five-primitive-preview
     path: media/five-primitive-preview.svg
     kind: image
-    creator: visual_sketches_bootcamp course authors
+    creator: visual-sketches-bootcamp course authors
     source: original
     license: CC-BY-4.0
     alt: Navy rectangle, coral circle, yellow triangle and diagonal, and navy ellipse form two uneven rows on a warm ground.

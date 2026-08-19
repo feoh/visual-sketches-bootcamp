@@ -1,4 +1,4 @@
-# visual_sketches_bootcamp
+# visual-sketches-bootcamp
 
 A gentle, visual-first curriculum for learning just enough modern C++ and mathematics to create expressive images and animations with [openFrameworks](https://openframeworks.cc/).
 
@@ -37,8 +37,8 @@ This repository contains the curriculum specification, implementation roadmap, t
    working copy so the repair exercises cannot erase unrelated work:
 
    ```sh
-   git clone https://github.com/feoh/visual_sketches_bootcamp.git
-   cd visual_sketches_bootcamp
+   git clone https://github.com/feoh/visual-sketches-bootcamp.git
+   cd visual-sketches-bootcamp
    git switch -c learner/course
    ```
 

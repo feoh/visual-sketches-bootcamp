@@ -16,7 +16,7 @@ decisions. It is not the implementation-phase support ledger for the future
 
 | Field | Value |
 |---|---|
-| Course repository | `feoh/visual_sketches_bootcamp` at `67afda4084e709e13016b41c53e919b35801c68a` before these specification edits |
+| Course repository | `feoh/visual-sketches-bootcamp` at `67afda4084e709e13016b41c53e919b35801c68a` before these specification edits |
 | Fixture | Disposable `/tmp/pg-spike`; not a tracked course project |
 | openFrameworks | Official 0.12.1 Linux x86-64 release archive |
 | Archive SHA-256 | `d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63` |

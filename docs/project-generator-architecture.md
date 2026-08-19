@@ -8,7 +8,7 @@ draft: false
 
 ## Decision
 
-`visual_sketches_bootcamp` remains a standalone Git repository. openFrameworks
+`visual-sketches-bootcamp` remains a standalone Git repository. openFrameworks
 0.12.1 is installed separately and supplied explicitly as `OF_ROOT`.
 
 This is a deliberate exception to upstream's preferred `OF_ROOT/apps/...`

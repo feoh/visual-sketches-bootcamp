@@ -252,13 +252,13 @@ try{
         $duplicateWeights = @($lessons | ForEach-Object { (Read-FrontMatter $_.FullName).weight } | Group-Object | Where-Object Count -gt 1)
         if ($duplicateWeights.Count -gt 0) { Fail 'non-draft lesson weights must be unique' }
         $traveler = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/01-a-mark-that-moves/index.html')
-        if (-not $traveler.Contains('github.com/feoh/visual_sketches_bootcamp/blob/main/exercises/')) { Fail 'publication did not rewrite repository file links' }
+        if (-not $traveler.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/exercises/')) { Fail 'publication did not rewrite repository file links' }
         if (-not (Test-Path -LiteralPath (Join-Path $publication 'course/01-a-mark-that-moves/media/traveler-time-preview.svg') -PathType Leaf)) { Fail 'publication omitted representative bundle media' }
         $section16 = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/16-three-cumulative-sketch-studies/index.html')
         $section17 = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/17-original-visual-instrument-capstone/index.html')
-        if (-not $section16.Contains('github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/16-three-sketch-studies/templates/model-test-contract.md')) { Fail 'publication did not rewrite section 16 Markdown resource links' }
-        if (-not $section16.Contains('github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/16-three-sketch-studies/fixtures/README.md')) { Fail 'publication did not expose section 16 fixture provenance' }
-        if (-not $section17.Contains('github.com/feoh/visual_sketches_bootcamp/blob/main/authoring/sections/17-original-visual-instrument/fixtures/README.md')) { Fail 'publication did not expose section 17 fixture provenance' }
+        if (-not $section16.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/templates/model-test-contract.md')) { Fail 'publication did not rewrite section 16 Markdown resource links' }
+        if (-not $section16.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/fixtures/README.md')) { Fail 'publication did not expose section 16 fixture provenance' }
+        if (-not $section17.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/17-original-visual-instrument/fixtures/README.md')) { Fail 'publication did not expose section 17 fixture provenance' }
         if (-not $section17.Contains('href="/visual-sketches-bootcamp/course/16-three-cumulative-sketch-studies/#supported-bootstrap-before-the-timer"')) { Fail 'publication did not resolve the section 17 sibling lesson link' }
         if (-not $section16.Contains('CC0-1.0')) { Fail 'publication omitted section 16 fixture license notice' }
         if (-not $section17.Contains('CC0-1.0')) { Fail 'publication omitted section 17 fixture license notice' }

@@ -1,4 +1,4 @@
-baseURL = "https://example.invalid/visual-sketches-bootcamp/"
+baseURL = "https://feoh.github.io/visual-sketches-bootcamp/"
 locale = "en-US"
 title = "Visual Sketches Bootcamp"
 disableKinds = ["taxonomy", "term", "rss", "sitemap", "robotsTXT", "404"]
@@ -7,7 +7,7 @@ enableRobotsTXT = false
 
 [params]
   description = "A Markdown-first creative coding curriculum using openFrameworks and C++."
-  repositoryURL = "https://github.com/feoh/visual_sketches_bootcamp"
+  repositoryURL = "https://github.com/feoh/visual-sketches-bootcamp"
 
 [markup]
   [markup.goldmark]

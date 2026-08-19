@@ -1,7 +1,7 @@
 #pragma once
 
 #if __cplusplus < 201703L
-#error "visual_sketches_bootcamp requires C++17 or newer"
+#error "visual-sketches-bootcamp requires C++17 or newer"
 #endif
 
 #include <cstdint>

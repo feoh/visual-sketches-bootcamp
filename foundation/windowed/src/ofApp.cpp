@@ -1,7 +1,7 @@
 #include "ofApp.h"
 
 void ofApp::setup() {
-    ofSetWindowTitle("visual_sketches_bootcamp foundation probe");
+    ofSetWindowTitle("visual-sketches-bootcamp foundation probe");
     ofSetFrameRate(60);
     ofSetBackgroundColor(12, 18, 32);
     viewport_ = {static_cast<float>(ofGetWidth()), static_cast<float>(ofGetHeight())};
