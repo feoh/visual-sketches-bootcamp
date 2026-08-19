@@ -3,6 +3,15 @@
     <p class="eyebrow">Markdown-first creative coding curriculum</p>
     <h1 id="course-title">{{ site.Title }}</h1>
     <p>{{ site.Params.description }}</p>
+    {{ $lesson := site.GetPage "/course/12-color-blending-and-trails" }}
+    {{ with $lesson }}
+      {{ with .Resources.GetMatch "media/trail-preview.svg" }}
+        <figure class="hero-figure">
+          <img src="{{ .RelPermalink }}" width="960" height="540" alt="On a dark navy field, a cyan-to-mint trail and a violet-to-amber trail loop across each other, each fading from faint older marks to bright newer ones.">
+          <figcaption>A preview from <a href="{{ $lesson.RelPermalink }}">{{ $lesson.Title }}</a>.</figcaption>
+        </figure>
+      {{ end }}
+    {{ end }}
     <p>The publication layer is optional: the canonical lessons remain portable Markdown leaf bundles under <code>authoring/sections/</code>.</p>
   </section>
   <section class="course-index" aria-labelledby="course-contents">

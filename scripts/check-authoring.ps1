@@ -236,6 +236,9 @@ try{
         foreach ($required in @('index.html','course/index.html','css/course.css')) {
             if (-not (Test-Path -LiteralPath (Join-Path $publication $required) -PathType Leaf)) { Fail "publication did not emit $required" }
         }
+        $home = Get-Content -Raw -LiteralPath (Join-Path $publication 'index.html')
+        if (-not $home.Contains('src="/visual-sketches-bootcamp/course/12-color-blending-and-trails/media/trail-preview.svg"')) { Fail 'publication home omitted its hero preview image' }
+        if ($home.Contains('alt=""')) { Fail 'publication home emitted an image with empty alt text' }
         $lessons = @(Get-ChildItem -LiteralPath (Join-Path $Authoring 'sections') -Filter index.md -File -Recurse | Where-Object { (Read-FrontMatter $_.FullName).draft -eq 'false' })
         foreach ($lesson in $lessons) {
             $slug = (Read-FrontMatter $lesson.FullName).slug

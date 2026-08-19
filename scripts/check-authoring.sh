@@ -299,6 +299,8 @@ EOF
     [ -f "$publication/index.html" ] || fail 'publication did not emit its home page'
     [ -f "$publication/course/index.html" ] || fail 'publication did not emit course navigation'
     [ -f "$publication/css/course.css" ] || fail 'publication did not emit its stylesheet'
+    grep -Fq 'src="/visual-sketches-bootcamp/course/12-color-blending-and-trails/media/trail-preview.svg"' "$publication/index.html" || fail 'publication home omitted its hero preview image'
+    grep -Fq 'alt=""' "$publication/index.html" && fail 'publication home emitted an image with empty alt text'
     published_count=0
     find "$root/authoring/sections" -mindepth 2 -maxdepth 2 -name index.md -type f | sort | while IFS= read -r lesson; do
       [ "$(frontmatter_value draft "$lesson")" = false ] || continue
