@@ -243,6 +243,10 @@ generate() {
     # one shared root keeps both unit-only directories PG-owned and buildable.
     [[ "$name" == unit ]] && sources='../../shared'
     local log="$REPO_ROOT/.harness/logs/generate-$HOST_PLATFORM-$name.log"
+    # A prior container/CI run can leave a root-owned file in a user-writable
+    # ignored log directory. Replace the disposable file rather than failing to
+    # truncate it in place.
+    rm -f -- "$log" || fail "cannot replace generated log: $log"
     info "generating foundation/$name"
     set +e
     (cd "$REPO_ROOT" && PG_OF_PATH="$OF_ROOT" "$PG" -o"$OF_ROOT" -p"$HOST_PLATFORM" -s"$sources" "foundation/$name") >"$log" 2>&1
@@ -310,6 +314,7 @@ test_unit() {
   doctor
   local product executable log="$REPO_ROOT/.harness/logs/test-$HOST_PLATFORM-$CONFIGURATION.log"
   mkdir -p "$(dirname "$log")"
+  rm -f -- "$log" || fail "cannot replace unit log: $log"
   product=$(product_path unit)
   case "$HOST_PLATFORM" in
     linux64) executable=$product ;;

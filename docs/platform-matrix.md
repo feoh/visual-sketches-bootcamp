@@ -48,11 +48,12 @@ GitHub release assets on 2026-08-17. GitHub publishes the macOS digest in the
 release API. A setup script must reject a mismatched hash before extraction.
 Do not replace these URLs with the rolling openFrameworks download page.
 
-## Selected three-platform matrix
+## Selected host matrix
 
 | Lane | Selected compatibility band and evidence anchor | Native project mode | Current evidence | Permitted claim |
 |---|---|---|---|---|
-| Linux | x86-64 Ubuntu 24.04 LTS; upstream 0.12.1 dependency script; GCC 13 family; GNU Make | The tagged make configuration selects C++20 for GCC 10 or newer. | `build-proven` and `unit-proven` at commit `f3c42f4`: Debug/Release tracked projects and the exact `12/12` Release unit contract passed on Ubuntu 24.04 with GCC/G++ 13.3.0. See [`foundation-harness-evidence.md`](foundation-harness-evidence.md). | Repository native build and deterministic unit support are proven for the selected Linux band. Graphical appearance remains a separate manual claim. |
+| Linux — Ubuntu | x86-64 Ubuntu 24.04 LTS; upstream 0.12.1 dependency script selected through `scripts/setup-linux.sh`; GCC 13 family; GNU Make | The tagged make configuration selects C++20 for GCC 10 or newer. | `build-proven` and `unit-proven` at commit `f3c42f4`: Debug/Release tracked projects and the exact `12/12` Release unit contract passed on Ubuntu 24.04 with GCC/G++ 13.3.0. See [`foundation-harness-evidence.md`](foundation-harness-evidence.md). | Repository native build and deterministic unit support are proven for the selected Ubuntu band. Graphical appearance remains a separate manual claim. |
+| Linux — CachyOS | x86-64 CachyOS rolling snapshot; repository pacman/paru package plan; host-native Project Generator rebuild; GCC 16 family; GNU Make; X11/XWayland window backend | The repository wrapper patches the separately downloaded OF 0.12.1 tree for current libstdc++ and dual-backend GLFW, then compiles Debug/Release framework libraries and PG 0.103.0 locally. | `build-proven` and `unit-proven` on 2026-08-18 at the delivery working tree based on `64da096`: foundation doctor/generation, Debug/Release windowed and unit builds, exact `12/12` unit runtime, and all 32 section 00–15 starter/solution projects generated and built in Debug and Release. Every deterministic section/first-C++ test passed with GCC/G++ 16.1.1 and Clang 22.1.8. Five-second foundation/section-00 runtime probes plus participant launch/resize passed with CachyOS kernel package 7.1.6-1 and GLFW 3.5.1. | Native generation/build and deterministic unit support are proven for this exact dated CachyOS snapshot; section-00 graphical startup/resize is manually observed. Other graphical/device behavior remains unobserved. CachyOS is rolling, so do not generalize to an unrecorded future package snapshot. `ofxOpenCv` is outside this course lane. |
 | macOS | Apple Silicon; macOS 15 family; Xcode 16 family; macOS 15 SDK family. The release-adjacent reference point was macOS 15.4.1, Xcode 16.0 (`16A242d`), SDK 15.0. | The `osx` Project Generator template writes `CLANG_CXX_LANGUAGE_STANDARD = c++23`. | `build-proven` and `unit-proven` at commit `f3c42f4`: Debug/Release tracked projects and the exact `12/12` Release unit contract passed on macOS 15.7.7 arm64, Xcode 16.4, SDK 15.5. | Repository native build and deterministic unit support are proven for the selected macOS band. Graphical appearance remains a separate manual claim. |
 | Windows | x64 Windows Server 2022 build 20348 with floating UBR; Visual Studio 2022 17.x and v143 C++ tools; Windows SDK 10.0.26100.0. The release-adjacent reference point had UBR 3561 and VS 17.13.35825.156. | The tagged solution is Visual Studio 17, uses toolset `v143`, and sets C++ to `stdcpplatest`. | `build-proven` and `unit-proven` at commit `f3c42f4`: Debug/Release tracked projects and the exact `12/12` Release unit contract passed on build 20348.5386, VS 17.14/MSBuild 17.14.51, v143, SDK 10.0.26100.0. | Repository native build and deterministic unit support are proven for the selected Windows band. Graphical appearance remains a separate manual claim. |
 
@@ -72,20 +73,28 @@ learner setup cost without improving the three-OS requirement.
 These are the commands the implementation wrappers must automate or verify.
 They are intentionally explicit about which parts have and have not been run.
 
-### Linux reference lane
+### Linux reference lanes
+
+From this repository on Ubuntu or CachyOS:
 
 ```bash
-curl -L --fail -o of_v0.12.1_linux64_gcc6_release.tar.gz \
-  https://github.com/openframeworks/openFrameworks/releases/download/0.12.1/of_v0.12.1_linux64_gcc6_release.tar.gz
-printf '%s  %s\n' \
-  d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63 \
-  of_v0.12.1_linux64_gcc6_release.tar.gz | sha256sum --check
-tar -xzf of_v0.12.1_linux64_gcc6_release.tar.gz
-export OF_ROOT="$PWD/of_v0.12.1_linux64_gcc6_release"
-sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y
+scripts/setup-of.sh --platform linux64 --destination "$HOME/openframeworks"
+export OF_ROOT="$HOME/openframeworks/of_v0.12.1_linux64_gcc6_release"
+scripts/setup-linux.sh install --of-root "$OF_ROOT"
+scripts/setup-linux.sh doctor --of-root "$OF_ROOT"
 ```
 
-The [2026-08-17 spike](foundation-spike.md) used a base image with digest
+`setup-of.sh` performs the immutable download, SHA-256 check, fresh extraction,
+and version check described above. `setup-linux.sh` reads `/etc/os-release` and
+never runs apt on CachyOS/Arch or pacman on Ubuntu. Its CachyOS path installs the
+course's required packages, uses `paru` for FreeImage only when the removed Arch
+package is absent, omits unused `ofxOpenCv`/OpenCV setup, rebuilds Project
+Generator against host libraries, and applies an idempotent X11 GLFW hint before
+rebuilding the framework. openFrameworks 0.12.1's Linux window implementation
+uses X11-native APIs, so `xorg-xwayland` is part of the CachyOS contract even
+when the desktop session is Wayland.
+
+The [2026-08-17 Ubuntu spike](foundation-spike.md) used a base image with digest
 `sha256:561618e2c15bf2397621dd04f96926663a3b5616c189cf7e38db7e82f5c538ea`,
 which resolved to Ubuntu 24.04.4 and GCC/G++ 13.3.0 after package installation.
 The official installer uses Ubuntu package repositories, so patch-level package

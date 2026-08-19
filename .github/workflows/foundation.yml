@@ -8,6 +8,8 @@ on:
       - shared/**
       - scripts/foundation.*
       - scripts/setup-of.*
+      - scripts/setup-linux.sh
+      - tests/run-linux-setup-tests.sh
       - tests/core_probe_test.cpp
       - tests/run-core-tests.sh
       - tests/run-first-cpp-test.*
@@ -19,6 +21,8 @@ on:
       - shared/**
       - scripts/foundation.*
       - scripts/setup-of.*
+      - scripts/setup-linux.sh
+      - tests/run-linux-setup-tests.sh
       - tests/core_probe_test.cpp
       - tests/run-core-tests.sh
       - tests/run-first-cpp-test.*

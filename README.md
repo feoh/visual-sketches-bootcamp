@@ -41,11 +41,20 @@ This repository contains the curriculum specification, implementation roadmap, t
    git switch -c learner/course
    ```
 
-2. Check the [pinned platform matrix](docs/platform-matrix.md), download the
-   matching openFrameworks 0.12.1 archive, and confirm that you have enough disk
-   space, network access, installation/admin rights, Git, and the required
-   compiler or IDE workload. The three CI bands are build evidence, not a claim
-   that an ordinary desktop learner has completed setup on every OS.
+2. Check the [pinned platform matrix](docs/platform-matrix.md), then use the
+   matching repository setup wrapper. On Ubuntu or CachyOS, do not run an
+   upstream distro installer directly:
+
+   ```sh
+   scripts/setup-of.sh --platform linux64 --destination "$HOME/openframeworks"
+   export OF_ROOT="$HOME/openframeworks/of_v0.12.1_linux64_gcc6_release"
+   scripts/setup-linux.sh install --of-root "$OF_ROOT"
+   ```
+
+   Confirm that you have enough disk space, network access,
+   installation/admin rights, Git, and the required compiler or IDE workload.
+   CI and dated local bands are build evidence, not a claim that an ordinary
+   desktop learner has completed setup on every OS.
 3. Begin with [section 00: cross-platform setup and the first frame](authoring/sections/00-cross-platform-setup/index.md).
    Run commands from the repository root and set `OF_ROOT` as described in
    [the scripts guide](scripts/README.md).

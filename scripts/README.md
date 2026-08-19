@@ -4,6 +4,34 @@ No Python, Node, CMake, or globally installed Project Generator is used. Supply
 the separately installed, pinned framework with `--of-root`/`-OfRoot` or
 `OF_ROOT`.
 
+## Linux host setup
+
+Do not invoke an upstream Ubuntu or Arch dependency installer directly. The
+repository wrapper detects Ubuntu, CachyOS, or Arch from `/etc/os-release`,
+selects the matching package manager, and verifies the resulting host:
+
+```bash
+scripts/setup-of.sh --platform linux64 --destination "$HOME/openframeworks"
+export OF_ROOT="$HOME/openframeworks/of_v0.12.1_linux64_gcc6_release"
+scripts/setup-linux.sh install --of-root "$OF_ROOT"
+```
+
+Use `--yes` only when noninteractive package approval is intended. `doctor`
+checks without changing packages; `prepare` applies host compatibility after
+dependencies are already installed. On CachyOS/Arch, preparation idempotently
+rebuilds Project Generator against the host's GLEW/GLFW/Poco/Assimp libraries,
+adds the `<algorithm>` include required by current GCC, forces GLFW's X11
+backend because openFrameworks 0.12.1 uses X11-native APIs, and recompiles the
+framework Debug/Release libraries. The package plan includes `xorg-xwayland`.
+It deliberately does not enable `ofxOpenCv`: the upstream 0.12.1 Arch script
+only understands OpenCV 3/4 metadata while current CachyOS supplies OpenCV 5,
+and no course project uses that addon.
+
+`setup-of.sh` always restores the checksum-verified upstream tree. Run
+`setup-linux.sh prepare` again after re-extracting it on CachyOS/Arch. FreeImage,
+which openFrameworks 0.12.1 links directly, is installed from the AUR with
+`paru` only when absent; without `--yes`, that review remains interactive.
+
 POSIX (Linux/macOS):
 
 ```bash

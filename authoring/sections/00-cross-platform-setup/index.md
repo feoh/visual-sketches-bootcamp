@@ -12,7 +12,7 @@ objectives:
   - Use the first useful compiler diagnostic to repair one syntax error
 prerequisites:
   - Comfort editing plain text files and running commands in a terminal
-  - An x86-64 Ubuntu 24.04, Apple Silicon macOS 15, or x64 Windows Server 2022 environment
+  - An x86-64 Ubuntu 24.04 or CachyOS environment, Apple Silicon macOS 15, or x64 Windows Server 2022 environment
 source_records: sources.yaml
 asset_records: assets.yaml
 ---
@@ -51,26 +51,39 @@ diameter or radius? Keep your prediction; verify it during Build.
 
 ### Install one pinned toolchain
 
-The section wrappers and native CI target three deliberately bounded
-compatibility bands: Ubuntu 24.04 x86-64 with GCC 13, Apple Silicon macOS 15
-with Xcode 16, and x64 Windows Server 2022 with Visual Studio 2022 v143 plus
-Windows SDK 10.0.26100.0. A platform claim requires that platform's distinct
-`section-00-linux-build`, `section-00-macos-build`, or
-`section-00-windows-build` status to pass for the commit being assessed; an
-uncommitted local result is not that evidence. Windows 11 is not yet a verified
-band. All lanes use openFrameworks 0.12.1 and its bundled Project Generator
-0.103.0. The course wrappers verify downloaded hashes and versions; they do not
-search your computer or use a rolling `latest` release. The upstream [setup guides](https://openframeworks.cc/setup/)
-explain the platform IDE and system packages.
+The section wrappers target four host bands: Ubuntu 24.04 x86-64 with GCC 13,
+x86-64 CachyOS/Arch with its current GCC family, Apple Silicon macOS 15 with
+Xcode 16, and x64 Windows Server 2022 with Visual Studio 2022 v143 plus Windows
+SDK 10.0.26100.0. Ubuntu, macOS, and Windows have distinct native CI statuses.
+CachyOS is rolling, so its support evidence records the exact dated package
+versions and local commands rather than pretending that one run proves every
+future snapshot. Windows 11 is not yet a verified band.
 
-Linux from the repository root:
+All lanes use openFrameworks 0.12.1 and Project Generator 0.103.0. The course
+wrappers verify downloaded hashes and versions; they do not search your
+computer or use a rolling `latest` framework release. The upstream [setup guides](https://openframeworks.cc/setup/)
+provide background, but do not run an upstream distro installer directly: the
+course's Linux wrapper selects apt only on Ubuntu and pacman/paru only on
+CachyOS or Arch.
+
+Ubuntu or CachyOS from the repository root:
 
 ```sh
 scripts/setup-of.sh --platform linux64 --destination "$HOME/openframeworks"
 export OF_ROOT="$HOME/openframeworks/of_v0.12.1_linux64_gcc6_release"
-sudo "$OF_ROOT/scripts/linux/ubuntu/install_dependencies.sh" -y
+scripts/setup-linux.sh install --of-root "$OF_ROOT"
 scripts/foundation.sh doctor
 ```
+
+On CachyOS/Arch, `setup-linux.sh` avoids the upstream OpenCV 3/4 rewrite (the
+course does not use `ofxOpenCv`), rebuilds Project Generator against current
+host libraries, adds the GCC-required `<algorithm>` include, and rebuilds
+openFrameworks with an X11 GLFW hint. The hint is required because
+openFrameworks 0.12.1 uses X11-native input and icon APIs while CachyOS GLFW
+3.4+ can otherwise select Wayland. `xorg-xwayland` is therefore an explicit
+course dependency. These changes affect only the separately downloaded
+`OF_ROOT`; rerunning `setup-of.sh` restores the verified archive and requires a
+new `setup-linux.sh prepare` or `install` afterward.
 
 macOS from the repository root:
 

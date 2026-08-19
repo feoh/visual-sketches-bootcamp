@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - .github/workflows/authoring.yml
+      - scripts/setup-linux.sh
+      - tests/run-linux-setup-tests.sh
       - authoring/**
       - exercises/**
       - site/**
@@ -27,6 +29,8 @@ on:
   pull_request:
     paths:
       - .github/workflows/authoring.yml
+      - scripts/setup-linux.sh
+      - tests/run-linux-setup-tests.sh
       - authoring/**
       - exercises/**
       - site/**
@@ -65,6 +69,8 @@ jobs:
         run: |
           hugo version
           shellcheck --version
+      - name: Validate Linux distro setup selection and preparation contracts
+        run: tests/run-linux-setup-tests.sh
       - name: Validate portable authoring contracts and Hugo fixtures
         run: tests/run-authoring-check-tests.sh
       - name: Test section 00 geometry
@@ -104,7 +110,7 @@ jobs:
           tests/run-first-cpp-test.sh starter
           tests/run-first-cpp-test.sh solution
       - name: Lint POSIX authoring scripts
-        run: shellcheck scripts/build-site.sh scripts/check-authoring.sh scripts/course-project.sh scripts/section-*.sh tests/run-authoring-check-tests.sh tests/run-section-*-tests.sh tests/run-first-cpp-test.sh
+        run: shellcheck scripts/build-site.sh scripts/check-authoring.sh scripts/course-project.sh scripts/setup-linux.sh scripts/section-*.sh tests/run-authoring-check-tests.sh tests/run-linux-setup-tests.sh tests/run-section-*-tests.sh tests/run-first-cpp-test.sh
 
   windows-contract:
     runs-on: windows-2022

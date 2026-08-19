@@ -242,6 +242,10 @@ generate() {
   git -C "$ROOT" diff --binary --no-ext-diff HEAD -- >"$before"
   canonical_snapshot >"$before_inputs"
   clean_generated; mkdir -p "$(dirname "$log")"
+  # A prior container/CI run can leave a root-owned file in a user-writable
+  # ignored log directory. Replace the disposable file rather than failing to
+  # truncate it in place.
+  rm -f -- "$log" || fail "cannot replace generated log: $log"
   local sources='../shared'
   [[ "$PLATFORM" == osx ]] && sources='src/design,../shared'
   set +e
