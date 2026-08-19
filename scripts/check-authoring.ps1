@@ -108,7 +108,7 @@ function Assert-PilotContract {
     $sequence=@{}; for($i=0;$i-lt$lessons.Count;$i++){$sequence[$lessons[$i].Slug]=$i+1}
 
     for($lineNumber=1;$lineNumber-lt$routeLines.Count;$lineNumber++){
-        $fields=@($routeLines[$lineNumber]-split"`t",-1)
+        $fields=@($routeLines[$lineNumber]-split"`t")
         if($fields.Count-ne6){Fail "$routePath`: row $($lineNumber+1) must have six tab-delimited fields"}
         if($fields[2]-notmatch'^[0-9]+$'){Fail "$routePath`: row $($lineNumber+1) sequence must be an ASCII decimal integer"}
     }
