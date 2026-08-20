@@ -1,8 +1,10 @@
 # visual-sketches-bootcamp
 
-A gentle, visual-first curriculum for learning just enough modern C++ and mathematics to create expressive images and animations with [openFrameworks](https://openframeworks.cc/).
+A visual-first, learn-by-making guide to creating expressive images and animations with [openFrameworks](https://openframeworks.cc/). We teach the C++ and math we need as we go, without turning the course into a tour of every dusty corner of either subject.
 
-The intended learner is an experienced Python programmer with rusty C/C++ knowledge. Every instructional section does the following:
+The math starting line is **basic algebra**: plugging numbers into a formula and solving simple equations such as `2x + 3 = 11`. You do **not** need to know trigonometry, sine, cosine, radians, or any other math that sounds like it belongs on a haunted chalkboard. When a sketch needs those ideas, the lesson introduces them with pictures, plain language, and small calculations.
+
+The intended learner is a curious programmer who can edit text and follow a few commands. Python experience is useful, but the lessons do not assume a formal C++ or college-math background. Every instructional section does the following:
 
 1. introduce one visual idea;
 2. teach only the C++ and mathematics needed for it;
@@ -14,7 +16,7 @@ The visual vocabulary is informed by recurring techniques in [Zach Lieberman’s
 
 ## Status
 
-This repository contains the curriculum specification, implementation roadmap, tracked foundation probe, authored instructional sections 00–15, and authored synthesis projects 16–17. The instructional sections pair portable lesson prose with tested deterministic models, learner starters, explained reference solutions, and Linux/macOS/Windows build wrappers; the synthesis projects provide bounded briefs, evaluator fixtures, process templates, and divergent partial exemplars rather than canonical finished answers. Human-learner pilot results and manual graphical, accessibility, and live-device evidence remain pending and are not inferred from automated checks.
+This repository contains the curriculum specification, implementation roadmap, tracked foundation probe, authored instructional sections 00–15, and authored synthesis projects 16–17. The instructional sections pair portable lesson prose with tested deterministic models, learner starters, explained reference solutions, and Linux/macOS/Windows build wrappers; the synthesis projects provide bounded briefs, evaluator fixtures, process templates, and divergent partial exemplars rather than canonical finished answers. Automated checks cover the repeatable parts; graphical appearance, accessibility, and live-device behavior are things you can inspect while making your own sketches.
 
 - [Curriculum map](docs/curriculum-map.md)
 - [Exercise and testing strategy](docs/testing-strategy.md)
@@ -25,8 +27,7 @@ This repository contains the curriculum specification, implementation roadmap, t
 - [Foundation harness validation](docs/foundation-harness-evidence.md)
 - [Portable authoring templates and conventions](authoring/README.md)
 - [Optional Hugo publication](docs/publication.md)
-- [Pilot protocol and evidence ledger](docs/pilot-protocol-and-evidence.md)
-- [Operational pilot launch kit and checked routes](docs/pilot/README.md)
+- [Optional practice notes and checked routes](docs/pilot/README.md)
 - [Delivery review process](docs/review-process.md)
 - [Research and source notes](docs/source-notes.md)
 - [License scope](LICENSE) and [third-party notices](THIRD_PARTY_NOTICES.md)
@@ -59,23 +60,23 @@ This repository contains the curriculum specification, implementation roadmap, t
 3. Begin with [section 00: cross-platform setup and the first frame](authoring/sections/00-cross-platform-setup/index.md).
    Run commands from the repository root and set `OF_ROOT` as described in
    [the scripts guide](scripts/README.md).
-4. Follow one of the provisional routes in the [curriculum map](docs/curriculum-map.md#provisional-course-routes).
-   Save each capture, reflection, seed/replay input, and test result before
-   moving on. Resume by checking `git status`, the last completed section, and
-   that section's saved evidence.
+4. Pick a pace from the [curriculum map](docs/curriculum-map.md#pick-a-pace-or-make-up-your-own), or ignore the map and follow your curiosity. Save captures, reflections, seed/replay inputs, and test results when they seem useful—not because a fictional registrar is checking. Resume by checking `git status` and the last section you enjoyed.
 
 The currently authored section 15 elective is **microphone amplitude with a
 recorded-input and no-device fallback**. The previously proposed 3D, spectrum,
 and camera alternatives are deferred; the curriculum does not claim that those
-lanes exist or have been piloted.
+lanes exist. Live audio is optional, and the sketch remains useful without a
+microphone.
 
 ## Design constraints
 
 - **Visual reward first:** make something move in the first lesson.
 - **Just-in-time C++:** no general-purpose C++ survey before creative work begins.
-- **Math you can see:** picture and motion first, notation second.
+- **Math you can see:** picture and motion first, plain-language explanation next, notation last.
+- **No surprise prerequisites:** basic algebra is enough to begin; new math vocabulary gets introduced before it appears in an exercise.
 - **Cross-platform:** macOS, Linux, and Windows are first-class targets.
-- **Gentle by default:** provisional routes span 12–18 weeks; an 8+2-week accelerated route deliberately omits extensions and remains unvalidated by human pacing evidence.
+- **Gentle by default:** suggested routes span 12–18 weeks; an 8+2-week fast route skips extensions, but you should stretch any route whenever that makes the work more enjoyable.
+- **Talk like a human:** explain the idea before the terminology, keep the tone friendly, and allow the occasional terrible joke when it helps a concept stick.
 - **Test behavior, not taste:** automated tests cover deterministic logic; visual quality remains a human judgment.
 - **Plain Markdown:** content uses portable YAML front matter, relative links, and standard Markdown so it can be used by Hugo or Obsidian.
 - **Originality over imitation:** exercises remix mechanisms with new inputs, mappings, geometry, palettes, and composition.

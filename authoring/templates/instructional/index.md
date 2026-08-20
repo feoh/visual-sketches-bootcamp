@@ -16,7 +16,7 @@ asset_records: assets.yaml
 
 # A visible lesson title
 
-## Look
+## See what we're making
 
 Describe the visual goal, then replace this complete preview block while
 preserving its accessible alternatives.
@@ -37,54 +37,55 @@ Follow the animation convention in the [authoring guide](../../README.md) when
 motion is essential. Replace the placeholder source while retaining a prose
 citation to the [primary source](https://example.org/source).
 
-## Predict
+## Take a guess
 
 Ask one no-notes question about a small fragment or state change.
 
-## Learn
+## Let's unpack it
 
 Teach one mathematical model visually, numerically, then symbolically. Add at
 most one substantial C++ mechanism.
 
-## Build
+## Make it run
 
 Link two or three complete examples and state how to generate, build, and run
 them on each supported platform.
 
-## Break and repair
+## Break it on purpose
 
 Plant one focused failure. Tell the learner what evidence to inspect, not the
 answer.
 
-## Exercise
+## Your turn
 
 State the visual behavior, learner-owned aesthetic choices, assessed concepts,
 public test interface, deterministic inputs, boundaries, and exact platform
 commands. Link the starter and tests source-file-relatively.
 
-## Test
+## Check your work
 
 Cover a known case, a boundary, and a useful property in the deterministic
 model or geometry. Keep renderer appearance in the manual checklist.
 
-## Reflect
+## Tell the story
 
 Request an accessible capture and a short explanation connecting code,
 mathematics, and visual behavior.
 
-## Remix
+## Make it yours
 
 Offer one optional variation that changes geometry, mapping, interaction,
 motion, or time rather than only color.
 
-## Manual review
+## Quick visual check
 
 - The intended input/output relationship is legible.
 - Resize, reset, pause/reduced motion, and non-pointer controls work as stated.
 - The result differs meaningfully from examples and cited precedents.
 - Contrast, non-color cues, credits, and licenses have been checked.
 
-## Pilot note
+## If you get stuck
 
-Record platform, elapsed time, setup friction, test outcome, and points of
-confusion after a real pilot. Do not infer these from author testing.
+Point the reader back to the smallest runnable example, the first useful error,
+and one concrete number to inspect. Keep troubleshooting practical and
+encouraging; do not ask the reader to fill out a research form.

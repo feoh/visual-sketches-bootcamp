@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Gesture as geometry
 
-## Look
+## See what we're making
 
 ![A sweeping, wavy blue-to-orange open path changes from a thick section to a narrow dashed section, with dark anchor dots and width differences making motion readable without color alone.](media/gesture-preview.svg "Sampled movement becomes width, turning color, and inspectable geometry.")
 
@@ -26,7 +26,7 @@ asset_records: assets.yaml
 
 The preview is static and uses width, dashes, and anchor dots as well as color.
 
-## Precedent and transfer
+## Borrow the idea, not the artwork
 
 Use the course's [credited precedent notes](../../../docs/source-notes.md#visual-vocabulary)
 to study gesture as sampled geometry, not as a target composition. In your
@@ -34,14 +34,14 @@ process note, name the creator and collaborators, state the transferable
 sampling or response principle, and change the input, mark construction,
 mapping, motion, and composition rather than reproducing a familiar still.
 
-## Predict
+## Take a guess
 
 A pointer reports `(0,0)`, `(10,0)`, then `(10,10)`, one second apart. With no
 filter and `k = log(2)`, predict each smoothed point, second-sample velocity,
 signed turn at the third point, and cumulative smoothed length. Now insert a
 duplicate point and a zero-time step: which divisions must be guarded?
 
-## Learn
+## Let's unpack it
 
 ### Events report observations; the model defines a gesture
 
@@ -162,7 +162,7 @@ A point center must remain at least half the maximum stroke width from every
 edge. No screenshot decides correctness. Contrast, motor access, legibility,
 and originality still require manual review.
 
-## Build: calculate, replay, and draw
+## Make it run: calculate, replay, and draw
 
 ### 1. Inspect the independent oracle
 
@@ -208,7 +208,7 @@ recenters the keyboard cursor; in a viewport narrower or shorter than the full
 maximum stroke width, verify pointer and arrow capture is safely suppressed
 until the window grows again. Compilation does not prove launch.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/08-gesture-as-geometry/shared/gesture_model.cpp`, temporarily remove
@@ -223,14 +223,14 @@ git restore -- exercises/08-gesture-as-geometry/shared/gesture_model.cpp
 That command discards every uncommitted change in that named file. Record the
 failure, why division was unsafe, and the repaired result.
 
-## Exercise
+## Your turn
 
 Open the [gesture brief](../../../exercises/08-gesture-as-geometry/README.md).
 Own the design record first, then create geometry that is not a recolor of the
 starter ribbon or solution facets. Compare pointer and keyboard routes. Explain
 one width mapping, one curvature mapping, and your maximum-sample choice.
 
-## Test
+## Check your work
 
 ```sh
 CXX=g++ tests/run-section-08-tests.sh
@@ -241,20 +241,20 @@ Use the PowerShell test on Windows. Generate and compile starter and solution
 in Debug and Release. Manually launch both input routes, clear/reset, resize,
 and review the checklist; pure/native CI prove only their named contracts.
 
-## Reflect
+## Tell the story
 
 In 140–180 words, distinguish vector size from capacity, raw input from model
 state, filtering from smoothing, speed from signed turn, and event count from
 arc length. Explain invalid-dt and duplicate-segment guards, one learner-owned
 mapping, and why pixel output is not the automated gate. Include capture alt text.
 
-## Remix
+## Make it yours
 
 Reverse the speed-width direction, use signed turn to select left/right shape
 families, or resample before constructing a chain of oriented marks. Keep
 endpoints, degenerate guards, maximum size, keyboard access, and learner ownership.
 
-## Manual review
+## Quick visual check
 
 - Mouse/trackpad and arrow-key fallback both create understandable marks; C clears.
 - Nothing autoplays or flashes; there is no audio-only information.
@@ -266,12 +266,9 @@ endpoints, degenerate guards, maximum size, keyboard access, and learner ownersh
 - Alt text names direction, speed-width, corners, geometry, and palette roles.
 - Reused references are credited.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; reading, prediction, repair, exercise, and
-reflection time separately; pointer and keyboard access; setup friction; whether
-size/capacity, filtering, smoothing, invalid dt, velocity, signed/unsigned turn,
-arc length, resampling endpoints, bounds, and input/model separation were
-understood; automated result; manual accessibility/originality review; and
-confusions. Do not infer learner timing, graphical success, or accessibility from CI.
+If the gesture is jittery, too fat, or disappears, inspect the points before
+inspecting the renderer. Check the distance threshold, the elapsed time, and
+the history cap one at a time. A gesture is just a short story told by points;
+when the story gets noisy, ask which point should not have been invited.

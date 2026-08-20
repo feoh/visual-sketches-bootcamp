@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Time as a drawable axis
 
-## Look
+## See what we're making
 
 ![Twenty vertical time slices cross a navy field; newest amber circles begin high at the left, progressively older mint circles descend and fade to the right, and horizontal ticks plus NOW and THEN labels communicate age without color.](media/time-axis-preview.svg "Horizontal position selects a retained moment.")
 
@@ -27,21 +27,21 @@ asset_records: assets.yaml
 The labels, repeated slice boundaries, circle outlines, and interior ticks keep
 age order legible without relying on amber, mint, or opacity alone.
 
-## Precedent and transfer
+## Borrow the idea, not the artwork
 
 Use the course's [credited precedent notes](../../../docs/source-notes.md#visual-vocabulary)
 to study time as stored material rather than copy an echo or slit-scan image.
 Name creators and collaborators, isolate the history-selection principle, and
 change the source, spatial lookup, decay, geometry, palette, and interaction.
 
-## Predict
+## Take a guess
 
 A history with capacity three receives frames 10, 11, 12, then 13. Which frames
 remain from oldest to newest? If horizontal position 0 means newest and 1 means
 oldest, which frame does position 0.5 select? Before reading on, sketch the
 storage slots and the moving next-write index.
 
-## Learn
+## Let's unpack it
 
 ### A ring makes bounded time
 
@@ -134,7 +134,7 @@ native manual check. Pure tests must not instantiate a GL context or pixel-gate
 results across drivers. Never sample from the same target currently being drawn
 unless a documented platform-safe technique proves that behavior.
 
-## Build: inspect three complete experiments
+## Make it run: inspect three complete experiments
 
 ### 1. Read the hand-checkable oracle
 
@@ -201,7 +201,7 @@ P pauses, R resets explicit frame/time history, and M freezes capture for a
 reduced-motion still. Resize resets history against the new viewport. A native
 build proves compilation only; launch and inspect the actual GPU window.
 
-## Break and repair
+## Break it on purpose
 
 In `exercises/13-time-as-a-drawable-axis/shared/temporal_history.cpp`,
 temporarily remove `- 1` from the `atAge` slot expression. Predict whether age
@@ -216,7 +216,7 @@ That command discards every uncommitted change in the named file. Record the
 first failed order assertion and explain why a not-yet-full buffer exposes an
 unwritten slot.
 
-## Exercise
+## Your turn
 
 Open the [spatial-temporal collage brief](../../../exercises/13-time-as-a-drawable-axis/README.md).
 Change bounded parameters in `starter/src/design/temporal_design.cpp` and own
@@ -224,7 +224,7 @@ the geometry grammar in `starter/src/ofApp.cpp`. Make spatial position choose
 age, but produce an image unlike both the starter's filled time windows and the
 solution's dark line-and-diamond loom.
 
-## Test
+## Check your work
 
 ```sh
 CXX=g++ tests/run-section-13-tests.sh
@@ -239,7 +239,7 @@ contrast, age cues, and originality. If you add FBOs, inspect allocation failure
 resize, alpha/clear behavior, texture orientation, and ping-pong separation on
 each claimed GPU lane. Automated tests do not validate those pixels.
 
-## Reflect
+## Tell the story
 
 In 160–200 words, distinguish capacity from length, physical slot from age,
 frame from time, sampling from interpolation, resize from reset, and decay from
@@ -247,7 +247,7 @@ feedback gain. Explain the modulo formula, checked byte budget, explicit replay
 inputs, one non-color age cue, one reduced-motion choice, and one learner-owned
 visual decision. Include capture alt text.
 
-## Remix
+## Make it yours
 
 Use y instead of x for age, arrange ages around a clock, select age from distance
 to a pointer-controlled seam, interpolate between adjacent samples, retain
@@ -256,7 +256,7 @@ Preserve finite guards, monotone frame/time order, checked memory arithmetic,
 deterministic selection, reset/resize behavior, keyboard access, reduced
 motion, and the pure/GPU validation boundary.
 
-## Manual review
+## Quick visual check
 
 - Left-to-right age remains understandable from labels, boundaries, shape, or ticks without color alone.
 - P pauses, R replays from frame/time zero, and M provides a still reduced-motion alternative.
@@ -267,13 +267,9 @@ motion, and the pure/GPU validation boundary.
 - Any FBO path is manually checked for allocation, orientation, clear/alpha, resize, GPU limits, and read/write separation.
 - Reused references, code, and assets are credited.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; reading, prediction, repair, exercise, and
-reflection time separately; setup friction; pointer/keyboard and reduced-motion
-access; whether next-write versus newest, modulo wrap, capacity versus length,
-spatial rounding, decay, explicit frame/time, replay, resize/reset, byte budget,
-finite/overflow rejection, and pure/GPU boundaries were understood; automated
-result; manual accessibility/originality/FBO result; and confusions. Do not infer
-completion time, visual success, GPU portability, or accessibility from CI.
+If the echo is out of order, label each history slot with its age and inspect
+one write/read cycle. Check capacity versus length, then check which end is
+newest. A ring buffer is a queue wearing a circle costume; draw the slots on
+paper before debugging the shader-sized version.

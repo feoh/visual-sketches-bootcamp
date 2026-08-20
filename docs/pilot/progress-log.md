@@ -1,32 +1,27 @@
-# Route progress — blank notes
+# Personal route notes — blank copy
 
-- Pilot mode: `self-pilot` / `shared-pilot`
-- Route ID:
-- Curriculum commit:
-- Platform/toolchain:
-- Start date:
-- Typical available session length:
+- Route ID (optional):
+- Curriculum commit (optional):
+- Platform/toolchain (optional):
+- Started:
 
 ## Checkpoints
 
-| Checkpoint | Date | Confidence before/after (1–5) | Independent task result | Help used | Continue/revise/pause | Notes |
-|---|---|---|---|---|---|---|
-| Unit 0 | not observed | not observed | not observed | none | pending | |
-| Unit 2 | not observed | not observed | not observed | none | pending | |
-| Complete path | not observed | not observed | not observed | none | pending | |
+| Checkpoint | Done? | Confidence (1–5, optional) | Help used | Notes |
+|---|---|---:|---|---|
+| Unit 0 | not yet |  | none | |
+| Unit 2 | not yet |  | none | |
+| Complete path | not yet |  | none | |
 
-## Sessions
+## Sketches and experiments
 
-| Date | Lessons | Reading min | Setup/build min | Exercise min | Reflection min | Manual-review min | Next step |
-|---|---|---:|---:|---:|---:|---:|---|
-| not started | none | 0 | 0 | 0 | 0 | 0 | start Unit 0 |
+| Lesson | What I made | Useful bug or idea | Next thing to try |
+|---|---|---|---|
+| not started |  |  |  |
 
 ## Route summary
 
-- Required lessons done/helped:
-- Required lessons partial/blocked/paused:
-- Optional lessons tried:
-- Biggest setup bottleneck:
-- Most confusing instruction:
-- Most reusable mechanism:
-- Provisional pacing change to try next:
+- Sketches I want to revisit:
+- Mechanism I can reuse:
+- Thing that finally clicked:
+- Next fun experiment:

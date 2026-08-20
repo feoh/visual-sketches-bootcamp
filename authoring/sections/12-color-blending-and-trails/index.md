@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # Color, blending, and trails
 
-## Look
+## See what we're making
 
 ![On a dark navy field, a cyan-to-mint trail marked by crosses and a violet-to-amber trail marked by diamonds loop through each other; older marks are smaller and more transparent, central overlap is pale and bright, and a labeled five-step alpha key shows age without relying on color.](media/trail-preview.svg "Two palettes cross while alpha and size reveal age.")
 
@@ -30,7 +30,7 @@ makes old-to-new order readable even if transparency or hue differences are
 hard to see. The preview is an original static SVG, not a captured claim that
 all GPUs produce identical pixels.
 
-## Predict
+## Take a guess
 
 A straight-alpha red mark `(1, 0, 0, 0.5)` is drawn over opaque blue
 `(0, 0, 1, 1)`. Predict the output alpha and RGB channels. A mark starts with
@@ -39,7 +39,7 @@ palette runs from `(0.1, 0.2, 0.3, 1)` to `(0.9, 0.6, 0.3, 0.5)`, what is its
 midpoint? Decide which answer describes model data and which still depends on a
 renderer.
 
-## Learn
+## Let's unpack it
 
 ### Color is checked data
 
@@ -146,7 +146,7 @@ P pauses, R clears and replays the initial phase, and M keeps current marks only
 Pointer and keyboard routes alter the same visible origin. Very small windows
 suppress origin movement safely. Nothing flashes, and no meaning is audio-only.
 
-## Build: inspect three complete experiments
+## Make it run: inspect three complete experiments
 
 ### 1. Replay the independent arithmetic oracle
 
@@ -209,7 +209,7 @@ Launch both projects, not just one. Normal-alpha paired ribbons and the additive
 star loom should be visibly divergent. Compilation cannot prove launch,
 contrast, additive appearance, or scoped state after a draw.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/12-color-blending-and-trails/shared/color_trail_model.cpp`,
@@ -236,7 +236,7 @@ git restore -- exercises/12-color-blending-and-trails/shared/color_trail_model.c
 That command discards every uncommitted change in the named file. Record the
 observed failure, the off-by-one explanation, and the repaired result.
 
-## Exercise
+## Your turn
 
 Open the [two-palette trail study brief](../../../exercises/12-color-blending-and-trails/README.md).
 Start from the particle-memory or gesture idea: keep bounded oldest-to-newest
@@ -247,7 +247,7 @@ geometry, and composition. Preserve checked normalized channels, finite guards,
 pure plan output, keyboard access, reset, reduced motion, and scoped renderer
 state.
 
-## Test
+## Check your work
 
 Linux x86-64 or macOS arm64:
 
@@ -266,7 +266,7 @@ properties, invalid/non-finite safety, endpoint preservation, decay monotonicity
 history caps, transactional output, and state-independent replay. It does not
 pixel-gate GPU output.
 
-## Reflect
+## Tell the story
 
 In 160–200 words, distinguish RGB from alpha, interpolation from composition,
 source-over from additive blending, sample age from wall-clock age, straight
@@ -275,7 +275,7 @@ numeric evidence from manual pixel evidence. Explain the palette midpoint,
 red-over-blue result, decay equation, one non-color palette cue, and one
 learner-owned visual decision. Include capture alt text.
 
-## Remix
+## Make it yours
 
 Use a gesture instead of autonomous particles, map speed to interpolation
 amount, make one palette cool-to-warm and the other low-to-high value, compare
@@ -285,7 +285,7 @@ non-color roles, bounded history, valid channels, explicit age, deterministic
 plan output, scoped style/blend/matrix state, reset, keyboard access, and a
 reduced-motion result.
 
-## Manual pixel validation
+## Quick visual check
 
 Automated tests do **not** complete this checklist. After a native launch,
 record platform, openFrameworks version, GPU/driver, project, configuration,
@@ -303,14 +303,9 @@ honestly **not performed**.
 - Capture alt text names both shape roles, overlap, age ordering, palette roles, controls, and reduced-motion behavior.
 - Any reused palette, code, reference, or asset is credited.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After one learner completes the section,
-record exact platform/tool versions; reading, prediction, repair, exercise,
-reflection, and manual review time separately; setup friction; pointer and
-keyboard access; reduced-motion use; whether normalized color, endpoint
-interpolation, straight alpha, source-over weighting, exponential decay,
-oldest-to-newest age, two palette roles, deterministic output, and renderer
-state scoping were understood; automated results; native launch/manual pixel
-results; originality review; and confusions. Do not infer timing,
-accessibility, originality, or graphical success from CI.
+If a trail becomes a muddy rectangle, check alpha, decay, and renderer state in
+that order. Clear the frame, draw one mark, then add persistence back in. Color
+mixing is weighted arithmetic with better lighting; a tiny two-color example
+will usually reveal the mistake faster than a full particle orchestra.

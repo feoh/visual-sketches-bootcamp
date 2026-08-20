@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Noise and flow fields
 
-## Look
+## See what we're making
 
 ![A dark blue field contains a pale grid of short direction ticks; three mint dotted ribbons curve together toward amber diamond heads with forward ticks, while a square field-coordinate control and small clock distinguish space and time without color alone.](media/flow-preview.svg "Nearby samples reveal one coherent, time-varying field.")
 
@@ -27,14 +27,14 @@ asset_records: assets.yaml
 Direction ticks, diamond heads, forward marks, and control shapes carry meaning
 without relying on the mint/amber palette.
 
-## Predict
+## Take a guess
 
 A 2-by-2 scalar grid stores top row `0, 1` and bottom row `1, 0`. Predict the
 bilinear sample at normalized position `(0.5, 0.5)`. Map that scalar to
 `angle = scalar * 2*pi`; which unit vector results? For a 4-column grid, which
 flat index stores column 2, row 1? What must happen at normalized x exactly 1?
 
-## Learn
+## Let's unpack it
 
 ### One vector can represent a two-dimensional grid
 
@@ -168,7 +168,7 @@ Pointer/drag and arrows change the same visible offset through the openFramework
 The renderer reads field, positions, histories, and flags; it does not own the
 only state that tests need.
 
-## Build: inspect three complete experiments
+## Make it run: inspect three complete experiments
 
 ### 1. Replay the independent oracle
 
@@ -229,7 +229,7 @@ pause stops particles and field time, while freeze keeps particles moving throug
 one static field. Try R, M, every edge, wrapping, and a tiny window. Compilation
 does not prove launch.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/11-noise-and-flow-fields/shared/flow_field_model.cpp`, temporarily
@@ -245,7 +245,7 @@ git restore -- exercises/11-noise-and-flow-fields/shared/flow_field_model.cpp
 That command discards every uncommitted change in the named file. Record the
 failure, why square examples can hide the transposition, and the repaired run.
 
-## Exercise
+## Your turn
 
 Open the [coherent-current instrument brief](../../../exercises/11-noise-and-flow-fields/README.md).
 Own parameters in `starter/src/design/flow_field_design.cpp` and geometry/trail
@@ -254,7 +254,7 @@ materially different field drawing. Explain indexing, two interpolation stages, 
 mapping, three scale/time controls, seed boundary, fixed-step/drop/wrap policy,
 and reduced-motion cue.
 
-## Test
+## Check your work
 
 ```sh
 CXX=g++ tests/run-section-11-tests.sh
@@ -266,7 +266,7 @@ in Debug and Release. Manually launch pointer and keyboard routes; inspect
 pause, reset, reduced motion, frozen time, resize, wrapping, contrast, direction
 cues, and originality. Pure and native CI prove only their named contracts.
 
-## Reflect
+## Tell the story
 
 In 170–210 words, distinguish lattice from stored grid, hash from noise,
 trilinear noise from bilinear grid sampling, scalar field from vector field,
@@ -275,7 +275,7 @@ wrap from clamp, and exact integer reproducibility from tolerant floats and
 manual pixels. Explain row-major indexing, one non-color direction/time cue,
 and one learner-owned choice. Include capture alt text.
 
-## Remix
+## Make it yours
 
 Map scalar to a half-turn instead of a full turn, use frozen field time as a
 printmaking mode, draw local direction combs, change wrap to a tested bounce, or
@@ -283,7 +283,7 @@ advect short ribbons seeded along one edge. Preserve checked row-major access,
 explicit interpolation boundaries, pinned seed mapping, finite guards, fixed-step
 and dropped-time evidence, work caps, keyboard access, reset, and reduced motion.
 
-## Manual review
+## Quick visual check
 
 - Pointer/drag and arrows change the same visible field-coordinate control.
 - P pauses without a resume burst; R replays; M removes histories; T freezes field time.
@@ -295,14 +295,9 @@ and dropped-time evidence, work caps, keyboard access, reset, and reduced motion
 - Alt text names coherence, direction, time state, history order/length, wrapping, controls, shapes, and palette roles.
 - Reused references, code, and assets are credited.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; reading, prediction, repair, exercise, and
-reflection time separately; pointer/keyboard and reduced-motion access; setup
-friction; whether row-major indexing, dimension caps, hash/noise distinction,
-smoothstep, trilinear versus bilinear interpolation, exact boundaries,
-scalar-to-angle mapping, scale/time controls, reproducibility boundary,
-fixed-step/drop/wrap/history policy, pause/reset/freeze, and transactional guards
-were understood; automated result; manual accessibility/originality result; and
-confusions. Do not infer timing, graphical success, or accessibility from CI.
+If the field looks like static, check whether nearby samples share values and
+whether you are sampling the grid smoothly. If particles fly off, inspect the
+angle mapping, bounds, and fixed-step policy. Freeze time and draw the field's
+arrows; the invisible math gets much less mysterious once it has a tiny handle.

@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # A mark that moves
 
-## Look
+## See what we're making
 
 One still cannot prove motion, so this preview uses position and ruler ticks to
 show the same traveler after equal simulation steps.
@@ -31,7 +31,7 @@ show the same traveler after equal simulation steps.
 The preview is static and has no audio. In the app, a line opposite velocity is
 a non-color direction cue, pause adds a ring, and reduced motion changes speed.
 
-## Predict
+## Take a guess
 
 Assume `x` starts at `100.0f`, speed is `120.0f` pixels per second, and one
 update receives `1.0f / 60.0f` seconds:
@@ -44,7 +44,7 @@ Predict the new `x`. Then predict what the same line does if `dt` accidentally
 contains `16.67` **milliseconds** rather than `0.01667` seconds. Keep both
 answers; the repair task makes this unit mismatch visible.
 
-## Learn
+## Let's unpack it
 
 ### Variables and numeric types
 
@@ -153,7 +153,7 @@ This avoids sticking at an edge. Space toggles pause, `R` resets deterministic
 motion state, and `M` uses one quarter speed. Reduced motion is a persistent
 preference, so reset does not silently turn it off.
 
-## Build
+## Make it run
 
 Keep pure model tests, project generation, native compilation, and graphical
 inspection as separate evidence.
@@ -202,7 +202,7 @@ implementation. Native platform claims require the corresponding section 01
 CI status on the commit; a local build is not proof of another platform or of
 visual runtime behavior.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/01-a-mark-that-moves/starter/src/ofApp.cpp`, temporarily change:
@@ -230,7 +230,7 @@ git restore -- exercises/01-a-mark-that-moves/starter/src/ofApp.cpp
 This command discards every uncommitted change in that file. Record the wrong
 unit, observed behavior, policy that limited it, and repair in one sentence.
 
-## Exercise
+## Your turn
 
 Open the [traveler brief](../../../exercises/01-a-mark-that-moves/README.md).
 Choose start, speed, radius, and colors in the starter design file, then make a
@@ -240,7 +240,7 @@ Choose geometry distinct from both while preserving the deterministic public
 model and controls: pointer response, arrow fallback, wrap, pause, reset, and
 reduced motion. There is no target screenshot.
 
-## Test
+## Check your work
 
 Run the pure C++17 test before and after each model/design change:
 
@@ -266,14 +266,14 @@ the clock, pointer, window, renderer, or pixels.
 Then generate and build both configurations. Launch manually and inspect the
 window; compilation is not runtime or visual evidence.
 
-## Reflect
+## Tell the story
 
 In 100–140 words, explain why the elapsed-time value is in seconds, what the
 accumulator retains, and how one 1/30-second frame relates to four 1/120-second
 steps. Name one learner-owned visual choice and one accessibility control.
 Include your repaired unit bug and alt text for one still capture.
 
-## Remix
+## Make it yours
 
 Keep the fixed-step policy and controls, but change one spatial behavior:
 steer away from the pointer, constrain velocity to horizontal/vertical axes,
@@ -281,7 +281,7 @@ or map pointer distance to speed within the documented range. Predict how the
 frame-partition test should behave before editing. The remix must change
 mapping or geometry, not only palette.
 
-## Manual review
+## Quick visual check
 
 - Pointer and arrow fallback each produce an immediately legible response.
 - Space pauses without a resume jump; reset repeats the start; reduced motion
@@ -294,11 +294,9 @@ mapping or geometry, not only palette.
 - The capture alt text names mark position, direction cue, and relationship.
 - Reused code and assets remain credited and licensed.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; setup, reading, build, exercise, and
-reflection time separately; setup friction; whether seconds/milliseconds and
-the accumulator were understood; test and repair outcomes; accessibility
-review; and points of confusion. Do not infer learner timing from CI or author
-tests.
+If the mark jumps, freezes, or vanishes, pause before rewriting everything.
+Print or inspect position, speed, and `dt` one at a time. Check the units first:
+seconds and milliseconds are not cousins who can safely share a wardrobe. Then
+rerun the smallest model test and make one change.

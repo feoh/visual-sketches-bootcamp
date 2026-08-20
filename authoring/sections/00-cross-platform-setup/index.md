@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # Cross-platform setup and the first frame
 
-## Look
+## See what we're making
 
 This entire image is one frame: a background plus exactly five calls that draw
 geometry. It is a reference for constraints, not a composition to copy.
@@ -32,7 +32,7 @@ The still has no motion or audio. Its SVG title and description, the alt text
 above, and the visible caption carry the same spatial information without
 requiring color perception.
 
-## Predict
+## Take a guess
 
 Without running this fragment, sketch the location of the circle and name which
 statement changes later drawing calls:
@@ -47,7 +47,7 @@ void ofApp::draw() {
 Is `(200, 150)` measured from the lower-left, center, or upper-left? Is `40` a
 diameter or radius? Keep your prediction; verify it during Build.
 
-## Learn
+## Let's unpack it
 
 ### Install one pinned toolchain
 
@@ -175,7 +175,7 @@ This is one substantial C++ mechanism: use declarations in a header and
 function definitions/calls across source files. Arrays and enums in supplied
 code are readable scaffolding here, not new assessed mechanisms.
 
-## Build
+## Make it run
 
 Keep generation, compilation, and running separate so an error has one home.
 
@@ -233,7 +233,7 @@ tests/run-section-00-tests.sh
 The equivalent Windows commands are in the exercise brief. Open the app only
 after generation and compilation pass.
 
-## Break and repair
+## Break it on purpose
 
 In the starter, delete the semicolon after one `ofSetColor(...)` call in the
 exact tracked file `exercises/00-visual-signature/starter/src/ofApp.cpp`, then
@@ -253,7 +253,7 @@ restore the repository copy with
 command discards every uncommitted edit in that file. Record the diagnostic,
 cause, and repair in one sentence.
 
-## Exercise
+## Your turn
 
 Create a visual signature from exactly five primitives and three colors. Start
 with the [exercise brief](../../../exercises/00-visual-signature/README.md),
@@ -264,7 +264,7 @@ deterministic edge policy,
 Linux/macOS/Windows commands, starter, tests, and explained reference solution
 are all in that bundle. There is intentionally no target screenshot.
 
-## Test
+## Check your work
 
 Run the pure C++17 suite separately from the native build:
 
@@ -289,7 +289,7 @@ extra pixels added by line width, compare pixels, antialiasing, or aesthetic
 choices. Finally inspect the window manually at 800 × 600 and after a narrow
 and wide resize, including whether thick strokes appear clipped.
 
-## Reflect
+## Tell the story
 
 Save one PNG capture and provide alt text that names shapes and spatial
 relationships, not only colors. In 80–120 words, connect one normalized
@@ -297,14 +297,14 @@ coordinate to its pixel location, explain why geometry lives outside `draw()`,
 and identify two composition choices that are yours. Include the first useful
 compiler diagnostic you repaired.
 
-## Remix
+## Make it yours
 
 Keep the same five specifications and three colors, but change one spatial
 rule: mirror x positions, exchange the two rows, or make all centers follow a
 diagonal. Predict which pixel coordinates change before editing. This must
 change geometry or placement, not only palette.
 
-## Manual review
+## Quick visual check
 
 - The first-frame relationship is legible without animation or input.
 - The app builds before it is run; tests keep nominal geometry in bounds, and a
@@ -316,9 +316,11 @@ change geometry or placement, not only palette.
   spatial logic, not merely color.
 - The capture has useful alt text; code/assets are credited and licensed.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record: platform and exact tool versions; elapsed setup, reading, build, and
-exercise time; setup friction; diagnostic and test outcomes; accessibility
-review; and points of confusion. Do not infer learner timing from author tests.
+That is normal; computers are very confident about tiny mistakes. Read the
+first useful error, compare your code with the nearest example, and rerun the
+smallest check before changing three things at once. If setup gets noisy, save
+the command and error text, then come back to it after a short break. Your
+visual choices are the point of the exercise—the reference is a guide, not a
+personality transplant.

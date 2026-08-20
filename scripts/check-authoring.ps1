@@ -141,8 +141,8 @@ function Assert-PilotContract {
     if(-not(Get-Content -Raw -LiteralPath (Join-Path $pilot 'progress-log.md')).Contains('Complete path')){Fail 'progress log is missing complete-path checkpoint'}
     foreach($lesson in $lessons|Where-Object{$_.Kind-eq'instructional'}){
         $content=Get-Content -Raw -LiteralPath $lesson.Path
-        if($content-notmatch'(?m)^## Manual'){Fail "$($lesson.Path)`: instructional section requires a manual-review heading"}
-        if($content-notmatch'(?m)^## Pilot note\r?$'){Fail "$($lesson.Path)`: instructional section requires a Pilot note heading"}
+        if($content-notmatch'(?m)^## (Quick visual|Manual)'){Fail "$($lesson.Path)`: instructional section requires a visual-review heading"}
+        if($content-notmatch'(?m)^## If you get stuck\r?$'){Fail "$($lesson.Path)`: instructional section requires a troubleshooting heading"}
     }
 }
 

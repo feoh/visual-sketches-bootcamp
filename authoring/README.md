@@ -67,13 +67,28 @@ made by another creator or under another license gets its own asset record.
 Video with speech also needs captions in the delivered media; the text
 transcript remains required.
 
+## Voice and math starting line
+
+Write to a smart beginner, not to a committee reviewing a syllabus. Basic
+algebra is the math prerequisite: substituting values, reading a graph, and
+solving small equations. Do not assume trigonometry or familiarity with names
+such as sine, cosine, radians, phase, or `atan2`; introduce each one before the
+learner needs it. Explain the picture and the useful intuition first, then show
+the formula and code. Define unavoidable jargon in the sentence where it
+appears.
+
+Keep the voice conversational and encouraging. Prefer “let's try this” to
+“the learner shall implement this.” A small joke is welcome when it clarifies
+rather than distracts. The technical contract still needs to be precise, but
+it can sound like a helpful guide instead of a registrar's course catalog.
+
 ## Definition of done: instructional section
 
 An instructional section is **written and ready to try** when it has:
 
 - 3–6 observable objectives, prerequisites, and an accessible visual preview;
-- the Look → Predict → Learn → Build → Break and repair → Exercise → Test →
-  Reflect → Remix scaffold;
+- the See → Guess → Unpack → Make → Break → Try → Check → Tell → Remix
+  scaffold;
 - one math idea shown visually, numerically, and symbolically;
 - no more than one substantial new C++ mechanism;
 - two or three runnable examples and one deliberate repair task;
@@ -83,12 +98,12 @@ An instructional section is **written and ready to try** when it has:
 - known-case, boundary, and property tests plus a manual visual/originality
   checklist;
 - complete source and asset records; and
-- a pilot note naming the completion, setup, timing, and confusion details to
-  jot down while someone actually works through it.
+- a short troubleshooting note that points the reader toward the smallest
+  useful example, test, or number to inspect when something goes sideways.
 
-A section has been **tried by a learner** only after a self-pilot or shared
-learner run supplies those notes. `not observed` means exactly that; automated
-checks do not establish learner pacing.
+A section is ready when a reader can follow it, make a sketch, and recover from
+ordinary mistakes without filling out a research form. Automated checks verify
+the code and links; the reader's own visual choices remain their business.
 
 ## Definition of done: synthesis project
 

@@ -8,39 +8,42 @@ draft: false
 
 ## Audience and outcome
 
-This course is for an experienced Python programmer who remembers some C or C++ but does not want to relearn the language academically. By the end, the learner should be able to:
+This is for a curious programmer who wants to make things move, not sit through a
+college syllabus in disguise. If you can edit text, run a command, and handle
+basic algebra—substitute values into a formula and solve something like
+`2x + 3 = 11`—you have enough math to start. Python experience is welcome but
+not required; rusty C++ is fine too. Trigonometry is **not** a prerequisite.
+When circles need sine, cosine, or radians, we stop and teach those ideas from
+scratch with pictures and tiny examples.
+
+By the end, you should be able to:
 
 - read and modify a typical openFrameworks `ofApp`;
-- structure a sketch so simulation and geometry can be tested without a window;
-- use vectors, interpolation, trigonometry, transforms, randomness, noise, and simple forces intentionally;
-- build gesture lines, repeated geometric systems, particles, flow fields, trails, and media-derived geometry;
+- keep a sketch's simulation and geometry testable without a window;
+- use vectors, interpolation, circle helpers, transforms, randomness, noise, and
+  simple forces intentionally;
+- build gesture lines, repeated geometric systems, particles, flow fields,
+  trails, and media-derived geometry;
 - diagnose ordinary compiler, linker, runtime, and frame-rate problems;
 - create and document an original, visually compelling sketch; and
-- explain how its code, mathematics, and visual behavior correspond.
+- explain how its code, math, and visual behavior connect.
 
-The course is designed for a **12–18 week planning envelope including
-synthesis**. This is an author planning assumption, not observed learner pace.
-The complete route is deliberately longer than the core route; the accelerated
-8+2 route is a scope-reduction option, not a promise that every learner can
-sustain two substantial sections per week. Pilot evidence, not the calendar,
-will determine which route is genuinely manageable.
+The course fits a **12–18 week suggested rhythm including synthesis**, but you
+can take longer, skip an extension, or spend an entire evening making one
+circle wiggle. The calendar is a map, not a boss fight.
 
-## Provisional course routes
+## Pick a pace (or make up your own)
 
-All estimates below are **unobserved planning envelopes**. The route names refer
-to provisional weeks, not lesson counts: each named route has 19 ordered bundles
-including the first-C++ test interlude. The machine-checked
-[`pilot/routes.tsv`](pilot/routes.tsv) contract marks every bundle required or
-optional and is the source used on pilot records. For each section, record
-reading, setup/build repair, exercise, reflection, and manual-review time
-separately so later revisions do not confuse technical work with writing or
-installation time.
+These are optional ways to organize the material. The route names refer to
+weeks, not lesson counts: each one contains 19 ordered bundles including the
+first-C++ test interlude. The checked route file keeps the published order
+honest; it is not a homework tracker, gradebook, or request for learner data.
 
 | Route | Provisional schedule | Scope and consequence |
 |---|---|---|
-| Complete, about 18 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4–13: one of 03–12 each week; 14: 13; 15: 14; 16: 15; 17: section 16 studies; 18: section 17 capstone milestone sequence, with extra capstone weeks permitted | Includes every currently authored lesson. One week is only a planning slot for the capstone; do not compress unfinished milestones merely to meet it. |
-| Core, about 12 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4: 03–04; 5: 05–06; 6: 07–08; 7: 09–10; 8: 11; 9: 12; 10: section 16; 11–12: section 17 | Omits extensions 13–15. Pairings require shorter sessions or multiple work periods within the named week. |
-| Accelerated, 8+2 weeks | 1: 00–01; 2: 02 + test interlude; 3: 03–04; 4: 05–06; 5: 07–08; 6: 09–10; 7: 11; 8: 12; synthesis weeks 1–2: sections 16–17 | Omits 13–15 and is explicitly experimental until human evidence supports it. Extend rather than skip deterministic evidence or accessibility work. |
+| Complete, about 18 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4–13: one of 03–12 each week; 14: 13; 15: 14; 16: 15; 17: section 16 studies; 18: section 17 capstone milestone sequence, with extra capstone weeks permitted | Includes every lesson. Take extra time for the capstone whenever you want; unfinished sketches are allowed to remain unfinished for a while. |
+| Core, about 12 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4: 03–04; 5: 05–06; 6: 07–08; 7: 09–10; 8: 11; 9: 12; 10: section 16; 11–12: section 17 | Omits extensions 13–15. Pair sections only when that still feels fun; otherwise stretch the route. |
+| Accelerated, 8+2 weeks | 1: 00–01; 2: 02 + test interlude; 3: 03–04; 4: 05–06; 5: 07–08; 6: 09–10; 7: 11; 8: 12; synthesis weeks 1–2: sections 16–17 | Omits 13–15. This is a fast tour, not a race; extend it rather than skipping the parts that make the sketch understandable. |
 
 Sections 00–12 are the core prerequisite chain. Sections 13 and 14 are
 extensions; section 15 is an elective. Section 16 requires the mechanisms from
@@ -49,26 +52,27 @@ histories introduced in sections 09 and 12. Section 17 requires section 16 or
 equivalent synthesis work. The only delivered section 15 lane is recorded
 microphone amplitude with no-device fallback.
 
-## Recurring lesson shape
+## The rhythm of a lesson
 
-Instructional sections 00–15 use the stages below as a recurring scaffold, but
-may combine **Try** and **Build** or use one complete worked sequence where that
-better preserves visual momentum. The synthesis projects (16–17) use a separate
-project contract rather than pretending to be ordinary lessons:
+Sections 00–15 follow a friendly repeatable rhythm. We may combine steps when
+that keeps the creative momentum moving; nobody gets extra points for obeying a
+syllabus-shaped box. The synthesis projects (16–17) use a separate project
+brief.
 
-1. **Look:** a short visual goal and animated/still reference.
-2. **Predict:** a no-notes question about what a small code fragment will draw or how it will move.
-3. **Learn:** one mathematical model and at most one substantial C++ mechanism.
-4. **Try/Build:** one to three runnable examples or one complete progressive program.
-5. **Break and repair:** one planted bug or misleading implementation.
-6. **Exercise:** a constrained but open-ended C++ sketch.
-7. **Test:** supplied tests for deterministic behavior and edge cases.
-8. **Reflect:** a capture plus a short explanation connecting code, math, and image.
-9. **Remix:** one optional aesthetic variation that reuses earlier ideas.
+1. **See it:** a short visual goal and an animated or still reference.
+2. **Take a guess:** predict what a tiny piece of code will draw or how it will move.
+3. **Unpack it:** one math idea and at most one substantial C++ mechanism, explained before the jargon arrives.
+4. **Make it run:** one to three runnable examples or one complete progressive program.
+5. **Break it on purpose:** repair one planted bug or misleading implementation.
+6. **Your turn:** a constrained but open-ended C++ sketch.
+7. **Check your work:** supplied tests for deterministic behavior and edge cases.
+8. **Tell the story:** a capture plus a short explanation connecting code, math, and image.
+9. **Make it yours:** an optional variation that reuses earlier ideas.
 
-Guidance fades across the course: complete example → completion problem → constrained remix → open brief.
+The training wheels fade gradually: complete example → completion problem →
+constrained remix → open brief.
 
-## Unit 0 — Runway
+## Part 0 — Get something on screen
 
 ### 00. Cross-platform setup and the first frame
 
@@ -114,9 +118,9 @@ Guidance fades across the course: complete example → completion problem → co
 
 **Goal:** make the exercise harness part of the learner’s vocabulary before tests become an unexplained ritual.
 
-Run one `ofxUnitTests`/`ofAppNoWindow` executable, repair one failed assertion, write one known-case test, and use the course’s approximate-floating-point helper. Explain test source versus sketch source, test executable linking, arrange/act/assert, fixtures, and why renderer output is usually outside this test layer. By Unit 2, every learner authors at least one meaningful property or invariant test.
+Run one `ofxUnitTests`/`ofAppNoWindow` executable, repair one failed assertion, write one known-case test, and use the course’s approximate-floating-point helper. Explain test source versus sketch source, test executable linking, arrange/act/assert, fixtures, and why renderer output is usually outside this test layer. By Part 2, you will have authored at least one meaningful property or invariant test.
 
-## Unit 1 — Motion with intention
+## Part 1 — Make motion mean something
 
 ### 03. Map, clamp, and lerp
 
@@ -148,13 +152,13 @@ Run one `ofxUnitTests`/`ofAppNoWindow` executable, repair one failed assertion, 
 
 **C++:** constants, helper functions, nested loops, and indexed phase offsets.
 
-**Math:** sine/cosine as circular motion, radians, amplitude, frequency, phase, polar coordinates, and `atan2`.
+**Math:** circles from the ground up: sine/cosine as two number-producing helpers, radians, amplitude, frequency, phase, polar coordinates, and `atan2`.
 
 **Exercise:** create an animated field of repeated forms driven by at least two independent phases.
 
 **Tests:** period, phase relationships, polar/cartesian round trips, and bounded amplitudes.
 
-## Unit 2 — Composition and expressive marks
+## Part 2 — Compose expressive marks
 
 ### 06. Controlled chance
 
@@ -194,7 +198,7 @@ Run one `ofxUnitTests`/`ofAppNoWindow` executable, repair one failed assertion, 
 
 **Tests:** distance filtering, smoothing endpoints, uniform-ish resampling, finite output, and empty/single-point inputs.
 
-## Unit 3 — Emergent systems
+## Part 3 — Let simple rules get weird
 
 ### 09. Particles with memory
 
@@ -232,7 +236,7 @@ Run one `ofxUnitTests`/`ofAppNoWindow` executable, repair one failed assertion, 
 
 **Tests:** grid indexing, interpolation at cell boundaries, deterministic samples, finite vectors, and particle bounds.
 
-## Unit 4 — Drawing with light, time, and media
+## Part 4 — Draw with light, time, and media
 
 ### 12. Color, blending, and trails
 
@@ -286,14 +290,14 @@ permission/device failure without retaining audio.
 
 **Exercise:** build a small amplitude-responsive instrument with keyboard,
 recorded-input, and no-device routes. A five-second viewer observation belongs
-to a self-pilot or shared-learner run; an author technical smoke check covers
-visible labels, monotonic mapping, fallback operation, and non-color cues but
-is not pacing evidence.
+to a local practice run; an author technical smoke check covers visible labels,
+monotonic mapping, fallback operation, and non-color cues. Live input is an
+optional extra, not a requirement.
 
 **Tests:** smoothing, dead zone, deterministic recorded input, explicit
 no-device fallback, bounded output, and reset behavior.
 
-## Unit 5 — Synthesis projects
+## Part 5 — Make your own thing
 
 ### 16. Project: three sketch studies
 
@@ -320,7 +324,7 @@ Suggested directions include a calligraphic flow instrument, a typographic sprin
 
 Unlike instructional exercises, the capstone has no canonical finished solution. It provides divergent partial process exemplars, architectural patterns, evaluator fixtures, and rubric examples so the course does not anchor the learner to one polished answer.
 
-## Portfolio checkpoints
+## Things worth saving
 
 1. **Foundations diptych:** two vector/motion studies.
 2. **Generative edition:** six to twelve seeded outputs and a contact sheet.
@@ -328,6 +332,12 @@ Unlike instructional exercises, the capstone has no canonical finished solution.
 4. **Capstone:** finished source, process note, test summary, and known limitations.
 5. **Variant challenge:** change one constraint live, predict the result, revise, and explain.
 
-## Deliberately deferred topics
+## Not on today's menu
 
-The bootcamp does not front-load manual memory management, template authoring, inheritance design, move-semantics theory, concurrency, custom allocators, formal calculus, hand-derived matrix multiplication, machine-learning training, or custom shaders. Shaders and addons appear only when a sketch creates a concrete need and the prerequisite CPU-side model is already understood and testable.
+The bootcamp does not front-load manual memory management, template authoring,
+inheritance design, move-semantics theory, concurrency, custom allocators,
+formal calculus, hand-derived matrix multiplication, machine-learning training,
+or custom shaders. It also does not expect trig knowledge at the door: section
+05 introduces the circle vocabulary it needs. Shaders and addons appear only
+when a sketch creates a concrete need and the prerequisite CPU-side model is
+already understood and testable.

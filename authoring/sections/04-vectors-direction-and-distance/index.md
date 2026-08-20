@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # Vectors, direction, and distance
 
-## Look
+## See what we're making
 
 ![Three labeled panels show horizontal, down-right positive (3,4), and zero-length anchor-to-target connectors with component, distance, and unit-vector values.](media/vector-connector-preview.svg "Direction, distance, and guarded normalization cases in the openFrameworks coordinate convention.")
 
@@ -28,13 +28,13 @@ asset_records: assets.yaml
 The static preview needs no motion or audio alternative. Circle/rectangle endpoint
 shapes, arrow lines, labels, and equations communicate roles without color alone.
 
-## Predict
+## Take a guess
 
 An anchor is at `(20, 30)` and a target at `(23, 34)`. Before calculating,
 predict the direction components, distance, and unit direction. Then predict
 what should happen when anchor and target are the same point.
 
-## Learn
+## Let's unpack it
 
 ### A vector is two components
 
@@ -180,9 +180,10 @@ studies:
 1. **Seek:** `seekAcceleration()` normalizes `target - position`, scales it to
    maximum acceleration, and returns zero when target and position coincide.
    `stepSeek()` limits velocity before its fixed-step position update.
-2. **Orbit:** `orbitPoint(center, radius, phase)` uses
-   `(cos(phase), sin(phase)) * radius`. Radius zero returns the center, an
-   intentional zero-vector case.
+2. **Orbit:** `orbitPoint(center, radius, phase)` uses the circle helper to
+   place a point at a chosen distance around a center. You do not need to know
+   sine or cosine yet—the next section opens that black box. Radius zero
+   returns the center, an intentional zero-vector case.
 3. **Bounce:** `stepBounce()` performs one fixed integration step, clamps a
    crossing to its rectangular boundary, and reverses only the crossed
    velocity component.
@@ -190,9 +191,11 @@ studies:
 These are numerical studies rather than three extra rendered apps. They keep
 one lesson project, compile in the public runner, and can be drawn by converting
 core `Vec2` values to `glm::vec2` in `ofApp`. Known cases test seek from `(0,0)`
-toward `(3,4)`, quarter-turn orbit, right-edge bounce, deterministic replay,
-and coincident/zero-radius guards. A large step that crosses a boundary more
-than once is outside this introductory bounce contract; keep fixed steps small.
+toward `(3,4)`, a quarter-turn orbit, right-edge bounce, deterministic replay,
+and coincident/zero-radius guards. The orbit is a preview of the circle math in
+the next section, not a trig pop quiz. A large step that crosses a boundary
+more than once is outside this introductory bounce contract; keep fixed steps
+small.
 
 The model exposes `dot(a, b) = a.x*b.x + a.y*b.y` because self-dot explains
 `squared length`: `dot((3,4),(3,4)) = 25`. No angle or lighting behavior needs
@@ -238,10 +241,11 @@ independent `(3,4)` fixture expects exactly understandable values—distance `5`
 unit `(0.6,0.8)`—while a clamped boundary fixture records rounded decimal
 oracles. There is no pixel comparison.
 
-## Try the calculations
+## Try the numbers
 
 1. From `(20,30)` to `(23,34)`: direction `(3,4)`, distance `5`, unit `(0.6,0.8)`.
 2. From `(10,8)` to `(4,8)`: direction `(-6,0)`, distance `6`, unit `(-1,0)`.
+3. If a point moves 6 pixels per second for 2 seconds, solve `distance = rate * time`: it moves 12 pixels.
 3. From `(7,7)` to itself: direction `(0,0)`, distance `0`, guarded unit `(0,0)`.
 4. Scale unit `(0.6,0.8)` by reach `10`: displacement `(6,8)`.
 5. In a 400-pixel-wide viewport with 12-pixel insets, usable width is `376`.
@@ -251,7 +255,7 @@ Draw axes and arrows, write the component pairs, then calculate. A diagram can
 show orientation but cannot prove magnitude; numbers can verify magnitude but
 may hide subtraction order.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/04-vectors-direction-and-distance/shared/constellation_model.cpp`,
@@ -279,7 +283,7 @@ git restore -- exercises/04-vectors-direction-and-distance/shared/constellation_
 That command discards every uncommitted change in the named file. Record the
 failure, operand-order explanation, and repaired result.
 
-## Exercise
+## Your turn
 
 Open the [distance-reactive constellation brief](../../../exercises/04-vectors-direction-and-distance/README.md).
 Edit exactly
@@ -294,7 +298,7 @@ perpendicular vector `(-unit.y, unit.x)`, two satellites, graduated connector
 marks, and negative space. Make a third relationship, not a recolor. There is
 no target screenshot.
 
-## Test
+## Check your work
 
 On Linux or macOS, use both compilers when available:
 
@@ -328,7 +332,7 @@ keyboard-accessible, and describe seek target, orbit center/path, and bounce
 bounds without relying on color. Native CI proves compilation only,
 not graphical runtime or accessibility.
 
-## Reflect
+## Tell the story
 
 In 120–160 words, explain components, “to minus from,” distance as length,
 zero-safe normalization, unit-direction scaling, and how velocity differs from
@@ -336,14 +340,14 @@ acceleration. Name one seek/orbit/bounce zero or boundary case, the coordinate-s
 y convention, test tolerance, one boundary rule, and one learner-owned visual
 decision. Include alt text for one capture.
 
-## Remix
+## Make it yours
 
 Keep the model contract but change one relationship: make satellite spread
 shrink with distance, use reach as a dashed rhythm, mirror a point across the
 anchor, or add a keyboard-controlled second target. Predict components,
 distance, zero-case, and boundary consequences before editing.
 
-## Manual review
+## Quick visual check
 
 - Anchor, target, and direction remain distinguishable without color alone.
 - Ink/background and accent/background contrast are suitable; nothing flashes.
@@ -353,12 +357,9 @@ distance, zero-case, and boundary consequences before editing.
 - Capture alt text names endpoints, connector direction, distance response, and viewport.
 - Reused code and assets remain credited and license-compatible.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; reading, calculation, repair, exercise,
-and reflection time separately; setup and input-device friction; whether
-subtraction order, y direction, length, zero-safe normalization, scaling,
-bounds, and tolerance were understood; automated test outcome; manual
-accessibility/originality review; and points of confusion. Do not infer learner
-timing from CI or author tests.
+For a backwards-moving point, draw the two points and write “to minus from”
+next to the subtraction. For a crash or a giant number, check the zero-length
+case before doing any division. The little `(3, 4, 5)` triangle is a useful
+sanity check, not a secret handshake.

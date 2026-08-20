@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # Map, clamp, and lerp
 
-## Look
+## See what we're making
 
 A responsive composition preserves relationships, not fixed pixel coordinates.
 
@@ -31,14 +31,14 @@ The preview is static, with no audio or motion alternative required. Viewport
 outlines, panel boundaries, labels, and position communicate the relationship
 without color alone.
 
-## Predict
+## Take a guess
 
 A viewport's short side is `600`. We want `320` to mean progress `0` and `1200`
 to mean progress `1`. Before calculating, predict whether `600` normalizes
 below, at, or above `0.5`. Then predict whether a 4:5 poster fitted into an
 `800 x 600` window will be limited by width or height.
 
-## Learn
+## Let's unpack it
 
 ### Normalize: turn a source range into progress
 
@@ -186,7 +186,7 @@ actual, expected, difference, and both tolerances. Do not pick a huge tolerance
 just to turn a red test green; derive it from scale and expected computation.
 Pixels are not compared.
 
-## Try the calculations
+## Try the numbers
 
 1. Normalize `760` from `[320, 1200]`. The answer is `0.5`.
 2. Map that progress into padding `[16, 64]`. The answer is `40`.
@@ -200,7 +200,7 @@ Sketch the panel rectangles before running code. Symbolic equations explain the
 rule, the numerical cases verify arithmetic, and the preview shows the visual
 consequence; none replaces the others.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/03-map-clamp-and-lerp/shared/poster_layout.cpp`, temporarily change:
@@ -226,7 +226,7 @@ git restore -- exercises/03-map-clamp-and-lerp/shared/poster_layout.cpp
 That command discards every uncommitted change in the named file. Record the
 failure, the width/height equation, and the repaired result.
 
-## Exercise
+## Your turn
 
 Open the [responsive poster brief](../../../exercises/03-map-clamp-and-lerp/README.md).
 Edit exactly
@@ -242,7 +242,7 @@ three rings remain contained even at the valid `64 x 64` boundary. Make a third
 composition that differs in geometry or mapping, not only color. There is no
 target screenshot.
 
-## Test
+## Check your work
 
 On Linux or macOS, use both compilers when available:
 
@@ -269,21 +269,21 @@ Generate and compile both starter and solution in Debug and Release before a
 release claim. Launch each manually at portrait, square, and landscape sizes;
 native CI names prove compilation only, not graphical runtime.
 
-## Reflect
+## Tell the story
 
 In 120–160 words, explain normalize as inverse interpolation, lerp, map as their
 composition, the reason for clamping, and the two-branch aspect fit. Compare
 linear padding with eased radius. Name the tolerance and one learner-owned
 visual decision. Include alt text for one capture.
 
-## Remix
+## Make it yours
 
 Keep the model contract but change one relationship: reverse focus direction,
 map aspect into a grid count, use smoothstep for margin instead of radius, or
 fit a different target ratio. Predict endpoint, midpoint, monotonicity, and
 resize consequences before changing code.
 
-## Manual review
+## Quick visual check
 
 - Hierarchy remains legible at portrait, square, landscape, and minimum useful sizes.
 - Shape, spacing, outline, or labels communicate structure without color alone.
@@ -293,11 +293,9 @@ resize consequences before changing code.
 - Resizing does not crop focal geometry or stretch the 4:5 panel.
 - Reused code and assets remain credited and license-compatible.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; reading, calculation, repair, exercise,
-and reflection time separately; setup friction; whether inverse interpolation,
-range direction, aspect fitting, smoothstep, and tolerance were understood;
-automated test outcome; manual resize/accessibility/originality review; and
-points of confusion. Do not infer learner timing from CI or author tests.
+When a mapped value looks backwards, write down the source and destination
+endpoints before touching the code. Check whether you normalized first and
+whether the input needs clamping. A tiny table with “input → progress → output”
+usually beats staring at a formula until it confesses.

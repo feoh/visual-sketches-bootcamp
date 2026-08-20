@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # The Python-to-C++ survival kit
 
-## Look
+## See what we're making
 
 One parameter record can generate many related values.
 
@@ -31,7 +31,7 @@ The preview is static and has no audio. The exercise also stays still, so it
 requires no motion fallback. Shape, position, index, and size—not color
 alone—communicate the family relationship.
 
-## Predict
+## Take a guess
 
 Read this signature left to right:
 
@@ -44,7 +44,7 @@ and whether that returned collection remains usable after the function ends.
 Then predict the size when `design.count` is `7` and the implementation performs
 one `push_back(...)` per index from `0` through `6`.
 
-## Learn
+## Let's unpack it
 
 ### The small, useful Python comparison
 
@@ -200,7 +200,7 @@ r(i) = clamp(b + |i - c|s, minimum, viewport maximum)
 Changing count, spacing, base radius, or step creates a related family rather
 than seven unrelated drawing calls.
 
-## Build
+## Make it run
 
 Keep the model, renderer, and generated native metadata separate.
 
@@ -249,7 +249,7 @@ exact source membership. A local Linux build is not macOS or Windows evidence;
 require the matching commit statuses. Compilation is not graphical runtime or
 manual accessibility evidence.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/02-python-to-cpp-survival-kit/shared/mark_family.cpp`, temporarily
@@ -278,7 +278,7 @@ git restore -- exercises/02-python-to-cpp-survival-kit/shared/mark_family.cpp
 That command discards every uncommitted change in the named file. Record the
 failing contract, capacity-versus-size distinction, and repaired result.
 
-## Exercise
+## Your turn
 
 Open the [family brief](../../../exercises/02-python-to-cpp-survival-kit/README.md).
 First edit only
@@ -293,7 +293,7 @@ linked hourglasses, alternates two colors, and increases size away from center.
 Create a third visual treatment. Keep shape or placement meaningful without
 color alone. There is no target screenshot.
 
-## Test
+## Check your work
 
 Run both compiler variants when available:
 
@@ -321,21 +321,21 @@ Generate and compile both starter and solution in Debug and Release before a
 release claim. Launch each manually to inspect visuals; CI build names claim
 native compilation only.
 
-## Reflect
+## Tell the story
 
 In 110–150 words, annotate the `makeMarkFamily` signature: return, each
 parameter, `const`, and `&`. Explain why the returned vector survives the
 function, why `reserve` is not `resize`, and why raw `new`/`delete` is deferred.
 Name one learner-owned visual choice and include alt text for one capture.
 
-## Remix
+## Make it yours
 
 Keep the public function and tests, but change one mapping: arc placement,
 alternating vertical offset, size by distance from pointer captured on rebuild,
 or two parameter groups. Predict which collection properties remain true and
 which representative values change. Remix geometry or mapping, not only color.
 
-## Manual review
+## Quick visual check
 
 - Every repeated mark remains legible at narrow and wide window sizes.
 - Shape, stroke, placement, or labels communicate the family without color.
@@ -345,11 +345,10 @@ which representative values change. Remix geometry or mapping, not only color.
 - The code uses short-lived const references and owned returned values; it adds no raw `new`/`delete`.
 - Reused code and assets remain credited and license-compatible.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; setup, reading, build, repair, exercise,
-and reflection time separately; setup friction; whether signature punctuation,
-`reserve` versus `resize`, range loops, and value/reference lifetime were
-understood; test outcome; accessibility/originality review; and points of
-confusion. Do not infer learner timing from CI or author tests.
+C++ punctuation has a talent for hiding in plain sight. Read the first compiler
+error, check braces and semicolons near that line, and compare the function
+signature with the call site. If a vector behaves strangely, ask whether you
+wanted to reserve space or resize the collection. Make the smallest repair you
+can explain, then run the test again.

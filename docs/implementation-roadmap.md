@@ -90,7 +90,7 @@ Deliver:
 
 Deliver the leaf-bundle lesson template, exercise template, media conventions, accessibility checklist, licensing policy, Hugo/link smoke check, testing-literacy interlude, and sections 00–02 with tested starters and solutions.
 
-**Exit gate:** a pilot learner reaches a moving sketch in the first session and can run tests on their platform.
+**Exit gate:** a reader can reach a moving sketch in the first session and can run tests on their platform.
 
 ### Phase 2 — Units 1 and 2
 
@@ -114,7 +114,7 @@ Deliver blending/trails, temporal buffers, image/type geometry, and depth/live-i
 
 Deliver three sketch-study briefs, capstone brief/rubric, gallery/process-note templates, instructional reference solutions, divergent capstone process exemplars (not one canonical solution), full link/license checks, and optional Hugo deployment.
 
-**Exit gate:** the complete path has been piloted, cross-platform validation is green or limitations are explicit, and a learner can publish a documented original capstone.
+**Exit gate:** the complete path is runnable, cross-platform validation is green or limitations are explicit, and a reader can publish a documented original capstone.
 
 ## Definition of done for an instructional section
 
@@ -132,12 +132,12 @@ An instructional section (00–15) is **written and ready to try** when it has:
 - automated tests for known cases, boundaries, and at least one property;
 - a manual visual/originality checklist;
 - credits and licenses; and
-- a pilot note naming the timing and confusion details to jot down while
-  somebody actually works through it.
+- a short troubleshooting note pointing to the smallest useful example, test,
+  or number to inspect when something goes sideways.
 
-A section has been **tried by a learner** only when a self-pilot or shared
-learner run records timing, outcome, help, confusion, completion components,
-and any checkpoint result. Automated tests do not establish learner pacing.
+A section is **ready to try** when its instructions, examples, tests, and
+fallbacks are usable on their own. Optional personal notes can help a reader
+choose what to revisit, but no timing or learner report is required.
 
 A synthesis project is complete when its brief, milestones, deterministic evaluator fixtures, technical/creative/originality rubric, accessibility/license expectations, captures/process-note template, and multiple visually divergent partial exemplars are ready. It does not require a canonical finished answer.
 
@@ -165,7 +165,9 @@ Each unit receives independent review from four angles:
 3. **pedagogical:** visual payoff arrives early, scaffolding fades, and assumed knowledge is explicit; and
 4. **creative/accessibility:** the brief leaves meaningful aesthetic agency, avoids cloning, and media has usable alternatives.
 
-Pilot checkpoints after Units 0 and 2 should adjust pacing from observed setup time, test success, independent reconstruction, and learner confidence rather than visual polish alone.
+Optional checkpoints after Units 0 and 2 can help a reader decide what to
+revisit, but pacing remains personal and visual polish is not the only measure
+of progress.
 
 ## Explicit risks
 

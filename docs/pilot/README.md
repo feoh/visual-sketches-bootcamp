@@ -1,21 +1,18 @@
-# Lightweight pilot notes
+# Optional practice notes
 
-This folder supports an informal self-study run or a course shared with a friend.
-It is deliberately small—no research-study paperwork.
+This folder is an optional scratchpad for organizing your own trip through the
+sketches. You do not need to run a study, report your pace, or submit anything.
+If a route helps, choose one from [`routes.tsv`](routes.tsv); if not, make up
+one that follows your curiosity.
 
-1. Choose a route from [`routes.tsv`](routes.tsv). Route names are provisional
-   week counts; all three list 19 ordered bundles including the test interlude.
-2. Copy [`progress-log.md`](progress-log.md) once for the route.
-3. Copy [`lesson-notes.md`](lesson-notes.md) for each lesson.
-4. Run [`checkpoints.md`](checkpoints.md) after Unit 0, Unit 2, and the complete
-   path.
-5. Record evidence-linked changes in [`revision-log.md`](revision-log.md).
-6. Optionally append compact timing rows to [`pacing-log.tsv`](pacing-log.tsv).
+1. Copy [`progress-log.md`](progress-log.md) if you enjoy a personal checklist.
+2. Copy [`lesson-notes.md`](lesson-notes.md) when you want a place to save a
+   useful command, a surprising bug, or a visual idea.
+3. Try [`checkpoints.md`](checkpoints.md) after Unit 0, Unit 2, or the capstone
+   whenever you want a “can I remix this?” challenge.
+4. Use [`revision-log.md`](revision-log.md) only if you want to remember why you
+   changed a lesson or route.
 
-Completed notes can stay private. If somebody else tries the course, ask before
-saving or sharing their words, captures, code, recordings, or identifying
-details. Do not publish their material without a separate clear yes.
-
-Use `.pilot-private/` only as a local convenience. `.gitignore` does not make
-anything private or secure; keeping personal notes outside the checkout is
-safer.
+The notes are for you. Keep them private if they contain personal details,
+captures, code, or recordings. The course is not grading you; the goal is to
+make something interesting and learn why it works.

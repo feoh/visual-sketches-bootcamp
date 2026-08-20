@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Controlled chance
 
-## Look
+## See what we're making
 
 ![Six bordered panels contain related but nonidentical arrangements of dark dots, horizontal orange dashes, and outlined rings; a small key labels the seed, weighted motif tickets, and center-biased position shape.](media/seeded-edition-preview.svg "Six related seeded editions.")
 
@@ -26,14 +26,14 @@ asset_records: assets.yaml
 
 The preview is static, has no audio, and encodes motif by shape as well as color.
 
-## Predict
+## Take a guess
 
 A ten-ticket choice gives tickets 0–5 to dots, 6–8 to dashes, and 9 to
 rings. Predict the proportions and the result for tickets 5, 6, 8, and 9.
 Then compare one uniform value with the mean of two uniform values: which rule
 places more marks near the middle?
 
-## Learn
+## Let's unpack it
 
 ### Engine, seed, and distribution have different jobs
 
@@ -182,7 +182,7 @@ The tests compile the starter's `makeEditionDesign()`, so invalid learner
 choices receive a direct diagnostic. Contrast and resemblance still require
 human review; a numerical model cannot prove either.
 
-## Try the calculations
+## Try the numbers
 
 1. Ten motif tickets assign probabilities 0.6, 0.3, and 0.1.
 2. Tickets 5, 6, 8, and 9 map to dot, dash, dash, and ring.
@@ -192,7 +192,7 @@ human review; a numerical model cannot prove either.
 6. Seed plus source is enough for same-build replay; portable parameters are
    required by this lesson's cross-toolchain contract.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/06-controlled-chance/shared/edition_model.cpp`, temporarily change:
@@ -218,7 +218,7 @@ git restore -- exercises/06-controlled-chance/shared/edition_model.cpp
 That command discards every uncommitted change in the named file. Record the
 failure, ticket-table explanation, and repaired result.
 
-## Exercise
+## Your turn
 
 Open the [six-image edition brief](../../../exercises/06-controlled-chance/README.md).
 Edit `starter/src/design/edition_design.cpp` first. Predict your 6/3/1 hierarchy,
@@ -230,7 +230,7 @@ Use the same seed to inspect a revision, a new seed to explore variation, and a
 saved parameter file to identify a chosen edition. Do not repeatedly reseed
 from the clock until something attractive appears; that erases the experiment.
 
-## Test
+## Check your work
 
 On Linux or macOS:
 
@@ -251,7 +251,7 @@ six panels at minimum, narrow, square, and wide sizes. Pure and native CI prove
 only their named contracts; they do not prove a graphical launch, contrast,
 accessibility, or originality.
 
-## Reflect
+## Tell the story
 
 In 120–160 words, distinguish engine, seed, and distribution; describe uniform,
 weighted, and triangular shapes; state the same-build and cross-toolchain replay
@@ -259,14 +259,14 @@ contracts; explain one record, one deterministic test, and one stroke-aware
 bound; and name one learner-owned visual relationship. Include alt text for a
 six-panel capture.
 
-## Remix
+## Make it yours
 
 Keep the saved parameter schema but change how records become marks. Sort by x
 before connecting, pair rare rings with nearest dots, map radius to line count,
 or use negative-space windows. Predict which generated invariants stay fixed
 and which renderer-only relationships change.
 
-## Manual review
+## Quick visual check
 
 - `R`, `N`, and `S` work by keyboard, and no panel flashes.
 - Dot, dash, and ring roles remain distinguishable without color alone.
@@ -276,13 +276,9 @@ and which renderer-only relationships change.
 - Capture alt text names six images, density shape, motif encoding, and palette role.
 - A saved parameter file reproduces the inspected model; reused work is credited.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; reading, prediction, repair, exercise,
-serialization, and reflection time separately; setup and keyboard friction;
-whether engine/seed/distribution roles, uniform and weighted choice,
-triangular shape, reproducibility levels, record structure, exact-six count,
-malformed-input policy, and stroke-aware bounds were understood; automated
-test outcome; manual accessibility/originality review; and points of confusion.
-Do not infer learner timing or graphical success from CI.
+If a random sketch changes every time, print the seed and check that the model
+uses the seeded engine—not a surprise global generator. If every result looks
+the same, check that you are actually drawing the generated values. Randomness
+is seasoning, not a substitute for choosing a composition.

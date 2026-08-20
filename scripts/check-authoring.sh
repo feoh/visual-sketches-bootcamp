@@ -172,8 +172,8 @@ validate_pilot_contract() {
   grep -Fq 'Complete path' "$root/docs/pilot/progress-log.md" || fail 'progress log is missing complete-path checkpoint'
   find "$root/authoring/sections" -mindepth 2 -maxdepth 2 -name index.md -type f | sort | while IFS= read -r lesson; do
     [ "$(frontmatter_value course_kind "$lesson")" = instructional ] || continue
-    grep -Eq '^## Manual' "$lesson" || fail "$lesson: instructional section requires a manual-review heading"
-    grep -Fqx '## Pilot note' "$lesson" || fail "$lesson: instructional section requires a Pilot note heading"
+    grep -Eq '^## (Quick visual|Manual)' "$lesson" || fail "$lesson: instructional section requires a visual-review heading"
+    grep -Fqx '## If you get stuck' "$lesson" || fail "$lesson: instructional section requires a troubleshooting heading"
   done
 }
 

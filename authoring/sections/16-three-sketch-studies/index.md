@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Three cumulative sketch studies
 
-## Brief
+## The mission
 
 Make **three small, separate sketches**, not one three-mode application. Each
 study combines the named families below, fits one focused weeknight, and leaves
@@ -44,7 +44,7 @@ coding and the [capture and explanation template](templates/capture-and-explanat
 afterward. The fixtures are evaluator inputs and expected values, not starter
 implementations.
 
-## Supported bootstrap before the timer
+## A little scaffolding before the timer
 
 Do not invent an untracked Project Generator layout for synthesis. On your
 learner branch, repurpose three **different existing starter directories** so
@@ -92,7 +92,7 @@ of the study. The three different starter directories remain three separate
 native sketches, and Git preserves the pre-synthesis solutions if recovery is
 needed.
 
-## Shared acceptance contract
+## What counts as done
 
 A study is complete when:
 
@@ -251,7 +251,7 @@ cap to frame budget, the fixture result, and one manual observation.
 - **Quantized corridor:** a coarse, recorded field turns sparse rectangles in 45-degree increments; boundary exit respawns from a fixture event. No translucent trail is used.
 - **Damped queues:** particles seek one of three horizontal anchors and encode speed through spacing, not glow. The partial stops before adding input or a final color system.
 
-## Evaluation and handoff
+## Show your work
 
 For each study, submit source, build command, test command and output, fixture
 copy, capture, 80–120-word explanation, controls, seed/replay values, and credits.
@@ -269,7 +269,7 @@ A similar still triggers a mechanism conversation; it is not an automatic
 failure or proof of originality. Compare geometry, density, mapping,
 interaction, motion, and temporal behavior. Record which choices are yours.
 
-## Completion checklist
+## Final quick check
 
 - [ ] Three separate sketches use all three named family pairs.
 - [ ] Each fits its 75/75/90-minute scope or reports where work stopped.

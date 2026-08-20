@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Original visual-instrument capstone
 
-## Brief
+## The mission
 
 Create one coherent **visual instrument**: a sketch whose controls have legible,
 repeatable consequences and whose model can be inspected without rendering. It
@@ -45,7 +45,7 @@ Start with the [capstone plan](templates/capstone-plan.md). It freezes the three
 or more concept roles, the one deepening, exclusions, input vocabulary, replay
 schema, budgets, fallback, and evidence before polish begins.
 
-## Supported capstone bootstrap
+## A little scaffolding
 
 Create a `learner/capstone` branch from the commit that contains all three
 section 16 studies. Select the one study whose existing model seam is closest
@@ -71,7 +71,7 @@ exactly-one deepening, divergent thumbnail, originality, and publication gates.
 If no completed study offers an honest model seam, record that as a curriculum
 blocker rather than creating undocumented native metadata.
 
-## Non-canonical orientation
+## No single right answer
 
 The diagrams below are unfinished process slices, not final compositions,
 starter layouts, or quality targets. They omit palette resolution, complete
@@ -94,7 +94,7 @@ mapping, and temporal behavior. Borrow their **process moves**—small probe,
 recorded rejection, isolated contract—not their layouts. No canonical finished
 capstone is supplied.
 
-## Required architecture and replay boundary
+## Keep the moving parts understandable
 
 Use four explicit boundaries, even if each is only a few functions:
 
@@ -120,7 +120,7 @@ viewport events, normalized input order, and fixed steps twice must produce the
 same project-defined state/geometry checkpoints within a stated tolerance.
 Avoid byte hashes of renderer output and unstable serialization padding.
 
-## Exactly-one deepening review
+## Go deeper in one place
 
 Complete this declaration before milestone 2:
 
@@ -136,7 +136,7 @@ still see the deepening clearly. If two rows require new algorithms,
 performance investigations, or unfamiliar APIs, the capstone is out of
 contract until one becomes ordinary reuse or is removed.
 
-## Milestones
+## A path through the project
 
 ### 1. Intent, precedent, and smallest probe
 
@@ -176,7 +176,7 @@ credits/licenses, known limitations, and project fixture. A new reader must be
 able to distinguish automated evidence from manual observation and reproduce a
 recorded checkpoint without the original device.
 
-## Deterministic evaluator fixtures
+## Tiny tests to keep you honest
 
 Fixture formats and rejection rules are documented in
 [`fixtures/README.md`](fixtures/README.md). The supplied TSV fixtures are
@@ -240,7 +240,7 @@ renderer, build configuration, population/geometry counts, and measurement
 method. Performance numbers are observations, not portable pass thresholds;
 caps and finite state are automated contracts.
 
-## Controls and discoverability
+## Make it easy to play
 
 Supply a persistent or toggleable help view that lists every control and status.
 At minimum provide reset, pause, replay from beginning, reduced-motion route,
@@ -253,7 +253,7 @@ without audio and without naming colors. Do not use rapid flashes. If motion is
 triggered by interaction, provide a disable/reduced alternative consistent with
 [WCAG animation from interactions guidance](https://www.w3.org/TR/WCAG22/#animation-from-interactions).
 
-## Accessibility evidence
+## Make it readable for more people
 
 Provide:
 
@@ -274,7 +274,7 @@ Use the [capture log](templates/capture-log.md) and
 [process note](templates/process-note.md). Each motion capture needs captions
 when it includes speech, a nearby transcript, and a representative still.
 
-## Originality review
+## Make it yours
 
 Originality is reviewed at mechanism level, not by vague style claims or image
 similarity alone.
@@ -289,7 +289,7 @@ The reviewer asks whether the changes alter relationships and behavior, not
 whether superficial colors differ. Uncredited derivation, incompatible terms,
 or an inability to explain the mechanism blocks publication.
 
-## Licensing and credits
+## Credit your ingredients
 
 Complete the [credits and licenses template](templates/credits-and-licenses.md)
 for code, assets, fonts, addons, data, precedents, and captures. Use a precise
@@ -305,7 +305,7 @@ collaborator roles and consent. For camera/microphone work, record whether raw
 media is retained, who appears or can be heard, and how consent can be revoked.
 A fixture and no-device fallback must allow review without capture hardware.
 
-## Rubric
+## How to tell if it's working
 
 Score each row from 0–3. All rows must receive evidence; originality, access,
 and licensing cannot be rescued by visual polish.
@@ -325,7 +325,7 @@ A publishable capstone has no zero, scores at least 2 in every row, and includes
 all required artifacts. The rubric evaluates evidence and decisions, not
 resemblance to these partial diagrams.
 
-## Capture and process package
+## Save the good bits
 
 Submit these files or equivalent sections:
 
@@ -342,7 +342,7 @@ Do not submit secrets, machine-local project paths, unlicensed binaries, raw
 camera/microphone material without consent, or generated openFrameworks project
 files that encode a local `OF_ROOT`.
 
-## Completion review
+## Ship it—or call it done for now
 
 - [ ] One coherent instrument combines three or more earlier concepts.
 - [ ] Exactly one concept is identified and evidenced as deeper; exclusions are explicit.

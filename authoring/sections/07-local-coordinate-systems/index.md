@@ -11,14 +11,14 @@ objectives:
   - Predict why transform order is noncommutative
   - Test three deterministic frames, responsive bounds, and learner-owned design without pixels
 prerequisites:
-  - Completion of section 06 or equivalent structs, pure functions, trigonometry, and bounds literacy
+  - Completion of section 06 or equivalent structs, pure functions, the circle helpers from section 05, and bounds literacy
 source_records: sources.yaml
 asset_records: assets.yaml
 ---
 
 # Local coordinate systems
 
-## Look
+## See what we're making
 
 ![Three bordered frames show a two-arm kinetic sculpture at different phases; each dark parent arm carries an orange child arm and outlined ring, demonstrating inherited position and rotation without relying on color alone.](media/local-sculpture-preview.svg "One hierarchy shown at three deterministic times.")
 
@@ -27,7 +27,7 @@ asset_records: assets.yaml
 The preview is static, has no audio, and identifies levels by shape and position
 as well as color.
 
-## Predict
+## Take a guess
 
 Put a point at local `(10, 0)`. Compare these two recipes:
 
@@ -38,7 +38,7 @@ Sketch both results before running a test. On an openFrameworks screen, where
 positive y points down, which visual direction does a positive 90-degree turn
 move a right-pointing vector?
 
-## Learn
+## Let's unpack it
 
 ### Local coordinates turn placement into a relationship
 
@@ -194,7 +194,7 @@ constraints; resemblance is not a goal.
 Automated tests cannot prove contrast, hierarchy legibility, or originality.
 Those remain manual review items.
 
-## Build: run and inspect a transform chain
+## Make it run: inspect a transform chain
 
 ### 1. Calculate before compiling
 
@@ -259,7 +259,7 @@ elbow, and ornament tip from the shape hierarchy—not color alone. Resize the
 window and check that all three anchors stay visible. The app is the observable
 graphics adapter; the printed fixture and pure test remain the numeric evidence.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/07-local-coordinate-systems/shared/sculpture_model.cpp`, temporarily
@@ -280,7 +280,7 @@ git restore -- exercises/07-local-coordinate-systems/shared/sculpture_model.cpp
 That command discards every uncommitted change in the named file. Record the
 failed anchor, order explanation, and repaired result.
 
-## Exercise
+## Your turn
 
 Open the [three-frame sculpture brief](../../../exercises/07-local-coordinate-systems/README.md).
 Edit `starter/src/design/sculpture_design.cpp`, predict all three poses, then
@@ -289,7 +289,7 @@ three phases and a `MatrixScope` around every pushed transform. Resize across
 tiny, narrow, square, and wide windows and explain what is inherited at each
 hierarchy level.
 
-## Test
+## Check your work
 
 On Linux or macOS:
 
@@ -309,20 +309,20 @@ and inspect all three frames across the viewport matrix. Pure and native CI
 prove only their named contracts; they do not prove graphical launch, contrast,
 accessibility, or originality.
 
-## Reflect
+## Tell the story
 
 In 120–160 words, explain local versus world coordinates, lexical scope, the
 narrow RAII guard, positive-down rotation, transform noncommutativity, one
 parent-child anchor calculation, periodic time, and one learner-owned visual
 relationship. Include alt text for a three-frame capture.
 
-## Remix
+## Make it yours
 
 Add a third hierarchy level, mirror one branch with a negative finite scale, or
 attach several ornaments to one parent. Predict which anchors inherit each
 change before editing. Keep each helper local and every matrix scope balanced.
 
-## Manual review
+## Quick visual check
 
 - No frame flashes, and the static three-frame comparison needs no audio.
 - Parent, child, pivots, and ornaments remain distinguishable without color alone.
@@ -332,13 +332,9 @@ change before editing. Keep each helper local and every matrix scope balanced.
 - Capture alt text names phases, hierarchy, motion, shape encoding, and palette roles.
 - Reused references are credited and matrix state does not leak between frames.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; reading, prediction, repair, exercise, and
-reflection time separately; setup and transform-order friction; whether scope,
-RAII intuition, local/world coordinates, positive-down rotation, homogeneous
-intuition, order, hierarchy, periodic time, and stroke-aware bounds were
-understood; automated test outcome; manual accessibility/originality review;
-and points of confusion. Do not infer learner timing or graphical success from
-CI.
+When a child arm goes somewhere surprising, freeze time and inspect one anchor
+at a time. Check the order of translate → rotate → scale, and make sure every
+push has a matching pop. Transform bugs are often just a tiny stack of
+instructions wearing a fake mustache.

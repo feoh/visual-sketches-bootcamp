@@ -5,20 +5,27 @@ weight: 70
 draft: false
 course_kind: instructional
 objectives:
-  - Use named constants, radians, sine, and cosine to describe circular motion
-  - Explain amplitude, frequency, phase, period, and polar coordinates
-  - Convert between polar and Cartesian coordinates with a documented atan2 zero policy
+  - Use a circle as a visual calculator for moving a point around a center
+  - Explain sine, cosine, radians, amplitude, frequency, phase, and period in plain language
+  - Convert between center/radius/angle and ordinary x/y coordinates with a documented zero policy
   - Build a repeated row/column field with deterministic phase offsets and fixed time
-  - Test conversions, cardinal points, quadrants, periodicity, bounds, and learner choices without pixels
+  - Test conversions, quarter-turns, periodicity, bounds, and learner choices without pixels
 prerequisites:
   - Completion of section 04 or equivalent C++ structs, vectors, pure functions, and tolerance literacy
+  - Basic algebra: substitute values into a formula and solve a simple equation
 source_records: sources.yaml
 asset_records: assets.yaml
 ---
 
 # Oscillation, circles, and phase
 
-## Look
+Circles are about to become a very handy motion machine. If the words *sine*,
+*cosine*, and *radians* currently look like alphabet soup, excellent: this is
+the lesson where we make them useful. You will not need to memorize a trig
+table or prove anything about triangles. We will use a picture, a few friendly
+number patterns, and formulas that tell the computer where to put a mark.
+
+## See what we're making
 
 ![A four-column, three-row field uses outlined orbit paths, crosshair centers, and filled travelers at progressively shifted phases, with a labeled circular inset showing cosine on x, sine on y, and positive-down screen coordinates.](media/phase-field-preview.svg "Nested phase field and circular coordinates.")
 
@@ -27,19 +34,25 @@ asset_records: assets.yaml
 The preview is static and has no audio. Outlined paths, crosshair centers, filled
 travelers, labels, and position—not color alone—explain the field.
 
-## Predict
+## Take a guess
 
-A point starts at angle `0` with radius `10`. Predict its `(x,y)` at `0`,
-`pi/2`, `pi`, and `3*pi/2`. In openFrameworks' positive-down y coordinates,
-which quarter-turn points downward? Then predict whether adding `2*pi` changes
-the position.
+No trig knowledge is required for this guess. Draw a circle with a point at the
+right-hand side. If the point moves one quarter-turn at a time, where do you
+expect it to be after one, two, and three quarter-turns? Does it return to the
+same spot after a full turn? Keep the sketch nearby—we will use it as our
+cheat sheet instead of asking your memory to do all the heavy lifting.
 
-## Learn
+## Let's unpack it
 
-### Name the constants
+### Start with one full turn
 
-A full circle is 360 degrees, `2*pi` radians, or one turn. Do not scatter
-rounded `3.14` values through a program. Give the relationships names:
+A full circle is 360 degrees, or one turn. Computers can also measure that
+same turn with a unit called **radians**. The name sounds grander than the
+idea: `2*pi` radians is one full turn. We will use `tau` as a friendly name for
+that amount so “one turn” is easy to spot in code.
+
+Do not scatter rounded `3.14` values through a program. Give the relationships
+names:
 
 ```cpp
 constexpr float pi = 3.14159265358979323846f;
@@ -51,41 +64,61 @@ constexpr float fixed_dt = 1.0f / 60.0f;
 changed accidentally. `tau` makes “one full turn” visible in formulas.
 `fixed_dt` makes each update an inspectable sixtieth of a second.
 
-### Degrees are for conversation; trig functions take radians
+### Degrees and radians are two labels for the same turn
 
-Degrees are often easier to sketch. C++ trigonometric functions use radians:
+Degrees are the labels we use in everyday conversation: a right angle is 90
+degrees and a full turn is 360. Radians are the labels the C++ math functions
+expect. You can switch labels with ordinary algebra:
 
 ```text
 radians = degrees * pi / 180
 degrees = radians * 180 / pi
 ```
 
-Thus 90 degrees is `pi/2`, 180 is `pi`, and 360 is `tau`. The course model
-keeps `degreesToRadians()` and `radiansToDegrees()` explicit so tests can check
-both directions. Non-finite conversion input returns zero by policy rather
-than passing NaN into geometry.
+So 90 degrees is `pi/2` radians, 180 degrees is `pi`, and 360 degrees is
+`tau`. You do not have to choose a favorite unit; just convert at the door and
+keep the rest of the calculation consistent. The course model keeps
+`degreesToRadians()` and `radiansToDegrees()` explicit so tests can check both
+directions. Non-finite input returns zero by policy rather than passing NaN
+into geometry.
 
-### Cosine and sine trace a circle
+### Sine and cosine are two tiny number machines
 
-For radius `r` and angle `theta`:
+Here is the useful, non-mysterious version. Give **cosine** an angle and it
+returns the point's horizontal share of a unit circle. Give **sine** the same
+angle and it returns the vertical share. At the four easy quarter-turns, their
+answers are close to this table:
+
+| Angle | `cos(angle)` | `sin(angle)` | Where the point is |
+|---|---:|---:|---|
+| `0` | `1` | `0` | right |
+| `pi/2` (90°) | `0` | `1` | down in an openFrameworks window |
+| `pi` (180°) | `-1` | `0` | left |
+| `3*pi/2` (270°) | `0` | `-1` | up in an openFrameworks window |
+
+The formulas for a circle of radius `r` are simply:
 
 ```text
-x = r * cos(theta)
-y = r * sin(theta)
+x offset = r * cos(angle)
+y offset = r * sin(angle)
 ```
 
-At angle zero, `(cos,sin)` is `(1,0)`. At `pi/2` it is `(0,1)`; in the usual
-openFrameworks window, positive y points **down**. The other cardinal points
-are `(-1,0)` at `pi` and `(0,-1)` at `3*pi/2`.
-
+Then add those offsets to the center. That is the whole trick: cosine handles
+left/right, sine handles up/down, and the radius scales both. The functions
 [`std::sin`](https://en.cppreference.com/w/cpp/numeric/math/sin.html) and
-`std::cos` repeat after `2*pi`. Floating-point results near a cardinal zero may
-be a tiny value such as `-4e-8`, so tests compare approximately rather than
-requiring exact zero.
+`std::cos` fill in the values between those four easy cases. Their answers
+repeat after `2*pi`, so one full turn lands back where it started.
 
-### Polar coordinates separate reach from direction
+Near a cardinal zero, a computer may report a tiny value such as `-4e-8`
+instead of exactly `0`. That is normal floating-point fuzz, not a haunted
+circle. Tests compare approximately.
 
-Cartesian coordinates store `(x,y)`. Polar coordinates store radius and angle:
+### Two useful ways to describe a point
+
+Most of the time we use **Cartesian coordinates**: `(x, y)` tells us the
+horizontal and vertical position directly. For circles, **polar coordinates**
+are often friendlier: `(radius, angle)` says “go this far from the center in
+this direction.”
 
 ```cpp
 struct Polar { float radius; float angle_radians; };
@@ -93,45 +126,50 @@ Vec2 offset = polarToCartesian({radius, angle});
 Vec2 point{center.x + offset.x, center.y + offset.y};
 ```
 
-Radius is reach; angle is direction around the circle. Negative radius is
-outside this lesson's contract and maps to zero. To go back:
+Radius is the reach; angle is the direction. `polarToCartesian()` does the
+cosine/sine bookkeeping for us. To go the other way, the computer measures the
+reach with `hypot(x, y)` and asks `atan2(y, x)` for the angle:
 
 ```text
 radius = hypot(x, y)
 angle = atan2(y, x)
 ```
 
-Unlike `atan(y/x)`, [`std::atan2`](https://en.cppreference.com/w/cpp/numeric/math/atan2.html)
-uses signs from both components and distinguishes all four quadrants. Its
-signed answer is normally in `[-pi, pi]`: down-left is positive `3*pi/4`, while
-up-left is negative `-3*pi/4` in screen coordinates.
+You can think of [`std::atan2`](https://en.cppreference.com/w/cpp/numeric/math/atan2.html)
+as a direction finder that looks at both x and y, so it knows all four
+quadrants. We do not need to derive it. We only need to know that it is safer
+than typing `atan(y/x)`, especially when x is zero.
 
-The zero vector has radius zero but no unique direction. Our explicit policy is
-`cartesianToPolar({0,0}) == {0,0}`. Never normalize or divide to invent an
-angle there. Tests cover all quadrants, the zero policy, and polar-to-Cartesian
-round trips.
+The zero vector `(0,0)` has a reach of zero but no meaningful direction. Our
+explicit policy is `cartesianToPolar({0,0}) == {0,0}`. That is a useful edge
+case to name, not a failure to hide.
 
-### Amplitude, frequency, phase, and period
+### Make a circle breathe and travel
 
-A sine wave can be written:
+Once the circle helpers work, a repeating motion is just a formula. Here is the
+shape we will use:
 
 ```text
 value = amplitude * sin(tau * frequency * time + phase)
 ```
 
-- **Amplitude** is maximum displacement from the center.
-- **Frequency** is cycles per second, measured in hertz.
-- **Period** is seconds per cycle: `period = 1 / frequency`.
-- **Phase** shifts where a cycle begins without changing amplitude or period.
+The vocabulary is friendlier than it first appears:
 
-For amplitude 7 and frequency 2 Hz, the period is 0.5 seconds. At a quarter
-period (`0.125` seconds), sine reaches amplitude 7. Adding `tau` to phase does
-not change the value. Adding one period to time does not change it either.
-Those are testable periodicity contracts, not just visual impressions.
+- **Amplitude**: how far the mark moves from its center.
+- **Frequency**: how many cycles happen each second.
+- **Period**: how long one cycle takes, so `period = 1 / frequency`.
+- **Phase**: where in the cycle a mark starts. It is a starting offset, not a new kind of force.
 
-The model rejects negative amplitude/frequency in its general `oscillate()`
-helper. Exercise designs use positive frequency from `0.05`–`2` Hz so every
-field has a defined finite period.
+For amplitude `7` and frequency `2` cycles per second, solve the small equation
+`period = 1 / 2`: one cycle takes `0.5` seconds. After a quarter period,
+`0.125` seconds, the mark reaches its maximum displacement. Add one full turn
+to the phase or one full period to time and the value comes back around.
+
+A field becomes interesting when neighboring marks use different starting
+phases. They all follow the same rule, but they are not marching in lockstep.
+That is how one boring repeated instruction turns into a wave. The model rejects
+negative amplitude/frequency in its general helper; exercise designs use a
+small positive frequency so every field has a clear period.
 
 ### Nested loops make a field
 
@@ -223,20 +261,23 @@ zero policy, wave parameters, count/order, phase and time periodicity,
 determinism, parameter variation, non-finite policy, and tiny/stroke bounds.
 There is no screenshot target or pixel gate.
 
-## Try the calculations
+## Try the numbers
+
+Use the table and ordinary algebra. It is completely fine to write the circle
+on paper first.
 
 1. Convert 90 degrees: `90*pi/180 = pi/2` radians.
 2. Convert `pi` radians: `pi*180/pi = 180` degrees.
-3. Radius 10 at `pi/2`: `(10*cos(pi/2), 10*sin(pi/2)) ≈ (0,10)`.
-4. Cartesian `(-3,4)`: radius `5`; `atan2(4,-3)` lies in quadrant two.
-5. For amplitude 6, frequency 0.5 Hz: period is `2` seconds.
+3. Radius 10 at `pi/2`: the table says `(cos,sin) ≈ (0,1)`, so the offset is approximately `(0,10)`.
+4. A point `(-3,4)` is 5 units from the center because `sqrt(3² + 4²) = 5`; `atan2` places it in quadrant two.
+5. For amplitude 6 and frequency 0.5 cycles per second, solve `period = 1 / 0.5`: the period is `2` seconds.
 6. In 5 rows by 7 columns, count is `35`; row 3, column 2 has index `23`.
 
-Sketch the circle and grid before running code. The diagram explains direction;
-the numbers verify conversions and indexing; the tests verify repetition and
-bounds.
+Sketch the circle and grid before running code. The picture explains direction;
+the numbers check the picture; the tests catch the tiny cases we would rather
+not debug by staring at a moving window.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/05-oscillation-circles-and-phase/shared/phase_field_model.cpp`,
@@ -263,7 +304,7 @@ git restore -- exercises/05-oscillation-circles-and-phase/shared/phase_field_mod
 That command discards every uncommitted change in the named file. Record the
 failure, the circle-coordinate explanation, and the repaired result.
 
-## Exercise
+## Your turn
 
 Open the [phase-field brief](../../../exercises/05-oscillation-circles-and-phase/README.md).
 Edit exactly
@@ -277,7 +318,7 @@ short directional strokes, paired marks, alternating scales, or negative-space
 bands. Predict count, first two phases, period, and maximum extent before
 building.
 
-## Test
+## Check your work
 
 On Linux or macOS, use both available compilers:
 
@@ -299,22 +340,23 @@ and native Linux/macOS/Windows CI prove their named numerical/compilation
 contracts only. They do not prove graphical runtime, accessibility, contrast,
 or originality.
 
-## Reflect
+## Tell the story
 
-In 120–160 words, explain radians, `(cos,sin)` circular motion, amplitude,
-frequency, period, phase, polar coordinates, the `atan2` quadrant advantage and
-zero policy, nested row/column indexing, one periodicity property, one
-stroke-aware bound, and one learner-owned visual choice. Include alt text for
-one capture.
+In 80–120 words, explain how the circle table turns an angle and radius into a
+position. Mention one new word—perhaps amplitude, frequency, period, phase, or
+polar coordinates—using your own example. Include one periodicity check, one
+boundary choice, and one visual decision you made. Add alt text for a capture.
+If your explanation sounds like a textbook, rewrite it as if you were telling a
+friend why the marks move.
 
-## Remix
+## Make it yours
 
 Keep the model contract but change a relationship: map row to amplitude, use
 alternating frequency signs in your renderer, connect equal-phase neighbors,
 or draw only marks near a cardinal direction. Predict cardinal, periodic,
 count, and boundary consequences before editing.
 
-## Manual review
+## Quick visual check
 
 - Pause/resume/reset work by keyboard, and no pattern flashes.
 - Mark roles and phase relationships remain understandable without color alone.
@@ -324,13 +366,10 @@ count, and boundary consequences before editing.
 - Capture alt text names the grid, phase direction, shape encoding, and viewport.
 - Reused code and assets remain credited and license-compatible.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; reading, calculation, repair, exercise,
-and reflection time separately; setup and keyboard friction; whether radians,
-cardinal sine/cosine, amplitude/frequency/phase/period, polar conversion,
-`atan2` quadrants/zero policy, nested indexing, periodicity, bounds, and
-approximate tolerances were understood; automated test outcome; manual
-accessibility/originality review; and points of confusion. Do not infer learner
-timing from CI or author tests.
+Keep the circle table visible. Check one quarter-turn before investigating a
+whole animated field: is cosine controlling x, is sine controlling y, and are
+you using radians consistently? If the mark is almost—but not exactly—at zero,
+remember that floating-point numbers enjoy being technically correct in tiny,
+annoying ways. Use the approximate comparison helper.

@@ -21,7 +21,7 @@ asset_records: assets.yaml
 This elective takes one lane only: microphone **amplitude**. It does not survey
 3D, spectra, or cameras.
 
-## Look
+## See what we're making
 
 ![Two panels show a quiet amplitude as a small four-ray circle and short meter, then a louder amplitude as a large sixteen-ray circle and long meter; badges identify recorded-fixture and keyboard fallback routes.](media/audio-instrument-preview.svg "Louder input has one immediate visual consequence.")
 
@@ -31,7 +31,7 @@ Within five seconds the rule should read: **louder → bigger + more marks**. Si
 count, a written meter, and an ACTIVE/QUIET label duplicate the cue, so neither
 hearing nor color is required.
 
-## Precedent and transfer
+## Borrow the idea, not the artwork
 
 Use the course's [credited precedent notes](../../../docs/source-notes.md#visual-vocabulary)
 to study immediate embodied-input feedback while preserving every named
@@ -39,7 +39,7 @@ collaborator and performer credit. Transfer only the legible cause-and-effect
 loop; change the input context, visual grammar, mapping, interaction, motion,
 and staging, and do not copy a precedent's vocal gesture or silhouette.
 
-## Predict
+## Take a guess
 
 The smoothed value starts at 0. With smoothing `alpha = 0.5`, inputs are `0.0`,
 `0.05`, then `0.4`. The dead zone is 0.1. Predict each smoothed value, which
@@ -47,7 +47,7 @@ steps remain quiet, and the normalized level after the third step. If radius
 maps from 20 to 120 and ray count maps from 4 to 24, predict the third radius
 and ray count before opening the fixture.
 
-## Learn
+## Let's unpack it
 
 ### One input adapter, three explicit sources
 
@@ -136,7 +136,7 @@ and geometry has at most 128 repeated marks. The core owns no history or audio
 buffer. Invalid negative/NaN amplitudes reject transactionally; values above 1
 clamp to 1. Oversize fixture replay rejects without replacing prior state.
 
-## Build: inspect three complete experiments
+## Make it run: inspect three complete experiments
 
 ### 1. Replay the scalar fixture
 
@@ -201,7 +201,7 @@ outside the sketch. Unit tests and compilation do not prove that an
 actual device opened, that OS permission UI appeared, or that the graphics
 launched.
 
-## Break and repair
+## Break it on purpose
 
 In `exercises/15-embodied-audio-input/shared/audio_input_model.cpp`, temporarily
 change the final activity expression from `normalized > 0.0f` to
@@ -216,7 +216,7 @@ only that file's uncommitted changes:
 git restore -- exercises/15-embodied-audio-input/shared/audio_input_model.cpp
 ```
 
-## Exercise
+## Your turn
 
 Open the [five-second audio instrument brief](../../../exercises/15-embodied-audio-input/README.md).
 Keep the tested input adapter, but own response parameters in
@@ -225,7 +225,7 @@ Keep the tested input adapter, but own response parameters in
 preserving an immediately inferable mapping, visible source/activity, keyboard
 fallback, fixture replay, bounded work, pause/reduced routes, and no retention.
 
-## Test
+## Check your work
 
 ```sh
 CXX=g++ tests/run-section-15-tests.sh
@@ -244,7 +244,7 @@ Property checks prove steady loud input cannot shrink radius and all geometry
 stays bounded. Wrapper probes reject incomplete `OF_ROOT` before cleanup.
 Screenshots, device behavior, consent, and five-second legibility remain manual.
 
-## Reflect
+## Tell the story
 
 In 160–200 words, explain the adapter boundary, smoothing order, dead-zone
 boundary, scalar-to-radius/count mapping, fixture determinism, callback work
@@ -253,7 +253,7 @@ one non-color/non-audio cue. State what automated tests proved and what you
 observed manually. Include capture alt text that names the source label, quiet
 and loud shapes, meter length, density, and palette roles.
 
-## Remix
+## Make it yours
 
 Try a wider horizon, stacked glyphs, line weight, spacing, or symmetry instead
 of a sun. Keep loudness monotonic in at least one obvious dimension. You may map
@@ -261,7 +261,7 @@ silence to stillness, but retain the activity label and meter. Do not add
 spectrum analysis, recording, classification, camera input, unbounded history,
 or a second elective lane.
 
-## Manual review
+## Quick visual check
 
 - A new viewer can state the input-to-output rule within five seconds.
 - F and Up/Down operate without a device; N visibly identifies fallback.
@@ -273,13 +273,9 @@ or a second elective lane.
 - Geometry, composition, response, and palette differ materially from both examples.
 - Capture alt text and reused code/assets are credited.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence has not yet been collected. Record exact OS, compiler,
-openFrameworks, input-device route, and permission state; separate reading,
-prediction, repair, build, exercise, and reflection time; note fixture/fallback
-success independently from optional live-device success; ask whether the
-mapping was inferred within five seconds; and capture confusion about RMS,
-smoothing order, dead-zone boundary, source labels, device selection, consent,
-retention, caps, replay, and manual-versus-automated evidence. Do not infer
-completion time, accessibility, live capture, or graphical success from CI.
+Start with the recorded input. It gives you a repeatable signal while you
+untangle smoothing and mapping. Then try the no-device route before debugging
+permissions. Live audio is optional; the sketch should still be fun when the
+microphone is unplugged, shy, or being used by a video call.

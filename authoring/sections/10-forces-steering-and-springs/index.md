@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Forces, steering, and springs
 
-## Look
+## See what we're making
 
 ![A teal circle swarm converges on a ring target above a coral chain of diamond-shaped agents hanging from a square anchor; dark arrows show paired spring forces in opposite directions, and shape, links, and vertical placement distinguish the two behavior modes without color alone.](media/force-preview.svg "One state model composes seek or elastic behavior.")
 
@@ -26,7 +26,7 @@ asset_records: assets.yaml
 
 The still uses circle/diamond shape, target/links, and layout as well as color.
 
-## Predict
+## Take a guess
 
 Two agents lie on the x-axis at 0 and 20. Their spring rest length is 10 and
 stiffness is 2. Predict the x force on the first agent. Then the second agent
@@ -34,7 +34,7 @@ moves toward the first at 10 units per second and axial damping is 1. Predict
 the new force. What should a radial behavior return when agent and source have
 exactly the same position and there is no direction to normalize?
 
-## Learn
+## Let's unpack it
 
 ### One behavior mode chooses a composition
 
@@ -143,7 +143,7 @@ pretending to inspect pixels. Tests inspect forces, transitions, bounds, and
 state; they do not compare GPU pixels or claim a compiled application was
 launched.
 
-## Build: compare three inspectable experiments
+## Make it run: compare three inspectable experiments
 
 ### 1. Replay the hand-calculated spring
 
@@ -200,7 +200,7 @@ change. Pause for several seconds and resume; there should be no catch-up burst.
 Try R, M, every edge, and a viewport narrower than one agent diameter. Build
 success is not launch evidence.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/10-forces-steering-and-springs/shared/force_model.cpp`, temporarily
@@ -216,14 +216,14 @@ git restore -- exercises/10-forces-steering-and-springs/shared/force_model.cpp
 That command discards every uncommitted change in that named file. Record the
 failure, the stale-state cause, and the repaired run.
 
-## Exercise
+## Your turn
 
 Open the [switchable force instrument brief](../../../exercises/10-forces-steering-and-springs/README.md).
 Own the design record, then replace starter geometry with a chain or swarm unlike
 the starter or solution. Explain one softening, cap, equilibrium, damping,
 boundary, mode-cue, and reduced-motion choice.
 
-## Test
+## Check your work
 
 ```sh
 CXX=g++ tests/run-section-10-tests.sh
@@ -235,7 +235,7 @@ Debug and Release. Manually launch both input routes and review seek, spring,
 mode changes, pause, reset, reduced motion, resize, edges, accessibility, and
 originality. Pure and native CI prove only their named contracts.
 
-## Reflect
+## Tell the story
 
 In 150–190 words, distinguish force from velocity, maximum force from maximum
 speed, accumulation from integration, attraction from repulsion, softening from
@@ -243,7 +243,7 @@ force limiting, extension from rest length, and global from axial damping.
 Explain the dot product's sign, semi-implicit order, explicit zero-distance
 policy, one customized appearance, and why pixels are not the correctness gate. Include capture alt text.
 
-## Remix
+## Make it yours
 
 Use a triangular spring network, let pointer distance tune equilibrium, replace
 seek with arrive-and-orbit, or map spring extension to mark orientation. Preserve
@@ -251,7 +251,7 @@ finite guards, positive softening, force/speed caps, paired spring forces,
 fixed-step/drop policy, hard agent cap, keyboard mode access, pause/reset, and a
 still reduced-motion view.
 
-## Manual review
+## Quick visual check
 
 - Pointer/drag and arrows move the same visible control point.
 - 1, 2, and Space make both modes discoverable without color.
@@ -264,13 +264,9 @@ still reduced-motion view.
 - Alt text names mode, target/anchor, force relation, geometry, bounds, and palette roles.
 - Reused references, code, and assets are credited.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; reading, prediction, repair, exercise, and
-reflection time separately; pointer/keyboard and reduced-motion access; setup
-friction; whether accumulation/reset, enum mode composition, seek/arrival,
-softening/zero distance, spring equilibrium/symmetry, dot-product damping,
-force/speed caps, semi-implicit order, boundaries, and fixed-step transitions
-were understood; automated result; manual accessibility/originality result; and
-confusions. Do not infer timing, graphical success, or accessibility from CI.
+If a force sends everything to infinity, check the zero-distance case and the
+force cap first. If a spring jitters, inspect the update order and damping. Run
+one hand-calculated pair of points before unleashing the whole swarm; physics
+bugs are much less intimidating when they only have two witnesses.

@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Images and type as geometry
 
-## Look
+## See what we're making
 
 ![A grayscale block-letter SHAPE mask becomes a field of spaced navy dots, then curved amber bars orbit around a marked centroid; arrows label threshold sampling and transform, and distinct circle, crosshair, and bar shapes communicate each stage without color alone.](media/geometry-preview.svg "A mask becomes measured and animated geometry.")
 
@@ -27,7 +27,7 @@ asset_records: assets.yaml
 Circle samples, a crosshair centroid, labeled arrows, and bar marks communicate
 the stages without depending on color.
 
-## Precedent and transfer
+## Borrow the idea, not the artwork
 
 Use the course's [credited precedent notes](../../../docs/source-notes.md#visual-vocabulary)
 to study the principle of treating image or type data as geometry. Credit the
@@ -35,7 +35,7 @@ creator and collaborators, use your own phrase or licensed source asset, and
 change sampling, topology, motion, mapping, palette, and composition instead of
 reconstructing a precedent image.
 
-## Predict
+## Take a guess
 
 A 4-by-3 grayscale image uses one byte per pixel. What flat index contains
 `(x=2, y=1)`? If stride is 2, which x coordinates are visited? A dark mask
@@ -43,7 +43,7 @@ selects `(0,0)` and `(2,2)`: predict its bounds and centroid. Finally, if those
 points rotate around the centroid and scale by 3, what changes and what stays
 invariant?
 
-## Learn
+## Let's unpack it
 
 ### Pixels become a checked grid
 
@@ -146,7 +146,7 @@ raster engines, and installed-font sets vary by platform, so cross-platform
 tests gate the pure point/mask math instead. A font extension still needs a
 bundled font license, a manual contour check, and the same work limit.
 
-## Build: inspect three complete experiments
+## Make it run: inspect three complete experiments
 
 ### 1. Read the independent tiny-mask oracle
 
@@ -195,7 +195,7 @@ On Windows:
 Without `OF_ROOT`, OF generation/build is unavailable. Pure C++ tests do not
 prove an OF compile, launch, image decoder, GPU drawing, or font contours.
 
-## Break and repair
+## Break it on purpose
 
 In `exercises/14-images-and-type-as-geometry/shared/image_geometry_model.cpp`,
 temporarily change `pixel * channels + channel` to
@@ -209,7 +209,7 @@ git restore -- exercises/14-images-and-type-as-geometry/shared/image_geometry_mo
 
 This command discards all uncommitted work in that named file.
 
-## Exercise
+## Your turn
 
 Open the [animated mask geometry brief](../../../exercises/14-images-and-type-as-geometry/README.md).
 Replace the mask with an original phrase or image you may redistribute. First
@@ -217,7 +217,7 @@ use the learner seam in `starter/src/design/image_geometry_design.cpp`; then
 change mark grammar or add licensed type contours. Preserve explicit failures,
 hard limits, checked indexing, keyboard controls, and reduced motion.
 
-## Test
+## Check your work
 
 ```sh
 CXX=g++ tests/run-section-14-tests.sh
@@ -230,7 +230,7 @@ and solution in Debug and Release, then manually launch them. Temporarily rename
 the asset to inspect failure behavior; restore it afterward. Automated tests
 cover known, boundary, failure, limit, and transform properties, not pixels.
 
-## Reflect
+## Tell the story
 
 In 160–200 words, distinguish image ownership from borrowed bytes, pixel from
 byte index, threshold from density, bounds from centroid, point centroid from
@@ -238,7 +238,7 @@ area centroid, source from transformed geometry, tangent from normal, and pure
 invariants from platform-dependent pixels. Name one accessibility decision and
 one original visual decision. Include alt text for a still.
 
-## Remix
+## Make it yours
 
 Sample edges instead of filled darkness, order points into tested scan-line
 ribbons, connect a bounded mesh, use centroid distance as phase, or extend the
@@ -246,7 +246,7 @@ pipeline with a licensed font outline. Preserve the asset error, work caps,
 checked indexing, deterministic geometry evidence, pause/reset, and reduced
 motion. Do not treat an installed system font as redistributable by default.
 
-## Manual review
+## Quick visual check
 
 - R reloads; P pauses without hidden state changes; M stops nonessential motion.
 - Missing and empty-threshold assets show readable errors rather than blank success.
@@ -256,12 +256,9 @@ motion. Do not treat an installed system font as redistributable by default.
 - Silhouette, sampling, motion, mark language, or palette materially differ from both examples.
 - Captured alt text names source shape, sample treatment, centroid role, and motion.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. Record platform and tool versions; reading,
-prediction, repair, exercise, and reflection time separately; OF/image setup
-friction; whether indexing, channel ownership, threshold boundaries, density,
-bounds, point centroid, transform order/invariants, work limits, explicit asset
-failure, type-contour portability, licensing, reduced motion, and originality
-were understood; automated results; manual visual/accessibility results; and
-points of confusion. Do not infer graphical success from pure model CI.
+If the image is upside down, empty, or enormous, inspect width, height, channel
+count, and coordinate mapping before changing the artistic idea. Start with a
+tiny fixture whose pixels you can count by hand. Assets are collaborators, but
+they are also files with opinions about paths and licenses.

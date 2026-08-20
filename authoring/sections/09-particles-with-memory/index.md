@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Particles with memory
 
-## Look
+## See what we're making
 
 ![On a cream field, teal circles and coral squares follow two curved, bounded oldest-to-newest trails from small earlier marks to large current heads; both trajectories stay inside the rounded viewport boundary, and shape plus size distinguish the palette roles without color alone.](media/particle-preview.svg "Objects carry short, bounded memories through a fixed-step world.")
 
@@ -26,14 +26,14 @@ asset_records: assets.yaml
 
 The still uses head size, shape, and trail spacing as well as color.
 
-## Precedent and transfer
+## Borrow the idea, not the artwork
 
 Use the course's [credited precedent notes](../../../docs/source-notes.md#visual-vocabulary)
 to identify a particle or trail mechanism without treating its final frame as a
 recipe. Credit creators and collaborators, then document deliberate changes to
 agent shape, emission, force, history, palette, and spatial composition.
 
-## Predict
+## Take a guess
 
 Start one particle at `x=10` with `vx=10`, zero acceleration, drag rate `1`,
 and a `0.25` second fixed step. Predict `vx` and `x` after one and two steps
@@ -41,7 +41,7 @@ using `drag = exp(-rate * dt)`, then `vx *= drag`, then `x += vx * dt`.
 Which value changes if one half-second update is replaced by two quarter-second
 updates? At exactly `age == lifetime`, should the object still be visible?
 
-## Learn
+## Let's unpack it
 
 ### A vector can own objects
 
@@ -149,7 +149,7 @@ measure real frame rate, launch a window, or compare pixels. Contrast, motor
 access, reduced motion, launch behavior, and originality still need manual
 review.
 
-## Build: construct, step, and inspect
+## Make it run: construct, step, and inspect
 
 ### 1. Replay the independent values
 
@@ -190,7 +190,7 @@ Move with pointer and arrows. Pause for several seconds and resume; there should
 be no catch-up burst. Try R and M, resize wide/narrow/tiny, and inspect all four
 edges. Compilation does not prove launch.
 
-## Break and repair
+## Break it on purpose
 
 In the exact tracked file
 `exercises/09-particles-with-memory/shared/particle_model.cpp`, temporarily
@@ -205,14 +205,14 @@ git restore -- exercises/09-particles-with-memory/shared/particle_model.cpp
 That command discards every uncommitted change in that named file. Record the
 failure, why equality is the declared lifetime boundary, and the repaired run.
 
-## Exercise
+## Your turn
 
 Open the [history-trail emitter brief](../../../exercises/09-particles-with-memory/README.md).
 Own the design record, then replace starter ribbons with a visual system unlike
 the starter or solution. Explain one force, trail-cap, spawn-cap, boundary, and
 reduced-motion choice.
 
-## Test
+## Check your work
 
 ```sh
 CXX=g++ tests/run-section-09-tests.sh
@@ -224,7 +224,7 @@ in Debug and Release. Manually launch both input routes and review pause,
 reset, reduced motion, resize, edges, accessibility, and originality. Pure and
 native CI prove only their named contracts.
 
-## Reflect
+## Tell the story
 
 In 150–190 words, distinguish a vector of objects from parallel arrays,
 constructor invariants from updates, age from lifetime, history size from
@@ -233,14 +233,14 @@ and safe removal from erasing during iteration. Explain semi-implicit order,
 exponential drag, one learner-owned appearance, and why pixels are not the gate.
 Include capture alt text.
 
-## Remix
+## Make it yours
 
 Emit only while input is held, map age to geometric fragmentation, use wrap
 rather than bounce, or connect nearby current heads. Preserve explicit seed,
 finite guards, radius-aware bounds, fixed-step/drop policy, hard container caps,
 safe removal, keyboard access, pause/reset, and reduced motion.
 
-## Manual review
+## Quick visual check
 
 - Pointer/drag and arrow keys move the same visible emitter.
 - P pauses without a resume burst, R deterministically resets, and M hides trails.
@@ -253,13 +253,9 @@ safe removal, keyboard access, pause/reset, and reduced motion.
 - Alt text names trajectory, memory order/length, boundary contact, shapes, and palette roles.
 - Reused references and assets are credited.
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes this section,
-record exact platform/tool versions; reading, prediction, repair, exercise, and
-reflection time separately; pointer/keyboard and reduced-motion access; setup
-friction; whether object construction, update order, drag, lifetime equality,
-safe removal, history/particle caps, boundaries, fixed-step accumulation,
-catch-up/drop, pause, and deterministic seed were understood; automated result;
-manual accessibility/originality result; and confusions. Do not infer timing,
-graphical success, or accessibility from CI.
+When particles explode, vanish, or multiply like rabbits, inspect one particle
+through one update. Check `dt`, velocity, lifetime, and the history size before
+looking at the whole cloud. Keep the simulation bounded: a beautiful sketch
+that quietly allocates forever is just a glitter-covered leak.

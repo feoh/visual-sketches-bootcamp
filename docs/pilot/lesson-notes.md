@@ -1,41 +1,26 @@
-# Lesson notes — blank copy
+# Personal lesson notes — blank copy
 
-- Pilot mode: `self-pilot` / `shared-pilot`
-- Lesson slug / route / curriculum commit:
-- Date / platform/toolchain:
+- Lesson slug / route (optional):
+- Date / platform (optional):
 
-## Time
+## What happened
 
-- Reading minutes:
-- Setup/build-repair minutes:
-- Exercise minutes:
-- Reflection minutes:
-- Manual visual-review minutes:
-
-## Result
-
-- Outcome: `done / helped / partial / blocked / skipped / paused`
-- Deterministic test: `pass / fail / blocked / not observed`
-- Native build: `pass / fail / blocked / not observed`
-- Graphical/manual review: `pass / fail / blocked / not observed`
-- Explanation/reflection: `pass / fail / blocked / not observed`
-- Artifact produced and observed: `pass / fail / blocked / not observed`
+- Sketch or experiment I made:
+- Deterministic test: `pass / fail / skipped / not run`
+- Native build: `pass / fail / skipped / not run`
+- Graphical check: `looked good / needs work / not run`
 - Command and concise result:
 
-## Friction and learning
+## What I learned
 
 - First confusing step or term:
-- What I tried before getting help:
 - Help used: `none / nudge / procedural / answer-level`
-- Setup, instruction, accessibility, or concept issue:
-- Visual explanation:
-- Numeric explanation:
-- Symbolic explanation:
-- What I could reuse in a different sketch:
-- Confidence before/after (1–5) and why:
+- Visual explanation in my own words:
+- Numeric explanation in my own words:
+- Symbolic explanation in my own words:
+- What I could reuse in another sketch:
 
-## Next change
+## Next experiment
 
 - Keep/change/remove:
-- Related revision-log ID:
-- Next step:
+- Next thing I want to try:

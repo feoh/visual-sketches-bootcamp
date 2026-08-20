@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # Interlude — reading and writing the first C++ test
 
-## Look
+## See what we're making
 
 A test is a small causal story, not a wall of assertions.
 
@@ -30,7 +30,7 @@ A test is a small causal story, not a wall of assertions.
 The diagram is static, contains no audio, and needs no motion alternative. Its
 labels and left-to-right arrows carry the sequence without relying on color.
 
-## Predict
+## Take a guess
 
 Read the final line of `foundation/unit/src/main.cpp`:
 
@@ -42,7 +42,7 @@ Predict what a shell sees when every assertion passes and when one assertion
 fails. Then predict why replacing that line with `ofRunMainLoop(); return 0;`
 would make a red suite look green to automation.
 
-## Learn
+## Let's unpack it
 
 ### The executable lifecycle
 
@@ -155,7 +155,7 @@ meaning, originality, or accessibility. This interlude therefore adds no pixel
 gate. Rendering remains a manual launch and review concern, while deterministic
 model tests remain fast and actionable.
 
-## Build
+## Make it run
 
 ### Example 1: run the portable learner contract
 
@@ -209,7 +209,7 @@ records Linux, macOS, and Windows build and runtime statuses. Reuse avoids a
 second, pedagogically identical native project. A local run proves only its
 host and commit state.
 
-## Break and repair
+## Break it on purpose
 
 Keep the tracked branch green by applying this change only temporarily. In
 `foundation/unit/src/main.cpp`, find the seeded viewport assertion and replace:
@@ -236,7 +236,7 @@ git restore -- foundation/unit/src/main.cpp
 It discards every uncommitted change in that file, so inspect `git diff` first.
 Do not commit the broken assertion.
 
-## Exercise
+## Your turn
 
 Open the [exercise brief](../../../exercises/00-first-cpp-test/README.md).
 Edit only `starter/learner_known_case.cpp`. Use this concrete observe-review-
@@ -269,7 +269,7 @@ The tracked starter is already green so the repository and CI remain usable.
 Your task is to replace its example oracle with your own. The explained
 solution uses a different seed and cannot be inferred from the public test.
 
-## Test
+## Check your work
 
 Run both available compiler variants and then the native foundation unit
 commands. The public contract requires the learner-authored test to accept the
@@ -291,7 +291,7 @@ Manual checks:
   zero after repair.
 - No generated metadata, screenshots, or red assertion remain tracked.
 
-## Reflect
+## Tell the story
 
 In 90–130 words, trace `ofInit` → `ofRunApp` registration → synchronous
 `setup/run` and requested exit *inside `ofRunApp`* → `ofRunMainLoop` observing
@@ -301,14 +301,14 @@ tolerance is appropriate for that float, and why a passing no-window test says
 nothing about rendered appearance. Include the temporary failing status and
 repaired result.
 
-## Remix
+## Make it yours
 
 Add one more *note*, not code: propose a boundary or property test for
 `makeModel`. State which inputs vary, which invariant should hold, and whether
 exact or approximate comparison fits. Avoid testing several unrelated ideas in
 one assertion.
 
-## Manual review
+## Quick visual check
 
 There is no visual submission and no pixel baseline for this interlude. Review
 terminal output for readable diagnostics; verify the reflection does not claim
@@ -317,11 +317,10 @@ and credit any reused test logic. If you later capture terminal output, write
 alt text that states the failing assertion and key numeric diagnostic rather
 than saying only “test failure.”
 
-## Pilot note
+## If you get stuck
 
-Pilot evidence not yet collected. After a learner completes the interlude,
-record exact platform and tool versions; reading, repair, known-case authoring,
-native build, and reflection time separately; setup friction; whether lifecycle
-exit propagation, independent oracles, and tolerance choice were understood;
-first failing diagnostic; final results; and points of confusion. Do not infer
-learner timing from CI duration.
+A failed assertion is not a verdict on your programming career; it is a clue
+with unusually dramatic punctuation. Read the actual and expected values, fix
+one thing, and run the smallest test again. If the harness feels mysterious,
+return to arrange → act → assert and write down the one value you expect before
+running it.

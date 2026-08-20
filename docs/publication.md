@@ -95,8 +95,8 @@ release owner records all of the following:
       compatible record and retained notice.
 - [ ] Any platform claim is supported by that platform’s CI/manual evidence;
       a local Hugo build does not prove native openFrameworks behavior.
-- [ ] Learner outcomes are labeled `not yet observed` until an actual self-pilot
-      or shared-learner run is entered in `docs/pilot-protocol-and-evidence.md`.
+- [ ] Reader-facing claims stay modest: automated checks are not presented as
+      proof of graphical appearance, accessibility, or live-device behavior.
 
 ## Licensing in generated pages
 
