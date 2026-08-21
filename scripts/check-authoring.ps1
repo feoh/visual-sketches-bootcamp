@@ -100,7 +100,7 @@ function Assert-PilotContract {
     $protocol = Get-Content -Raw -LiteralPath (Join-Path $Root 'docs/pilot-protocol-and-evidence.md')
     if (-not $protocol.Contains('**Protocol version:** 1.2')) { Fail 'pilot protocol version must agree with routes.tsv' }
 
-    $lessons = @(Get-ChildItem -LiteralPath (Join-Path $Authoring 'sections') -Filter index.md -File -Recurse |
+    $lessons = @(Get-ChildItem -LiteralPath (Join-Path $Authoring 'sections') -Filter index.md -File -Recurse | Sort-Object -Property FullName |
         ForEach-Object { $front=Read-FrontMatter $_.FullName; if($front.draft-eq'false'){[pscustomobject]@{Slug=$front.slug;Weight=[int]$front.weight;Path=$_.FullName;Kind=$front.course_kind}} } |
         Where-Object { $null-ne$_ } | Sort-Object Weight)
     if ($lessons.Count -ne 19) { Fail 'pilot routes require exactly 19 published lesson bundles' }
@@ -147,7 +147,7 @@ function Assert-PilotContract {
 }
 
 Assert-PilotContract
-$bundles=@(Get-ChildItem -LiteralPath (Join-Path $Authoring "templates"),(Join-Path $Authoring "examples"),(Join-Path $Authoring "sections") -Filter index.md -File -Recurse)
+$bundles=@(Get-ChildItem -LiteralPath (Join-Path $Authoring "templates"),(Join-Path $Authoring "examples"),(Join-Path $Authoring "sections") -Filter index.md -File -Recurse|Sort-Object -Property FullName)
 if($bundles.Count-eq0){Fail "no leaf-bundle index.md files found"}
 $linkPattern=[regex]'\]\(([^)]+)\)'
 foreach($bundle in $bundles){
@@ -190,7 +190,7 @@ foreach($bundle in $bundles){
     foreach($path in $paths){if($text-notmatch[regex]::Escape("]($path")){Fail "$dir`: local asset '$path' is not referenced from index.md"}}
 }
 
-foreach($file in Get-ChildItem -LiteralPath $Authoring,(Join-Path $Root 'exercises') -Filter '*.md' -File -Recurse){
+foreach($file in Get-ChildItem -LiteralPath $Authoring,(Join-Path $Root 'exercises') -Filter '*.md' -File -Recurse|Sort-Object -Property FullName){
     $lines=@(Get-NormalMarkdownLines $file.FullName);$text=$lines-join"`n"
     if($text.Contains(']]')){Fail "$($file.FullName)`: Obsidian wikilinks are not portable"}
     if($text-match'\{\{[<%]'){Fail "$($file.FullName)`: Hugo shortcodes are not allowed"}
@@ -243,7 +243,7 @@ try{
         $homePage = Get-Content -Raw -LiteralPath (Join-Path $publication 'index.html')
         if (-not $homePage.Contains("src=`"${basePath}course/12-color-blending-and-trails/media/trail-preview.svg`"")) { Fail 'publication home omitted its hero preview image' }
         if ($homePage.Contains('alt=""')) { Fail 'publication home emitted an image with empty alt text' }
-        $lessons = @(Get-ChildItem -LiteralPath (Join-Path $Authoring 'sections') -Filter index.md -File -Recurse | Where-Object { (Read-FrontMatter $_.FullName).draft -eq 'false' })
+        $lessons = @(Get-ChildItem -LiteralPath (Join-Path $Authoring 'sections') -Filter index.md -File -Recurse | Sort-Object -Property FullName | Where-Object { (Read-FrontMatter $_.FullName).draft -eq 'false' })
         foreach ($lesson in $lessons) {
             $slug = (Read-FrontMatter $lesson.FullName).slug
             $page = Join-Path $publication "course/$slug/index.html"

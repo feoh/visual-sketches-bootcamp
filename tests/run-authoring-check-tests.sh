@@ -16,7 +16,7 @@ make_fixture(){
     destination="$fixture/$relative"
     mkdir -p "$(dirname "$destination")"
     cp -P "$root/$relative" "$destination"
-  done < <(git -C "$root" ls-files -z --cached --others --exclude-standard -- authoring exercises docs/pilot docs/pilot-protocol-and-evidence.md)
+  done < <(git -C "$root" ls-files -z --cached --others --exclude-standard -- authoring exercises docs/pilot docs/pilot-protocol-and-evidence.md THIRD_PARTY_NOTICES.md docs/source-notes.md docs/foundation-harness-evidence.md foundation/windowed/src/ofApp.cpp)
   cp "$root/scripts/check-authoring.sh" "$fixture/scripts/"
   chmod +x "$fixture/scripts/check-authoring.sh"
 }

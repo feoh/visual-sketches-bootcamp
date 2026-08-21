@@ -11,6 +11,11 @@ function Make-Fixture([string]$Name) {
     New-Item -ItemType Directory -Force -Path (Join-Path $fixture "docs") | Out-Null
     Copy-Item -LiteralPath (Join-Path $Root "docs/pilot") -Destination (Join-Path $fixture "docs/pilot") -Recurse
     Copy-Item -LiteralPath (Join-Path $Root "docs/pilot-protocol-and-evidence.md") -Destination (Join-Path $fixture "docs/pilot-protocol-and-evidence.md")
+    foreach ($relative in @("THIRD_PARTY_NOTICES.md", "docs/source-notes.md", "docs/foundation-harness-evidence.md", "foundation/windowed/src/ofApp.cpp")) {
+        $destination = Join-Path $fixture $relative
+        New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destination) | Out-Null
+        Copy-Item -LiteralPath (Join-Path $Root $relative) -Destination $destination
+    }
     Copy-Item -LiteralPath (Join-Path $Root "scripts/check-authoring.ps1") -Destination (Join-Path $fixture "scripts/check-authoring.ps1")
     return $fixture
 }
