@@ -231,14 +231,18 @@ try{
     $publicationConfig = Join-Path $Root 'site/hugo.toml'
     if (Test-Path -LiteralPath $publicationConfig -PathType Leaf) {
         $publication = Join-Path $temp 'publication'
+        $baseUrl = [regex]::Match((Get-Content -Raw -LiteralPath $publicationConfig), '(?m)^baseURL\s*=\s*"([^"]*)"')
+        if (-not $baseUrl.Success) { Fail 'site/hugo.toml does not define baseURL' }
+        $basePath = ([Uri]$baseUrl.Groups[1].Value).AbsolutePath
+        if (-not $basePath.EndsWith('/')) { $basePath = "$basePath/" }
         &$hugo.Source --quiet --source $Root --config site/hugo.toml --destination $publication --cleanDestinationDir --panicOnWarning --printPathWarnings
         if ($LASTEXITCODE -ne 0) { Fail 'checked publication build failed' }
         foreach ($required in @('index.html','course/index.html','css/course.css')) {
             if (-not (Test-Path -LiteralPath (Join-Path $publication $required) -PathType Leaf)) { Fail "publication did not emit $required" }
         }
-        $home = Get-Content -Raw -LiteralPath (Join-Path $publication 'index.html')
-        if (-not $home.Contains('src="/visual-sketches-bootcamp/course/12-color-blending-and-trails/media/trail-preview.svg"')) { Fail 'publication home omitted its hero preview image' }
-        if ($home.Contains('alt=""')) { Fail 'publication home emitted an image with empty alt text' }
+        $homePage = Get-Content -Raw -LiteralPath (Join-Path $publication 'index.html')
+        if (-not $homePage.Contains("src=`"${basePath}course/12-color-blending-and-trails/media/trail-preview.svg`"")) { Fail 'publication home omitted its hero preview image' }
+        if ($homePage.Contains('alt=""')) { Fail 'publication home emitted an image with empty alt text' }
         $lessons = @(Get-ChildItem -LiteralPath (Join-Path $Authoring 'sections') -Filter index.md -File -Recurse | Where-Object { (Read-FrontMatter $_.FullName).draft -eq 'false' })
         foreach ($lesson in $lessons) {
             $slug = (Read-FrontMatter $lesson.FullName).slug
@@ -250,7 +254,7 @@ try{
             if ($rendered.Contains('href="../../../')) { Fail "publication retained an unresolved repository link in $slug" }
             if ($rendered.Contains('href=""')) { Fail "publication emitted an empty link in $slug" }
             $homeContent = Get-Content -Raw -LiteralPath (Join-Path $publication 'index.html')
-            if (-not $homeContent.Contains("href=`"/visual-sketches-bootcamp/course/$slug/`"")) { Fail "publication home omitted lesson $slug" }
+            if (-not $homeContent.Contains("href=`"${basePath}course/$slug/`"")) { Fail "publication home omitted lesson $slug" }
         }
         $duplicateWeights = @($lessons | ForEach-Object { (Read-FrontMatter $_.FullName).weight } | Group-Object | Where-Object Count -gt 1)
         if ($duplicateWeights.Count -gt 0) { Fail 'non-draft lesson weights must be unique' }
@@ -262,19 +266,19 @@ try{
         if (-not $section16.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/templates/model-test-contract.md')) { Fail 'publication did not rewrite section 16 Markdown resource links' }
         if (-not $section16.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/fixtures/README.md')) { Fail 'publication did not expose section 16 fixture provenance' }
         if (-not $section17.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/17-original-visual-instrument/fixtures/README.md')) { Fail 'publication did not expose section 17 fixture provenance' }
-        if (-not $section17.Contains('href="/visual-sketches-bootcamp/course/16-three-cumulative-sketch-studies/#supported-bootstrap-before-the-timer"')) { Fail 'publication did not resolve the section 17 sibling lesson link' }
+        if (-not $section17.Contains("href=`"${basePath}course/16-three-cumulative-sketch-studies/#supported-bootstrap-before-the-timer`"")) { Fail 'publication did not resolve the section 17 sibling lesson link' }
         if (-not $section16.Contains('CC0-1.0')) { Fail 'publication omitted section 16 fixture license notice' }
         if (-not $section17.Contains('CC0-1.0')) { Fail 'publication omitted section 17 fixture license notice' }
         $courseIndex = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/index.html')
         $firstLesson = [regex]::Match($courseIndex, '<li><a href="([^"]+)"').Groups[1].Value
-        if ($firstLesson -ne '/visual-sketches-bootcamp/course/00-cross-platform-setup-and-first-frame/') { Fail 'publication course contents do not begin with section 00 setup' }
+        if ($firstLesson -ne "${basePath}course/00-cross-platform-setup-and-first-frame/") { Fail 'publication course contents do not begin with section 00 setup' }
         $setup = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/00-cross-platform-setup-and-first-frame/index.html')
         if ($setup.Contains('<span>Previous</span><a')) { Fail 'section 00 setup unexpectedly has a previous lesson' }
-        if (-not $setup.Contains('<span>Next</span><a href="/visual-sketches-bootcamp/course/01-a-mark-that-moves/">')) { Fail 'section 00 setup does not lead to section 01' }
+        if (-not $setup.Contains("<span>Next</span><a href=`"${basePath}course/01-a-mark-that-moves/`">")) { Fail 'section 00 setup does not lead to section 01' }
         if ($section17.Contains('<span>Next</span><a')) { Fail 'section 17 unexpectedly has a next lesson' }
         $pagination = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/14-images-and-type-as-geometry/index.html')
-        if (-not $pagination.Contains('<span>Previous</span><a href="/visual-sketches-bootcamp/course/13-time-as-a-drawable-axis/">')) { Fail 'publication Previous navigation does not follow increasing course weight' }
-        if (-not $pagination.Contains('<span>Next</span><a href="/visual-sketches-bootcamp/course/15-embodied-audio-input/">')) { Fail 'publication Next navigation does not follow increasing course weight' }
+        if (-not $pagination.Contains("<span>Previous</span><a href=`"${basePath}course/13-time-as-a-drawable-axis/`">")) { Fail 'publication Previous navigation does not follow increasing course weight' }
+        if (-not $pagination.Contains("<span>Next</span><a href=`"${basePath}course/15-embodied-audio-input/`">")) { Fail 'publication Next navigation does not follow increasing course weight' }
         Write-Host "authoring check: contracts, Hugo fixtures, and publication build passed ($($lessons.Count) lessons)"
     } else {
         Write-Host 'authoring check: contracts and Hugo fixture builds passed (publication layer not present)'

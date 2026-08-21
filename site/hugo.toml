@@ -1,4 +1,4 @@
-baseURL = "https://feoh.github.io/visual-sketches-bootcamp/"
+baseURL = "https://visualsketches.feoh.org/"
 locale = "en-US"
 title = "Visual Sketches Bootcamp"
 disableKinds = ["taxonomy", "term", "rss", "sitemap", "robotsTXT", "404"]

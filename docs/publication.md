@@ -26,7 +26,7 @@ one-off destination or base URL, run Hugo directly:
 ```sh
 hugo --source . --config site/hugo.toml \
   --destination /tmp/visual-sketches-site \
-  --baseURL https://example.invalid/visual-sketches-bootcamp/ \
+  --baseURL https://example.invalid/ \
   --cleanDestinationDir --panicOnWarning --printPathWarnings
 ```
 
@@ -36,10 +36,14 @@ publishes the result; no script in this repository deploys anything.
 
 ## GitHub Pages deployment
 
-The site is published at <https://feoh.github.io/visual-sketches-bootcamp/>,
-which is also the `baseURL` in `site/hugo.toml`, so local and deployed builds
-emit identical links. The path segment must stay equal to the repository name;
-the authoring checker asserts it.
+The site is published at <https://visualsketches.feoh.org/>, the custom domain
+recorded in the repository Pages settings, which is also the `baseURL` in
+`site/hugo.toml`, so local and deployed builds emit identical links. The custom
+domain serves the site from the root, so there is no repository path segment;
+`https://feoh.github.io/visual-sketches-bootcamp/` now redirects here. The
+authoring checker derives its expected link prefix from that `baseURL` rather
+than hardcoding one, so moving the site to another base updates the assertions
+with it.
 
 `.github/workflows/pages.yml` builds and deploys:
 
