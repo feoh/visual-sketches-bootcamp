@@ -5,62 +5,61 @@ weight: 160
 draft: true
 course_kind: synthesis
 objectives:
-  - Combine named mechanisms into one coherent visual system
-  - Defend technical and aesthetic choices with evidence
-  - Publish an accessible, licensed process record
+  - Combine familiar ideas into one coherent visual system
+  - Explain how technical and visual choices shape the experience
+  - Optionally share an accessible, licensed record of the work
 prerequisites:
-  - Name the required units or portfolio checkpoints
+  - Name the earlier ideas that make this project approachable
 source_records: sources.yaml
 asset_records: assets.yaml
 ---
 
 # An original synthesis project
 
-## Brief
+## What you are making
 
-Define the experience and constraints without prescribing one finished image.
-Name which choices belong to the learner. Replace this placeholder citation to
-the [primary precedent](https://example.org/source).
+Describe the experience and gentle scope limits without prescribing one finished image.
+Name the choices the reader gets to make. Replace this placeholder citation with a
+useful [primary inspiration](https://example.org/source).
 
-![Describe the composition and the evidence this capture contributes.](media/process-still.svg "State the milestone and choice illustrated by this capture.")
+![Describe the unfinished composition, current behavior, and visible non-color cues.](media/process-still.svg "An unfinished direction and the choice it explores.")
 
-*State the milestone and choice illustrated by this capture.*
+*An unfinished direction can make one useful choice visible without becoming a target image.*
 
-## Milestones
+## One possible path
 
-1. Record intent, precedents, licenses, and a deterministic model sketch.
-2. Prove one mechanism with an evaluator fixture.
-3. Produce divergent studies and choose a direction with reasons.
-4. Test failure paths, accessibility, and platform behavior.
-5. Publish source, controls, captures, credits, and known limitations.
+1. Jot down the idea, inspirations, licenses, and smallest model experiment.
+2. Check one important calculation with a saved input and expected answer.
+3. Try a few visibly different arrangements and keep the one that interests you.
+4. Try likely failure paths, keyboard access, reduced motion, and window sizes.
+5. If you want to share the result, gather source, controls, captures, credits, and known limitations.
 
-## Evaluator fixtures
+## Repeatable examples
 
-Describe fixed seeds, time steps, viewport values, and recorded inputs. Evaluate
-state and geometry rather than cross-platform pixels.
+Offer fixed seeds, time steps, window values, or recorded inputs that help a reader check
+state and geometry. Explain that pictures may vary across graphics hardware.
 
-## Rubric
+## Check the experience yourself
 
-Score technical behavior, creative coherence, mechanism-level originality,
-explanation, accessibility, and licensing separately. A similar still is a
-prompt for review, not a complete originality test.
+Use practical questions about behavior, visual coherence, original structure,
+accessibility, and licensing. A similar-looking still is a reason to compare choices,
+not an automatic failure.
 
-## Process and capture record
+## Optional notes and captures
 
-Require an accessible still, reduced-motion alternative, motion transcript,
-test summary, controls, build notes, and an explanation of at least three
-changes from each named precedent.
+Offer lightweight templates for an accessible still, reduced-motion alternative,
+motion transcript, controls, build notes, and a short explanation. Tell readers to keep
+only what will help them revisit or share the project.
 
-## Partial exemplars
+## Unfinished examples
 
-Provide multiple incomplete approaches with visibly different geometry,
-mapping, interaction, motion, or temporal behavior. Do not provide a canonical
-finished solution.
+Provide several incomplete approaches with visibly different geometry, mapping,
+interaction, motion, or use of time. Do not provide one official finished answer.
 
-## Completion review
+## Before you stop
 
-- Brief, milestones, evaluator fixtures, and rubric are usable independently.
-- Accessibility and license expectations are explicit and satisfied.
-- Captures and process-note structure are complete.
-- Divergent partial exemplars do not anchor one final composition.
-- The learner can explain intent, mechanisms, evidence, and limitations.
+- The aim and optional path make sense independently.
+- Accessibility and license guidance is explicit.
+- Notes and capture templates are clearly optional.
+- Unfinished examples do not anchor one final composition.
+- The reader can describe the idea, main mechanisms, and known limitations in their own words.

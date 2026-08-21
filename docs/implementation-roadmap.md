@@ -84,37 +84,37 @@ Deliver:
 - CI with separate build/test statuses; and
 - the accepted standalone-repository and clean-regeneration architecture.
 
-**Exit gate:** on every selected lane, a contributor can clone the repository, follow the platform guide, generate and run the sketch (including its bundled-asset probe), and run deterministic tests without undocumented manual edits. Every lane must be both `build-proven` and `unit-proven`. An `unsupported` result remains visible with a reason and follow-up criterion, but blocks this phase rather than being silently skipped or shown as green.
+**Ready when:** on every selected lane, a contributor can clone the repository, follow the platform guide, generate and run the sketch (including its bundled-asset probe), and run deterministic tests without undocumented manual edits. Every lane must be both `build-proven` and `unit-proven`. An `unsupported` result remains visible with a reason and follow-up criterion, but blocks this phase rather than being silently skipped or shown as green.
 
 ### Phase 1 — Authoring system and Unit 0
 
 Deliver the leaf-bundle lesson template, exercise template, media conventions, accessibility checklist, licensing policy, Hugo/link smoke check, testing-literacy interlude, and sections 00–02 with tested starters and solutions.
 
-**Exit gate:** a reader can reach a moving sketch in the first session and can run tests on their platform.
+**Ready when:** a reader can reach a moving sketch in the first session and can run tests on their platform.
 
 ### Phase 2 — Units 1 and 2
 
 Deliver mapping/interpolation, vectors, oscillation, randomness, transforms, and gesture geometry.
 
-**Exit gate:** the learner completes a foundations diptych and a reproducible generative edition without copying a worked composition.
+**Ready when:** a reader can make a foundations diptych and a reproducible generative edition without copying a worked composition.
 
 ### Phase 3 — Unit 3
 
 Deliver particles, forces/springs/steering, and noise/flow fields with fixed-step simulation tests.
 
-**Exit gate:** the learner can explain and test the difference between independent randomness and coherent field-driven motion.
+**Ready when:** a reader can explain and test the difference between independent randomness and coherent field-driven motion.
 
 ### Phase 4 — Unit 4
 
 Deliver blending/trails, temporal buffers, image/type geometry, and depth/live-input lanes. Camera/audio work must include privacy, fixture, and no-device fallback guidance.
 
-**Exit gate:** the learner produces an interactive instrument whose mapping is legible and whose core can replay recorded input deterministically.
+**Ready when:** a reader can make an interactive instrument whose mapping is legible and whose core can replay recorded input deterministically.
 
 ### Phase 5 — Synthesis and publication
 
-Deliver three sketch-study briefs, capstone brief/rubric, gallery/process-note templates, instructional reference solutions, divergent capstone process exemplars (not one canonical solution), full link/license checks, and optional Hugo deployment.
+Deliver three sketch-study guides, a capstone guide, lightweight optional note templates, instructional reference solutions, several unfinished capstone directions, full link/license checks, and optional Hugo deployment.
 
-**Exit gate:** the complete path is runnable, cross-platform validation is green or limitations are explicit, and a reader can publish a documented original capstone.
+**Ready when:** the complete path runs, cross-platform validation is green or limitations are explicit, and a reader can finish or share an original project.
 
 ## Definition of done for an instructional section
 
@@ -128,9 +128,9 @@ An instructional section (00–15) is **written and ready to try** when it has:
 - two or three runnable worked examples;
 - one repair/debugging example;
 - one exercise starter, tests, and instructional reference solution;
-- platform commands validated in CI or clearly marked unsupported;
-- automated tests for known cases, boundaries, and at least one property;
-- a manual visual/originality checklist;
+- platform commands validated in CI, with adaptation guidance for other systems;
+- automated tests for known cases, boundaries, and at least one useful rule;
+- a practical visual and access self-check;
 - credits and licenses; and
 - a short troubleshooting note pointing to the smallest useful example, test,
   or number to inspect when something goes sideways.
@@ -139,7 +139,9 @@ A section is **ready to try** when its instructions, examples, tests, and
 fallbacks are usable on their own. Optional personal notes can help a reader
 choose what to revisit, but no timing or learner report is required.
 
-A synthesis project is complete when its brief, milestones, deterministic evaluator fixtures, technical/creative/originality rubric, accessibility/license expectations, captures/process-note template, and multiple visually divergent partial exemplars are ready. It does not require a canonical finished answer.
+A synthesis project is ready when its guide, gentle scope path, repeatable test inputs,
+accessibility/license guidance, optional notes, and several visibly different unfinished
+examples work together. It does not provide one official finished answer.
 
 ## Debugging progression
 

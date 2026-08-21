@@ -1,7 +1,7 @@
 # Credits and licenses
 
-One row per item or coherent original file group. Do not combine items with
-different creators, sources, or terms.
+Use one row for each borrowed item or group of original files. Keep items with
+different creators, sources, or license terms in separate rows.
 
 | Item/path | Kind | Creator | Source URL or original | License/version | Changes | Redistribution/notice action |
 |---|---|---|---|---|---|---|
@@ -14,7 +14,7 @@ different creators, sources, or terms.
 - Capture/media license:
 - Collaborators, roles, and consent:
 
-## Compatibility review
+## Before sharing
 
 - Material replaced because terms were missing or incompatible:
 - Attribution locations:

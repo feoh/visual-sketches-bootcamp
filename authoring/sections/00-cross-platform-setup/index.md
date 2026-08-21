@@ -7,12 +7,12 @@ course_kind: instructional
 objectives:
   - Verify the pinned openFrameworks and Project Generator versions before changing code
   - Explain the roles of main.cpp, ofApp.h, and ofApp.cpp
-  - Map normalized screen positions to pixel coordinates
-  - Build a first frame from color and primitive drawing calls
-  - Use the first useful compiler diagnostic to repair one syntax error
+  - Place shapes by percentage so they adapt when the window changes size
+  - Build a first frame from color and basic shape-drawing calls
+  - Use the first useful compiler error message to repair one syntax error
 prerequisites:
   - Comfort editing plain text files and running commands in a terminal
-  - An x86-64 Ubuntu 24.04 or CachyOS environment, Apple Silicon macOS 15, or x64 Windows Server 2022 environment
+  - A supported Linux, macOS, or Windows desktop; the exact automated test systems are listed below
 source_records: sources.yaml
 asset_records: assets.yaml
 ---
@@ -21,16 +21,15 @@ asset_records: assets.yaml
 
 ## See what we're making
 
-This entire image is one frame: a background plus exactly five calls that draw
-geometry. It is a reference for constraints, not a composition to copy.
+This image is a single still frame: one background and five drawn shapes. It shows the
+few rules you will work with, but you do not need to copy its layout.
 
-![Navy rectangle, coral circle, yellow triangle and diagonal, and navy ellipse form two uneven rows on a warm ground.](media/five-primitive-preview.svg "The reference uses exactly five primitives and three colors; position and silhouette still distinguish forms without color.")
+![Navy rectangle, coral circle, yellow triangle and diagonal, and navy ellipse form two uneven rows on a warm ground.](media/five-primitive-preview.svg "The example uses exactly five basic shapes and three colors; their shapes and positions still distinguish them without color.")
 
-*The reference uses exactly five primitives and three colors; position and silhouette still distinguish forms without color.*
+*The example uses exactly five basic shapes and three colors; their shapes and positions still distinguish them without color.*
 
-The still has no motion or audio. Its SVG title and description, the alt text
-above, and the visible caption carry the same spatial information without
-requiring color perception.
+Nothing moves or makes sound yet. The image description and caption explain the layout
+without relying only on color.
 
 ## Take a guess
 
@@ -44,27 +43,25 @@ void ofApp::draw() {
 }
 ```
 
-Is `(200, 150)` measured from the lower-left, center, or upper-left? Is `40` a
-diameter or radius? Keep your prediction; verify it during Build.
+Is `(200, 150)` measured from the lower-left, center, or upper-left? Is `40`
+a diameter or radius? Keep your prediction; verify it during Build.
 
 ## Let's unpack it
 
 ### Install one pinned toolchain
 
-The section wrappers target four host bands: Ubuntu 24.04 x86-64 with GCC 13,
-x86-64 CachyOS/Arch with its current GCC family, Apple Silicon macOS 15 with
-Xcode 16, and x64 Windows Server 2022 with Visual Studio 2022 v143 plus Windows
-SDK 10.0.26100.0. Ubuntu, macOS, and Windows have distinct native CI statuses.
-CachyOS is rolling, so its support evidence records the exact dated package
-versions and local commands rather than pretending that one run proves every
-future snapshot. Windows 11 is not yet a verified band.
+Setup is the least glamorous part, so here is the short version: use the block for your
+operating system and let the course scripts check the details. The automated builds
+cover Ubuntu 24.04, Apple Silicon macOS 15, and Windows with Visual Studio 2022.
+CachyOS/Arch changes frequently, so the repository records the package versions that
+were tested rather than promising that every future update will behave exactly the same.
+Windows 11 will probably work, but it has not been checked yet.
 
-All lanes use openFrameworks 0.12.1 and Project Generator 0.103.0. The course
-wrappers verify downloaded hashes and versions; they do not search your
-computer or use a rolling `latest` framework release. The upstream [setup guides](https://openframeworks.cc/setup/)
-provide background, but do not run an upstream distro installer directly: the
-course's Linux wrapper selects apt only on Ubuntu and pacman/paru only on
-CachyOS or Arch.
+Everyone uses openFrameworks 0.12.1 and Project Generator 0.103.0. The scripts download
+and check those exact versions. The upstream [setup guides](https://openframeworks.cc/setup/) are useful background, but
+use the course commands below rather than running an upstream Linux installer yourself.
+The course script knows whether it should use Ubuntu's `apt` or CachyOS/Arch's
+`pacman` and `paru`.
 
 Ubuntu or CachyOS from the repository root:
 
@@ -75,15 +72,12 @@ scripts/setup-linux.sh install --of-root "$OF_ROOT"
 scripts/foundation.sh doctor
 ```
 
-On CachyOS/Arch, `setup-linux.sh` avoids the upstream OpenCV 3/4 rewrite (the
-course does not use `ofxOpenCv`), rebuilds Project Generator against current
-host libraries, adds the GCC-required `<algorithm>` include, and rebuilds
-openFrameworks with an X11 GLFW hint. The hint is required because
-openFrameworks 0.12.1 uses X11-native input and icon APIs while CachyOS GLFW
-3.4+ can otherwise select Wayland. `xorg-xwayland` is therefore an explicit
-course dependency. These changes affect only the separately downloaded
-`OF_ROOT`; rerunning `setup-of.sh` restores the verified archive and requires a
-new `setup-linux.sh prepare` or `install` afterward.
+On CachyOS/Arch, the setup script also handles a few compatibility fixes for you: it
+skips an OpenCV step this course does not need, rebuilds Project Generator for the
+libraries on your machine, and makes openFrameworks use its working X11 path. You do not
+need to perform those fixes by hand. They only change the downloaded openFrameworks
+folder stored in `OF_ROOT`. If you run `setup-of.sh` again, run `setup-linux.sh prepare` or
+`install` again too.
 
 macOS from the repository root:
 
@@ -93,9 +87,8 @@ export OF_ROOT="$HOME/openframeworks/of_v0.12.1_osx_release"
 scripts/foundation.sh doctor
 ```
 
-Windows Developer PowerShell from the repository root, after installing the
-Visual Studio 2022 **Desktop development with C++** workload and the selected
-Windows SDK:
+Windows Developer PowerShell from the repository root, after installing the Visual
+Studio 2022 **Desktop development with C++** workload and the selected Windows SDK:
 
 ```powershell
 .\scripts\setup-of.ps1 -Destination "$HOME\openframeworks"
@@ -103,87 +96,98 @@ $env:OF_ROOT = "$HOME\openframeworks\of_v0.12.1_vs_64_release"
 .\scripts\foundation.ps1 doctor
 ```
 
-A successful doctor prints `openFrameworks=0.12.1` and Project Generator
-`0.103.0`. Stop on any error; do not patch a generated project to get around a
-wrong root or version.
+A successful doctor prints `openFrameworks=0.12.1` and Project Generator `0.103.0`. Stop on
+any error; do not patch a generated project to get around a wrong root or version.
 
 ### Project Generator and the three source roles
 
-Project Generator reads tracked `src`, `addons.make`, data, and an explicit
-shared-source path, then creates Make, Xcode, Visual Studio, or VS Code metadata
-for this machine. The official [Project Generator documentation](https://github.com/openframeworks/openFrameworks/blob/0.12.1/docs/projectgenerator.md)
-explains the tool. Generated metadata and binaries are ignored: regenerate
-them after source files change; never commit or hand-edit them.
+Project Generator creates the Make, Xcode, Visual Studio, or VS Code project files
+needed on your machine. It reads the source code and add-on list already in the
+repository. The official [Project Generator documentation](https://github.com/openframeworks/openFrameworks/blob/0.12.1/docs/projectgenerator.md) has the details. Treat generated project files
+as disposable: regenerate them when needed instead of editing or committing them.
 
 - `main.cpp` creates an 800 × 600 window, hands it an `ofApp`, and starts the
   main loop.
-- `ofApp.h` declares the app's shape: callback names and stored values. A header
-  is a table of contents other source files can include.
-- `ofApp.cpp` defines what those declared callbacks do. `ofApp::` says the
-  function belongs to `ofApp`.
+- `ofApp.h` lists the functions and saved values your app has. Think of this header
+  as a table of contents that other source files can include.
+- `ofApp.cpp` contains the code inside those functions. `ofApp::` simply says
+  that a function belongs to `ofApp`.
 
-Compilation translates source files and reports language/type mistakes.
-Linking joins compiled pieces with openFrameworks. Running starts the finished
-program. A build can succeed even if nobody has manually inspected its window.
-The [ofBaseApp reference](https://openframeworks.cc/documentation/application/ofBaseApp.html)
-defines the callbacks: `setup()` runs once after window creation; `draw()` runs
-again for each frame.
+When you build, the compiler checks and translates your C++ files, then the linker joins
+them with openFrameworks. When you run, the finished program opens. A successful build
+does not prove that the picture looks right, so you still need to open the window. The
+[ofBaseApp reference](https://openframeworks.cc/documentation/application/ofBaseApp.html) lists the available functions. For now, remember only this:
+`setup()` runs once when the app starts, and `draw()` runs again for every
+frame.
 
-### Screen coordinates: visual, numeric, symbolic
+### Place shapes with pixels and percentages
 
 ```text
-(0,0) ───────────────► +x = width
+(0,0) ───────────────► x moves right
   │
   │       (200,150)
   │
   ▼
- +y = height
+ y moves down
 ```
 
-The origin is the upper-left; x grows right and y grows down. In an 800 × 600
-window, `(200, 150)` is one quarter of the width and one quarter of the height.
-Numerically, `0.25 × 800 = 200` and `0.25 × 600 = 150`. Symbolically, for
-normalized choices `u` and `v`:
+The upper-left corner is `(0, 0)`. The first number is how many pixels to move
+right; the second is how many pixels to move down. So `(200, 150)` means “start at the
+upper-left, move 200 pixels right, then 150 pixels down.” In an 800 × 600 window, that
+point is one quarter of the way across and one quarter of the way down.
+
+Hard-coded pixel positions stop being useful when the window changes size. The starter
+therefore writes positions as percentages, using decimals from `0.0` to
+`1.0`. The code calls these values **normalized**, but there is no special math
+hiding behind that word:
+
+| Value | Meaning |
+| --- | --- |
+| `0.0` | at the left or top |
+| `0.25` | 25% of the way across or down |
+| `0.5` | halfway across or down |
+| `1.0` | at the right or bottom |
+
+To turn a percentage into pixels, multiply it by the window size. In an 800 × 600
+window, a center of `(0.25, 0.25)` becomes `(200, 150)` because `0.25 × 800 = 200` and
+`0.25 × 600 = 150`.
+
+Sizes work the same way. `normalized_size = (0.10, 0.20)` means “10% of the window wide and 20% of the
+window tall.” At 800 × 600, that is an `80 × 120` pixel shape.
+
+You will see `half_width` and `half_height` in the supplied code. They are just half
+of the shape's full size: an `80 × 120` shape has a half-width of `40` and
+a half-height of `60`. Keeping those halves makes the edge check easy:
 
 ```text
-x = uW    and    y = vH,    where 0 ≤ u,v ≤ 1
+left edge   = center x - 40       right edge  = center x + 40
+top edge    = center y - 60       bottom edge = center y + 60
 ```
 
-A specification's `normalized_size = (s, t)` stores its **full** width and
-height as viewport fractions. The geometry model stores half-extents for easy
-boundary checks:
+If all four edges stay inside the window, the shape fits. The helper code does this
+arithmetic so the tests can catch an off-screen shape without opening a graphics window.
 
-```text
-half_width = sW / 2    and    half_height = tH / 2
-```
+### Color and shapes
 
-For `normalized_size = (0.10, 0.20)` at 800 × 600, those half-extents are
-`0.10 × 800 / 2 = 40` and `0.20 × 600 / 2 = 60` pixels. The exercise keeps
-`u`, `v`, `s`, and `t` in standard-library C++ geometry, then supplies `W` and
-`H` at the window boundary. Tests can inspect the result without a GPU.
+`ofSetBackgroundColor(red, green, blue)` chooses the background color. `ofSetColor(...)` chooses the color for
+whatever you draw next; it does not draw anything by itself. Calls such as
+`ofDrawCircle`, `ofDrawRectangle`, `ofDrawTriangle`, `ofDrawLine`, and `ofDrawEllipse` draw
+the actual shapes. Each red, green, or blue number can range from 0 through 255. Keep
+the official [ofGraphics reference](https://openframeworks.cc/documentation/graphics/ofGraphics/) nearby when you want to look up a drawing function.
 
-### Color and primitives
-
-`ofSetBackgroundColor(red, green, blue)` sets the clear color. `ofSetColor(...)`
-sets state for later drawing calls; it draws nothing by itself. Then calls such
-as `ofDrawCircle`, `ofDrawRectangle`, `ofDrawTriangle`, `ofDrawLine`, and
-`ofDrawEllipse` emit geometry. Channels range from 0 through 255. The official
-[ofGraphics reference](https://openframeworks.cc/documentation/graphics/ofGraphics/)
-is the API authority.
-
-This is one substantial C++ mechanism: use declarations in a header and
-function definitions/calls across source files. Arrays and enums in supplied
-code are readable scaffolding here, not new assessed mechanisms.
+You will also see arrays and named shape choices in the supplied code. You do not need
+to understand all of their C++ syntax yet. In this lesson, focus on changing the five
+shapes, their positions and sizes, and the three colors.
 
 ## Make it run
 
-Keep generation, compilation, and running separate so an error has one home.
+Run the setup, build, and app as separate steps. That way, when something goes wrong,
+you know which step produced the error.
 
 ### Example 1: the proven first window
 
-Read the complete foundation adapter in
-[`foundation/windowed/src/ofApp.cpp`](../../../foundation/windowed/src/ofApp.cpp).
-Generate and compile it without editing generated files:
+Start with the known-good sample in [`foundation/windowed/src/ofApp.cpp`](../../../foundation/windowed/src/ofApp.cpp). Generate its project files and build
+it:
 
 ```sh
 scripts/foundation.sh generate --project windowed
@@ -197,13 +201,12 @@ On Windows use:
 .\scripts\foundation.ps1 build -Project windowed -Configuration Release
 ```
 
-Launch the emitted app from `foundation/windowed/bin/` manually. This is visual
-evidence, separate from the successful build.
+Then open the app from `foundation/windowed/bin/`. Building proves that the code compiled; opening
+it lets you check the picture with your own eyes.
 
 ### Example 2: one shape
 
-In a generated scratch copy, these definitions clear once and draw once per
-frame:
+In a generated scratch copy, these definitions clear once and draw once per frame:
 
 ```cpp
 void ofApp::setup() {
@@ -216,13 +219,13 @@ void ofApp::draw() {
 }
 ```
 
-Confirm your Predict answer: the center is 200 pixels right and 150 pixels down
-from the upper-left; 40 is the radius.
+Confirm your Predict answer: the center is 200 pixels right and 150 pixels down from the
+upper-left; 40 is the radius.
 
 ### Example 3: the exercise starter
 
-The complete [`starter`](../../../exercises/00-visual-signature/starter/) keeps
-five normalized specifications separate from rendering:
+The complete [`starter`](../../../exercises/00-visual-signature/starter/) stores five shape choices in one small design file. Other
+supplied code turns those choices into pixels and draws them:
 
 ```sh
 scripts/section-00.sh generate --project starter
@@ -230,39 +233,36 @@ scripts/section-00.sh build --project starter --configuration Release
 tests/run-section-00-tests.sh
 ```
 
-The equivalent Windows commands are in the exercise brief. Open the app only
-after generation and compilation pass.
+The equivalent Windows commands are in the exercise brief. Open the app only after
+generation and compilation pass.
 
 ## Break it on purpose
 
-In the starter, delete the semicolon after one `ofSetColor(...)` call in the
-exact tracked file `exercises/00-visual-signature/starter/src/ofApp.cpp`, then
-build again. Compiler wording varies, but find the **first**
-diagnostic that names your file and line. A useful GCC/Clang form is:
+Open `exercises/00-visual-signature/starter/src/ofApp.cpp` and delete the semicolon after one `ofSetColor(...)` call. Build again.
+Compiler wording varies, but find the **first error message** that names your file and
+line. A useful GCC/Clang form is:
 
 ```text
 error: expected ';' after expression
 ```
 
-Ignore later cascading messages until that first local error is repaired. Read
-the named line and the line immediately before it, restore the semicolon, save,
-and build again. Do not regenerate: source syntax changed, not project
-membership. If this was the only intentional change to that file, you can
-restore the repository copy with
-`git restore -- exercises/00-visual-signature/starter/src/ofApp.cpp`; this
-command discards every uncommitted edit in that file. Record the diagnostic,
-cause, and repair in one sentence.
+Ignore later cascading messages until that first local error is repaired. Read the named
+line and the line immediately before it, restore the semicolon, save, and build again.
+Do not regenerate: source syntax changed, not project membership. If this was the only
+intentional change to that file, you can restore the repository copy with
+`git restore -- exercises/00-visual-signature/starter/src/ofApp.cpp`; this command discards every uncommitted edit in that file. In one
+sentence, write down the error message, what caused it, and how you fixed it.
 
 ## Your turn
 
-Create a visual signature from exactly five primitives and three colors. Start
-with the [exercise brief](../../../exercises/00-visual-signature/README.md),
-then edit the tracked design source. Primitive kinds, positions, sizes, order,
-and RGB values are learner-owned. Keep every primitive's nominal bounding box
-in bounds after resize. The public geometry interface, fixture viewports,
-deterministic edge policy,
-Linux/macOS/Windows commands, starter, tests, and explained reference solution
-are all in that bundle. There is intentionally no target screenshot.
+Create a visual signature from exactly five shapes and three colors. Start with the
+[exercise brief](../../../exercises/00-visual-signature/README.md), then edit `starter/src/design/signature_design.cpp`. You choose the shape types, their positions
+and sizes, which ones are drawn first, and the three colors. Keep each shape inside the
+window when you resize it.
+
+The exercise folder contains the commands, starter, tests, and one example solution.
+There is deliberately no picture you must reproduce. The goal is to make your own small
+picture while staying within the five-shape, three-color rules.
 
 ## Check your work
 
@@ -278,49 +278,45 @@ Or in Windows Developer PowerShell:
 .\tests\run-section-00-tests.ps1
 ```
 
-The known helper case checks normalized-to-pixel mapping with approximate
-floating-point comparisons and verifies that palette indices are not wrapped.
-The boundary helper case checks clamping, non-finite fields, and non-positive
-viewport policy. Public learner-contract checks compile the starter's
-`signature_design.cpp`, require exactly five finite normalized specifications,
-three distinct in-range palette colors, valid kinds/channels/indices, and build
-nominal geometry across every explicit fixture viewport. They do not model the
-extra pixels added by line width, compare pixels, antialiasing, or aesthetic
-choices. Finally inspect the window manually at 800 × 600 and after a narrow
-and wide resize, including whether thick strokes appear clipped.
+The tests check the parts a computer can judge reliably:
 
-## Tell the story
+- there are exactly five shapes and three usable colors;
+- percentage positions and sizes turn into the expected pixel values;
+- shapes stay inside several window sizes; and
+- color and shape choices use valid numbers.
 
-Save one PNG capture and provide alt text that names shapes and spatial
-relationships, not only colors. In 80–120 words, connect one normalized
-coordinate to its pixel location, explain why geometry lives outside `draw()`,
-and identify two composition choices that are yours. Include the first useful
-compiler diagnostic you repaired.
+The tests do **not** decide whether your picture looks good. They also do not check
+every extra pixel from a thick outline. Open the app at 800 × 600, then make the window
+narrow and wide. Look for clipped shapes or lines yourself.
+
+## Optional notes for future you
+
+Save one PNG and write alt text that describes the shapes and where they are, not only
+their colors. Pick one percentage position and show what pixel position it became, then
+name two visual choices you made. Also include the first useful compiler error you
+fixed.
 
 ## Make it yours
 
-Keep the same five specifications and three colors, but change one spatial
-rule: mirror x positions, exchange the two rows, or make all centers follow a
-diagonal. Predict which pixel coordinates change before editing. This must
-change geometry or placement, not only palette.
+Keep the same five shapes and three colors, but change one layout rule. You could mirror
+the picture left-to-right, swap its two rows, or put every center on a diagonal. Before
+editing, guess which pixel positions will change. Change the shapes or layout, not just
+the colors.
 
 ## Quick visual check
 
-- The first-frame relationship is legible without animation or input.
-- The app builds before it is run; tests keep nominal geometry in bounds, and a
-  person checks stroke appearance after resize.
-- Exactly five primitives and three palette entries remain inspectable in code.
-- Shape or placement provides a non-color cue.
-- Contrast supports the stated viewing context.
-- The result differs from the starter, preview, and solution in geometry or
-  spatial logic, not merely color.
-- The capture has useful alt text; code/assets are credited and licensed.
+- The picture makes sense as a still image; it does not need motion or input.
+- The app builds, the tests pass, and no shape looks clipped after a resize.
+- The design file still contains exactly five shapes and three colors.
+- Shape or placement—not only color—helps distinguish the forms.
+- The shapes stand out clearly from the background.
+- Your layout differs from the starter, preview, and solution in more than its colors.
+- Your saved image has useful alt text.
 
 ## If you get stuck
 
-That is normal; computers are very confident about tiny mistakes. Read the
-first useful error, compare your code with the nearest example, and rerun the
-smallest check before changing three things at once. If setup gets noisy, save
-the command and error text, then come back to it after a short break. Your
-visual choices are the point of the exercise—the reference is a guide, not a
-personality transplant.
+That is normal; computers are very confident about tiny mistakes. Read the first useful
+error, compare your code with the nearest example, and rerun the smallest check before
+changing three things at once. If setup gets noisy, save the command and error text,
+then come back to it after a short break. Your visual choices are the point of the
+exercise—the example is a guide, not a personality transplant.

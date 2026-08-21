@@ -1,27 +1,29 @@
 # Exercise title
 
-## Visual behavior
+## What the sketch should do
 
-Describe what must be observable without prescribing one composition.
+Describe the visible behavior without prescribing one composition.
 
-## Learner-owned choices
+## What you choose
 
 List choices such as geometry, palette, density, mapping, and motion.
 
-## Assessed concepts and interface
+## Main ideas and fixed code names
 
-Name the single main C++ mechanism, mathematical model, and exact public
-functions/types the supplied tests call.
+Name the main C++ idea, mathematical model, and exact public functions/types the
+supplied tests call.
 
-## Deterministic inputs and edge cases
+## Repeatable inputs and edge cases
 
-State fixed `dt`, seed, viewport, fixture stream, tolerances, boundaries,
-missing-input behavior, and any intentionally manual renderer behavior.
+State fixed `dt`, seed, window size, saved input, rounding allowances,
+boundaries, missing-input behavior, and anything that must be checked in the
+running app.
 
 ## Build and test
 
 Give exact Project Generator, native build, and no-window test commands for
-Linux, macOS, and Windows. Mark a lane unsupported rather than omitting it.
+Linux, macOS, and Windows. For other systems, say that the reader may need to
+adapt the build steps.
 
 ## Starter, tests, fixtures, and solution
 
@@ -31,13 +33,13 @@ Linux, macOS, and Windows. Mark a lane unsupported rather than omitting it.
 - [`solution/`](solution/) contains the instructional reference solution and
   explanation; it is not a composition learners must imitate.
 
-## Manual visual and originality review
+## Check the picture yourself
 
 Check input/output legibility, resize, reset, pause/reduced motion, non-pointer
 controls, contrast, non-color cues, meaningful differences from examples, and
 credits/licenses.
 
-## Reflection
+## Optional notes for future you
 
-Request one accessible capture and a short connection among code, mathematics,
-and visual behavior.
+Suggest an accessible capture and a short note connecting code, mathematics,
+and visible behavior.

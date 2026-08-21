@@ -1,31 +1,25 @@
-# Study capture and mechanism explanation
+# One picture and a short note
 
-## Capture record
+Use this page if it helps you remember a study. Short answers are enough.
 
-- Study and commit/archive identifier:
-- OS, compiler, openFrameworks version, and renderer:
-- Viewport and pixel density:
-- Seed or replay fixture:
-- Model checkpoint or elapsed fixed steps:
-- Controls used:
-- Reduced-motion or paused state:
-- Capture filename:
-- Alt text: Describe structure, ordering or motion cue, interaction state, and evidence without relying on color names alone.
-- Visible caption:
+## Picture
 
-## Explanation
+- Filename:
+- Window size, if it matters:
+- Seed or saved input, if used:
+- Controls or paused/reduced-motion state shown:
+- Alt text: Describe the shapes, layout, ordering or motion cue, and interaction state
+  without relying only on color names.
+- Optional visible caption:
 
-Write 80–120 words below. Cover the mechanism pair, deterministic evidence,
-composition choice, and limitation. Do not include the heading or caption in
-the count; record the count only to confirm the range, not as an editing target.
+## Note for future you
 
-[80–120 words.]
+- How did the two techniques affect one shared visual rule?
+- What did your small repeatable check catch?
+- Which visual choice feels most important?
+- What remains unfinished or limited?
 
-Word-count method:
+## Credits
 
-## Credit and license check
-
-- Original code/assets:
-- Borrowed code/assets with creator, source, license, and changes:
-- Named precedents and transferable principles:
-- Capture license:
+List anything you borrowed with its creator, source, and license. If everything is yours,
+say so and choose a license for the image when you share it.

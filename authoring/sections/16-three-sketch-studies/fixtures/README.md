@@ -1,12 +1,12 @@
-# Section 16 evaluator fixtures
+# Section 16 study test fixtures
 
 Creator: Visual Sketches Bootcamp contributors. Origin: original, hand-authored
-course evaluator data. License: CC0-1.0; see
+course test data. License: CC0-1.0; see
 `../../../../LICENSES/CC0-1.0.txt`. Malformed input must fail before changing
 model state or indexing a row.
 
 These UTF-8, tab-separated fixtures use a header row, decimal points, `1` for
-true, and `0` for false. Evaluators must reject missing columns, extra columns,
+true, and `0` for false. Your fixture reader must reject missing columns, extra columns,
 non-finite numbers, non-positive capacities, and non-positive time steps with a
 clear diagnostic. Rows are sequential within a file; reset model state before
 the first data row. Do not use wall-clock time, framework randomness, or
@@ -23,4 +23,4 @@ rendered pixels.
 
 Compare fixture floats with absolute tolerance `0.0001`. A learner may add
 cases or a fixture for a different documented fixed step; preserve these rows
-as evaluator interoperability checks.
+as shared compatibility checks.

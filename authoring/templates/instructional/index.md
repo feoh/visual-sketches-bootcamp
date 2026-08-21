@@ -53,23 +53,22 @@ them on each supported platform.
 
 ## Break it on purpose
 
-Plant one focused failure. Tell the learner what evidence to inspect, not the
-answer.
+Plant one focused failure. Tell the learner what output or visible behavior to
+inspect, not the answer.
 
 ## Your turn
 
-State the visual behavior, learner-owned aesthetic choices, assessed concepts,
-public test interface, deterministic inputs, boundaries, and exact platform
-commands. Link the starter and tests source-file-relatively.
+State the visual behavior, open-ended design choices, main ideas, public test
+interface, repeatable inputs, boundaries, and exact platform commands. Link the starter and tests source-file-relatively.
 
 ## Check your work
 
 Cover a known case, a boundary, and a useful property in the deterministic
 model or geometry. Keep renderer appearance in the manual checklist.
 
-## Tell the story
+## Optional notes for future you
 
-Request an accessible capture and a short explanation connecting code,
+Suggest an accessible capture and a short explanation connecting code,
 mathematics, and visual behavior.
 
 ## Make it yours

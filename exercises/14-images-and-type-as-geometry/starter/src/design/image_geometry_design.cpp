@@ -21,7 +21,7 @@ bool imageGeometryDesignIsValid(const ImageGeometryDesign& design) {
            colorIsValid(design.background) && colorIsValid(design.ink);
 }
 
-// LEARNER DESIGN SEAM: change density, threshold, mark scale, motion, and palette.
+// CHANGE YOUR DESIGN HERE: density, darkness threshold, mark size, motion, and colors.
 // Keep values within imageGeometryDesignIsValid(); the pure model tests this seam.
 ImageGeometryDesign makeImageGeometryDesign() {
     return {{2, 150, true}, 2.2f, 18.0f, 1.2f,

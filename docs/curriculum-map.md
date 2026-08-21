@@ -8,10 +8,9 @@ draft: false
 
 ## Audience and outcome
 
-This is for a curious programmer who wants to make things move, not sit through a
-college syllabus in disguise. If you can edit text, run a command, and handle
-basic algebra—substitute values into a formula and solve something like
-`2x + 3 = 11`—you have enough math to start. Python experience is welcome but
+This is for a curious programmer who wants to make things move. If you can edit
+text, run a command, and handle basic algebra—substitute values into a formula
+and solve something like `2x + 3 = 11`—you have enough math to start. Python experience is welcome but
 not required; rusty C++ is fine too. Trigonometry is **not** a prerequisite.
 When circles need sine, cosine, or radians, we stop and teach those ideas from
 scratch with pictures and tiny examples.
@@ -36,12 +35,11 @@ circle wiggle. The calendar is a map, not a boss fight.
 
 These are optional ways to organize the material. The route names refer to
 weeks, not lesson counts: each one contains 19 ordered bundles including the
-first-C++ test interlude. The checked route file keeps the published order
-honest; it is not a homework tracker, gradebook, or request for learner data.
+first-C++ test interlude. The checked route file simply keeps the published pages in the intended order.
 
 | Route | Provisional schedule | Scope and consequence |
 |---|---|---|
-| Complete, about 18 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4–13: one of 03–12 each week; 14: 13; 15: 14; 16: 15; 17: section 16 studies; 18: section 17 capstone milestone sequence, with extra capstone weeks permitted | Includes every lesson. Take extra time for the capstone whenever you want; unfinished sketches are allowed to remain unfinished for a while. |
+| Complete, about 18 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4–13: one of 03–12 each week; 14: 13; 15: 14; 16: 15; 17: section 16 studies; 18: begin section 17, with as much extra capstone time as you want | Includes every lesson. Take extra time for the capstone whenever you want; unfinished sketches are allowed to remain unfinished for a while. |
 | Core, about 12 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4: 03–04; 5: 05–06; 6: 07–08; 7: 09–10; 8: 11; 9: 12; 10: section 16; 11–12: section 17 | Omits extensions 13–15. Pair sections only when that still feels fun; otherwise stretch the route. |
 | Accelerated, 8+2 weeks | 1: 00–01; 2: 02 + test interlude; 3: 03–04; 4: 05–06; 5: 07–08; 6: 09–10; 7: 11; 8: 12; synthesis weeks 1–2: sections 16–17 | Omits 13–15. This is a fast tour, not a race; extend it rather than skipping the parts that make the sketch understandable. |
 
@@ -54,10 +52,9 @@ microphone amplitude with no-device fallback.
 
 ## The rhythm of a lesson
 
-Sections 00–15 follow a friendly repeatable rhythm. We may combine steps when
-that keeps the creative momentum moving; nobody gets extra points for obeying a
-syllabus-shaped box. The synthesis projects (16–17) use a separate project
-brief.
+Sections 00–15 follow a friendly repeatable rhythm. We may combine or skip steps
+when that keeps the creative momentum moving. The larger projects in sections
+16–17 use a looser path.
 
 1. **See it:** a short visual goal and an animated or still reference.
 2. **Take a guess:** predict what a tiny piece of code will draw or how it will move.
@@ -66,11 +63,12 @@ brief.
 5. **Break it on purpose:** repair one planted bug or misleading implementation.
 6. **Your turn:** a constrained but open-ended C++ sketch.
 7. **Check your work:** supplied tests for deterministic behavior and edge cases.
-8. **Tell the story:** a capture plus a short explanation connecting code, math, and image.
+8. **Notes for later:** optionally save a capture or short explanation connecting code,
+   math, and image.
 9. **Make it yours:** an optional variation that reuses earlier ideas.
 
-The training wheels fade gradually: complete example → completion problem →
-constrained remix → open brief.
+The guidance gradually opens up: complete example → small gap → constrained remix →
+open brief.
 
 ## Part 0 — Get something on screen
 
@@ -106,7 +104,7 @@ constrained remix → open brief.
 
 **Visual goal:** generate a row of related moving forms without duplicating code.
 
-**Primary assessed C++ mechanism:** decompose repeated drawing into functions operating on a `std::vector` of values. Supporting reading knowledge covers parameters/returns, `const`, references seen in APIs, range loops, scoped value lifetime, and why the course avoids `new`/`delete`; these are not all independently assessed here.
+**Main C++ idea:** break repeated drawing into functions that work with a `std::vector` of values. You will also encounter parameters and return values, `const`, references in APIs, range loops, and local variable lifetime. The course avoids `new` and `delete`; you do not need to master every supporting term in this lesson.
 
 **Math:** indexed ranges and normalized progress from 0 to 1.
 
@@ -118,7 +116,7 @@ constrained remix → open brief.
 
 **Goal:** make the exercise harness part of the learner’s vocabulary before tests become an unexplained ritual.
 
-Run one `ofxUnitTests`/`ofAppNoWindow` executable, repair one failed assertion, write one known-case test, and use the course’s approximate-floating-point helper. Explain test source versus sketch source, test executable linking, arrange/act/assert, fixtures, and why renderer output is usually outside this test layer. By Part 2, you will have authored at least one meaningful property or invariant test.
+Run one `ofxUnitTests`/`ofAppNoWindow` program, repair one failed check, write one known-answer test, and use the course helper for comparing calculated decimal values. Learn which file holds the test, how inputs/call/answer form one check, and why a number-only test cannot judge the finished picture. Later lessons introduce more kinds of tests when they become useful.
 
 ## Part 1 — Make motion mean something
 
@@ -188,7 +186,7 @@ Run one `ofxUnitTests`/`ofAppNoWindow` executable, repair one failed assertion, 
 
 **Visual goal:** turn pointer motion into a responsive, calligraphic line.
 
-**Primary assessed C++ mechanism:** maintain a bounded vector of sampled points while keeping input sampling, model processing, and rendering separate. A small class is optional refactoring rather than a second assessment target.
+**Main C++ idea:** keep a size-limited vector of sampled points, while separating input collection, point calculations, and drawing. You may move that work into a small class if it helps; it is optional.
 
 **Primary math model:** arc-length sampling from point distance. Velocity, exponential smoothing, and turning angle are introduced as small derived measurements used by the visual mapping.
 
@@ -289,10 +287,9 @@ single-atomic latest-value mailbox for the callback boundary, and graceful
 permission/device failure without retaining audio.
 
 **Exercise:** build a small amplitude-responsive instrument with keyboard,
-recorded-input, and no-device routes. A five-second viewer observation belongs
-to a local practice run; an author technical smoke check covers visible labels,
-monotonic mapping, fallback operation, and non-color cues. Live input is an
-optional extra, not a requirement.
+recorded-input, and no-device routes. Check visible labels, a clear quiet-to-loud
+mapping, fallback operation, and non-color cues yourself. Live input is
+optional.
 
 **Tests:** smoothing, dead zone, deterministic recorded input, explicit
 no-device fallback, bounded output, and reset behavior.
@@ -307,7 +304,9 @@ Create three compact studies, each combining two technique families:
 2. **repetition + oscillation or transforms**; and
 3. **particles + forces or flow**.
 
-Each study gets one weeknight-sized constraint, one automated model test, one capture, and an 80–120-word explanation. At least one must use a visual grammar substantially different from the worked examples.
+Each study stays small enough for one focused sitting. A small model test, a
+capture, and a short note can make an interesting study easier to revisit. Try at
+least one visual structure that differs substantially from the worked examples.
 
 ### 17. Project: an original visual instrument
 
@@ -317,26 +316,28 @@ Create one coherent sketch that:
 - deepens exactly one area rather than adding every available feature;
 - has deterministic/replayable core behavior where practical;
 - handles resize, reset, missing assets/devices, and varying frame time;
-- includes source, build notes, controls, credits/licenses, captures, and test results; and
-- passes a mechanism-level originality review: name the precedent, state the transferable principle, document code/assets and licenses, and explain at least three deliberate changes among geometry, density, palette, input, mapping, interaction, motion, or temporal behavior. A confusingly similar still is one warning, not the entire test.
+- keeps source, build commands, controls, and credits/licenses together; optional
+  capture and test notes can help you revisit or share it; and
+- changes the structure or behavior—not only the palette—from important influences, which are named and credited.
 
 Suggested directions include a calligraphic flow instrument, a typographic spring system, a temporal portrait of an everyday object, a sound-reactive contour field, or a small 3D kinetic poem.
 
-Unlike instructional exercises, the capstone has no canonical finished solution. It provides divergent partial process exemplars, architectural patterns, evaluator fixtures, and rubric examples so the course does not anchor the learner to one polished answer.
+Unlike instructional exercises, the capstone has no canonical finished solution. It provides unfinished process directions, a suggested code structure, and saved test examples without anchoring the learner to one polished answer.
 
 ## Things worth saving
 
 1. **Foundations diptych:** two vector/motion studies.
 2. **Generative edition:** six to twelve seeded outputs and a contact sheet.
 3. **Interactive instrument:** discoverable controls and a one-minute capture.
-4. **Capstone:** finished source, process note, test summary, and known limitations.
+4. **Capstone:** finished source, plus any process notes, test results, and known
+   limitations that will help you revisit or share it.
 5. **Variant challenge:** change one constraint live, predict the result, revise, and explain.
 
 ## Not on today's menu
 
 The bootcamp does not front-load manual memory management, template authoring,
 inheritance design, move-semantics theory, concurrency, custom allocators,
-formal calculus, hand-derived matrix multiplication, machine-learning training,
+calculus, hand-derived matrix multiplication, machine-learning training,
 or custom shaders. It also does not expect trig knowledge at the door: section
 05 introduces the circle vocabulary it needs. Shaders and addons appear only
 when a sketch creates a concrete need and the prerequisite CPU-side model is

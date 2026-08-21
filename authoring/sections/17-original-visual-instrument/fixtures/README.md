@@ -1,7 +1,7 @@
-# Section 17 evaluator fixture contract
+# Section 17 replay test fixtures
 
 Creator: Visual Sketches Bootcamp contributors. Origin: original, hand-authored
-course evaluator data. License: CC0-1.0; see
+course test data. License: CC0-1.0; see
 `../../../../LICENSES/CC0-1.0.txt`. Malformed input must fail before changing
 adapter/model state or indexing a row.
 
@@ -28,13 +28,13 @@ seconds, maximum accepted frame delta `0.05` seconds, and at most five catch-up
 steps per frame. Compare accumulator values with absolute tolerance `0.000001`.
 Partitions A and B represent equal elapsed accepted time and both produce ten
 steps. `SPIKE` proves `0.2` is clamped before stepping and produces five steps.
-A project may add different production constants but must retain this fixture
-as a small accumulator-unit contract.
+Keep this small common check even if your project uses different production constants.
+Add a project-specific case separately when your values differ.
 
 ## `failure-cases.tsv`
 
-Each row specifies an abstract failure and observable minimum outcome. Replace
-placeholder input with a project-relevant path, adapter, or parser case. If a
-capstone truly has no asset or device adapter, report `NOT_APPLICABLE` and the
-architectural reason; do not claim a fake passing exercise. Status text must be
-inspectable and visible in the graphical adapter.
+Each row suggests a failure worth trying. Replace placeholder asset or device input with
+a case that matters to your sketch; skip only `missing_asset` or `missing_device` when
+that input type does not exist. Keep the malformed-replay, tiny-viewport, and
+nonfinite-time cases for every project. Show a short, visible status instead of crashing
+or silently continuing.

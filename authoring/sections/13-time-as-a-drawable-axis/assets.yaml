@@ -6,4 +6,4 @@ assets:
     source: original
     license: CC-BY-4.0
     alt: Twenty vertical time slices cross a navy field; newest amber circles begin high at the left, progressively older mint circles descend and fade to the right, and horizontal ticks plus NOW and THEN labels communicate age without color.
-    caption: A bounded history turns horizontal position into age zero through the oldest retained sample.
+    caption: A limited history turns horizontal position into ages from the newest through the oldest saved sample.

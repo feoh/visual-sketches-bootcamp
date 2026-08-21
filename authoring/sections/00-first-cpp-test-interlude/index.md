@@ -7,7 +7,7 @@ course_kind: instructional
 objectives:
   - Trace the no-window test executable from setup through process exit
   - Read one failure using arrange, act, and assert
-  - Repair one focused assertion and author one independent deterministic known case
+  - Repair one focused assertion and author one independent repeatable known case
   - Compare floating-point results with explicit absolute and relative tolerances
   - Explain why renderer pixels and visual quality stay outside headless model tests
 prerequisites:
@@ -25,10 +25,10 @@ A test is a small causal story, not a wall of assertions.
 
 ![Arrange fixes seed 17 and a 640 by 480 viewport, act calls makeModel, and assert compares x position 0.6848907471 within tolerance.](media/test-flow.svg "Arrange, act, assert test flow")
 
-*A useful test separates fixed inputs, one behavior, and an observable claim.*
+*A useful test separates fixed inputs, one action, and one answer you can check.*
 
-The diagram is static, contains no audio, and needs no motion alternative. Its
-labels and left-to-right arrows carry the sequence without relying on color.
+The diagram is static, contains no audio, and needs no motion alternative. Its labels
+and left-to-right arrows carry the sequence without relying on color.
 
 ## Take a guess
 
@@ -38,70 +38,68 @@ Read the final line of `foundation/unit/src/main.cpp`:
 return ofRunMainLoop();
 ```
 
-Predict what a shell sees when every assertion passes and when one assertion
-fails. Then predict why replacing that line with `ofRunMainLoop(); return 0;`
-would make a red suite look green to automation.
+Predict what a shell sees when every assertion passes and when one assertion fails. Then
+predict why replacing that line with `ofRunMainLoop(); return 0;` would make a red suite look green to
+automation.
 
 ## Let's unpack it
 
-### The executable lifecycle
+### Before the testing vocabulary
 
-The repository uses the `ofxUnitTests` addon shipped in openFrameworks 0.12.1.
-Its pinned [`ofxUnitTests.h` implementation](https://github.com/openframeworks/openFrameworks/blob/0.12.1/addons/ofxUnitTests/src/ofxUnitTests.h)
-is the source of truth for the test app behavior below. Read `main()` from top
-to bottom:
+A test is just a small program that asks your code a question and complains when the
+answer is wrong. For example: “When the seed is 17 and the window is this size, does the
+model put the mark at the position we already worked out?”
 
-```cpp
-ofInit();
-auto window = std::make_shared<ofAppNoWindow>();
-auto app = std::make_shared<FoundationTests>();
-ofRunApp(window, app);
-return ofRunMainLoop();
-```
+Most tests in this course follow three ordinary steps:
 
-[`ofAppNoWindow`](https://github.com/openframeworks/openFrameworks/blob/0.12.1/libs/openFrameworks/app/ofAppNoWindow.h)
-provides an application target without creating a drawing window. In the
-pinned [`ofAppRunner.cpp`](https://github.com/openframeworks/openFrameworks/blob/0.12.1/libs/openFrameworks/app/ofAppRunner.cpp),
-the two-argument `ofRunApp` delegates to the main loop's `run(window, app)`.
-The pinned [`ofMainLoop.cpp`](https://github.com/openframeworks/openFrameworks/blob/0.12.1/libs/openFrameworks/app/ofMainLoop.cpp)
-shows what happens next: `run` registers app callbacks and, when there is no
-window-owned loop, synchronously calls `notifySetup()` before `ofRunApp`
-returns. That setup call runs `FoundationTests::run()`, prints the summary, and
-calls `ofExit(numTestsFailed)`, which records close status. Thus the tests and
-exit request happen *inside* the `ofRunApp` call, not later in
-`ofRunMainLoop()`.
+1. make the input values;
+2. run one function; and
+3. compare the answer with what you expected.
 
-After `ofRunApp` returns, `ofRunMainLoop()` enters `ofMainLoop::loop()`. It
-observes the already-requested close, performs exit notification and listener
-cleanup, and returns the recorded status. Returning that value from `main()` is
-the bridge from a failed C++ test to a failed shell or CI job. Compilation and
-execution are separate proof: a test binary can compile and still return
-failure.
+Test writers call those steps **arrange, act, assert**. The name is less important than
+the habit: keep each question small enough that a failure tells you what to look at.
 
-### Which source files become each executable
+The course also uses the word **fixture** for a saved test example: fixed input values
+and, when useful, the answer you expect. It is just a reusable example, not a new kind
+of mathematics.
 
-A compiler translates each `.cpp` file separately, then the linker combines
-those translation units into one executable. Headers such as `expect_near.h`
-are included by a `.cpp`; they are not separate translation units here.
+### How a failed test reaches the terminal
 
-| Executable | Translation units owned by this repository | Who owns `main()` |
+You do not need to memorize the framework's internal call order. The practical chain is
+short:
+
+1. the test runs and counts failures;
+2. it asks the app to exit with that failure count;
+3. the main loop returns the count; and
+4. `main()` returns it to the shell.
+
+Zero means all tests passed. A number above zero tells the shell that something failed. A test program can compile successfully and still fail when it runs.
+
+This course uses openFrameworks' [`ofxUnitTests`](https://github.com/openframeworks/openFrameworks/blob/0.12.1/addons/ofxUnitTests/src/ofxUnitTests.h) with an
+[`ofAppNoWindow`](https://github.com/openframeworks/openFrameworks/blob/0.12.1/libs/openFrameworks/app/ofAppNoWindow.h) target. If you are curious about the framework plumbing, the pinned
+[`ofAppRunner.cpp`](https://github.com/openframeworks/openFrameworks/blob/0.12.1/libs/openFrameworks/app/ofAppRunner.cpp) and
+[`ofMainLoop.cpp`](https://github.com/openframeworks/openFrameworks/blob/0.12.1/libs/openFrameworks/app/ofMainLoop.cpp) show how that exit number travels back to `main()`.
+
+### Which files go into each test program
+
+The compiler handles each `.cpp` file, then the linker joins the compiled pieces
+into one program. A header such as `expect_near.h` is included by a `.cpp` file;
+it does not become a separate compiled piece.
+
+| Test program | Source files from this repository | Where the program starts |
 |---|---|---|
-| Portable starter contract | `shared/core/course_probe.cpp`; `exercises/00-first-cpp-test/starter/learner_known_case.cpp`; `exercises/00-first-cpp-test/tests/learner_known_case_test.cpp` | The public contract test |
-| Portable solution contract | `shared/core/course_probe.cpp`; `exercises/00-first-cpp-test/solution/learner_known_case.cpp`; `exercises/00-first-cpp-test/tests/learner_known_case_test.cpp` | The same public contract test |
-| Native foundation unit | `foundation/unit/src/main.cpp`; the intentionally empty template adapters `foundation/unit/src/ofApp.cpp` and `ofApp.h`; `shared/core/course_probe.cpp` (plus openFrameworks and `ofxUnitTests` library sources selected by generated native metadata) | `foundation/unit/src/main.cpp` |
+| Small starter test | `shared/core/course_probe.cpp`; `exercises/00-first-cpp-test/starter/learner_known_case.cpp`; `exercises/00-first-cpp-test/tests/learner_known_case_test.cpp` | the test runner's `main()` |
+| Small solution test | `shared/core/course_probe.cpp`; `exercises/00-first-cpp-test/solution/learner_known_case.cpp`; `exercises/00-first-cpp-test/tests/learner_known_case_test.cpp` | the same test runner's `main()` |
+| openFrameworks no-window test | `foundation/unit/src/main.cpp`; the intentionally empty `foundation/unit/src/ofApp.cpp` and `ofApp.h`; `shared/core/course_probe.cpp`; plus openFrameworks and `ofxUnitTests` files chosen by Project Generator | `foundation/unit/src/main.cpp` |
 
-Only `.cpp` entries above are translation units; the unit `ofApp.h` is listed
-to explain its tracked template-adapter role. The windowed sketch's
-`foundation/windowed/src/main.cpp` and `ofApp.cpp` are
-intentionally omitted from both test executables. The former would introduce a
-second `main()` symbol, and the latter contains graphical callbacks that the
-headless model contract neither needs nor proves. Shared model behavior reaches
-both executables through `course_probe.cpp` instead.
+The windowed sketch's `foundation/windowed/src/main.cpp` and `ofApp.cpp` stay out of these test programs.
+The first would add a second `main()` and the second contains drawing callbacks
+the number-based test does not need. Both test programs reach the shared calculation
+through `course_probe.cpp`.
 
 ### Arrange, act, assert
 
-Use comments only when they clarify the roles; the values matter more than the
-labels:
+Use comments only when they clarify the roles; the values matter more than the labels:
 
 ```cpp
 // Arrange: fixed input and an independently reviewed expected value.
@@ -112,52 +110,52 @@ const float expectedX = 0.6848907471f;
 // Act: one behavior.
 const course::Model actual = course::makeModel(seed, viewport);
 
-// Assert: one observable claim with a useful diagnostic.
+// Assert: check one answer and show a useful failure message.
 const auto near = course::test::expectNear(actual.position.x, expectedX,
                                            1e-5, 1e-6);
 ofxTest(near.passed, "known seed produces reviewed x", near.message);
 ```
 
-A fixture is reusable arranged state. `DeterministicFixture` owns the course's
-fixed seed, viewport, input, and time step and supplies `freshModel()`. It does
-not make expected results independent automatically. If expected values are
-computed by calling the same function under test, the assertion merely agrees
-with itself. A known-case fixture records a value that you calculated,
-observed once, and reviewed.
+A fixture is a reusable saved example. The `DeterministicFixture` class stores the seed,
+window size, input, and time step and can make a fresh model from them.
 
-### Approximate floating-point comparisons
+Work out the expected answer separately. If the test asks the same function for both the
+actual and expected answer, the function can agree with its own mistake. In this lesson,
+we simply call it the **expected answer**: a number you calculated or reviewed another
+way.
 
-Binary floating-point values do not generally follow decimal arithmetic as if
-they were exact real numbers; the broader environment is described in the
-[C++ floating-point reference](https://en.cppreference.com/w/cpp/types/fenv.html).
-This course's helper accepts both absolute and relative tolerances:
+### Compare decimal answers with a little room
 
-```text
-difference = |actual - expected|
-allowed = max(absTol, relTol × max(|actual|, |expected|))
-pass exactly when difference ≤ allowed
-```
+Computers cannot store every decimal exactly. A calculation that should look like `0.3`
+may end up a tiny amount above or below it. The [C++ floating-point reference](https://en.cppreference.com/w/cpp/types/fenv.html) has the formal details; you
+do not need them for this exercise.
 
-For `actual = 0.684891`, `expected = 0.684890`, `absTol = 0.00001`, and
-`relTol = 0.000001`, the difference is `0.000001` and the allowed error is
-`0.00001`, so the assertion passes. Absolute tolerance protects values near
-zero; relative tolerance scales with magnitude. Choose tolerances from the
-behavior's precision needs, not merely to silence a failure. Exact equality is
-still appropriate for integer counts and deliberately exact state.
+Suppose the test gets `0.684891` and your separately worked answer is `0.684890`. The
+difference is `0.000001`. If the allowed error is `0.00001`, the test passes because the
+difference is smaller than the allowance.
 
-### What headless tests do not prove
+The helper combines two allowances:
 
-The no-window suite can test model values, deterministic transitions, bounds,
-and diagnostics. It does not create a graphics context or inspect `draw()`.
-Pixels vary with renderer, GPU, driver, fonts, antialiasing, and color
-management; more importantly, a matching screenshot cannot prove legibility,
-meaning, originality, or accessibility. This interlude therefore adds no pixel
-gate. Rendering remains a manual launch and review concern, while deterministic
-model tests remain fast and actionable.
+- `absTol` is a small fixed allowance, useful near zero; and
+- `relTol` grows with larger numbers.
+
+It uses whichever allowance is larger. Choose these values from how precise the behavior
+needs to be, not merely to silence a failure. Whole-number counts and deliberately exact
+state can still use exact equality.
+
+### What a no-window test cannot tell you
+
+A no-window test can check saved numbers, reset behavior, boundaries, and useful error
+messages. It never opens the app or sees `draw()`.
+
+Pictures vary slightly across graphics cards, drivers, fonts, and displays. More
+importantly, a matching screenshot cannot tell you whether an image is meaningful,
+readable, original, or accessible. Use fast number-based tests for calculations, then
+open the app and judge the visual result yourself.
 
 ## Make it run
 
-### Example 1: run the portable learner contract
+### Example 1: run the small test without openFrameworks
 
 ```sh
 for variant in starter solution; do
@@ -174,14 +172,9 @@ foreach ($variant in @("starter", "solution")) {
 }
 ```
 
-Each variant compiles its known-case test with the same course model, tolerance
-helper, and public contract. The contract checks behavior rather than source
-text: each test must accept the real model and reject the same injected
-one-pixel mutation. It is compiled with `NDEBUG` and uses explicit conditionals,
-`std::cerr` diagnostics, and nonzero returns instead of disabled `assert`
-macros. A real-model failure prints `real.message`; an accepted or unexplained
-mutation prints its mutation diagnostic. The public contract embeds no solution
-seed or coordinates.
+Each variant runs the same small calculation with the same comparison helper. The real
+model must pass, while an intentionally changed one-pixel answer must fail. That proves
+the test can catch the mistake instead of merely printing a green message.
 
 ### Example 2: run the real no-window executable
 
@@ -201,18 +194,16 @@ In Windows Developer PowerShell:
 .\scripts\foundation.ps1 test -Project unit -Configuration Release
 ```
 
-The strict wrapper requires process status zero and exactly one `12/12 tests
-passed` summary. The tracked foundation harness—not this exercise—owns Project
-Generator metadata and the native executable. Its commit-addressed
-[three-platform evidence](../../../docs/foundation-harness-evidence.md)
-records Linux, macOS, and Windows build and runtime statuses. Reuse avoids a
-second, pedagogically identical native project. A local run proves only its
-host and commit state.
+A successful run returns zero and prints one `12/12 tests passed` summary. The existing
+foundation test app is reused here so you do not have to maintain a second identical
+native project. The [three-platform build notes](../../../docs/foundation-harness-evidence.md) describe
+the Linux, macOS, and Windows setups used for the course. Your local run checks only your
+current machine and code.
 
 ## Break it on purpose
 
-Keep the tracked branch green by applying this change only temporarily. In
-`foundation/unit/src/main.cpp`, find the seeded viewport assertion and replace:
+Make this change only long enough to see the failure, then repair it. In
+`foundation/unit/src/main.cpp`, find the seeded viewport check and replace:
 
 ```cpp
 first.position.x >= 0.0f
@@ -224,103 +215,77 @@ with the deliberately wrong assertion:
 first.position.x < 0.0f
 ```
 
-Build and run the Release unit executable with the commands above. Read the
-named failure and nonzero wrapper result. Repair it to `>= 0.0f`, rerun, and
-require `12/12 tests passed`. If this is your only intended edit, this exact
-command restores the tracked file:
+Build and run the Release unit executable with the commands above. Read the named
+failure and nonzero wrapper result. Repair it to `>= 0.0f`, rerun, and require
+`12/12 tests passed`. If this is your only intended edit, this command restores the
+file:
 
 ```sh
 git restore -- foundation/unit/src/main.cpp
 ```
 
-It discards every uncommitted change in that file, so inspect `git diff` first.
-Do not commit the broken assertion.
+It discards every uncommitted change in that file, so inspect `git diff` first. Finish
+with the repaired check in place.
 
 ## Your turn
 
-Open the [exercise brief](../../../exercises/00-first-cpp-test/README.md).
-Edit only `starter/learner_known_case.cpp`. Use this concrete observe-review-
-freeze workflow:
+Open the [exercise brief](../../../exercises/00-first-cpp-test/README.md) and edit only
+`starter/learner_known_case.cpp`.
 
-1. Choose a fixed seed and positive finite viewport, but do not change the four
-   expected values yet.
-2. Immediately after the one `actual` model call, temporarily add
-   `std::cerr << actual.position.x << ' ' << actual.position.y << ' ' <<
-   actual.velocity.x << ' ' << actual.velocity.y << '\n';` and add
-   `#include <iostream>`.
-3. Run `tests/run-first-cpp-test.sh starter` (or the PowerShell command). The
-   old oracle may fail; copy all four printed values into notes labeled
-   `position.x`, `position.y`, `velocity.x`, and `velocity.y`.
-4. Review that each value is finite, position lies in the chosen viewport, and
-   velocity is plausible for the model's documented speed range. Rerun once
-   with the same seed and confirm all four values repeat exactly.
-5. Only then replace the four expected constants and remove the temporary
-   print/include. Run both compiler commands until the starter is green and its
-   mutation diagnostic names a numerical difference.
+1. Choose a fixed seed and an ordinary positive window size. Leave the four expected
+   answers alone for the moment.
+2. Immediately after the one call that creates `actual`, temporarily print its position
+   and velocity. The exercise brief shows the exact line to add.
+3. Run the starter test. Copy the four printed numbers into clearly labeled notes.
+4. Check that the position is inside your chosen window and the speed looks reasonable.
+   Run again with the same seed and confirm the numbers repeat.
+5. Put those reviewed numbers into the four expected-value slots, then remove the
+   temporary print and include. Run the test again.
 
-This freezes observed-and-reviewed values rather than computing the oracle by
-calling the implementation during arrangement. Keep one call through the
-injected model factory as the act step and approximate comparisons in the
-assert step. Then translate one coordinate into the `ofxTest` shape shown above
-on paper or in your notes; do not add a thirteenth foundation test during this
-focused exercise.
+Why not ask the model to calculate its own expected answer inside the test? Because the
+same mistake could appear in both places and quietly agree with itself. Saving one
+reviewed answer gives the test something independent to compare against.
 
-The tracked starter is already green so the repository and CI remain usable.
-Your task is to replace its example oracle with your own. The explained
-solution uses a different seed and cannot be inferred from the public test.
+The runner tries your test with the real model and with a deliberately wrong version.
+The real one should pass; the wrong one should produce a useful numerical message. The
+explained solution uses a different seed, so it does not reveal your four answers.
 
 ## Check your work
 
-Run both available compiler variants and then the native foundation unit
-commands. The public contract requires the learner-authored test to accept the
-real model and reject a controlled wrong model while producing a diagnostic.
-The starter itself checks model seed and initial step count exactly and all four
-learner-authored expected floats with explicit tolerance. The existing native
-suite supplies known cases, invalid
-and boundary time cases, deterministic replay, and failure diagnostics.
-Neither suite inspects source formatting or pixels.
+Run the starter with both compiler commands, then run the foundation unit commands. Look
+for three things:
 
-Manual checks:
+- the assertion you repaired now accepts a position at or to the right of zero;
+- the real model matches the four reviewed numbers within the allowed rounding
+  difference; and
+- the deliberately wrong model fails with a message that shows the actual and expected
+  values.
 
-- The repaired assertion expresses the intended nonnegative lower bound.
-- Expected coordinates came from one deliberately reviewed run, not a call to
-  the injected model factory inside the arrange step.
-- A failing diagnostic names the assertion and prints actual, expected,
-  difference, and allowed error.
-- The no-window executable returns nonzero during the temporary failure and
-  zero after repair.
-- No generated metadata, screenshots, or red assertion remain tracked.
+These tests check calculations, not pictures. A failing run returns a nonzero number to
+the shell; a passing run returns zero.
 
-## Tell the story
+## Optional notes for future you
 
-In 90–130 words, trace `ofInit` → `ofRunApp` registration → synchronous
-`setup/run` and requested exit *inside `ofRunApp`* → `ofRunMainLoop` observing
-close, cleaning up, and returning status → `main` return. Name your arrange,
-act, and assert. Explain why your expected number is an independent oracle, why
-tolerance is appropriate for that float, and why a passing no-window test says
-nothing about rendered appearance. Include the temporary failing status and
-repaired result.
+Jot down the input you chose, the four expected numbers, and one failure message that
+helped. Also note that a no-window test can check arithmetic but cannot tell you whether
+a picture looks right.
 
-## Make it yours
+## One idea for later
 
-Add one more *note*, not code: propose a boundary or property test for
-`makeModel`. State which inputs vary, which invariant should hold, and whether
-exact or approximate comparison fits. Avoid testing several unrelated ideas in
-one assertion.
+Think of one edge case `makeModel` might need to handle—for example a very small window
+or a zero time step. You do not need to write that test now. If you do, keep it focused
+on one rule and use an approximate comparison for calculated decimal values.
 
 ## Quick visual check
 
-There is no visual submission and no pixel baseline for this interlude. Review
-terminal output for readable diagnostics; verify the reflection does not claim
-graphical, accessibility, macOS, or Windows evidence from a local Linux run;
-and credit any reused test logic. If you later capture terminal output, write
-alt text that states the failing assertion and key numeric diagnostic rather
-than saying only “test failure.”
+There is no picture to review in this interlude. Make sure the failure message names the
+value that differed and the final run is green. If you save a terminal screenshot, its
+alt text should mention the failed check and useful numbers rather than saying only
+“test failure.”
 
 ## If you get stuck
 
-A failed assertion is not a verdict on your programming career; it is a clue
-with unusually dramatic punctuation. Read the actual and expected values, fix
-one thing, and run the smallest test again. If the harness feels mysterious,
-return to arrange → act → assert and write down the one value you expect before
-running it.
+A failed assertion is not a verdict on your programming career; it is a clue with
+unusually dramatic punctuation. Read the actual and expected values, fix one thing, and
+run the smallest test again. If the harness feels mysterious, return to arrange → act →
+assert and write down the one value you expect before running it.

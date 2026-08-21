@@ -6,8 +6,9 @@ signature::Palette makePalette() {
 }
 
 signature::SignatureSpecs makeSignatureSpecs() {
-    // Each center and full size is normalized from 0 to 1. Keep five entries;
-    // change their kinds, positions, sizes, order, and color indices (0, 1, or 2).
+    // Positions and full sizes are percentages written as decimals from 0 to 1.
+    // Keep five entries. Change the shapes, positions, sizes, order, and color
+    // numbers (0 for the first palette color, 1 for the second, or 2 for the third).
     using signature::Point;
     using signature::PrimitiveKind;
     return {{{PrimitiveKind::circle, {0.20f, 0.50f}, {0.07f, 0.10f}, 0U},

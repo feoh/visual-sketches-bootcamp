@@ -1,3 +1,8 @@
 # Explained solution
 
-This solution uses seed `9001`, unlike the starter and unlike any value embedded in the public contract. It keeps arrangement separate, calls the injected model factory once, compares each float approximately, returns the first actionable diagnostic, and checks exact seed/count state exactly. It is one valid test, not a required oracle.
+## What this example checks
+
+This solution uses seed `9001`, which is different from the starter's saved
+examples. It makes the input values first, calls the supplied model function once,
+compares decimal answers with a small tolerance, and reports the first useful failure.
+It is one valid test, not the answer your test must copy.

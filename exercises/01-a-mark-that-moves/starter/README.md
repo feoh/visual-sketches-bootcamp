@@ -1,3 +1,8 @@
 # Starter
 
-Edit `src/design/traveler_design.cpp` and then the renderer in `src/ofApp.cpp`. Keep deterministic motion in `shared/traveler_model.*`; `draw()` should only translate inspectable state into graphics. See the parent exercise brief for controls, tests, and generated-project rules.
+1. Edit `src/design/traveler_design.cpp` to choose the motion values.
+2. Change the visible marks in `src/ofApp.cpp` after the model tests pass.
+3. Leave the time-step calculation in `shared/traveler_model.*`; `draw()` should
+   only turn its finished positions into graphics.
+
+See the parent exercise brief for commands and controls.

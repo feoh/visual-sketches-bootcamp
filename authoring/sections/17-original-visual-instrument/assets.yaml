@@ -6,7 +6,7 @@ assets:
     source: original
     license: CC-BY-4.0
     alt: A process diagram routes pointer knots through resampling into a sparse angular vector field and short offset echoes; a crossed-out dense field records an abandoned direction.
-    caption: Partial process exemplar A combines gesture, flow, and temporal memory; only gesture resampling is deepened, and a dense-field dead end remains visible.
+    caption: Unfinished direction A combines gesture, flow, and recent history. It explores gesture resampling; the crossed-out dense field shows an idea that was dropped.
   - id: typographic-spring-partial
     path: media/typographic-spring-partial.svg
     kind: image
@@ -14,7 +14,7 @@ assets:
     source: original
     license: CC-BY-4.0
     alt: A process diagram turns three licensed glyph outlines into spring-connected anchors and repeated offset frames, with collision and audio branches explicitly excluded.
-    caption: Partial process exemplar B combines type geometry, springs, and transforms; only spring response is deepened, while collision and audio are rejected scope.
+    caption: Unfinished direction B combines letter shapes, springs, and transforms. It explores spring response while deliberately leaving out collision and audio.
   - id: temporal-object-partial
     path: media/temporal-object-partial.svg
     kind: image
@@ -22,12 +22,12 @@ assets:
     source: original
     license: CC-BY-4.0
     alt: A process diagram samples an everyday-object silhouette into points, writes sparse states into a ring buffer, and selects seeded time slices; a camera path is replaced by a bundled still fallback.
-    caption: Partial process exemplar C combines image geometry, bounded temporal memory, and controlled chance; only history selection is deepened, with live camera capture deliberately removed.
+    caption: Unfinished direction C combines sampled image points, recent history, and seeded chance. It explores history selection and deliberately uses a still image instead of a live camera.
   - id: replay-boundary
     path: media/replay-boundary.svg
     kind: image
     creator: Visual Sketches Bootcamp
     source: original
     license: CC-BY-4.0
-    alt: A replay diagram shows live and fixture events entering the same normalized adapter, then fixed-step model, inspectable geometry, and renderer; reset returns model and adapter to recorded initial state.
-    caption: Replay contract: normalize once, advance with explicit fixed steps, inspect geometry before rendering, and make reset restore the recorded beginning.
+    alt: A replay diagram shows live and recorded controls entering the same input cleanup step, then a fixed-step model, shape data, and drawing; reset returns the input and model to their recorded beginning.
+    caption: Clean up input once, update in fixed time steps, check the shape data before drawing, and make reset return to the recorded beginning.

@@ -1,11 +1,11 @@
 # Checkpoint prompts
 
-These are small transfer checks, not exams. Try them without reopening the
-step-by-step lesson first; normal API references are fine. Record help honestly.
+These are optional remix prompts. Try one from memory if that sounds useful, and
+open the lesson or API references whenever you need them. Note which explanation
+or example helped you get unstuck.
 
-Confidence prompt before and after: “How confident am I that I could do a
-similar task without this lesson open?” Use 1 (no starting point) through 5
-(can adapt, verify, and explain it).
+If you like, jot down how the task felt before and after. Plain words such as
+“lost,” “finding my way,” or “ready to adapt it” are enough.
 
 ## After Unit 0
 
@@ -24,12 +24,9 @@ symbolically.
 
 ## Complete path
 
-Use section 17's plan, replay/failure/frame-time fixtures, evaluator report,
-process note, capture log, and credits templates. Name the precedent and
-transferable principle, show at least three deliberate changes, and deepen one
-mechanism. Record tests, failure handling, explanation, confidence, and known
-limitations—not an aesthetic score.
+Use one section 17 idea and its saved replay or frame-time example. Explore one
+mechanism more deeply and make the structure your own. Keep whichever optional
+plan, test note, capture note, or credits list will genuinely help you return to
+the project.
 
-After each checkpoint choose `continue`, `revise`, or `pause`. If the curriculum
-changes, record the new commit and do not compare it as though the material were
-unchanged.
+After each prompt, continue, revise, pause, or wander back to another sketch.

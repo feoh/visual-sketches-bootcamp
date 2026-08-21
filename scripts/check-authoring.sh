@@ -338,7 +338,7 @@ EOF
     grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/templates/model-test-contract.md' "$section16" || fail 'publication did not rewrite section 16 Markdown resource links'
     grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/fixtures/README.md' "$section16" || fail 'publication did not expose section 16 fixture provenance'
     grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/17-original-visual-instrument/fixtures/README.md' "$section17" || fail 'publication did not expose section 17 fixture provenance'
-    grep -Fq "href=\"${base_path}course/16-three-cumulative-sketch-studies/#supported-bootstrap-before-the-timer\"" "$section17" || fail 'publication did not resolve the section 17 sibling lesson link'
+    grep -Fq "href=\"${base_path}course/16-three-cumulative-sketch-studies/#reuse-three-working-starters\"" "$section17" || fail 'publication did not resolve the section 17 sibling lesson link'
     grep -Fq 'CC0-1.0' "$section16" || fail 'publication omitted section 16 fixture license notice'
     grep -Fq 'CC0-1.0' "$section17" || fail 'publication omitted section 17 fixture license notice'
     first_lesson=$(sed -n 's|.*<li><a href="\([^"]*\)".*|\1|p' "$publication/course/index.html" | head -n 1)

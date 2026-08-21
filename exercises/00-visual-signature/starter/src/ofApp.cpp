@@ -41,8 +41,8 @@ void ofApp::setup() {
 
 void ofApp::draw() {
     for (const signature::Primitive& primitive : primitives_) {
-        // Public tests reject invalid indices. Index 0 is a deterministic visual
-        // fallback if this app is launched before those tests are run.
+        // Tests reject invalid color numbers. Use the first color only as a safe
+        // drawing fallback if the app is opened before the tests are run.
         const std::size_t color_index = primitive.color_index < palette_.size()
                                             ? primitive.color_index
                                             : 0U;

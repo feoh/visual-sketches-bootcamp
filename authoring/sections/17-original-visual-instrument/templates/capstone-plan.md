@@ -1,48 +1,46 @@
-# Capstone plan
+# One-page capstone plan
 
-## Intent
+Use the prompts that help you start. Short answers and rough notes are fine.
 
-- One-sentence action → consequence → expressive range:
-- Intended audience/context:
-- Primary mapping a viewer should infer within five seconds:
-- Explicit non-goals:
+## What I want to make
 
-## Concept contract
+- When someone does this:
+- They will see this happen:
+- The useful or expressive range is:
+- Things I am deliberately leaving out:
 
-| Role | Earlier concept | Reused mechanism | Evidence |
-|---|---|---|---|
-| Deepened — exactly one | | | hypothesis, comparison, expected result |
-| Combined | | | checkpoint |
-| Combined | | | checkpoint |
-| Optional combined | | | checkpoint |
+## Ideas I am combining
 
-Why only the first row is deeper:
+Choose one earlier idea to explore more deeply. Keep the other ideas familiar enough
+that the project remains finishable.
 
-Features/APIs/algorithms deliberately excluded:
+| Role | Earlier idea | What I want to try |
+|---|---|---|
+| Deeper exploration — choose one | | |
+| Familiar idea I am combining | | |
+| Familiar idea I am combining | | |
+| Optional extra | | |
 
-## Input, time, and replay
+## Controls and saved input
 
-- Live input vocabulary and units:
-- Recorded event schema and version:
-- Seed and reset state:
-- Fixed step, maximum frame delta, and catch-up cap:
-- Project-specific fixture and checkpoint fields:
-- Floating-point comparison policy:
+- Main controls:
+- No-device or recorded-input route:
+- What reset returns to:
+- Seed, if I use one:
+- Fixed time step and slow-frame limit:
+- One saved case I can replay:
 
-## Bounds and failures
+## Limits and fallbacks
 
-- Model, geometry, history, and per-frame work caps:
-- Resize policy including tiny/zero viewport:
-- Missing asset behavior or reason not applicable:
-- Missing device behavior or reason not applicable:
-- Malformed replay and non-finite input behavior:
-- Visible statuses and fallback controls:
+- Maximum number of objects, saved points, or other repeated work:
+- What happens after resize or in a tiny window:
+- What happens when an asset is missing:
+- What happens when an optional device is unavailable:
+- Message shown for broken saved input:
 
-## Access and publication
+## Access and ingredients
 
-- Keyboard/replay equivalent:
 - Reduced-motion behavior:
-- Non-color cues and help/status text:
-- Camera/audio/privacy/consent statement:
-- Expected source and asset licenses:
-- Capture and transcript plan:
+- Shape, position, texture, or text cues that do not depend only on color:
+- Sound/camera/microphone use, privacy, and consent:
+- Code, images, fonts, audio, or other material I need to credit:

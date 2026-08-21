@@ -1,16 +1,16 @@
-# Model-test contract
+# One small repeatable check
 
 Copy this block once per study and replace every prompt.
 
-## Boundary
+## What you are checking
 
 - Pure function or model object:
 - Inputs and units:
-- Returned/inspectable state or geometry:
+- Returned values or shapes:
 - State deliberately kept in `ofApp`:
 - Fixture filename and schema version:
 
-## Determinism
+## What makes the result repeat
 
 - Seed, if any:
 - Initial state:
@@ -23,12 +23,12 @@ Copy this block once per study and replace every prompt.
 
 - Known case and expected result:
 - Boundary case and expected result:
-- Invariant or property:
-- Invalid input and transactional behavior:
+- Rule that should always remain true:
+- Bad input and what must remain unchanged:
 
-## Evidence
+## What happened
 
-- Headless test command:
-- Exact pass/fail summary:
+- No-window test command:
+- Concise test result:
 - What this test does not prove:
 - Manual graphical check:

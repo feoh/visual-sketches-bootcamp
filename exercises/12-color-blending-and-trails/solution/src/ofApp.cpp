@@ -131,7 +131,7 @@ void ofApp::draw() {
         ofSetColor(225, 232, 248);
         ofNoFill();
         ofDrawRectangle(origin_.x - 7.0f, origin_.y - 7.0f, 14.0f, 14.0f);
-        ofDrawBitmapString("crosses: palette A | diamonds: palette B | additive overlap | pointer/arrows move | P pause | R reset | M still", 12, 22);
+        ofDrawBitmapString("crosses: palette A | diamonds: palette B | additive overlap | pointer/arrows move | P pause | R reset | M no trails", 12, 22);
         ofPopStyle();
     }
 }

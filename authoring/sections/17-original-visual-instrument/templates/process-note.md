@@ -1,41 +1,43 @@
-# Visual-instrument process note
+# Optional project notebook
 
-## Intent and controls
+Use this if you want a readable story of the project for yourself or someone you share
+it with. A few sentences, screenshots, and links may be enough.
 
-State action → visible consequence → expressive range. Include the complete
-controls/status table and supported build/run commands.
+## What I wanted to happen
 
-## Concepts and exactly-one deepening
+Describe the main action and visible result. List the controls or link to the help view.
 
-Name at least three earlier concepts. Identify exactly one deepening, its
-hypothesis, the alternatives compared, evidence, and conclusion. Explain why
-all other concepts are disciplined reuse. List rejected extra features.
+## The one idea I explored more deeply
 
-## Precedents and structural changes
+What question did you try to answer? What did you compare, and what did you decide to
+keep? Mention the familiar ideas you combined without expanding them and anything you
+chose not to add.
 
-For each precedent, name creator, source, license, and transferable principle.
-Explain at least three deliberate changes among geometry, density, palette,
-input, mapping, interaction, motion, and temporal behavior. Describe two
-rejected thumbnail systems and why the selected system serves intent better.
+## Quick alternatives and influences
 
-## Architecture and deterministic evidence
+Save any rough alternatives that helped you choose a direction. Credit important
+influences with creator, source, and license, and say what useful principle you borrowed
+rather than only how the work looked.
 
-Describe adapter, model, geometry, and renderer boundaries; replay schema;
-seed; reset; resize; fixed step; frame clamp/cap; fixtures; tolerances; exact
-test commands/results; and project-specific deepening test. Separate automated
-claims from manual observations.
+## How the sketch works
 
-## Failure, access, and performance
+In your own words, describe the path from controls or saved input to model values,
+shapes, and drawing. Link the saved input and the small tests that helped. Include exact
+commands only when another person will need them.
 
-Report missing asset/device, malformed replay, tiny viewport, non-finite frame
-time, fallback, and visible status behavior. Describe reduced motion, keyboard
-or replay access, non-color cues, alt text/transcript, sound/camera/privacy,
-and remaining barriers. Report viewport, build, renderer, counts, measurement
-method, and observed median/worst update and draw times without claiming a
-portable threshold.
+## What happened when things went wrong
 
-## Credits, licenses, and limitations
+Note anything useful you learned from resize, reset, a missing asset or device, broken
+saved input, a slow frame, or a very small window. Describe the fallback a player sees.
+Performance measurements are optional unless performance was your deeper question.
 
-Link the complete inventory and notices. State licenses for your code, captures,
-and prose. Record known platform, device, numerical, visual, and accessibility
-limitations plus the next smallest experiment.
+## Access, privacy, and limits
+
+Record reduced motion, no-device or keyboard/replay access, non-color cues, alt text or
+transcripts you created, and any sound/camera/microphone privacy choices. Be honest about
+what remains difficult, inaccessible, platform-specific, or untested.
+
+## Credits and a next step
+
+Link the credit/license list. End with one limitation you accept for now or the next
+small experiment you might try later.

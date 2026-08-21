@@ -7,17 +7,16 @@
 **Checked route contract:** [`pilot/routes.tsv`](pilot/routes.tsv)
 **Optional notes:** [`pilot/README.md`](pilot/README.md)
 
-This file documents the machine-checked order of the published lessons. It is
-project bookkeeping, not an assignment. The route names describe suggested
-weeks, not required pacing, and the checked manifest lists 19 ordered bundles,
-including the first-C++ test interlude.
+This file documents the machine-checked order of the published lessons. The
+route names are only suggested ways to spread out the work. The checked file
+lists 19 ordered bundles, including the first-C++ test interlude.
 
 ## Current status
 
 The lessons, examples, tests, and optional routes are available to use. No
-reader report, timing study, or submission is required. Automated checks cover
-links, builds, and deterministic behavior; graphical appearance and live-device
-behavior are best inspected while you make your own sketches.
+extra records are needed. Automated checks cover links, builds, and repeatable
+behavior; appearance and live-device behavior are best inspected while you make
+your own sketches.
 
 ## What the optional notes are for
 
@@ -41,20 +40,19 @@ understand well enough to change.
 
 ## Optional checkpoints
 
-The prompts in [`pilot/checkpoints.md`](pilot/checkpoints.md) are small remix
-challenges, not exams:
+The prompts in [`pilot/checkpoints.md`](pilot/checkpoints.md) are optional remix
+ideas:
 
 1. after Unit 0, reconstruct setup and the first test;
 2. after Unit 2, combine seeded choice, local transforms, and gesture input in a
    new small sketch; and
-3. at the complete path, use the section 17 capstone evidence.
+3. near the end, revisit one section 17 idea with saved input.
 
 Try them when they sound fun. Skip them when another experiment has your
 attention. The route file remains the source of truth for published order.
 
 ## Route contract
 
-A named route is only a convenience for selecting required and optional lesson
-bundles. `complete-18` includes every bundle; `core-12` and
-`accelerated-8-plus-2` treat sections 13–15 as optional. None of these routes is
-a grade, certification, or promise about how fast a person should learn.
+A named route is only a convenient selection of lesson bundles. `complete-18`
+includes every bundle; `core-12` and `accelerated-8-plus-2` treat sections
+13–15 as optional. Move between routes or change the pace whenever that helps.

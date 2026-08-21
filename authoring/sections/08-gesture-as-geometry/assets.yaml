@@ -6,4 +6,4 @@ assets:
     license: CC-BY-4.0
     path: media/gesture-preview.svg
     alt: A sweeping, wavy blue-to-orange open path changes from a thick section to a narrow dashed section, with dark anchor dots and width differences making motion readable without color alone.
-    caption: "Sampled movement becomes width, turning color, and inspectable geometry."
+    caption: "Sampled movement changes the path's width, color, and shape."

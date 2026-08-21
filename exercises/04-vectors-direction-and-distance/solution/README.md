@@ -1,3 +1,12 @@
 # Explained solution
 
-This reference deliberately differs from the starter: a traveler reached by bounded unit-direction scaling becomes the apex region of a triangular constellation; two satellites use the perpendicular `(-unit.y, unit.x)`; four graduated marks reveal direction along the full connector. Satellite spread grows with distance and caps at 24 pixels. The shared model clamps all node centers to a 12-pixel inset; the starter target's 8-pixel half-extent plus half of its 4-pixel stroke occupies 10 pixels, leaving 2 pixels of margin. Use this to explain one approach, not as a target screenshot.
+## What this example tries
+
+This version turns the traveler into the point of a triangular constellation. Two side
+marks use the perpendicular direction `(-unit.y, unit.x)`, which is a quarter-turn from the
+main arrow. Four marks along the connector make its direction visible.
+
+The side
+spread grows with distance but stops at 24 pixels. Every center stays at least 12 pixels
+from the window edge. The largest target reaches 10 of those pixels after its outline is
+included, leaving a 2-pixel margin.

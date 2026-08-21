@@ -69,9 +69,9 @@ transcript remains required.
 
 ## Voice and math starting line
 
-Write to a smart beginner, not to a committee reviewing a syllabus. Basic
-algebra is the math prerequisite: substituting values, reading a graph, and
-solving small equations. Do not assume trigonometry or familiarity with names
+Write to a smart beginner who wants to make something. Basic algebra is the math
+starting point: substituting values, reading a graph, and solving small
+equations. Do not assume trigonometry or familiarity with names
 such as sine, cosine, radians, phase, or `atan2`; introduce each one before the
 learner needs it. Explain the picture and the useful intuition first, then show
 the formula and code. Define unavoidable jargon in the sentence where it
@@ -79,8 +79,8 @@ appears.
 
 Keep the voice conversational and encouraging. Prefer “let's try this” to
 “the learner shall implement this.” A small joke is welcome when it clarifies
-rather than distracts. The technical contract still needs to be precise, but
-it can sound like a helpful guide instead of a registrar's course catalog.
+rather than distracts. Technical instructions still need to be precise, but
+they should sound like help from a friendly guide.
 
 ## Definition of done: instructional section
 
@@ -94,9 +94,10 @@ An instructional section is **written and ready to try** when it has:
 - two or three runnable examples and one deliberate repair task;
 - a starter, deterministic tests, fixtures where needed, and an explained
   instructional reference solution;
-- exact supported platform commands and honest unsupported labels;
-- known-case, boundary, and property tests plus a manual visual/originality
-  checklist;
+- exact commands for the checked platforms and friendly guidance for adapting
+  them elsewhere;
+- known-case, boundary, and property tests plus a practical visual and access
+  self-check;
 - complete source and asset records; and
 - a short troubleshooting note that points the reader toward the smallest
   useful example, test, or number to inspect when something goes sideways.
@@ -105,14 +106,14 @@ A section is ready when a reader can follow it, make a sketch, and recover from
 ordinary mistakes without filling out a research form. Automated checks verify
 the code and links; the reader's own visual choices remain their business.
 
-## Definition of done: synthesis project
+## Ready-to-use synthesis project
 
-A synthesis project is done only when it has a brief, milestones, deterministic
-evaluator fixtures, technical/creative/originality rubric, accessibility and
-license expectations, capture/process-note templates, and multiple visually
-divergent partial exemplars. It deliberately has no canonical finished
-solution. Evaluation checks the learner's intent and transferable mechanisms,
-not resemblance to one reference image.
+A synthesis project is ready when it offers a clear aim, gentle scope limits,
+repeatable example inputs, accessibility and license guidance, lightweight
+optional note templates, and several visibly different unfinished examples. It
+has no official finished solution. Its self-checks help the reader understand
+their own intent and reusable techniques rather than imitate one reference
+image.
 
 ## Checks
 

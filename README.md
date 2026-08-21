@@ -1,41 +1,54 @@
-# visual-sketches-bootcamp
+# Visual Sketches Bootcamp
 
-A visual-first, learn-by-making guide to creating expressive images and animations with [openFrameworks](https://openframeworks.cc/). We teach the C++ and math we need as we go, without turning the course into a tour of every dusty corner of either subject.
+Make expressive images and animations with
+[openFrameworks](https://openframeworks.cc/) while learning the C++ and math you
+need along the way. The course starts with a still image, then adds motion,
+gestures, repeated forms, particles, flow, trails, images, and optional sound
+input.
 
-The math starting line is **basic algebra**: plugging numbers into a formula and solving simple equations such as `2x + 3 = 11`. You do **not** need to know trigonometry, sine, cosine, radians, or any other math that sounds like it belongs on a haunted chalkboard. When a sketch needs those ideas, the lesson introduces them with pictures, plain language, and small calculations.
+This is a learn-by-making guide for a curious adult who can edit a text file and
+follow a few terminal commands. Every new math idea appears when a sketch needs
+it.
 
-The intended learner is a curious programmer who can edit text and follow a few commands. Python experience is useful, but the lessons do not assume a formal C++ or college-math background. Every instructional section does the following:
+## What you need before starting
 
-1. introduce one visual idea;
-2. teach only the C++ and mathematics needed for it;
-3. build the idea through small openFrameworks examples;
-4. end with a C++ sketch exercise; and
-5. include automated tests for the deterministic math, geometry, and simulation behavior.
+You need basic arithmetic and a little algebra: plugging numbers into a formula
+and solving a small equation such as `2x + 3 = 11`. Python experience is useful,
+but not required.
 
-The visual vocabulary is informed by recurring techniques in [Zach Lieberman’s public work](https://x.com/zachlieberman)—gesture, repetition, oscillation, particles, flow, trails, typography, and responsive input—but the course teaches transferable techniques rather than reproducing individual artworks.
+You do **not** need prior trigonometry, calculus, physics, or C++ experience.
+When a sketch needs a vector, sine, radians, interpolation, probability, or a
+spring, the lesson begins with a picture and a worked example. The technical
+name comes afterward.
 
-## Status
+If mathematical notation makes you freeze, read the words and numerical example
+first. The notation is a shorter way to record the same idea, not a test of
+whether you belong here.
 
-This repository contains the curriculum specification, implementation roadmap, tracked foundation probe, authored instructional sections 00–15, and authored synthesis projects 16–17. The instructional sections pair portable lesson prose with tested deterministic models, learner starters, explained reference solutions, and Linux/macOS/Windows build wrappers; the synthesis projects provide bounded briefs, evaluator fixtures, process templates, and divergent partial exemplars rather than canonical finished answers. Automated checks cover the repeatable parts; graphical appearance, accessibility, and live-device behavior are things you can inspect while making your own sketches.
+## How the course works
 
-- [Curriculum map](docs/curriculum-map.md)
-- [Exercise and testing strategy](docs/testing-strategy.md)
-- [Repository and delivery plan](docs/implementation-roadmap.md)
-- [Pinned platform matrix](docs/platform-matrix.md)
-- [Standalone Project Generator architecture](docs/project-generator-architecture.md)
-- [Foundation spike evidence](docs/foundation-spike.md)
-- [Foundation harness validation](docs/foundation-harness-evidence.md)
-- [Portable authoring templates and conventions](authoring/README.md)
-- [Optional Hugo publication](docs/publication.md)
-- [Optional practice notes and checked routes](docs/pilot/README.md)
-- [Delivery review process](docs/review-process.md)
-- [Research and source notes](docs/source-notes.md)
-- [License scope](LICENSE) and [third-party notices](THIRD_PARTY_NOTICES.md)
+Each guided lesson:
+
+1. shows the visual result first;
+2. introduces only the C++ and math needed for that result;
+3. works through small examples with actual numbers;
+4. gives you a starter sketch to change; and
+5. includes tests for calculations and limits a computer can check.
+
+Tests cannot judge your taste. They can check that a shape stays in the window
+or that reset gives the same starting values. They cannot decide whether your
+image is interesting, clear, or fun to play. You decide those parts by running
+the sketch and looking, listening, and interacting.
+
+The visual vocabulary is informed by recurring techniques in
+[Zach Lieberman's public work](https://x.com/zachlieberman)—gesture, repetition,
+oscillation, particles, flow, trails, typography, and responsive input. The
+course teaches reusable techniques rather than asking you to copy an artwork.
 
 ## Start here
 
-1. Clone the repository, create a learner branch, and keep it as a disposable
-   working copy so the repair exercises cannot erase unrelated work:
+1. Clone the repository and make a course branch. Some lessons intentionally
+   break a file, so keep your work separate from anything important.
 
    ```sh
    git clone https://github.com/feoh/visual-sketches-bootcamp.git
@@ -43,52 +56,91 @@ This repository contains the curriculum specification, implementation roadmap, t
    git switch -c learner/course
    ```
 
-2. Check the [pinned platform matrix](docs/platform-matrix.md), then use the
-   matching repository setup wrapper. On Ubuntu or CachyOS, do not run an
-   upstream distro installer directly:
+2. Open
+   [section 00: setup and the first frame](authoring/sections/00-cross-platform-setup/index.md).
+   Follow the block for Linux, macOS, or Windows. Run commands from the
+   repository root.
 
-   ```sh
-   scripts/setup-of.sh --platform linux64 --destination "$HOME/openframeworks"
-   export OF_ROOT="$HOME/openframeworks/of_v0.12.1_linux64_gcc6_release"
-   scripts/setup-linux.sh install --of-root "$OF_ROOT"
-   ```
+3. Continue in order or use the
+   [curriculum map](docs/curriculum-map.md) to choose a route. Stretch the pace
+   whenever a concept needs more time.
 
-   Confirm that you have enough disk space, network access,
-   installation/admin rights, Git, and the required compiler or IDE workload.
-   CI and dated local bands are build evidence, not a claim that an ordinary
-   desktop learner has completed setup on every OS.
-3. Begin with [section 00: cross-platform setup and the first frame](authoring/sections/00-cross-platform-setup/index.md).
-   Run commands from the repository root and set `OF_ROOT` as described in
-   [the scripts guide](scripts/README.md).
-4. Pick a pace from the [curriculum map](docs/curriculum-map.md#pick-a-pace-or-make-up-your-own), or ignore the map and follow your curiosity. Save captures, reflections, seed/replay inputs, and test results when they seem useful—not because a fictional registrar is checking. Resume by checking `git status` and the last section you enjoyed.
+4. Save screenshots, notes, seeds, and test output when they help **you** return
+   to a sketch.
 
-The currently authored section 15 elective is **microphone amplitude with a
-recorded-input and no-device fallback**. The previously proposed 3D, spectrum,
-and camera alternatives are deferred; the curriculum does not claim that those
-lanes exist. Live audio is optional, and the sketch remains useful without a
-microphone.
+## What is included
 
-## Design constraints
+The course contains:
 
-- **Visual reward first:** make something move in the first lesson.
-- **Just-in-time C++:** no general-purpose C++ survey before creative work begins.
-- **Math you can see:** picture and motion first, plain-language explanation next, notation last.
-- **No surprise prerequisites:** basic algebra is enough to begin; new math vocabulary gets introduced before it appears in an exercise.
-- **Cross-platform:** macOS, Linux, and Windows are first-class targets.
-- **Gentle by default:** suggested routes span 12–18 weeks; an 8+2-week fast route skips extensions, but you should stretch any route whenever that makes the work more enjoyable.
-- **Talk like a human:** explain the idea before the terminology, keep the tone friendly, and allow the occasional terrible joke when it helps a concept stick.
-- **Test behavior, not taste:** automated tests cover deterministic logic; visual quality remains a human judgment.
-- **Plain Markdown:** content uses portable YAML front matter, relative links, and standard Markdown so it can be used by Hugo or Obsidian.
-- **Originality over imitation:** exercises remix mechanisms with new inputs, mappings, geometry, palettes, and composition.
+- 16 guided lessons, numbered 00 through 15;
+- three short sketch studies in section 16; and
+- one larger visual-instrument project in section 17.
 
-## Project tracking
+Every guided exercise has a starter, number-based tests, one possible solution,
+and build commands. The solution is an example to study, never the picture you
+must reproduce.
 
-The work is tracked in Witan as project `wp-visual-sketches-bootcamp-9c2c95`, with repository-scoped epics and tasks for the toolchain, curriculum units, capstones, and publication.
+The section 15 sound exercise always includes recorded-input and keyboard routes.
+Live microphone input is optional. You can complete it without a microphone or
+recording any sound.
 
-## Baseline
+## Course promises
 
-The initial implementation targets openFrameworks **0.12.1** and a deliberately conservative **C++17 language subset** for lesson code, even where individual platform toolchains enable newer language modes. Use the separate POSIX-shell and PowerShell commands documented in [`scripts/README.md`](scripts/README.md); no Python, Node, CMake, or committed native project metadata is required. Commit-addressed foundation evidence at `f3c42f4` proves Debug/Release builds and the exact 12-test no-window suite on Linux, macOS, and Windows. Current delivery-head CI and graphical appearance remain separate validation claims; see the [foundation evidence ledger](docs/foundation-harness-evidence.md) and [delivery review ledger](docs/review-process.md).
+- **Visual reward first:** make or change something visible early.
+- **Math you can see:** picture first, ordinary explanation next, notation last.
+- **No surprise prerequisites:** basic algebra is enough to begin.
+- **Just-in-time C++:** learn a language feature when the sketch needs it.
+- **Gentle pacing:** repeat an exercise, take a side trip, or ignore a suggested
+  schedule without falling “behind.”
+- **Human language:** technical words get explanations instead of being used as
+  passwords.
+- **Test behavior, not taste:** computers check calculations; people judge the
+  visual result.
+- **Originality over imitation:** change relationships, input, motion, shapes,
+  density, and color instead of tracing a target screenshot.
+- **Access matters:** lessons include keyboard routes, reduced-motion choices,
+  non-color cues, alt text, and fallbacks where they apply.
+
+## Useful links
+
+For taking the course:
+
+- [Curriculum map and suggested routes](docs/curriculum-map.md)
+- [Supported operating systems and tools](docs/platform-matrix.md)
+- [Scripts and commands](scripts/README.md)
+- [Optional practice notes](docs/pilot/README.md)
+- [Research and source notes](docs/source-notes.md)
+- [License](LICENSE) and
+[third-party notices](THIRD_PARTY_NOTICES.md)
+
+For contributors and maintainers:
+
+- [Testing strategy](docs/testing-strategy.md)
+- [Implementation roadmap](docs/implementation-roadmap.md)
+- [Project Generator notes](docs/project-generator-architecture.md)
+- [Foundation checks](docs/foundation-harness-evidence.md)
+- [Authoring guide](authoring/README.md)
+- [Publication guide](docs/publication.md)
+- [Review process](docs/review-process.md)
+
+You do not need the contributor documents to take the course.
+
+## Tool versions
+
+The lessons use openFrameworks **0.12.1** and a small, conservative part of
+**C++17**. Follow the shell or PowerShell commands in
+[`scripts/README.md`](scripts/README.md). You do not need Python, Node, or CMake,
+and you should not commit generated Xcode, Visual Studio, Make, or VS Code
+project files.
+
+Automated builds run on Linux, macOS, and Windows. A green build means the code
+compiled and the number-based tests passed. It does not replace opening the app
+and checking its appearance and controls yourself.
 
 ## License
 
-Original curriculum prose and media are licensed under CC BY 4.0; source code, tests, and scripts are licensed under MIT; fixture data explicitly marked CC0-1.0 remains CC0. Third-party material retains its own terms. See [LICENSE](LICENSE), the full texts under [`LICENSES/`](LICENSES/), and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+Original curriculum prose and media are licensed under CC BY 4.0. Source code,
+tests, and scripts are licensed under MIT. Saved test data marked CC0-1.0 remains
+CC0. Third-party material keeps its own terms. See [LICENSE](LICENSE), the full
+texts under [`LICENSES/`](LICENSES/), and
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

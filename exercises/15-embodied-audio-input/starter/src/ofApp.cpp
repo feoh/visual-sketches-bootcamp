@@ -159,7 +159,10 @@ void ofApp::keyPressed(int key) {
     else if (key == 'm' || key == 'M') reduced_motion_ = !reduced_motion_;
     else if (key == 'r' || key == 'R') {
         if (state_.source == embodied::InputSource::recorded) chooseRecorded();
-        else if (state_.source == embodied::InputSource::live_microphone) tryLiveMicrophone();
+        else if (state_.source == embodied::InputSource::live_microphone) {
+            pending_amplitude_.store(-1.0f);
+            embodied::reset(state_, design_, embodied::InputSource::live_microphone);
+        }
         else chooseNoDevice();
     } else if (key == OF_KEY_UP || key == OF_KEY_DOWN) {
         fallback_amplitude_ = std::clamp(fallback_amplitude_ +

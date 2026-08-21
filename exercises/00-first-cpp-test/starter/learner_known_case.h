@@ -14,8 +14,8 @@ struct TestResult {
     std::string message;
 };
 
-// The factory parameter lets the public contract prove that this test rejects
-// incorrect behavior instead of merely returning true.
+// The factory argument lets the runner try this test against working and
+// intentionally broken model functions instead of accepting a test that always passes.
 TestResult learnerKnownCaseTest(ModelFactory makeModelUnderTest);
 
 }  // namespace course::interlude

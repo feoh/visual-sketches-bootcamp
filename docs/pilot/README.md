@@ -1,9 +1,8 @@
 # Optional practice notes
 
 This folder is an optional scratchpad for organizing your own trip through the
-sketches. You do not need to run a study, report your pace, or submit anything.
-If a route helps, choose one from [`routes.tsv`](routes.tsv); if not, make up
-one that follows your curiosity.
+sketches. If a route helps, choose one from [`routes.tsv`](routes.tsv); otherwise
+make up one that follows your curiosity.
 
 1. Copy [`progress-log.md`](progress-log.md) if you enjoy a personal checklist.
 2. Copy [`lesson-notes.md`](lesson-notes.md) when you want a place to save a
@@ -14,5 +13,5 @@ one that follows your curiosity.
    changed a lesson or route.
 
 The notes are for you. Keep them private if they contain personal details,
-captures, code, or recordings. The course is not grading you; the goal is to
-make something interesting and learn why it works.
+captures, code, or recordings. Aim to make something interesting and learn why
+it works.

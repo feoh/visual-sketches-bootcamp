@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="360" viewBox="0 0 1080 360" role="img" aria-labelledby="title desc">
-  <title id="title">Deterministic replay boundary</title>
-  <desc id="desc">Live controls and a recorded fixture converge on one normalized input adapter. The adapter feeds a fixed-step deterministic model, inspectable geometry, and finally a renderer. A reset arrow returns both adapter and model to seed, cursor, accumulator, and initial state.</desc>
+  <title id="title">Live and recorded controls share one path</title>
+  <desc id="desc">Live controls and recorded controls enter the same input cleanup step. That step feeds a fixed-step model, shape data, and finally drawing code. A reset arrow returns both input and model to their recorded beginning.</desc>
   <defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#23333d"/></marker></defs>
   <rect width="1080" height="360" fill="#edf3f6"/>
   <text x="38" y="46" font-family="sans-serif" font-size="22" font-weight="700" fill="#23333d">ONE PATH FOR LIVE AND RECORDED BEHAVIOR</text>
@@ -14,6 +14,6 @@
     <path d="M218 111h54M218 209h30q24 0 24-24M468 161h52M716 161h52M924 161h42" fill="none" stroke="#23333d" stroke-width="3" marker-end="url(#a)"/>
     <path d="M621 212v71H373v-71" fill="none" stroke="#b24e41" stroke-width="4" marker-end="url(#a)"/>
     <text x="497" y="307" font-size="14" font-weight="700">RESET: seed + replay cursor + accumulator + model + queued input</text>
-    <text x="540" y="340" font-size="13">renderer output is reviewed manually; deterministic checkpoints stop at state and geometry</text>
+    <text x="540" y="340" font-size="13">check model and shape values with tests; review the finished drawing yourself</text>
   </g>
 </svg>

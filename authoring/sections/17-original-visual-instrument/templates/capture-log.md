@@ -1,29 +1,24 @@
-# Capture log
+# Optional capture notes
 
-Create one entry per still or recording.
+Use this only for stills or recordings you plan to share. Scratch images do not need a
+form. Keep the details that matter to your project and delete the rest.
 
-## Capture entry
+## Capture
 
-- Filename and kind:
-- Source/archive identifier:
-- OS, renderer, build configuration, and display scale:
-- Viewport:
-- Seed, replay fixture, event index, and fixed-step count:
-- Live device and consent state, or explicit non-use:
-- Controls/actions immediately before capture:
-- Model/geometry counts and status labels:
-- Normal-motion, paused, fallback, or reduced-motion state:
-- Alt text: Name structure, primary mapping, interaction/status, and meaningful non-color cues.
-- Visible caption:
-- Transcript/caption filename, if motion:
-- Creator, source, license, and people/collaborators shown or heard:
-- What this capture proves:
-- What it cannot prove:
+- Filename:
+- What control or saved input produced this moment:
+- Window size, seed, or replay position, if needed to repeat it:
+- Live-device and consent state, if relevant:
+- Paused, fallback, ordinary-motion, or reduced-motion state:
+- Alt text describing the structure, main mapping, current state, and non-color cues:
+- Optional visible caption:
+- Transcript or caption file, if the recording includes meaningful motion or speech:
+- Creator, source, and license; people shown or heard and their consent:
 
-## Manual comparison
+## Quick check
 
-- Tiny viewport result:
-- Enlarged interface/text result:
-- Color-disabled or monochrome interpretation:
-- Reduced-motion equivalence:
-- Keyboard/replay route:
+- Does the image communicate at a small window size?
+- Does the reduced-motion or paused version preserve the main idea?
+- Can someone understand the important distinction without relying only on color?
+- Is there a keyboard, replay, or other no-device route where practical?
+- What can this capture show, and what can it not show?

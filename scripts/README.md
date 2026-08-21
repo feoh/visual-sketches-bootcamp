@@ -137,8 +137,8 @@ wrappers. A learner keeps the checked build boundary by repurposing distinct
 existing starter directories on a learner branch: section 08 for gesture
 memory, section 05 or 07 for repetition, and section 10 or 11 for particles.
 The capstone then evolves one completed study on a separate capstone branch.
-See the [section 16 supported bootstrap](../authoring/sections/16-three-sketch-studies/index.md#supported-bootstrap-before-the-timer)
-and [section 17 capstone bootstrap](../authoring/sections/17-original-visual-instrument/index.md#supported-capstone-bootstrap)
+See the [section 16 supported bootstrap](../authoring/sections/16-three-sketch-studies/index.md#reuse-three-working-starters)
+and [section 17 capstone bootstrap](../authoring/sections/17-original-visual-instrument/index.md#start-from-one-working-study)
 for the required baseline test, generation, build, launch, and checkpoint steps.
 The selected section's existing shell/PowerShell runner remains the public test
 command; synthesis adds its pure model contract and fixtures to that checked

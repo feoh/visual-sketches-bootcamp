@@ -8,10 +8,11 @@ draft: false
 
 Creative work needs two kinds of feedback:
 
-- **automated evidence** that the program’s deterministic behavior is correct; and
-- **human judgment** about composition, motion, legibility, delight, and intent.
+- **automated checks** for the program's repeatable calculations; and
+- **your own judgment** about composition, motion, legibility, delight, and intent.
 
-The curriculum will not disguise aesthetic preference as correctness, nor will it use brittle cross-platform screenshots as the main oracle.
+The course keeps those jobs separate. It does not treat visual preference as a code bug
+or expect screenshots to match perfectly across different graphics hardware.
 
 ## Exercise contract
 
@@ -26,13 +27,13 @@ exercises/<section-slug>/
 └── solution/               # reference implementation and explanation
 ```
 
-The published lesson links to the starter and tests. Instructional solutions should be easy to hide from a deployed site if desired but remain available in the repository for self-study. Synthesis projects use briefs, evaluator fixtures, rubrics, and divergent partial exemplars; the capstone deliberately has no canonical finished solution.
+The published lesson links to the starter and tests. Instructional solutions should be easy to hide from a deployed site if desired but remain available in the repository for self-study. Larger projects use guides, repeatable test inputs, practical self-checks, and several unfinished examples; the capstone deliberately has no official finished solution.
 
 Each brief states:
 
 - the visual behavior to implement;
 - the learner-owned aesthetic choices;
-- the C++ and math concepts under assessment;
+- the main C++ and math ideas;
 - public function/type signatures that tests expect;
 - exact build/test commands for macOS, Linux, and Windows;
 - deterministic inputs such as `dt`, seed, viewport, or fixture stream;
@@ -92,7 +93,7 @@ as:
 - history remains bounded and ordered; and
 - missing assets/devices enter a documented fallback state.
 
-Do not read wall-clock time, random global state, live input devices, or window dimensions from core algorithms. Every exercise still requires at least one meaningful deterministic behavior test plus build/smoke evidence; it should not invent a fake simulation layer merely to satisfy a category quota.
+Do not read wall-clock time, random global state, live input devices, or window dimensions from core algorithms. Every exercise still needs at least one useful repeatable behavior test plus a basic build/run check; it should not invent a fake simulation layer merely to fill a category.
 
 ### Reproducibility contract
 

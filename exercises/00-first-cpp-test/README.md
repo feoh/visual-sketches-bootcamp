@@ -1,14 +1,41 @@
 # Exercise: repair and write the first C++ test
 
-This exercise uses the already-proven `foundation/unit` no-window executable rather than owning another generated openFrameworks project. The small public contract compiles the learner-owned known-case test without openFrameworks so feedback is quick; the lesson then shows how the same arrange/act/assert values fit an `ofxTest` assertion.
+## The short version
+
+You will repair one small C++ test, then write a second test of your own. The goal is
+not to become a testing expert. It is to learn how a tiny test can tell you, quickly and
+specifically, when a calculation changes.
+
+A test makes inputs, calls a function, and checks the answer. The supplied runner
+handles the build details.
+
+The small runner checks your calculation without opening a graphics window, so feedback
+is quick. The lesson also shows how the same input, function call, and expected answer
+fit into an openFrameworks `ofxTest`.
 
 ## 1. Repair one assertion
 
-Follow the lesson's exact temporary patch in `foundation/unit/src/main.cpp`: make the seeded-state bounds assertion wrong with `position.x < 0.0f`, run the native suite, read the failure, and restore the correct `position.x >= 0.0f`. The tracked repository remains green.
+Follow the lesson's exact temporary patch in `foundation/unit/src/main.cpp`: make the seeded-state
+bounds assertion wrong with `position.x < 0.0f`, run the native suite, read the failure, and
+restore the correct `position.x >= 0.0f`. Finish with the repaired check in place.
 
-## 2. Author one known case
+## 2. Write one known-answer test
 
-Edit only `starter/learner_known_case.cpp`. Choose a seed and viewport, then temporarily print `actual.position.x`, `actual.position.y`, `actual.velocity.x`, and `actual.velocity.y` immediately after the single factory call. Run the starter, label and review all four values for finiteness, in-viewport position, and plausible velocity, then rerun to confirm exact repetition. Freeze those reviewed values as the oracle and remove the temporary output. Do not compute expectations by calling the injected model factory during arrangement; that would repeat the implementation instead of recording an independent oracle. Keep the factory call in the act step and comparisons in the assert step.
+Edit only `starter/learner_known_case.cpp`. Choose a seed and window size. Immediately
+after the single call that creates `actual`, temporarily print:
+
+```cpp
+std::cerr << actual.position.x << ' ' << actual.position.y << ' '
+          << actual.velocity.x << ' ' << actual.velocity.y << '\n';
+```
+
+Add `#include <iostream>`, run the starter, and label the four numbers. Check that the
+position is inside the window and the speed seems reasonable, then run again to confirm
+the same seed repeats. Copy those reviewed numbers into the expected-value slots and
+remove the temporary print and include.
+
+Do not call the model a second time to create the expected answer. If the model contains
+a mistake, both calls could agree on the same wrong answer.
 
 ```sh
 for variant in starter solution; do
@@ -25,7 +52,10 @@ foreach ($variant in @("starter", "solution")) {
 }
 ```
 
-The public contract passes the real model factory and then the same controlled wrong factory into each variant. It requires the first to pass and the mutation to fail with a diagnostic, without containing the explained solution's seed or coordinates. `solution/` demonstrates a different reviewed seed; read it only after completing yours.
+The runner tries your test with the real model and then with a deliberately wrong one.
+The real model should pass. The wrong one should fail with a message showing which
+number differed. `solution/` uses a different reviewed seed; read it after completing
+yours if you want another example.
 
 ## Native harness commands
 
@@ -45,4 +75,5 @@ On Windows Developer PowerShell:
 .\scripts\foundation.ps1 test -Project unit -Configuration Release
 ```
 
-The foundation evidence ledger records the native Linux, macOS, and Windows unit statuses. This exercise adds no renderer, screenshot, pixel threshold, or generated metadata.
+These commands run the larger foundation tests. This exercise adds no drawing window or
+screenshot comparison; it checks numbers only.
