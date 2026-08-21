@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Images and type as geometry
 
-## See what we're making
+## See what you're making
 
 ![A grayscale block-letter SHAPE mask becomes a field of spaced navy dots, then curved amber bars orbit around a marked centroid; arrows label threshold sampling and transform, and distinct circle, crosshair, and bar shapes communicate each stage without color alone.](media/geometry-preview.svg "A mask becomes measured and animated geometry.")
 

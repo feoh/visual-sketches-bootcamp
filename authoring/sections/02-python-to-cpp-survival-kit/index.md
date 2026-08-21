@@ -12,14 +12,14 @@ objectives:
   - Create an accessible visual family of your own by varying explicit parameters
 prerequisites:
   - Completion of sections 00 and 01 or equivalent openFrameworks setup/update/draw experience
-  - No Python experience required; Python comparisons are optional shortcuts for readers who know it
+  - No Python experience required; Python comparisons are optional shortcuts if you know it
 source_records: sources.yaml
 asset_records: assets.yaml
 ---
 
 # The Python-to-C++ survival kit
 
-## See what we're making
+## See what you're making
 
 One parameter record can generate many related values.
 
@@ -175,8 +175,8 @@ exercise, keep references short-lived and return owned values.
 
 The [`new` expression](https://en.cppreference.com/w/cpp/language/new.html) can create dynamically allocated objects, but raw `new`
 requires a correct ownership and matching-release rule. Leaks, double deletion, and
-dangling pointers distract from visual structure. We deliberately defer raw
-`new` and `delete`; `std::vector` owns this collection, while the
+dangling pointers distract from visual structure. You can leave raw `new` and `delete`
+for later; `std::vector` owns this collection, while the
 existing openFrameworks window setup uses library-standard smart ownership. Deferral is
 not a claim that allocation never occurs.
 

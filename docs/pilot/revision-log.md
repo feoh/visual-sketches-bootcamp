@@ -8,4 +8,4 @@ This is an optional record of changes to the teaching material.
 
 When a lesson feels too formal, too fast, or unclear, make the smallest useful
 revision and run the authoring checks. Keep the explanation focused on what the
-reader can try next.
+you can try next.

@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Particles with memory
 
-## See what we're making
+## See what you're making
 
 ![On a cream field, teal circles and coral squares follow two curved, limited oldest-to-newest trails from small earlier marks to large current heads; both trajectories stay inside the rounded viewport boundary, and shape plus size distinguish the palette roles without color alone.](media/particle-preview.svg "Objects carry short, limited memories through a fixed-step world.")
 

@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Controlled chance
 
-## See what we're making
+## See what you're making
 
 ![Six bordered panels contain related but nonidentical arrangements of dark dots, horizontal orange dashes, and outlined rings; a small key labels the seed, weighted motif tickets, and center-biased position shape.](media/seeded-edition-preview.svg "Six related seeded editions.")
 
@@ -183,8 +183,7 @@ rings. The explained solution connects record order into routes and uses filled 
 vertical cross-stems, and square outlines. Create a third grammar—perhaps bands, paired
 marks, cut-paper clusters, or a typographic constellation—not a recolor.
 
-The tests compile the starter's `makeEditionDesign()`, so invalid learner choices receive a
-direct diagnostic. Contrast and resemblance still require human review; a numerical
+The tests compile the starter's `makeEditionDesign()`, so invalid choices receive a direct diagnostic. Contrast and resemblance still require human review; a numerical
 model cannot prove either.
 
 ## Try the numbers

@@ -9,7 +9,7 @@ objectives:
   - Explain sine, cosine, radians, amplitude, frequency, phase, and period in plain language
   - Convert between center/radius/angle and ordinary x/y coordinates with a documented zero rule
   - Build a repeated row/column field with repeatable phase offsets and fixed time
-  - Test conversions, quarter-turns, periodicity, bounds, and learner choices without pixels
+  - Test conversions, quarter-turns, periodicity, bounds, and your choices without pixels
 prerequisites:
   - Completion of section 04 or equivalent C++ structs, vectors, pure functions, and tolerance literacy
   - Basic algebra: substitute values into a formula and solve a simple equation
@@ -21,10 +21,10 @@ asset_records: assets.yaml
 
 Circles are about to become a handy motion tool. This lesson introduces *sine*,
 *cosine*, and *radians* from the beginning. You will not need to memorize a trig table
-or prove anything about triangles. We will use a picture, a few number patterns, and
+or prove anything about triangles. You will use a picture, a few number patterns, and
 formulas that tell the computer where to put a mark.
 
-## See what we're making
+## See what you're making
 
 ![A four-column, three-row field uses outlined orbit paths, crosshair centers, and filled travelers at progressively shifted phases, with a labeled circular inset showing cosine on x, sine on y, and positive-down screen coordinates.](media/phase-field-preview.svg "Nested phase field and circular coordinates.")
 
@@ -38,7 +38,7 @@ travelers, labels, and position—not color alone—explain the field.
 No trig knowledge is required for this guess. Draw a circle with a point at the
 right-hand side. If the point moves one quarter-turn at a time, where do you expect it
 to be after one, two, and three quarter-turns? Does it return to the same spot after a
-full turn? Keep the sketch nearby—we will use it as our cheat sheet instead of asking
+full turn? Keep the sketch nearby—use it as your cheat sheet instead of asking
 your memory to do all the heavy lifting.
 
 ## Let's unpack it
@@ -58,7 +58,7 @@ simply means where a repeating motion is in its cycle right now.
 
 A full circle is 360 degrees, or one turn. Computers can also measure that same turn
 with a unit called **radians**. The name sounds grander than the idea: `2*pi`
-radians is one full turn. We will use `tau` as a friendly name for that amount
+radians is one full turn. The code uses `tau` as a friendly name for that amount
 so “one turn” is easy to spot in code.
 
 Do not scatter rounded `3.14` values through a program. Give the relationships
@@ -76,7 +76,7 @@ makes every update the same one-sixtieth of a second.
 
 ### Degrees and radians are two labels for the same turn
 
-Degrees are the labels we use in everyday conversation: a right angle is 90 degrees and
+Degrees are the labels you use in everyday conversation: a right angle is 90 degrees and
 a full turn is 360. Radians are the labels the C++ math functions expect. You can switch labels with this conversion recipe:
 
 ```text
@@ -123,7 +123,7 @@ room.
 
 ### Two useful ways to describe a point
 
-Most of the time we use **Cartesian coordinates**: `(x, y)` tells us the
+You will usually use **Cartesian coordinates**: `(x, y)` tells you the
 horizontal and vertical position directly. For circles, **polar coordinates** are often
 friendlier: `(radius, angle)` says “go this far from the center in this direction.”
 
@@ -134,7 +134,7 @@ Vec2 point{center.x + offset.x, center.y + offset.y};
 ```
 
 Radius is the reach; angle is the direction. `polarToCartesian()` does the cosine/sine
-bookkeeping for us. To go the other way, the computer measures the reach with
+bookkeeping for you. To go the other way, the computer measures the reach with
 `hypot(x, y)` and asks `atan2(y, x)` for the angle:
 
 ```text
@@ -144,10 +144,10 @@ angle = atan2(y, x)
 
 You can think of [`std::atan2`](https://en.cppreference.com/w/cpp/numeric/math/atan2.html) as a direction finder that looks at both x and y, so it
 knows which of the four regions around the crossed x and y axes contains the point.
-Those regions are called **quadrants**. We do not need to derive `atan2`; it is
+Those regions are called **quadrants**. You do not need to derive `atan2`; it is
 safer than typing `atan(y/x)`, especially when x is zero.
 
-The zero vector `(0,0)` has a reach of zero but no meaningful direction. Our
+The zero vector `(0,0)` has a reach of zero but no meaningful direction. The
 explicit rule is `cartesianToPolar({0,0}) == {0,0}`. That is a useful edge case to name, not a failure to
 hide.
 
@@ -247,8 +247,7 @@ design values; they do not compare pixels.
 `Design` owns rows, columns, amplitude, frequency, row/column phase steps, mark
 radius, and palette. These choices change count, geometry, rhythm, and color. The shared
 model owns conversion rules, indexing, phase math, bounds, and invalid-input rule.
-Public tests compile the starter's `makePhaseFieldDesign()`, so an out-of-range learner choice
-produces an actionable failure.
+Public tests compile the starter's `makePhaseFieldDesign()`, so an out-of-range choice produces an actionable failure.
 
 The starter uses orbit outlines, crosshairs capped at the mark radius, and filled
 circular travelers. The explained solution uses connected row threads and alternating
@@ -285,7 +284,7 @@ first.
   `23`.
 
 Sketch the circle and grid before running code. The picture explains direction; the
-numbers check the picture; the tests catch the tiny cases we would rather not debug by
+numbers check the picture; the tests catch the tiny cases you would rather not debug by
 staring at a moving window.
 
 ## Break it on purpose

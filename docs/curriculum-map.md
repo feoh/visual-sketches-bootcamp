@@ -12,8 +12,8 @@ This is for a curious programmer who wants to make things move. If you can edit
 text, run a command, and handle basic algebra—substitute values into a formula
 and solve something like `2x + 3 = 11`—you have enough math to start. Python experience is welcome but
 not required; rusty C++ is fine too. Trigonometry is **not** a prerequisite.
-When circles need sine, cosine, or radians, we stop and teach those ideas from
-scratch with pictures and tiny examples.
+When circles need sine, cosine, or radians, the lesson pauses to teach those ideas
+from scratch with pictures and tiny examples.
 
 By the end, you should be able to:
 
@@ -52,8 +52,8 @@ microphone amplitude with no-device fallback.
 
 ## The rhythm of a lesson
 
-Sections 00–15 follow a friendly repeatable rhythm. We may combine or skip steps
-when that keeps the creative momentum moving. The larger projects in sections
+Sections 00–15 follow a friendly repeatable rhythm. You may combine or skip steps
+when that keeps your creative momentum moving. The larger projects in sections
 16–17 use a looser path.
 
 1. **See it:** a short visual goal and an animated or still reference.
@@ -114,7 +114,7 @@ open brief.
 
 ### Interlude. Reading and writing the first C++ test
 
-**Goal:** make the exercise harness part of the learner’s vocabulary before tests become an unexplained ritual.
+**Goal:** make the exercise harness part of your vocabulary before tests become an unexplained ritual.
 
 Run one `ofxUnitTests`/`ofAppNoWindow` program, repair one failed check, write one known-answer test, and use the course helper for comparing calculated decimal values. Learn which file holds the test, how inputs/call/answer form one check, and why a number-only test cannot judge the finished picture. Later lessons introduce more kinds of tests when they become useful.
 
@@ -322,7 +322,7 @@ Create one coherent sketch that:
 
 Suggested directions include a calligraphic flow instrument, a typographic spring system, a temporal portrait of an everyday object, a sound-reactive contour field, or a small 3D kinetic poem.
 
-Unlike instructional exercises, the capstone has no canonical finished solution. It provides unfinished process directions, a suggested code structure, and saved test examples without anchoring the learner to one polished answer.
+Unlike instructional exercises, the capstone has no canonical finished solution. It provides unfinished process directions, a suggested code structure, and saved test examples without anchoring you to one polished answer.
 
 ## Things worth saving
 

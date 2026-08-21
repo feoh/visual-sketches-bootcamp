@@ -70,7 +70,7 @@ Do not rename `makeTravelerDesign()` or the declarations in `shared/traveler_mod
 frame-stream fixture column and drive one-step, partition, pause-spike, and boundary
 scenarios from those records. They also cover zero, negative, NaN, and infinite
 durations, all four exact wrap endpoints, reset, reduced-motion persistence, and
-finite/ranged learner choices with distinct mark/background RGB values. Sufficient
+finite/ranged choices with distinct mark/background RGB values. Sufficient
 visual contrast and your trail/silhouette distinction remain manual checks; tests
 inspect state and never pixels.
 

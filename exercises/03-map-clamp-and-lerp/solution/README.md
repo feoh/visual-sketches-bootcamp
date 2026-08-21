@@ -9,4 +9,4 @@ The ring step is limited by one third of the available distance from the focus t
 nearest panel edge, so the outer orbit remains contained at every valid viewport,
 including `64 x 64`. Outline, nesting, and overlap carry hierarchy without relying
 only on color. This intentionally differs from the starter's filled panel, isolated dot,
-and horizontal rule; learners should make a third composition.
+and horizontal rule; make a third composition.

@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Local coordinate systems
 
-## See what we're making
+## See what you're making
 
 ![Three bordered frames show a two-arm kinetic sculpture at different phases; each dark parent arm carries an orange child arm and outlined ring, demonstrating inherited position and rotation without relying on color alone.](media/local-sculpture-preview.svg "One hierarchy shown at three repeatable times.")
 
@@ -184,8 +184,8 @@ displayed frames are fixed samples, not three independent animations.
 
 A finite zero scale is legal in the matrix helper and deliberately collapses an axis. A
 scale containing `NaN` or infinity returns the unchanged point instead of
-spreading a bad value through a scene. Learner `Design` lengths, period, radius,
-and stroke must remain positive and finite; colors remain 0–255.
+spreading a bad value through a scene. Your `Design` lengths, period, radius, and stroke must remain positive and finite;
+colors remain 0–255.
 
 A viewport smaller than `48 x 48` is invalid. Legal scenes fit total arm reach and
 ornament radius inside half of the smaller dimension, reserving half the stroke width

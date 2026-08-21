@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # Cross-platform setup and the first frame
 
-## See what we're making
+## See what you're making
 
 This image is a single still frame: one background and five drawn shapes. It shows the
 few rules you will work with, but you do not need to copy its layout.
@@ -57,7 +57,7 @@ CachyOS/Arch changes frequently, so the repository records the package versions 
 were tested rather than promising that every future update will behave exactly the same.
 Windows 11 will probably work, but it has not been checked yet.
 
-Everyone uses openFrameworks 0.12.1 and Project Generator 0.103.0. The scripts download
+You will use openFrameworks 0.12.1 and Project Generator 0.103.0. The scripts download
 and check those exact versions. The upstream [setup guides](https://openframeworks.cc/setup/) are useful background, but
 use the course commands below rather than running an upstream Linux installer yourself.
 The course script knows whether it should use Ubuntu's `apt` or CachyOS/Arch's

@@ -18,8 +18,8 @@ Start with no viewport and no pointer state. Reset records seed 4242. A viewport
 event changes the normalization dimensions. Normalize pointer pixels as
 `clamp(pixel / dimension, 0, 1)`. The unknown event is rejected without moving
 the pointer or replay cursor. After the adapter fixture passes, feed accepted
-normalized events into the learner's model twice and compare declared
-state/geometry checkpoints.
+normalized events into your model twice and compare declared state/geometry
+checkpoints.
 
 ## `frame-times.tsv`
 

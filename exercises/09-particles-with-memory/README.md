@@ -45,7 +45,7 @@ Use `.ps1` wrappers in Windows Developer PowerShell. Keep `makeParticleDesign()`
 `shared/particle_model.h` declarations. Tests parse an independent drag/integration oracle and
 inspect cadence/count, frame partition, capped catch-up/drop, pause spikes, expiry
 equality, simultaneous removal, exponential drag, four edges, history order/cap,
-repeatable replay, seed variation, finite extremes, tiny bounds, and learner ownership.
+repeatable replay, seed variation, finite extremes, tiny bounds, and your design choices.
 No pixel or real-clock test is used. The course supplies checked Linux, macOS, and
 Windows build commands; open the app to check the finished motion.
 

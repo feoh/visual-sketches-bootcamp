@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Gesture as geometry
 
-## See what we're making
+## See what you're making
 
 ![A sweeping, wavy blue-to-orange open path changes from a thick section to a narrow dashed section, with dark anchor dots and width differences making motion readable without color alone.](media/gesture-preview.svg "Sampled movement changes the path's width, color, and shape.")
 
@@ -260,7 +260,7 @@ with alt text.
 
 Reverse the speed-width direction, use signed turn to select left/right shape families,
 or resample before constructing a chain of oriented marks. Keep endpoints, degenerate
-guards, maximum size, keyboard access, and learner ownership.
+guards, maximum size, keyboard access, and your design choices.
 
 ## Quick visual check
 

@@ -53,7 +53,7 @@ course teaches reusable techniques rather than asking you to copy an artwork.
    ```sh
    git clone https://github.com/feoh/visual-sketches-bootcamp.git
    cd visual-sketches-bootcamp
-   git switch -c learner/course
+   git switch -c course
    ```
 
 2. Open

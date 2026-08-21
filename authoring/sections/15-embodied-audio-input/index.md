@@ -21,7 +21,7 @@ asset_records: assets.yaml
 This elective takes one lane only: microphone **amplitude**. It does not survey 3D,
 spectra, or cameras.
 
-## See what we're making
+## See what you're making
 
 ![Two panels show a quiet amplitude as a small four-ray circle and short meter, then a louder amplitude as a large sixteen-ray circle and long meter; badges identify recorded-fixture and keyboard fallback routes.](media/audio-instrument-preview.svg "Louder input has one immediate visual consequence.")
 

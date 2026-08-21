@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Noise and flow fields
 
-## See what we're making
+## See what you're making
 
 ![A dark blue field contains a pale grid of short direction ticks; three mint dotted ribbons curve together toward amber diamond heads with forward ticks, while a square field-coordinate control and small clock distinguish space and time without color alone.](media/flow-preview.svg "Nearby arrows form one smoothly changing field.")
 

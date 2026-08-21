@@ -21,6 +21,5 @@ rendered pixels.
 - `particle-step.tsv` starts at zero position and velocity. Rows use
   semi-implicit Euler and accumulate sequentially.
 
-Compare fixture floats with absolute tolerance `0.0001`. A learner may add
-cases or a fixture for a different documented fixed step; preserve these rows
+Compare fixture floats with absolute tolerance `0.0001`. You may add cases or a fixture for a different documented fixed step; preserve these rows
 as shared compatibility checks.

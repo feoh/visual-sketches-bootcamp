@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Forces, steering, and springs
 
-## See what we're making
+## See what you're making
 
 ![A teal circle swarm converges on a ring target above a coral chain of diamond-shaped agents hanging from a square anchor; dark arrows show paired spring forces in opposite directions, and shape, links, and vertical placement distinguish the two behavior modes without color alone.](media/force-preview.svg "The same objects can seek a target or connect as a springy chain.")
 

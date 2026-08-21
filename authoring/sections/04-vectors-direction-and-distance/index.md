@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # Vectors, direction, and distance
 
-## See what we're making
+## See what you're making
 
 ![Three labeled panels show horizontal, down-right positive (3,4), and zero-length anchor-to-target connectors with component, distance, and unit-vector values.](media/vector-connector-preview.svg "Direction, distance, and guarded normalization cases in the openFrameworks coordinate convention.")
 
@@ -62,7 +62,7 @@ glm::vec2 direction = target - anchor;
 float magnitude = glm::length(direction);
 ```
 
-The braces initialize both components. Our renderer-independent core uses an equivalent
+The braces initialize both components. The renderer-independent core uses an equivalent
 small aggregate so tests need neither a window nor openFrameworks:
 
 ```cpp
@@ -130,8 +130,8 @@ distance(anchor, target) = length(target - anchor)
 
 Distance is never negative. The [GLM geometric-functions reference](https://glm.g-truc.net/0.9.9/api/a00212.html) lists the same `length`,
 `distance`, `dot`, and `normalize` vocabulary commonly seen in graphics
-code. Our small course `Vec2` remains standard-library-only so its mechanics can
-be tested without a renderer. It uses [`std::hypot`](https://en.cppreference.com/w/cpp/numeric/math/hypot.html) to compute length without first
+code. This small `Vec2` remains standard-library-only so its mechanics can be tested
+without a renderer. It uses [`std::hypot`](https://en.cppreference.com/w/cpp/numeric/math/hypot.html) to compute length without first
 storing `x*x + y*y` as a potentially overflowing intermediate.
 
 ### Normalize safely

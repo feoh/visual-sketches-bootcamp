@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # Interlude — reading and writing the first C++ test
 
-## See what we're making
+## See what you're making
 
 A test is a small causal story, not a wall of assertions.
 
@@ -48,7 +48,7 @@ automation.
 
 A test is just a small program that asks your code a question and complains when the
 answer is wrong. For example: “When the seed is 17 and the window is this size, does the
-model put the mark at the position we already worked out?”
+model put the mark at the position you already worked out?”
 
 Most tests in this course follow three ordinary steps:
 
@@ -121,7 +121,7 @@ window size, input, and time step and can make a fresh model from them.
 
 Work out the expected answer separately. If the test asks the same function for both the
 actual and expected answer, the function can agree with its own mistake. In this lesson,
-we simply call it the **expected answer**: a number you calculated or reviewed another
+the lesson simply calls it the **expected answer**: a number you calculated or reviewed another
 way.
 
 ### Compare decimal answers with a little room

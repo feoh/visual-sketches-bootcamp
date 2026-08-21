@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # Map, clamp, and lerp
 
-## See what we're making
+## See what you're making
 
 A responsive composition preserves relationships, not fixed pixel coordinates.
 
@@ -32,7 +32,7 @@ panel boundaries, labels, and position communicate the relationship without colo
 
 ## Take a guess
 
-A viewport's short side is `600`. We want `320` to mean progress
+A viewport's short side is `600`. You want `320` to mean progress
 `0` and `1200` to mean progress `1`. Before calculating,
 predict whether `600` normalizes below, at, or above `0.5`. Then
 predict whether a 4:5 poster fitted into an `800 x 600` window will be limited by
@@ -74,7 +74,7 @@ t = (600 - 320) / (1200 - 320)
 
 Normalization is also called inverse interpolation: ordinary interpolation turns
 `t` into a ranged value, while normalization recovers `t` from
-that range. Our helper requires an ascending source range: `input_min < input_max`. It returns
+that range. The helper requires an ascending source range: `input_min < input_max`. It returns
 `0` for an equal or descending source range, or when the value or source
 endpoints are `NaN` or infinite, then clamps valid results to `[0, 1]`.
 That invalid-input rule is explicit rather than an accidental division by zero.
@@ -161,8 +161,8 @@ smoothstep(t) = t²(3 - 2t), for clamped t in [0, 1]
 
 It keeps endpoints `0` and `1`, keeps midpoint `0.5`, and
 remains monotonic, but starts and ends more gently. The [easing reference gallery](https://easings.net/) shows why a
-shaped curve feels different from linear progress. We use only smoothstep for headline
-size and focal radius; padding stays linear so the two behaviors can be compared. Easing
+shaped curve feels different from linear progress. The lesson uses smoothstep only for
+headline size and focal radius; padding stays linear so you can compare the two behaviors. Easing
 does not add time or animation here.
 
 ### Helpers before drawing

@@ -50,7 +50,7 @@ fallback are enough.
 
 ## Start from one working study
 
-Create a `learner/capstone` branch after finishing section 16. Pick the one study whose
+Create a `capstone` branch after finishing section 16. Pick the one study whose
 calculations are closest to the idea you want to explore. Grow **that one starter** into
 the capstone. Do not try to merge three `ofApp` files or three sets of generated
 project files. Keep using the chosen section's familiar build wrapper and its tested

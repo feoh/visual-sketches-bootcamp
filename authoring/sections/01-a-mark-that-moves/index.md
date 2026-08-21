@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # A mark that moves
 
-## See what we're making
+## See what you're making
 
 One still cannot prove motion, so this preview uses position and ruler ticks to show the
 same traveler after equal simulation steps.

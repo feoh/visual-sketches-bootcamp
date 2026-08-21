@@ -32,7 +32,7 @@ damping sideways motion. The model advances at a fixed 1/60-second step, simulat
 most eight steps per render frame, and reports clamped or unsimulated whole-step time as
 dropped rather than hiding unlimited catch-up.
 
-A learner should explain and replace count, force/speed caps, damping, arrival,
+Explain and replace count, force/speed caps, damping, arrival,
 softening, spring equilibrium, restitution, geometry, mode cue, reduced motion, and
 palette rather than treating this design as a target image.
 

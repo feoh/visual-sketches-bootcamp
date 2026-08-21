@@ -19,7 +19,7 @@ asset_records: assets.yaml
 
 # Color, blending, and trails
 
-## See what we're making
+## See what you're making
 
 ![On a dark navy field, a cyan-to-mint trail marked by crosses and a violet-to-amber trail marked by diamonds loop through each other; older marks are smaller and more transparent, central overlap is pale and bright, and a labeled five-step alpha key shows age without relying on color.](media/trail-preview.svg "Two palettes cross while alpha and size reveal age.")
 
@@ -70,7 +70,7 @@ channel(t) = first_channel + (second_channel - first_channel) * t
 At `t = 0`, the exact first endpoint is returned. At `t = 1`, the exact
 second endpoint is returned. At `t = 0.5`, the Predict palette becomes
 `(0.5, 0.4, 0.3, 0.75)`. This is both a numerical weighted average and a small palette function.
-Tests sample 101 amounts across each learner palette and check that every channel
+Tests sample 101 amounts across each palette and check that every channel
 remains between its endpoints and within `[0, 1]`.
 
 The plain `Color`, `Palette`, `TrailSample`, and `TrailMark` records are
@@ -152,8 +152,8 @@ Each input sample carries palette index 0 or 1 and interpolation amount. In the 
 the two repeatable paths adapt the memory idea from section 09; pointer/drag and arrows
 move their shared origin. Palette A uses circles and palette B squares. The solution
 changes path equations, history length, decay, size, background, both palettes, blend
-mode, sampling rhythm, and geometry. It uses crosses for A and diamonds for B. A learner
-must create a third visual grammar rather than recolor either example.
+mode, sampling rhythm, and geometry. It uses crosses for A and diamonds for B. You must
+create a third visual grammar rather than recolor either example.
 
 P pauses, R clears and replays the initial phase, and M keeps current marks only.
 Pointer and keyboard routes alter the same visible origin. Very small windows suppress

@@ -18,7 +18,7 @@ asset_records: assets.yaml
 
 # Time as a drawable axis
 
-## See what we're making
+## See what you're making
 
 ![Twenty vertical time slices cross a navy field; newest amber circles begin high at the left, progressively older mint circles descend and fade to the right, and horizontal ticks plus NOW and THEN labels communicate age without color.](media/time-axis-preview.svg "Horizontal position chooses a saved moment.")
 
