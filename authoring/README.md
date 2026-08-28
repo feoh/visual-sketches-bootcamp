@@ -82,17 +82,36 @@ Keep the voice conversational and encouraging. Prefer “let's try this” to
 rather than distracts. Technical instructions still need to be precise, but
 they should sound like help from a friendly guide.
 
+## Lesson → Practice → Exercise structure
+
+Every instructional section has exactly three learner-facing phases, in this
+order:
+
+1. **Lesson** explains one coherent idea with a visual, ordinary language, a
+   worked numerical example, and only the C++ needed for that idea.
+2. **Practice** guides the reader through small changes, predictions, builds,
+   and repairs. Practice may use compiler or runtime feedback, but it does not
+   run the section's unit-test suite.
+3. **Exercise** poses one problem against a focused starter with explicit
+   change points. The section's unit tests run here and check observable attributes that
+   indicate correctness. Visual quality and accessibility remain a manual
+   review because tests should not grade taste.
+
+Use H2 headings named exactly `Lesson`, `Practice`, and `Exercise`. Put supporting
+subsections beneath them as H3 headings. Keep the exercise brief authoritative
+for its files, commands, constraints, and test contract; the lesson page should
+summarize and link rather than invent a second exercise.
+
 ## Definition of done: instructional section
 
 An instructional section is **written and ready to try** when it has:
 
 - 3–6 observable objectives, prerequisites, and an accessible visual preview;
-- the See → Guess → Unpack → Make → Break → Try → Check → Tell → Remix
-  scaffold;
+- the Lesson → Practice → Exercise structure;
 - one math idea shown visually, numerically, and symbolically;
 - no more than one substantial new C++ mechanism;
-- two or three runnable examples and one deliberate repair task;
-- a starter, deterministic tests, fixtures where needed, and an explained
+- two or three small guided practice steps and one deliberate repair task;
+- a focused starter with explicit change points, deterministic tests, fixtures where needed, and an explained
   instructional reference solution;
 - exact commands for the checked platforms and friendly guidance for adapting
   them elsewhere;

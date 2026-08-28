@@ -1,6 +1,9 @@
-# Five-shape visual signature
+# Exercise 00 — five-shape visual signature
 
-## What you are making
+Complete the [Lesson and Practice](../../authoring/sections/00-cross-platform-setup/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
+## Problem
 
 Make a still image from **exactly five shapes** and **exactly three colors**. The
 starter opens an 800 × 600 window, but your shapes should also stay inside the window
@@ -11,6 +14,9 @@ catch shapes that go off-screen. They cannot decide whether your design is inter
 That part belongs to you.
 
 ## Start with one file
+
+The starter is deliberately incomplete. Its duplicate palette and single-kind
+shape row make the unit tests fail until you replace the `TODO` values.
 
 At first, edit only:
 
@@ -34,9 +40,10 @@ Read it from left to right:
 - `0U` — use the first color in the palette. Use `1U` for the second
   color or `2U` for the third.
 
-Change the five shape types, positions, sizes, order, and color numbers. Change the red,
-green, and blue numbers in `makePalette()` to choose your three colors. Keep five shape
-lines and three palette entries.
+Change the five shape types, positions, sizes, order, and color numbers. Use at
+least three primitive kinds. Change the red, green, and blue numbers in
+`makePalette()` to choose three distinct colors. Keep five shape lines and three
+palette entries.
 
 ## A quick percentage refresher
 
@@ -92,7 +99,8 @@ which parts the computer can check for you.
 
 The tests try window sizes from 1 × 1 through 1920 × 1080. They check that:
 
-- there are exactly five shapes and three different colors;
+- there are exactly five shapes using at least three primitive kinds;
+- there are exactly three different colors and every color is used;
 - every position and size is a normal number between `0.0` and `1.0`;
 - every red, green, and blue value is between 0 and 255;
 - every shape uses palette number `0U`, `1U`, or `2U`; and
@@ -107,8 +115,9 @@ outline. You will check those things by looking at the running app.
 
 ## Build and test
 
-First complete the setup and doctor steps in the [lesson](../../authoring/sections/00-cross-platform-setup/index.md). Project Generator
-creates machine-specific build files. Do not commit or hand-edit those generated files.
+First complete the setup and doctor steps in the [Practice](../../authoring/sections/00-cross-platform-setup/index.md#practice).
+Project Generator creates machine-specific build files. Do not commit or hand-edit
+those generated files.
 
 On Linux or macOS, run these commands from the repository root:
 
@@ -128,8 +137,11 @@ $env:OF_ROOT = 'C:\absolute\path\to\of_v0.12.1_vs_64_release'
 .\tests\run-section-00-tests.ps1
 ```
 
-Use `solution` instead of `starter` if you want to build the example solution.
-After the build and tests pass, open the resulting app and inspect it yourself.
+The default test command checks `starter`, so it should be red before you replace
+the `TODO` values and green afterward. To verify the supplied example instead,
+run `tests/run-section-00-tests.sh solution` or pass `-Variant solution` to the
+PowerShell runner. Use `solution` instead of `starter` in build commands to open
+that example. After your build and tests pass, inspect the app yourself.
 
 ## What is in this exercise folder
 

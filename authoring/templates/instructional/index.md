@@ -16,7 +16,11 @@ asset_records: assets.yaml
 
 # A visible lesson title
 
-## See what we're making
+State the one idea and one final problem this section covers.
+
+## Lesson
+
+### See the idea
 
 Describe the visual goal, then replace this complete preview block while
 preserving its accessible alternatives.
@@ -37,54 +41,41 @@ Follow the animation convention in the [authoring guide](../../README.md) when
 motion is essential. Replace the placeholder source while retaining a prose
 citation to the [primary source](https://example.org/source).
 
-## Take a guess
-
-Ask one no-notes question about a small fragment or state change.
-
-## Let's unpack it
+### Explain it
 
 Teach one mathematical model visually, numerically, then symbolically. Add at
-most one substantial C++ mechanism.
+most one substantial C++ mechanism. Include one small prediction question.
 
-## Make it run
+## Practice
 
-Link two or three complete examples and state how to generate, build, and run
-them on each supported platform.
+Guide two or three small steps that apply the lesson without invoking the
+section unit-test runner. Include exact build/run commands and one focused bug to
+repair. Tell the reader what output or visible behavior to inspect, not the
+answer.
 
-## Break it on purpose
+## Exercise
 
-Plant one focused failure. Tell the learner what output or visible behavior to
-inspect, not the answer.
+### Problem
 
-## Your turn
+Pose one bounded problem. Name the starter's explicit change points, editable
+files, fixed public names, repeatable inputs, and edge cases. Link the exercise
+brief, tests, fixtures, and explained solution source-file-relatively.
 
-State the visual behavior, open-ended design choices, main ideas, public test
-interface, repeatable inputs, boundaries, and exact platform commands. Link the starter and tests source-file-relatively.
+### Run the tests
 
-## Check your work
+Give exact Linux, macOS, and Windows commands here. Explain the known case,
+boundary, and useful property the deterministic tests check. Keep renderer
+appearance in the manual checklist.
 
-Cover a known case, a boundary, and a useful property in the deterministic
-model or geometry. Keep renderer appearance in the manual checklist.
-
-## Optional notes for future you
-
-Suggest an accessible capture and a short explanation connecting code,
-mathematics, and visual behavior.
-
-## Make it yours
-
-Offer one optional variation that changes geometry, mapping, interaction,
-motion, or time rather than only color.
-
-## Quick visual check
+### Quick visual check
 
 - The intended input/output relationship is legible.
 - Resize, reset, pause/reduced motion, and non-pointer controls work as stated.
 - The result differs meaningfully from examples and cited precedents.
 - Contrast, non-color cues, credits, and licenses have been checked.
 
-## If you get stuck
+### If you get stuck
 
-Point the reader back to the smallest runnable example, the first useful error,
+Point the reader back to the first failing test, the smallest runnable example,
 and one concrete number to inspect. Keep troubleshooting practical and
-encouraging; do not ask the reader to fill out a research form.
+encouraging.

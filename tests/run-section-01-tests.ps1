@@ -1,10 +1,16 @@
+[CmdletBinding()]
+param(
+    [ValidateSet("starter", "solution")]
+    [string]$Variant = "starter"
+)
 $ErrorActionPreference = "Stop"
 $Root = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
 $Compiler = Get-Command cl.exe -ErrorAction SilentlyContinue
 if (-not $Compiler) { throw "Visual Studio cl.exe is required; run from a Developer PowerShell" }
 $Output = Join-Path ([IO.Path]::GetTempPath()) ("section-01-test-" + [guid]::NewGuid().ToString("N") + ".exe")
 try {
-    & $Compiler.Source /nologo /std:c++17 /W4 /WX /EHsc "/I$(Join-Path $Root 'exercises\01-a-mark-that-moves\shared')" "/I$(Join-Path $Root 'exercises\01-a-mark-that-moves\starter\src\design')" (Join-Path $Root "exercises\01-a-mark-that-moves\shared\traveler_model.cpp") (Join-Path $Root "exercises\01-a-mark-that-moves\starter\src\design\traveler_design.cpp") (Join-Path $Root "exercises\01-a-mark-that-moves\tests\traveler_model_test.cpp") "/Fe:$Output"
+    $Design = Join-Path $Root "exercises\01-a-mark-that-moves\$Variant\src\design"
+    & $Compiler.Source /nologo /std:c++17 /W4 /WX /EHsc "/I$(Join-Path $Root 'exercises\01-a-mark-that-moves\shared')" "/I$Design" (Join-Path $Root "exercises\01-a-mark-that-moves\shared\traveler_model.cpp") (Join-Path $Design "traveler_design.cpp") (Join-Path $Root "exercises\01-a-mark-that-moves\tests\traveler_model_test.cpp") "/Fe:$Output"
     if ($LASTEXITCODE -ne 0) { throw "section 01 test compilation failed" }
     & $Output (Join-Path $Root "exercises\01-a-mark-that-moves\fixtures\frame-streams.tsv")
     if ($LASTEXITCODE -ne 0) { throw "section 01 tests failed" }

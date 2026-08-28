@@ -140,9 +140,17 @@ function Assert-PilotContract {
     if(-not(Get-Content -Raw -LiteralPath (Join-Path $pilot 'lesson-notes.md')).Contains('Help used:')){Fail 'lesson notes template is missing help level'}
     if(-not(Get-Content -Raw -LiteralPath (Join-Path $pilot 'progress-log.md')).Contains('Complete path')){Fail 'progress log is missing complete-path checkpoint'}
     foreach($lesson in $lessons|Where-Object{$_.Kind-eq'instructional'}){
-        $content=Get-Content -Raw -LiteralPath $lesson.Path
-        if($content-notmatch'(?m)^## (Quick visual|Manual)'){Fail "$($lesson.Path)`: instructional section requires a visual-review heading"}
-        if($content-notmatch'(?m)^## If you get stuck\r?$'){Fail "$($lesson.Path)`: instructional section requires a troubleshooting heading"}
+        $lines=@(Get-NormalMarkdownLines $lesson.Path)
+        foreach($phase in @('Lesson','Practice','Exercise')){
+            if(@($lines|Where-Object{$_-eq"## $phase"}).Count-ne1){Fail "$($lesson.Path)`: phase structure requires exactly one Lesson, Practice, and Exercise heading"}
+        }
+        $lessonLine=[Array]::IndexOf($lines,'## Lesson');$practiceLine=[Array]::IndexOf($lines,'## Practice');$exerciseLine=[Array]::IndexOf($lines,'## Exercise')
+        if(-not($lessonLine-lt$practiceLine-and$practiceLine-lt$exerciseLine)){Fail "$($lesson.Path)`: phases must appear in Lesson, Practice, Exercise order"}
+        $beforeExercise=($lines[0..($exerciseLine-1)]-join"`n")
+        if($beforeExercise-match'run-section-[0-9][0-9]-tests\.(?:sh|ps1)'){Fail "$($lesson.Path)`: section unit-test commands belong in Exercise, not Lesson or Practice"}
+        $content=$lines-join"`n"
+        if($content-notmatch'(?m)^#{2,3} (Quick visual|Manual)'){Fail "$($lesson.Path)`: instructional section requires a visual-review heading"}
+        if($content-notmatch'(?m)^#{2,3} If you get stuck\r?$'){Fail "$($lesson.Path)`: instructional section requires a troubleshooting heading"}
     }
 }
 
@@ -245,12 +253,19 @@ try{
         if ($homePage.Contains('alt=""')) { Fail 'publication home emitted an image with empty alt text' }
         $lessons = @(Get-ChildItem -LiteralPath (Join-Path $Authoring 'sections') -Filter index.md -File -Recurse | Sort-Object -Property FullName | Where-Object { (Read-FrontMatter $_.FullName).draft -eq 'false' })
         foreach ($lesson in $lessons) {
-            $slug = (Read-FrontMatter $lesson.FullName).slug
+            $front = Read-FrontMatter $lesson.FullName
+            $slug = $front.slug
             $page = Join-Path $publication "course/$slug/index.html"
             if (-not (Test-Path -LiteralPath $page -PathType Leaf)) { Fail "publication did not emit lesson $slug" }
             $rendered = Get-Content -Raw -LiteralPath $page
             if (-not $rendered.Contains('class="lesson"')) { Fail "publication lesson $slug did not use the accessible lesson layout" }
             if (([regex]::Matches($rendered, '<h1')).Count -ne 1) { Fail "publication lesson $slug must contain exactly one h1" }
+            if ($front.course_kind -eq 'instructional') {
+                if (([regex]::Matches($rendered, '<h2 ')).Count -ne 3) { Fail "publication instructional lesson $slug must contain exactly three h2 phase headings" }
+                foreach ($phase in @('lesson','practice','exercise')) {
+                    if (-not $rendered.Contains("<h2 id=`"$phase`">")) { Fail "publication instructional lesson $slug omitted $phase heading" }
+                }
+            }
             if ($rendered.Contains('href="../../../')) { Fail "publication retained an unresolved repository link in $slug" }
             if ($rendered.Contains('href=""')) { Fail "publication emitted an empty link in $slug" }
             $homeContent = Get-Content -Raw -LiteralPath (Join-Path $publication 'index.html')

@@ -1,5 +1,8 @@
 # Exercise 02: a parameterized family of marks
 
+Complete the [Lesson and Practice](../../authoring/sections/02-python-to-cpp-survival-kit/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will use a C++ `std::vector` to build a family of related marks. Think of it as a

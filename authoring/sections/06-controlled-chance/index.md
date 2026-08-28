@@ -18,81 +18,67 @@ asset_records: assets.yaml
 
 # Controlled chance
 
-## See what you're making
+This section treats randomness as a design material: choose a repeatable seed,
+choose the shape of the choices, and save exact parameters when a seed is not
+enough.
+
+1. [Lesson: control repeatable variation](#lesson)
+2. [Practice: predict, run, and repair](#practice)
+3. [Exercise: build a tested six-image edition](#exercise)
+
+## Lesson
+
+### One rule can produce a family
 
 ![Six bordered panels contain related but nonidentical arrangements of dark dots, horizontal orange dashes, and outlined rings; a small key labels the seed, weighted motif tickets, and center-biased position shape.](media/seeded-edition-preview.svg "Six related seeded editions.")
 
 *One seed generates six related editions; shape and position distinguish motifs without relying on color.*
 
-The preview is static, has no audio, and encodes motif by shape as well as color.
+A computer's random-number generator behaves more like an elaborate card shuffle
+than magic. A **seed** chooses the starting shuffle. The same seed and same rules
+produce the same sequence again, giving a varied image a repeatable identity.
 
-## Take a guess
+A **distribution** decides how engine output becomes useful choices. Uniform
+choices treat equal ranges equally; weighted choices favor some outcomes;
+center-biased choices make the middle more common. These are compositional tools,
+not a substitute for choosing a composition.
 
-A ten-ticket choice gives tickets 0–5 to dots, 6–8 to dashes, and 9 to rings. Predict
-the proportions and the result for tickets 5, 6, 8, and 9. Then compare one uniform
-value with the average of two uniform values: which rule places more marks near the middle?
+### Engine, seed, and distribution have separate jobs
 
-## Let's unpack it
-
-### Before the randomness vocabulary
-
-A computer's random-number generator is more like a very elaborate card shuffle than
-magic. A **seed** chooses the starting shuffle. Use the same seed and the same rules,
-and you get the same sequence again. That repeatability lets a test recreate an image
-even though the image looks varied.
-
-A **distribution** is the rule for choosing from the sequence. A uniform rule gives
-every choice the same chance. A weighted rule makes some choices more common than
-others. You will use those rules as visual design tools, not prove probability theorems.
-
-### Engine, seed, and distribution have different jobs
-
-A random **engine** is a repeatable state machine that emits integers. A seed selects
-its initial state:
+A random engine is a repeatable state machine:
 
 ```cpp
 std::mt19937 engine(seed);
 ```
 
-The standard specifies the `std::mt19937` engine algorithm and state sequence; see
-[`std::mersenne_twister_engine`](https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine.html). The output looks irregular, but the same initial engine state repeats.
-It is pseudo-random, not secret and not entropy.
+The standard defines the sequence for
+[`std::mt19937`](https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine.html).
+It is pseudo-random and repeatable, not secret.
 
-A **distribution** maps engine output into useful values. The model creates a
-[`std::uniform_real_distribution<float>`](https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution.html) for normalized positions and radii. “Uniform” means equal-length
-intervals are intended to receive equal probability, not that a small image must contain
-an even grid.
+A distribution maps that sequence into a range. The exercise uses
+[`std::uniform_real_distribution<float>`](https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution.html)
+for positions and radii. Exact distribution mapping is not required to match
+between every C++ standard-library implementation, even when the engine and seed
+match.
 
-This distinction matters for reproducibility: the standard engine sequence is specified,
-while a standard distribution's exact mapping algorithm is not required to match every
-C++ library implementation. Two builds may consume or map engine values differently even
-with the same seed.
+That creates three different replay promises:
 
-### Reproducibility has explicit levels
+1. **Concept replay:** a seed and algorithm describe the same process.
+2. **Same-build replay:** the same source, library build, parameters, and seed
+   reproduce the same serialized model.
+3. **Cross-toolchain parameter replay:** saved generated records recreate the
+   exact model without running the distribution again.
 
-This section uses three clear promises:
+The adapter uses
+[openFrameworks file utilities](https://openframeworks.cc/documentation/utils/ofFileUtils/)
+when `S` saves `edition-parameters.txt`. The `CONTROLLED_CHANCE_V1` format stores
+seed metadata and exactly six ordered editions. Its parser rejects wrong
+versions, missing or extra records, non-finite numbers, unknown motifs, bad
+ranges, and noncontiguous indices.
 
-1. **Concept replay:** seed and algorithm explain the same process.
-2. **Same-build replay:** same source, compiler/library build, parameters, and seed
-  produce exactly the same serialized model text. `R` demonstrates this.
-3. **Cross-toolchain parameter replay:** save `CONTROLLED_CHANCE_V1` text so tests,
-  another adapter, or code you add can parse those generated records without running a
-  random distribution again. The supplied starter saves this file but does not load it.
+### Generate records before drawing
 
-A seed alone cannot promise the same choices from every compiler's random library. Save
-the generated choices when another person must recreate the exact result or when you
-want to return to it much later. The adapter uses [openFrameworks file utilities](https://openframeworks.cc/documentation/utils/ofFileUtils/) when `S`
-writes `edition-parameters.txt`.
-
-This one standard text format stores a version, seed metadata, exactly six ordered
-editions, mark count, normalized x/y, radius, and motif code. It uses the classic locale
-and enough decimal digits to round-trip each `float`. The parser rejects wrong
-versions, missing or extra records, `NaN` or infinite values, unknown motifs,
-bad ranges, and noncontiguous edition indices.
-
-### Simple records separate chance from drawing
-
-The model does not draw while sampling:
+The model stores choices without any drawing call:
 
 ```cpp
 struct MarkParameter {
@@ -107,16 +93,14 @@ struct Edition {
 };
 ```
 
-First generate records; then serialize, test, or render them. This seam lets a fixture
-provide parameters independently of an engine. It also lets another toolchain parse the
-exact edition without pretending its distributions match.
+Separating records from rendering lets tests inspect values and another program
+parse saved parameters. Drawing then becomes a separate visual interpretation.
 
-### Uniform choice and weighted choice
+### Weighted tickets make hierarchy explicit
 
-A radius uses a uniform real distribution between the minimum and maximum
-radii you choose.
-Motifs use an integer ticket drawn with [`std::uniform_int_distribution<int>`](https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html) from 0 through 9, followed by an
-explicit table:
+Motifs use an integer from
+[`std::uniform_int_distribution<int>`](https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html)
+between 0 and 9:
 
 ```text
 0 1 2 3 4 5 -> dot   (six tickets)
@@ -124,80 +108,64 @@ explicit table:
 9           -> ring  (one ticket)
 ```
 
-This is weighted choice without hidden magic. `weightedMotif()` is tested over all ten
-tickets and must map exactly six to dot, three to dash, and one to ring. Generator
-integration checks exact counts and legal motifs, but does not treat a small random
-sample's histogram as a portable oracle.
+The intended proportions are 60%, 30%, and 10%. Exact ticket boundaries are
+testable; a small random sample's observed percentages are not a reliable oracle.
 
-### Distributions are design shapes
+### Averaging uniforms creates a visible distribution shape
 
-A single uniform coordinate spreads marks evenly in expectation. This lesson uses the
-average of two uniform draws:
+One uniform coordinate spreads values evenly in expectation. Averaging two
+uniform values favors the center:
 
 ```text
 center_biased = (uniform_a + uniform_b) / 2
 ```
 
-Few pairs average near 0 or 1; many average near 0.5. The result is a triangular
-probability shape with more central marks. The public test uses every pair on a fixed
-0.0–1.0 grid and counts center versus tail values. That repeatable calculation cannot
-fail because of a lucky or unlucky random sample.
+Few pairs average near 0 or 1; many average near 0.5. This triangular shape
+creates a denser middle and quieter edges. The property test checks all pairs on
+a fixed grid instead of trusting a lucky random sample.
 
-Distributions should answer a compositional question. Uniform radius gives a flat size
-range; weighted motifs establish hierarchy; center-biased positions create a dense
-middle and quieter edges. Change those rules only when you can name the intended shape.
+One continuing engine creates editions 0 through 5. All six share the same rules
+but receive different records. Responsive panel geometry maps normalized values
+after generation and reserves maximum radius, half the stroke, and an outer
+margin. A panel smaller than `64 × 64` or any non-finite parameter is invalid.
 
-### Exactly six images, not six reruns by hand
+## Practice
 
-One outer loop creates indices 0 through 5. Each edition receives the same number of
-records from one continuing engine state. The result is a family: shared rules, distinct
-parameters. Tests require exactly six editions, contiguous indices, exact per-edition
-counts, legal normalized positions, finite radii, and known motif codes.
+Predict the choice rules and inspect a known-good edition without using the
+section unit-test runner.
 
-Changing the seed must alter many generated records, not only seed metadata. Within one
-build, the same seed is compared through that standard saved text. Neither test inspects
-pixels.
+### 1. Work the ticket and layout numbers
 
-### Stroke-aware responsive panels
+1. Tickets 5, 6, 8, and 9 map to dot, dash, dash, and ring.
+2. Uniform values 0.2 and 0.8 average to 0.5.
+3. Six editions with 20 marks each contain 120 records.
+4. With maximum radius 8, the inset is `8 + 1.5 + 2 = 11.5` pixels.
+5. A seed is enough for same-build replay; saved parameters are needed for this
+   section's exact cross-toolchain replay.
 
-Normalized coordinates are mapped into each panel only after generation. The inset
-reserves the largest record radius, half of the 3-pixel stroke, and a 2-pixel outer
-margin:
+Predict each result first. Then draw ten ticket boxes and shade the six/three/one
+groups so the hierarchy is visible.
 
-```text
-inset = maximum radius + 1.5 + 2
-center = inset + unit * (viewport dimension - 2*inset)
+### 2. Build and explore the working example
+
+```sh
+scripts/section-06.sh generate --project solution
+scripts/section-06.sh build --project solution --configuration Release
 ```
 
-Circles, horizontal or vertical dashes, rings, and the solution's axis-aligned squares
-have extrema no farther than one radius from their center. Tests calculate those extrema
-independently for all six fixture editions at square, narrow, wide, and `64 x 64`
-panel sizes. A panel smaller than 64 in either dimension is explicitly invalid.
-`NaN` or infinite parameters never enter a scene.
+On Windows Developer PowerShell:
 
-### Your composition and palette
+```powershell
+.\scripts\section-06.ps1 generate -Project solution
+.\scripts\section-06.ps1 build -Project solution -Configuration Release
+```
 
-`Design` owns the seed, marks per edition, radius range, and three-color palette.
-The starter draws framed samples with filled dots, horizontal dashes, and circular
-rings. The explained solution connects record order into routes and uses filled squares,
-vertical cross-stems, and square outlines. Create a third grammar—perhaps bands, paired
-marks, cut-paper clusters, or a typographic constellation—not a recolor.
+Open the app. Press `R` and confirm the same edition returns. Press `N` and
+identify what changes while the six-panel grammar remains. Press `S`, then open
+`edition-parameters.txt` and find its version, seed, edition indices, normalized
+positions, radii, and motif codes.
 
-The tests compile the starter's `makeEditionDesign()`, so invalid choices receive a direct diagnostic. Contrast and resemblance still require human review; a numerical
-model cannot prove either.
-
-## Try the numbers
-
-1. Ten motif tickets assign probabilities of 60%, 30%, and 10%—the same as
-  `0.6`, `0.3`, and `0.1`.
-2. Tickets 5, 6, 8, and 9 map to dot, dash, dash, and ring.
-3. Uniform inputs 0.2 and 0.8 average to 0.5.
-4. With maximum radius 8, inset is `8 + 1.5 + 2 = 11.5` pixels.
-5. Six editions with 20 marks each contain 120 records.
-6. Seed plus source is enough for same-build replay; portable parameters are required by
-  this lesson's cross-platform rule.
-
-## Break it on purpose
+### 3. Repair a weighted boundary
 
 In `exercises/06-controlled-chance/shared/edition_model.cpp`, temporarily change:
 
@@ -211,76 +179,72 @@ to:
 if (ticket >= 0 && ticket < 5) return Motif::dot;
 ```
 
-Run `tests/run-section-06-tests.sh`. Predict the ticket-boundary and exact six/three/one mapping
-diagnostics, then restore `< 6` and rerun. If this was your only intended edit:
+Before rebuilding, write the new ticket counts. Build and run the solution, then
+inspect several `N` variations and compare the motif hierarchy with your ten-box
+diagram. Restore `< 6` and rebuild; do not regenerate.
+
+If that was your only intended edit:
 
 ```sh
 git restore -- exercises/06-controlled-chance/shared/edition_model.cpp
 ```
 
-That command discards every uncommitted change in the named file. Before moving on, make
-sure you can connect the failure to the ticket table.
+That command discards every uncommitted change in the named file.
 
-## Your turn
+## Exercise
 
-Open the [six-image edition brief](../../../exercises/06-controlled-chance/README.md). Edit `starter/src/design/edition_design.cpp` first. Predict your 6/3/1 hierarchy,
-position density, radius range, and 3-by-2 panel behavior. Then create your geometry in
-`starter/src/ofApp.cpp` while keeping exactly six editions and `R`, `N`,
-and `S` keyboard controls.
+### Problem: create a six-image seeded edition
 
-Use the same seed to inspect a revision, a new seed to explore variation, and a saved
-parameter file to identify a chosen edition. Do not repeatedly reseed from the clock
-until something attractive appears; that erases the experiment.
+Build exactly six related images from one seeded model. Choose a seed, marks per
+edition, radius range, and palette, then create a visual grammar distinct from
+the starter's dots/dashes/rings and the solution's connected routes. Preserve
+the explicit six/three/one ticket rule, center-biased positions, `R`/`N`/`S`
+controls, responsive bounds, and portable serialization contract.
 
-## Check your work
+Use the
+[Exercise 06 brief, starter, tests, and solution](../../../exercises/06-controlled-chance/README.md)
+as the authoritative requirements. Begin in
+`starter/src/design/edition_design.cpp`, then edit `starter/src/ofApp.cpp`.
 
-On Linux or macOS:
+### Run the unit tests
+
+Linux or macOS, using both compilers when available:
 
 ```sh
 CXX=g++ tests/run-section-06-tests.sh
 CXX=clang++ tests/run-section-06-tests.sh
 ```
 
-On Windows Developer PowerShell:
+Windows Developer PowerShell:
 
 ```powershell
 .\tests\run-section-06-tests.ps1
 ```
 
-Generate and compile starter and solution in Debug and Release. Launch manually, press
-`R`, `N`, and `S`, inspect the saved parameter text, and inspect all six panels at
-minimum, narrow, square, and wide sizes. The tests exercise the parser; the supplied app does not load the file unless you add
-that route. Open the app yourself to check the window, contrast, controls, and visual
-choices; the number tests and build cannot see them.
+The tests check same-build seed replay, exactly six editions, legal ranges and
+motifs, exact six/three/one ticket mapping, the center-biased distribution
+property, stable serialization round trips, strict seed grammar, malformed
+input rejection, finite three-pixel stroke-aware bounds at `64 × 64`, invalid
+smaller viewports, and your design choices. They compile the starter design and
+do not compare screenshots.
 
-## Optional notes for future you
+After tests pass, generate and build the starter. Exercise `R`, `N`, and `S`,
+inspect the saved text, and view all six panels at minimum, narrow, square, and
+wide sizes.
 
-Explain the difference between a seed and a distribution, then describe one weighted or
-center-biased choice in your picture. Note what the saved parameter file contains and
-name one visual relationship you chose. Save a six-panel capture with alt text.
+### Quick visual check
 
-## Make it yours
-
-Keep the saved parameter schema but change how records become marks. Sort by x before
-connecting, pair rare rings with nearest dots, map radius to line count, or use
-negative-space windows. Predict which generated invariants stay fixed and which
-renderer-only relationships change.
-
-## Quick visual check
-
-- `R`, `N`, and `S` work by keyboard, and no panel
-  flashes.
-- Dot, dash, and ring roles remain distinguishable without color alone.
+- `R`, `N`, and `S` work from the keyboard; no panel flashes.
+- Motif roles and edition differences remain legible without color alone.
 - Ink/background and accent/background contrast are suitable.
-- Exactly six panels remain legible at narrow, square, wide, and minimum sizes.
-- Geometry or spatial relationships differ from starter and solution, not only palette.
-- Capture alt text names six images, density shape, motif encoding, and palette role.
-- A saved parameter file records the exact inspected model for tests or a loader you
-  add; reused work is credited.
+- Exactly six images remain clear at minimum, narrow, square, and wide sizes.
+- Geometry differs from starter and solution in more than palette.
+- Capture alt text names six images, density shape, motif encoding, and palette.
+- Saved parameters record the inspected model; reused work remains credited.
 
-## If you get stuck
+### If you get stuck
 
-If a random sketch changes every time, print the seed and check that the model uses the
-seeded engine—not a surprise global generator. If every result looks the same, check
-that you are actually drawing the generated values. Randomness is seasoning, not a
-substitute for choosing a composition.
+If the sketch changes unexpectedly, print the seed and confirm the model uses
+the seeded engine rather than a global generator. If every image looks alike,
+verify that rendering reads the generated records. For a weighting failure,
+draw tickets 0 through 9 and inspect the first boundary that differs.

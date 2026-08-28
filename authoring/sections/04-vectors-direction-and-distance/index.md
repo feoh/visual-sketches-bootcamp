@@ -19,70 +19,34 @@ asset_records: assets.yaml
 
 # Vectors, direction, and distance
 
-## See what you're making
+This section turns an arrow between two points into numbers you can calculate,
+draw, and use for motion.
+
+1. [Lesson: understand vector direction and length](#lesson)
+2. [Practice: calculate, run, and repair](#practice)
+3. [Exercise: build a tested constellation](#exercise)
+
+## Lesson
+
+### One arrow, three useful descriptions
 
 ![Three labeled panels show horizontal, down-right positive (3,4), and zero-length anchor-to-target connectors with component, distance, and unit-vector values.](media/vector-connector-preview.svg "Direction, distance, and guarded normalization cases in the openFrameworks coordinate convention.")
 
 *Subtraction gives direction components; length gives distance; guarded normalization gives a unit direction or zero.*
 
-The static preview needs no motion or audio alternative. Circle/rectangle endpoint
-shapes, arrow lines, labels, and equations communicate roles without color alone.
+Here a **vector** is an arrow stored as two numbers: sideways movement and
+vertical movement. It is not the `std::vector` list from section 02.
 
-## Take a guess
+If an anchor is at `(20, 30)` and a target is at `(23, 34)`, subtract “to minus
+from”:
 
-An anchor is at `(20, 30)` and a target at `(23, 34)`. Before calculating,
-predict the direction components, distance, and unit direction. Then predict what should
-happen when anchor and target are the same point.
-
-## Let's unpack it
-
-### Before the vector vocabulary
-
-Here a **vector** is an arrow stored as two numbers: how far it goes sideways and how
-far it goes vertically. It is not the same thing as the C++ `std::vector` list from
-section 02.
-
-If an anchor is at `(1, 2)` and a target is at `(4, 6)`, subtracting gives
-`(3, 4)`: move 3 right and 4 down to reach the target. That arrow is 5 units long.
-A **normalized vector** keeps the direction but has length 1, so `(3, 4)` becomes
-`(0.6, 0.8)`. Multiplying that unit arrow by any speed gives controlled motion in the
-same direction.
-
-You can draw every vector in this lesson as an arrow. If the numbers become murky,
-return to the picture: start point, arrow, end point.
-
-### A vector is two components
-
-A two-dimensional vector stores horizontal and vertical components. openFrameworks ships
-[GLM](https://glm.g-truc.net/0.9.9/api/a00246.html), so an adapter can use:
-
-```cpp
-glm::vec2 pointer{static_cast<float>(x), static_cast<float>(y)};
-glm::vec2 direction = target - anchor;
-float magnitude = glm::length(direction);
+```text
+direction = target - anchor
+          = (23 - 20, 34 - 30)
+          = (3, 4)
 ```
 
-The braces initialize both components. The renderer-independent core uses an equivalent
-small aggregate so tests need neither a window nor openFrameworks:
-
-```cpp
-struct Vec2 { float x; float y; };
-Vec2 direction{3.0f, 4.0f};
-```
-
-`(3, 4)` means three units in positive x and four in positive y. In the usual
-openFrameworks window, x increases rightward and y increases downward. Thus
-`(0, -12)` points up, not down. A vector can represent a point, displacement,
-velocity, or other paired quantity; the surrounding name supplies meaning.
-
-A two-float `Vec2` is cheap and clear to pass **by value**, as in
-`length(Vec2 value)`. A larger configuration that is only read uses a **const reference**, as
-in `designIsValid(const Design& design)`: no copy is made and the function cannot change the caller's design.
-The adapters make the library boundary explicit with `fromGlm(const glm::vec2& value)` and `toGlm(const Vec2& value)`.
-Do not reinterpret-cast between unrelated structs; copy the named `x` and
-`y` components.
-
-These are three ways to describe the same thing:
+That same vector can be described three ways:
 
 ```text
 picture: an arrow right 3 and down 4
@@ -90,191 +54,131 @@ numbers: (3, 4)
 code:    direction = target - anchor
 ```
 
-Use whichever version makes the next step clearest.
+Swapping the operands produces `(-3, -4)`, the opposite arrow. In the usual
+openFrameworks window, positive x points right and positive y points down.
 
-### Subtraction gives a direction displacement
+### Store and pass two components
 
-To point **from anchor to target**, subtract in that order:
+openFrameworks includes [GLM's two-component vector](https://glm.g-truc.net/0.9.9/api/a00246.html):
 
-```text
-direction = target - anchor
-          = (target.x - anchor.x, target.y - anchor.y)
+```cpp
+glm::vec2 pointer{static_cast<float>(x), static_cast<float>(y)};
+glm::vec2 direction = target - anchor;
 ```
 
-For anchor `(20, 30)` and target `(23, 34)`:
+The renderer-independent model uses a matching standard-library-only aggregate:
 
-```text
-direction = (23 - 20, 34 - 30) = (3, 4)
+```cpp
+struct Vec2 { float x; float y; };
+Vec2 direction{3.0f, 4.0f};
 ```
 
-Swapping operands gives `(-3, -4)`, the opposite direction. Keep the phrase “to
-minus from” beside the expression until the order feels natural.
+A small `Vec2` is clear to pass by value. A larger read-only design uses a const
+reference such as `designIsValid(const Design& design)`, avoiding a copy while
+preventing the function from changing the caller's design. Adapter helpers copy
+named `x` and `y` fields between `Vec2` and `glm::vec2`; they never reinterpret
+one unrelated struct as another.
 
-### Length and distance
+### Length turns the arrow into distance
 
-The Pythagorean theorem gives vector length. “Squared” means multiplying a
-number by itself, and `sqrt` asks which positive number produces the total:
+The Pythagorean relationship measures the `(3, 4)` arrow:
 
 ```text
-length((3, 4)) = sqrt(3*3 + 4*4)
-               = sqrt(9 + 16)
-               = sqrt(25)
-               = 5
+length = sqrt(3*3 + 4*4)
+       = sqrt(25)
+       = 5
 ```
 
-Distance between points is the length of their difference:
+Distance between two points is the length of their difference:
 
 ```text
 distance(anchor, target) = length(target - anchor)
 ```
 
-Distance is never negative. The [GLM geometric-functions reference](https://glm.g-truc.net/0.9.9/api/a00212.html) lists the same `length`,
-`distance`, `dot`, and `normalize` vocabulary commonly seen in graphics
-code. This small `Vec2` remains standard-library-only so its mechanics can be tested
-without a renderer. It uses [`std::hypot`](https://en.cppreference.com/w/cpp/numeric/math/hypot.html) to compute length without first
-storing `x*x + y*y` as a potentially overflowing intermediate.
+The [GLM geometric functions](https://glm.g-truc.net/0.9.9/api/a00212.html)
+use the same `length`, `distance`, `dot`, and `normalize` vocabulary. The pure
+course helper uses [`std::hypot`](https://en.cppreference.com/w/cpp/numeric/math/hypot.html)
+to avoid first storing a potentially overflowing `x*x + y*y` intermediate.
 
-### Normalize safely
+### Normalize safely, then scale
 
-Normalization keeps direction while changing nonzero length to one:
+Normalization keeps direction but changes a nonzero vector's length to one:
 
 ```text
-unit = direction / length(direction)
+unit = direction / length
 (3, 4) / 5 = (0.6, 0.8)
 ```
 
-But dividing `(0, 0)` by length zero is invalid. The zero check is required, not
-optional cleanup:
+A unit vector separates **where** from **how far**. Multiply `(0.6, 0.8)` by
+speed 10 and the step becomes `(6, 8)`, still pointing the same way.
 
-```cpp
-Vec2 normalizeOrZero(Vec2 value) {
-    float magnitude = length(value);
-    if (magnitude <= 0.0f) return {0.0f, 0.0f};
-    return scale(value, 1.0f / magnitude);
-}
+The zero vector has no direction and length zero, so dividing it would be
+invalid. `normalizeOrZero({0,0})` deliberately returns `{0,0}`. Non-finite
+inputs also return safe values rather than sending `NaN` into drawing calls.
+`moveToward()` limits a step to the remaining distance so it cannot overshoot.
+
+### The same vector rules drive motion
+
+`MotionState` keeps position, velocity, and acceleration together. One fixed
+step first changes velocity by `acceleration * dt`, then position by
+`velocity * dt`. A fixed `dt` makes replay repeatable.
+
+The pure model uses the same building blocks for three small numerical studies:
+
+- **Seek:** point toward a target, guard coincidence, and limit speed.
+- **Orbit:** place a point at a chosen radius and phase around a center.
+- **Bounce:** clamp a boundary crossing and reverse only the crossed velocity
+  component.
+
+The exercise's visible constellation also uses these rules. Pointer input through
+[`mouseMoved`](https://openframeworks.cc/documentation/application/ofBaseApp/#!show_mouseMoved)
+and arrow input through
+[`keyPressed`](https://openframeworks.cc/documentation/application/ofBaseApp/#!show_keyPressed)
+update the same requested target. The model clamps that target to a stroke-aware
+safe inset, including at the minimum valid `64 × 64` viewport.
+
+## Practice
+
+Practice the arithmetic and inspect a working connector before using the unit-test
+suite in the Exercise.
+
+### 1. Calculate four arrows
+
+Draw axes and work these out on paper:
+
+1. `(20,30)` to `(23,34)` gives direction `(3,4)`, distance `5`, and unit
+   direction `(0.6,0.8)`.
+2. `(10,8)` to `(4,8)` gives `(-6,0)`, distance `6`, and unit `(-1,0)`.
+3. `(7,7)` to itself gives `(0,0)`, distance `0`, and guarded unit `(0,0)`.
+4. Unit `(0.6,0.8)` scaled by reach 10 gives displacement `(6,8)`.
+
+Predict each answer before calculating it. If one is surprising, draw the arrow
+and write “to minus from” next to the subtraction.
+
+### 2. Build and explore the working example
+
+Generate and build the solution as a known-good practice app:
+
+```sh
+scripts/section-04.sh generate --project solution
+scripts/section-04.sh build --project solution --configuration Release
 ```
 
-If a vector contains `NaN` or infinity, the helper returns zero length and a
-zero unit vector. If the requested target contains one of those bad values, the scene is
-marked invalid. The model never lets NaN silently enter drawing coordinates.
+On Windows Developer PowerShell:
 
-### Scale direction into speed or reach
-
-A unit direction separates **where** from **how far**:
-
-```text
-step = unit_direction * speed
-next = current + step
+```powershell
+.\scripts\section-04.ps1 generate -Project solution
+.\scripts\section-04.ps1 build -Project solution -Configuration Release
 ```
 
-For unit `(0.6, 0.8)` and speed `10`, step is `(6, 8)` and has length
-`10`. `moveToward()` uses `min(distance, max_step)`, so a point five pixels away does not
-overshoot when maximum step is twenty. In the constellation exercise `reach` is a
-spatial limit recomputed from input. The three compact studies below add elapsed-time
-motion with an explicit fixed `dt`.
+Open the app. Move the pointer, then use each arrow key. Watch direction,
+distance, and satellite spacing as the target approaches the anchor, coincides
+with it, and reaches an edge. Resize to narrow, square, wide, and `64 × 64`.
 
-### Velocity, acceleration, and three fixed-step studies
+### 3. Repair a backwards connector
 
-A small aggregate keeps related motion values together and is initialized in one
-expression whose answer the tests can check:
-
-```cpp
-struct MotionState { Vec2 position; Vec2 velocity; Vec2 acceleration; };
-MotionState mote{{0.0f, 0.0f}, {3.0f, 1.0f}, {0.0f, 2.0f}};
-constexpr float fixed_dt = 1.0f / 60.0f;
-mote = integrateFixed(mote, fixed_dt);
-```
-
-Velocity is position change per second; acceleration is velocity change per second
-squared. Here `dt` means the duration of one time step. `integrateFixed()` first changes
-velocity by `acceleration * dt`, then changes position by `velocity * dt`. This order is
-sometimes called **semi-implicit Euler**, but the two steps matter more than the name.
-A caller uses the same `fixed_dt` every step instead of frame duration, making replay
-predictable. A `dt` that is `NaN`, infinite, zero, or negative preserves the input state.
-
-The pure functions in `shared/constellation_model.cpp` form three small studies:
-
-1. **Seek:** `seekAcceleration()` normalizes `target - position`, scales it to maximum
-  acceleration, and returns zero when target and position coincide. `stepSeek()`
-  limits velocity before its fixed-step position update.
-2. **Orbit:** `orbitPoint(center, radius, phase)` uses the circle helper to place a point at a chosen
-  distance around a center. You do not need to know sine or cosine yet—the next section
-  opens that black box. Radius zero returns the center, an intentional zero-vector case.
-3. **Bounce:** `stepBounce()` performs one fixed integration step, clamps a crossing to
-  its rectangular boundary, and reverses only the crossed velocity component.
-
-These are numerical studies rather than three extra rendered apps. They keep one lesson
-project, compile in the public runner, and can be drawn by converting core
-`Vec2` values to `glm::vec2` in `ofApp`. Known cases test seek from
-`(0,0)` toward `(3,4)`, a quarter-turn orbit, right-edge bounce,
-repeatable replay, and coincident/zero-radius guards. The orbit is a preview of the
-circle math in the next section, not a trig pop quiz. A large step that crosses a
-boundary more than once is outside this introductory bounce exercise; keep fixed steps
-small.
-
-The model exposes `dot(a, b) = a.x*b.x + a.y*b.y` because self-dot explains `squared length`:
-`dot((3,4),(3,4)) = 25`. No angle or lighting behavior needs the dot product here, so the
-exercise does not add those concepts prematurely.
-
-### Input becomes data at the boundary
-
-The openFrameworks adapter receives pointer coordinates through [`mouseMoved`](https://openframeworks.cc/documentation/application/ofBaseApp/#!show_mouseMoved) and
-arrow-key events through [`keyPressed`](https://openframeworks.cc/documentation/application/ofBaseApp/#!show_keyPressed). Both update one `requested_target_`, then call the
-same pure `makeScene()`. Arrow keys move by 12 pixels per event, providing an input
-alternative and a clear component example: left changes x by `-12`; up changes
-y by `-12`.
-
-Input can lie outside the window. The model clamps target centers to a 12-pixel safe
-inset. The starter's 8-pixel target half-extent plus half of its 4-pixel stroke occupies
-10 pixels, leaving 2 pixels of margin, so visible geometry—not merely calculated
-centers—remains inside. After every valid rebuild, the adapter synchronizes its
-requested target to that clamped center. An arrow key therefore moves exactly 12 pixels
-inward even immediately after an out-of-window pointer event. A window smaller than
-`64 x 64`, an invalid design, or a target containing `NaN` or infinity
-returns a clearly marked invalid scene instead of broken coordinates.
-
-### Calculate the constellation before drawing it
-
-`shared/constellation_model.cpp` computes anchor, clamped target, direction, distance,
-guarded unit direction, traveler, and two perpendicular satellites. It contains no
-`ofDraw...` call. The starter draws the anchor, target, and traveler with a line,
-circles, and a rectangle. The solution also draws the returned satellite points as a
-triangle.
-
-Your `Design` controls anchor fractions, maximum reach, and palette. The shared
-model owns safety and vector mechanics. Tests compile the starter design so changing a
-design value can turn the starter tests red.
-
-### Approximate comparisons still matter
-
-`sqrt` and normalization usually produce binary floating-point approximations.
-Fixtures compare with absolute tolerance `0.002` and relative tolerance
-`0.000001`, reporting actual, expected, difference, and both tolerances. The
-independent `(3,4)` fixture expects exactly understandable values—distance
-`5`, unit `(0.6,0.8)`—while a clamped boundary fixture records rounded
-decimal oracles. There is no pixel comparison.
-
-## Try the numbers
-
-1. From `(20,30)` to `(23,34)`: direction `(3,4)`, distance
-  `5`, unit `(0.6,0.8)`.
-2. From `(10,8)` to `(4,8)`: direction `(-6,0)`, distance
-  `6`, unit `(-1,0)`.
-3. If a point moves 6 pixels per second for 2 seconds, solve `distance = rate * time`: it moves 12
-  pixels.
-4. From `(7,7)` to itself: direction `(0,0)`, distance `0`,
-  guarded unit `(0,0)`.
-5. Scale unit `(0.6,0.8)` by reach `10`: displacement `(6,8)`.
-6. In a 400-pixel-wide viewport with 12-pixel insets, usable width is `376`.
-  Anchor fraction `0.25` gives x `12 + 0.25 * 376 = 106`.
-
-Draw axes and arrows, write the component pairs, then calculate. A diagram can show
-orientation but cannot prove magnitude; numbers can verify magnitude but may hide
-subtraction order.
-
-## Break it on purpose
-
-In `exercises/04-vectors-direction-and-distance/shared/constellation_model.cpp`, temporarily change:
+Temporarily change this line in
+`exercises/04-vectors-direction-and-distance/shared/constellation_model.cpp`:
 
 ```cpp
 scene.direction = subtract(scene.target, scene.anchor);
@@ -286,89 +190,73 @@ to:
 scene.direction = subtract(scene.anchor, scene.target);
 ```
 
-Run `tests/run-section-04-tests.sh`. Predict which parsed direction/unit oracles and traveler
-relationships fail while unsigned distance may still pass. Read the component
-diagnostics, restore “target minus anchor,” and rerun. If this was your only intended
-edit:
+Rebuild the solution without regenerating it. Predict what remains correct and
+what points backward, then inspect the app. Distance stays nonnegative, but the
+direction and traveler relationship reverse. Restore “target minus anchor” and
+rebuild.
+
+If that was your only intended edit:
 
 ```sh
 git restore -- exercises/04-vectors-direction-and-distance/shared/constellation_model.cpp
 ```
 
-That command discards every uncommitted change in the named file. Before moving on, make
-sure you can connect the failure to operand order.
+That command discards every uncommitted change in the named file.
 
-## Your turn
+## Exercise
 
-Open the [distance-reactive constellation brief](../../../exercises/04-vectors-direction-and-distance/README.md). Edit exactly `exercises/04-vectors-direction-and-distance/starter/src/design/constellation_design.cpp` first. Choose anchor fractions,
-reach, and palette in documented ranges. Then edit `starter/src/ofApp.cpp` to create your own
-connector geometry.
+### Problem: make a distance-reactive constellation
 
-The starter is a line, filled circular anchor, outlined square target, and outlined
-traveler, so endpoint roles do not rely on color. The explained solution is visually
-distinct: a triangular constellation uses the perpendicular vector `(-unit.y, unit.x)`, two
-satellites, graduated connector marks, and negative space. Make a third relationship,
-not a recolor. There is no target screenshot.
+Build a connector whose geometry responds to pointer and arrow-key input. Choose
+anchor fractions, maximum reach, and a valid palette, then create a visual
+relationship distinct from the starter's line-and-nodes and the solution's
+triangular satellites. Preserve the public model interface, zero guard,
+stroke-aware inset, and equivalent pointer/keyboard routes.
 
-## Check your work
+Use the
+[Exercise 04 brief, starter, tests, and solution](../../../exercises/04-vectors-direction-and-distance/README.md)
+as the authoritative requirements. Begin in
+`starter/src/design/constellation_design.cpp`, then change
+`starter/src/ofApp.cpp` after the model choices are valid.
 
-On Linux or macOS, use both compilers when available:
+### Run the unit tests
+
+Linux or macOS, using both compilers when available:
 
 ```sh
 CXX=g++ tests/run-section-04-tests.sh
 CXX=clang++ tests/run-section-04-tests.sh
 ```
 
-On Windows Developer PowerShell:
+Windows Developer PowerShell:
 
 ```powershell
 .\tests\run-section-04-tests.ps1
 ```
 
-Fixtures parse every requested target, anchor, clamped target, direction, distance, and
-unit component. Public properties cover vector arithmetic, subtraction order,
-length/distance, normalization and zero/`NaN` or infinite guards, aggregate
-motion initialization, fixed-step acceleration/velocity integration, seek speed limiting
-and coincidence, orbit phases and zero radius, bounce component reversal and replay,
-scaling without overshoot, clamped boundaries, stroke-aware in-bounds geometry, valid
-`64 x 64` and invalid smaller viewports, repeatable replay, parameter variation,
-and your design. Tests compile the starter design, not the solution. They do not
-inspect source style, pixels, contrast, or resemblance.
+The tests check observable numerical contracts: vector arithmetic and
+subtraction order; length, distance, and guarded normalization; fixed-step
+velocity and acceleration; seek, orbit, and bounce boundaries; scaling without
+overshoot; clamped target geometry; valid `64 × 64` and invalid smaller
+viewports; deterministic replay; fixture values; and your design ranges. They
+compile the starter design and never inspect pixels, contrast, or resemblance.
 
-Generate and compile starter and solution in Debug and Release. Open them at narrow,
-square, and wide sizes; test pointer and arrow keys, including coincident points and
-edges. To visualize the optional studies, draw their returned points with distinct
-shapes, keep pause/reset controls keyboard-accessible, and describe the seek target,
-orbit path, and bounce bounds without relying only on color. The compiler cannot check
-those visible and interactive details.
+After tests pass, generate and build the starter in Debug or Release and open it
+at narrow, square, wide, and minimum sizes.
 
-## Optional notes for future you
-
-In informal notes, explain “to minus from” and how velocity differs from acceleration.
-Choose one zero or boundary case that helped you understand the code, and name one
-visual decision you made. Save a capture with alt text.
-
-## Make it yours
-
-Keep the model interface and tests but change one relationship: make satellite spread
-shrink with distance, use reach as a dashed rhythm, mirror a point across the anchor, or
-add a keyboard-controlled second target. Predict components, distance, zero-case, and
-boundary consequences before editing.
-
-## Quick visual check
+### Quick visual check
 
 - Anchor, target, and direction remain distinguishable without color alone.
+- Pointer and arrow keys provide equivalent target movement.
+- Coincident and edge targets remain finite and legible.
 - Ink/background and accent/background contrast are suitable; nothing flashes.
-- Pointer and arrow keys both work, including coincident and edge targets.
-- Geometry remains legible at narrow, square, wide, and `64 x 64` sizes.
-- Geometry or spatial behavior differs from starter and solution, not only palette.
-- Capture alt text names endpoints, connector direction, distance response, and
-  viewport.
+- Geometry differs from the starter and solution in more than palette.
+- Capture alt text names endpoints, direction, distance response, and viewport.
 - Reused code and assets remain credited and license-compatible.
 
-## If you get stuck
+### If you get stuck
 
-For a backwards-moving point, draw the two points and write “to minus from” next to the
-subtraction. For a crash or a giant number, check the zero-length case before doing any
-division. The little `(3, 4, 5)` triangle is a useful sanity check, not a secret
-handshake.
+For a backwards point, draw both points and write “to minus from” beside the
+subtraction. For a giant or invalid number, inspect the zero-length guard before
+any division. Use the `(3,4,5)` example as the smallest sanity check, then rerun
+the first failing test.

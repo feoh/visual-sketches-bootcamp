@@ -172,8 +172,21 @@ validate_pilot_contract() {
   grep -Fq 'Complete path' "$root/docs/pilot/progress-log.md" || fail 'progress log is missing complete-path checkpoint'
   find "$root/authoring/sections" -mindepth 2 -maxdepth 2 -name index.md -type f | sort | while IFS= read -r lesson; do
     [ "$(frontmatter_value course_kind "$lesson")" = instructional ] || continue
-    grep -Eq '^## (Quick visual|Manual)' "$lesson" || fail "$lesson: instructional section requires a visual-review heading"
-    grep -Fqx '## If you get stuck' "$lesson" || fail "$lesson: instructional section requires a troubleshooting heading"
+    body="$work/phase-$(basename "$(dirname "$lesson")")"
+    normal_markdown "$lesson" > "$body"
+    [ "$(grep -Fxc '## Lesson' "$body" || true)" -eq 1 ] &&
+      [ "$(grep -Fxc '## Practice' "$body" || true)" -eq 1 ] &&
+      [ "$(grep -Fxc '## Exercise' "$body" || true)" -eq 1 ] ||
+      fail "$lesson: phase structure requires exactly one Lesson, Practice, and Exercise heading"
+    lesson_line=$(grep -Fn '## Lesson' "$body" | cut -d: -f1)
+    practice_line=$(grep -Fn '## Practice' "$body" | cut -d: -f1)
+    exercise_line=$(grep -Fn '## Exercise' "$body" | cut -d: -f1)
+    [ "$lesson_line" -lt "$practice_line" ] && [ "$practice_line" -lt "$exercise_line" ] ||
+      fail "$lesson: phases must appear in Lesson, Practice, Exercise order"
+    awk '/^## Exercise$/{exit}{print}' "$body" | grep -Eq 'run-section-[0-9][0-9]-tests\.(sh|ps1)' &&
+      fail "$lesson: section unit-test commands belong in Exercise, not Lesson or Practice"
+    grep -Eq '^#{2,3} (Quick visual|Manual)' "$body" || fail "$lesson: instructional section requires a visual-review heading"
+    grep -Eq '^#{2,3} If you get stuck$' "$body" || fail "$lesson: instructional section requires a troubleshooting heading"
   done
 }
 
@@ -320,6 +333,12 @@ EOF
       [ -f "$page" ] || fail "publication did not emit lesson $slug"
       grep -Fq 'class="lesson"' "$page" || fail "publication lesson $slug did not use the accessible lesson layout"
       [ "$(grep -c '<h1' "$page")" -eq 1 ] || fail "publication lesson $slug must contain exactly one h1"
+      if [ "$(frontmatter_value course_kind "$lesson")" = instructional ]; then
+        [ "$(grep -c '<h2 ' "$page")" -eq 3 ] || fail "publication instructional lesson $slug must contain exactly three h2 phase headings"
+        for phase in lesson practice exercise; do
+          grep -Fq "<h2 id=\"$phase\">" "$page" || fail "publication instructional lesson $slug omitted $phase heading"
+        done
+      fi
       grep -Fq "href=\"${base_path}course/$slug/\"" "$publication/index.html" || fail "publication home omitted lesson $slug"
       grep -Fq 'href="../../../' "$page" && fail "publication retained an unresolved repository link in $slug"
       grep -Fq 'href=""' "$page" && fail "publication emitted an empty link in $slug"

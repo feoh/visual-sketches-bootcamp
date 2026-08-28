@@ -2,6 +2,8 @@
 set -euo pipefail
 ROOT=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)
 CXX=${CXX:-c++}
+VARIANT=${1:-starter}
+case "$VARIANT" in starter|solution) ;; *) echo 'usage: tests/run-section-01-tests.sh [starter|solution]' >&2; exit 2 ;; esac
 command -v "$CXX" >/dev/null || { echo "section 01 tests: C++ compiler not found: $CXX" >&2; exit 1; }
 OUT=$(mktemp "${TMPDIR:-/tmp}/section-01-test.XXXXXX")
 FAKE_OF=$(mktemp -d "${TMPDIR:-/tmp}/section-01-incomplete-of.XXXXXX")
@@ -9,9 +11,9 @@ SENTINEL="$ROOT/exercises/01-a-mark-that-moves/starter/bin/wrapper-safety-sentin
 trap 'rm -f "$OUT" "$SENTINEL"; rm -rf "$FAKE_OF"' EXIT
 "$CXX" -std=c++17 -Wall -Wextra -Wpedantic -Werror \
   -I"$ROOT/exercises/01-a-mark-that-moves/shared" \
-  -I"$ROOT/exercises/01-a-mark-that-moves/starter/src/design" \
+  -I"$ROOT/exercises/01-a-mark-that-moves/$VARIANT/src/design" \
   "$ROOT/exercises/01-a-mark-that-moves/shared/traveler_model.cpp" \
-  "$ROOT/exercises/01-a-mark-that-moves/starter/src/design/traveler_design.cpp" \
+  "$ROOT/exercises/01-a-mark-that-moves/$VARIANT/src/design/traveler_design.cpp" \
   "$ROOT/exercises/01-a-mark-that-moves/tests/traveler_model_test.cpp" -o "$OUT"
 "$OUT" "$ROOT/exercises/01-a-mark-that-moves/fixtures/frame-streams.tsv"
 

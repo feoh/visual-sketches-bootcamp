@@ -1,5 +1,8 @@
 # Exercise 11: coherent-current instrument
 
+Complete the [Lesson and Practice](../../authoring/sections/11-noise-and-flow-fields/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will fill a grid with smoothly changing values, turn those values into arrow

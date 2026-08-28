@@ -126,6 +126,9 @@ tests/run-section-00-tests.sh
 
 For sections 01–15, substitute the matching two-digit section number in those
 command names; tests follow `tests/run-section-NN-tests.sh` or `.ps1`.
+Sections 00 and 01 now begin intentionally red: their default commands test the
+incomplete starter. Pass `solution` to the shell runner or `-Variant solution`
+to the PowerShell runner when verifying the supplied reference solution.
 
 Use `--of-root`/`-OfRoot` or `OF_ROOT` exactly as for the foundation. Generated
 native metadata and build products remain ignored.

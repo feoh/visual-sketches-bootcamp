@@ -50,25 +50,22 @@ histories introduced in sections 09 and 12. Section 17 requires section 16 or
 equivalent synthesis work. The only delivered section 15 lane is recorded
 microphone amplitude with no-device fallback.
 
-## The rhythm of a lesson
+## The rhythm of a section
 
-Sections 00–15 follow a friendly repeatable rhythm. You may combine or skip steps
-when that keeps your creative momentum moving. The larger projects in sections
-16–17 use a looser path.
+Sections 00–15 use three clearly named phases. The larger projects in sections
+16–17 keep a looser synthesis path.
 
-1. **See it:** a short visual goal and an animated or still reference.
-2. **Take a guess:** predict what a tiny piece of code will draw or how it will move.
-3. **Unpack it:** one math idea and at most one substantial C++ mechanism, explained before the jargon arrives.
-4. **Make it run:** one to three runnable examples or one complete progressive program.
-5. **Break it on purpose:** repair one planted bug or misleading implementation.
-6. **Your turn:** a constrained but open-ended C++ sketch.
-7. **Check your work:** supplied tests for deterministic behavior and edge cases.
-8. **Notes for later:** optionally save a capture or short explanation connecting code,
-   math, and image.
-9. **Make it yours:** an optional variation that reuses earlier ideas.
+1. **Lesson:** learn one coherent visual, mathematical, and C++ idea through an
+   explanation and worked example.
+2. **Practice:** apply the idea in small guided steps, make a prediction, run the
+   sketch, and repair one focused mistake without a unit-test gate.
+3. **Exercise:** solve one problem in a focused starter. Unit tests check
+   attributes that indicate correctness; you inspect visual quality
+   and accessibility yourself.
 
-The guidance gradually opens up: complete example → small gap → constrained remix →
-open brief.
+The exercise brief owns the exact files, constraints, commands, fixtures, and
+test contract. A supplied solution explains one valid approach without becoming
+a picture to copy.
 
 ## Part 0 — Get something on screen
 

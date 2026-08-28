@@ -1,6 +1,15 @@
 #include "traveler_design.h"
+
+float traveler::stepDistance(float rate_pixels_per_second, float elapsed_seconds) {
+    // TODO: Return the signed distance traveled during this amount of time.
+    (void)rate_pixels_per_second;
+    (void)elapsed_seconds;
+    return 0.0f;
+}
+
 traveler::Design makeTravelerDesign() {
-    // Change these visual and motion choices; keep them inside the brief's ranges.
-    return {{0.25f, 0.50f}, 150.0f, 18.0f,
-            {238, 91, 71}, {244, 190, 81}, {24, 38, 67}};
+    // TODO: Choose a normalized start, speed, radius, and three valid colors.
+    // The mark and background colors must differ.
+    return {{-1.0f, 2.0f}, 0.0f, 0.0f,
+            {0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
 }

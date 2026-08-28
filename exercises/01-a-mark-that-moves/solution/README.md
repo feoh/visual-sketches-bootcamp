@@ -2,8 +2,10 @@
 
 ## What this example tries
 
-The solution changes the start, speed, radius, colors, and mark shape while keeping the
-supplied fixed-step motion. `ofApp::update()` passes `ofGetLastFrameTime()` (seconds) and current
+The solution implements `stepDistance` as signed rate multiplied by elapsed
+seconds, then changes the start, speed, radius, colors, and mark shape while
+keeping the supplied fixed-step motion. `ofApp::update()` passes
+`ofGetLastFrameTime()` (seconds) and current
 input into the model; it does not move pixels directly. The model clamps each frame to
 0.1 second, accumulates it, and consumes 1/120-second steps. Pointer direction is
 recomputed at each fixed step; arrow direction is the device-independent fallback.

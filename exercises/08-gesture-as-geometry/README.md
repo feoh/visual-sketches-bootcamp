@@ -1,5 +1,8 @@
 # Exercise 08: speed-width and curvature-color gesture
 
+Complete the [Lesson and Practice](../../authoring/sections/08-gesture-as-geometry/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will turn a pointer drag into a clean path that can change width, color, and mark

@@ -61,9 +61,12 @@ try {
     Expect-Failure "route-extra-field" "must have six tab-delimited fields" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; $lines=@(Get-Content -LiteralPath $p); $lines[1]+="`textra"; $lines|Set-Content -LiteralPath $p }
     Expect-Failure "route-invalid-sequence" "sequence must be an ASCII decimal integer" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; $s=Get-Content -Raw -LiteralPath $p; Set-Content -NoNewline -LiteralPath $p -Value ([regex]::Replace($s,"`t1`t","`tone`t",1)) }
     Expect-Failure "route-reordered-rows" "sequence must be contiguous from 1" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; $lines=@(Get-Content -LiteralPath $p); $first=$lines[1]; $lines[1]=$lines[2]; $lines[2]=$first; $lines|Set-Content -LiteralPath $p }
+    Expect-Failure "phase-missing-practice" "phase structure requires exactly one Lesson, Practice, and Exercise heading" { param($f) $p=Join-Path $f "authoring/sections/00-cross-platform-setup/index.md"; @(Get-Content -LiteralPath $p|Where-Object{$_-ne'## Practice'})|Set-Content -LiteralPath $p }
+    Expect-Failure "phase-order" "phases must appear in Lesson, Practice, Exercise order" { param($f) $p=Join-Path $f "authoring/sections/00-cross-platform-setup/index.md"; $s=(Get-Content -Raw -LiteralPath $p).Replace('## Lesson','## TEMP').Replace('## Practice','## Lesson').Replace('## TEMP','## Practice'); Set-Content -NoNewline -LiteralPath $p -Value $s }
+    Expect-Failure "tests-before-exercise" "section unit-test commands belong in Exercise, not Lesson or Practice" { param($f) $p=Join-Path $f "authoring/sections/00-cross-platform-setup/index.md"; $s=(Get-Content -Raw -LiteralPath $p).Replace('## Lesson',"## Lesson`n`ntests/run-section-00-tests.sh"); Set-Content -NoNewline -LiteralPath $p -Value $s }
     # Symlink escape is POSIX-only because Windows runner policy may deny link creation.
     $positive = if ($RequireHugo) { "positive Hugo fixture/publication builds" } else { "positive structural contract" }
-    Write-Host "authoring PowerShell checker tests: $positive and 26 negative contracts passed"
+    Write-Host "authoring PowerShell checker tests: $positive and 29 negative contracts passed"
 } finally {
     if (Test-Path -LiteralPath $Work) { Remove-Item -LiteralPath $Work -Recurse -Force }
 }

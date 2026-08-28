@@ -79,10 +79,20 @@ jobs:
         run: tests/run-linux-setup-tests.sh
       - name: Validate portable authoring contracts and Hugo fixtures
         run: tests/run-authoring-check-tests.sh
-      - name: Test section 00 geometry
-        run: tests/run-section-00-tests.sh
-      - name: Test section 01 motion model
-        run: tests/run-section-01-tests.sh
+      - name: Test section 00 exercise and solution
+        run: |
+          if tests/run-section-00-tests.sh starter; then
+            echo 'section 00 starter unexpectedly passed' >&2
+            exit 1
+          fi
+          tests/run-section-00-tests.sh solution
+      - name: Test section 01 exercise and solution
+        run: |
+          if tests/run-section-01-tests.sh starter; then
+            echo 'section 01 starter unexpectedly passed' >&2
+            exit 1
+          fi
+          tests/run-section-01-tests.sh solution
       - name: Test section 02 mark-family model
         run: tests/run-section-02-tests.sh
       - name: Test section 03 responsive-poster model
@@ -133,12 +143,12 @@ jobs:
       - name: Validate native PowerShell contract parity
         shell: pwsh
         run: tests/run-authoring-check-tests.ps1 -RequireHugo
-      - name: Test section 00 geometry
+      - name: Test section 00 geometry solution
         shell: pwsh
-        run: tests/run-section-00-tests.ps1
-      - name: Test section 01 motion model
+        run: tests/run-section-00-tests.ps1 -Variant solution
+      - name: Test section 01 motion model solution
         shell: pwsh
-        run: tests/run-section-01-tests.ps1
+        run: tests/run-section-01-tests.ps1 -Variant solution
       - name: Test section 02 mark-family model
         shell: pwsh
         run: tests/run-section-02-tests.ps1

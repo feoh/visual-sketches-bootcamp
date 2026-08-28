@@ -1,5 +1,8 @@
 # Section 14 exercise: animated geometry from a mask
 
+Complete the [Lesson and Practice](../../authoring/sections/14-images-and-type-as-geometry/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will read dark pixels from an image and turn them into points. A threshold chooses

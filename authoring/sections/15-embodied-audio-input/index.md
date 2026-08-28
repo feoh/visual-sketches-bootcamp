@@ -18,58 +18,37 @@ asset_records: assets.yaml
 
 # Embodied audio input
 
-This elective takes one lane only: microphone **amplitude**. It does not survey 3D,
-spectra, or cameras.
+This elective takes one lane only: microphone **amplitude**, with recorded and
+keyboard routes that require no device. Learn the mapping, practice every route
+safely, then create one tested visual instrument.
 
-## See what you're making
+1. [Lesson: turn one loudness value into geometry](#lesson)
+2. [Practice: calculate, run, and repair the input routes](#practice)
+3. [Exercise: build a tested amplitude instrument](#exercise)
+
+## Lesson
+
+### One input should have one visible consequence
 
 ![Two panels show a quiet amplitude as a small four-ray circle and short meter, then a louder amplitude as a large sixteen-ray circle and long meter; badges identify recorded-fixture and keyboard fallback routes.](media/audio-instrument-preview.svg "Louder input has one immediate visual consequence.")
 
 *Louder input visibly makes one mark larger and denser; recorded and keyboard routes keep the mapping available without a microphone.*
 
-The rule should be easy to read: **louder → bigger + more marks**. Size, count,
-a written meter, and an ACTIVE/QUIET label duplicate the cue, so neither hearing nor
-color is required.
+The rule is **louder → bigger + more marks**. Size, count, a meter, and an
+ACTIVE/QUIET label duplicate the cue, so hearing and color are never required.
+Use the course's
+[credited precedent notes](../../../docs/source-notes.md#visual-vocabulary)
+to study immediate embodied feedback, not to copy a performer's gesture or
+silhouette. Preserve creator, collaborator, and performer credits while changing
+the visual grammar, mapping, interaction, motion, and staging.
 
-## Borrow the idea, not the artwork
+The optional microphone route reduces a short sound block to one amplitude from
+0 to 1. Only that scalar crosses into the visual model. The model retains no
+waveform, sound, identity, timestamps, device metadata, or amplitude history.
 
-Use the course's [credited precedent notes](../../../docs/source-notes.md#visual-vocabulary) to study immediate embodied-input feedback while
-preserving every named collaborator and performer credit. Transfer only the legible
-cause-and-effect loop; change the input context, visual grammar, mapping, interaction,
-motion, and staging, and do not copy a precedent's vocal gesture or silhouette.
+### Three sources enter one adapter
 
-## Take a guess
-
-The displayed level starts at 0 and moves halfway toward each new reading. The readings
-are `0.0`, `0.05`, then `0.4`. Values at or below `0.1` count as quiet. Predict each
-displayed value, which steps remain quiet, and how far the third value sits between the
-quiet floor and full loudness. The terms **smoothing alpha**, **dead zone**, and
-**normalized level** come next.
-If radius maps from 20 to 120 and ray count maps from 4 to 24, predict the third radius
-and ray count before opening the fixture.
-
-## Let's unpack it
-
-### Before the audio vocabulary
-
-The optional microphone route does not send recorded sound into the visual model. It
-reduces a tiny block of sound samples to one loudness number from 0 to 1, then passes
-only that number across.
-
-The model blends the old level with the new one so the picture does not twitch. That
-blend is **smoothing**. It then removes very small levels with a **dead zone**, so room
-noise does not keep the sketch active. For example, with a dead zone of 0.1, an input of
-0.05 becomes quiet while 0.55 is remapped into the useful range above the floor.
-
-Audio callbacks and drawing happen at different times. A one-value mailbox lets the
-audio side leave the latest loudness for the drawing side without saving sound or an
-amplitude history. The recorded and keyboard routes let you learn every other part
-without a microphone.
-
-### One input adapter, three explicit sources
-
-The section's one main C++ idea is an input adapter. All sources produce one normalized
-amplitude number:
+All sources produce the same normalized value:
 
 ```text
 recorded amplitude fixture ─┐
@@ -77,49 +56,41 @@ live microphone RMS ────────┼─> consumeAmplitude ─> state 
 keyboard no-device value ───┘
 ```
 
-The repeatable core never opens a device, reads a clock, draws a pixel, or stores
-waveform samples. `InputSource` says `recorded`, `live_microphone`, or `no_device`;
-the source name is recorded instead of being guessed from a blank screen. The fixture
-contains six synthetic scalar values—not captured sound, speech, waveform, device
-identity, or timestamps. The optional openFrameworks adapter follows the portable
-[`ofSoundStream`](https://openframeworks.cc/documentation/sound/ofSoundStream/) callback boundary. Its callback reads frame/channel samples through
-[`ofSoundBuffer`](https://openframeworks.cc/documentation/sound/ofSoundBuffer/), computes one RMS amplitude over at most 4,096 frames, publishes that
-scalar, and retains no audio.
+`InputSource` explicitly says `recorded`, `live_microphone`, or `no_device`.
+The fixture contains synthetic scalars rather than captured sound. The optional
+openFrameworks boundary uses
+[`ofSoundStream`](https://openframeworks.cc/documentation/sound/ofSoundStream/)
+and reads callback frames and channels through
+[`ofSoundBuffer`](https://openframeworks.cc/documentation/sound/ofSoundBuffer/).
+It computes one RMS amplitude over at most 4,096 frames, publishes that scalar
+through a one-value mailbox, and retains no audio.
 
-The program begins in no-device mode. Pressing L is the only action that asks to open
-the system's selected default input. Before doing so, tell people nearby, obtain
-consent, select the intended input in operating-system sound settings, and verify the
-on-screen `LIVE MICROPHONE` label. Press N or exit to stop and close it. If setup fails,
-the adapter returns visibly to keyboard fallback. These choices follow the W3C's broader
-[privacy and security considerations](https://www.w3.org/TR/mediacapture-streams/#privacy-and-security-considerations): make capture intentional and visible, minimize derived information, and
-stop when it is no longer needed. Do not use this lesson to record, identify, or
-classify people.
+The program starts in no-device mode. Pressing L is the only action that requests
+the selected default input. Tell nearby people, obtain consent, choose the
+intended device in OS settings, and verify the visible `LIVE MICROPHONE` label.
+N or exit stops and closes the stream. Setup failure visibly returns to keyboard
+fallback. These choices follow the W3C's broader
+[privacy and security considerations](https://www.w3.org/TR/mediacapture-streams/#privacy-and-security-considerations):
+make capture intentional and visible, minimize derived information, and stop
+when it is no longer needed. Do not record, identify, or classify people.
 
-### Smooth first, then remove the floor
+### Smooth first, then remove the quiet floor
 
-Raw amplitude jitters. Exponential smoothing blends the previous result `s`
-with new amplitude `x`:
+Raw amplitude jitters. Exponential smoothing moves partway from previous value
+`s` toward new value `x`:
 
 ```text
 s_new = s_old + alpha * (x - s_old)
 ```
 
-Visually, `alpha` is how far a marker travels from old to new on each sample:
-
-```text
-old 0.0 |--------- target 0.4
-alpha .5 moves halfway: 0.2
-```
-
-The Predict sequence gives `0.0`, `0.025`, then `0.2125`. For that
-third step, the old value is `0.025`, the new target is `0.4`, and
-`alpha` is `0.5`:
+With alpha 0.5 and readings `0.0`, `0.05`, then `0.4`, smoothed values are
+`0.0`, `0.025`, and `0.2125`:
 
 ```text
 0.025 + 0.5 × (0.4 - 0.025) = 0.2125
 ```
 
-A dead zone suppresses a room/noise floor after smoothing:
+A dead zone removes the room-noise floor after smoothing:
 
 ```text
 level = 0                              when smoothed <= dead_zone
@@ -127,13 +98,11 @@ level = (smoothed - dead_zone) /
         (1 - dead_zone)                otherwise
 ```
 
-With dead zone 0.1, the first two steps are quiet. The third normalized level is
-`(0.2125 - 0.1) / 0.9 = 0.125`. The boundary at exactly 0.1 is quiet. Smoothing comes first so the
-threshold acts on the same stable state that geometry sees.
+With dead zone 0.1, the first two values stay quiet. The third normalized level
+is `(0.2125 - 0.1) / 0.9 = 0.125`. Exactly 0.1 is quiet. Smoothing happens first
+so the threshold acts on the same stable state the geometry sees.
 
-### One loudness level controls visible shapes
-
-The core maps normalized level `u` into radius and repeated-mark count:
+### The normalized value controls bounded geometry
 
 ```text
 radius = minimum_radius + u * (maximum_radius - minimum_radius)
@@ -141,157 +110,137 @@ rays = round(minimum_rays + u * (maximum_rays - minimum_rays))
 active = u > 0
 ```
 
-For `u = 0.125`, radius is `32.5` and ray count is 7 only if ordinary
-rounding is used on 6.5; this implementation computes `floor(value + 0.5)`, so the answer is
-**7**. The supplied starter fixture instead pins the actual floating-point path and
-checks every row; inspect it when your hand arithmetic and machine result disagree.
-Radius, count, normalized level, activity, source, and accepted/rejected/dropped
-counters are available before rendering.
+For `u = 0.125`, radius maps from 20–120 to `32.5`. Rays map from 4–24 to
+`6.5`; this implementation uses `floor(value + 0.5)`, so the result is 7.
+Radius, ray count, normalized level, activity, source, and accepted/rejected/
+dropped counters are available before rendering.
 
-Work cannot grow with sound duration. A batch consumes at most 256 amplitudes, a fixture
-has at most 4,096 values, one callback inspects at most 4,096 frames, and geometry has
-at most 128 repeated marks. The core owns no history or audio buffer. Invalid
-negative/NaN amplitudes reject transactionally; values above 1 clamp to 1. Oversize
-fixture replay rejects without replacing prior state.
+Work never grows with sound duration. A batch consumes at most 256 amplitudes, a
+fixture at most 4,096 values, one callback at most 4,096 frames, and geometry at
+most 128 marks. Invalid negative or non-finite amplitude rejects
+transactionally; values above 1 clamp to 1. Oversize fixture replay rejects
+without replacing the prior state.
 
-## Make it run: inspect three complete experiments
+## Practice
 
-### 1. Replay the saved loudness values
+Practice is guided and has no unit-test gate. Calculate one replay, explore the
+recorded and no-device routes, optionally try consented live input, then repair
+one quiet-boundary mistake.
 
-Linux x86-64 or macOS arm64:
+### 1. Calculate three input steps
+
+Open `exercises/15-embodied-audio-input/fixtures/amplitude-replay.txt` without
+running the suite. For alpha 0.5, dead zone 0.1, and readings 0, 0.05, 0.4,
+reproduce smoothed values 0, 0.025, 0.2125 and normalized values 0, 0, 0.125.
+Then map the third value to radius 32.5 and 7 rays. Compare every intermediate
+column rather than skipping directly to final geometry.
+
+### 2. Build the working solution without a microphone
+
+Set `OF_ROOT` to openFrameworks 0.12.1. Linux or macOS:
 
 ```sh
-cat exercises/15-embodied-audio-input/fixtures/amplitude-replay.txt
-CXX=g++ tests/run-section-15-tests.sh
+scripts/section-15.sh generate --project solution
+scripts/section-15.sh build --project solution --configuration Release
 ```
 
-Windows Visual Studio 2022 x64 Developer PowerShell:
+Launch the solution binary on Linux or its generated app bundle on macOS.
+Windows Developer PowerShell:
 
 ```powershell
-Get-Content .\exercises\15-embodied-audio-input\fixtures\amplitude-replay.txt
-.\tests\run-section-15-tests.ps1
+.\scripts\section-15.ps1 generate -Project solution
+.\scripts\section-15.ps1 build -Project solution -Configuration Release
+& .\exercises\15-embodied-audio-input\solution\bin\solution.exe
 ```
 
-The test parses all seven columns, checks each intermediate state, replays the same
-amplitudes, and compares final state/geometry. No microphone is involved.
+Use Up/Down and confirm the geometry and meter grow together while the label
+says `NO DEVICE`. Press F to replay the synthetic fixture. P pauses, R restarts
+the current source, and M reduces repeated marks. These routes make the complete
+instrument usable without capture permission or hardware.
 
-### 2. Use the no-device instrument
+If you choose to try live amplitude, first obtain consent and select the intended
+OS default input. Press L and require the `LIVE MICROPHONE` label; press N to
+close the stream and return to keyboard control. If setup fails, continue with
+N, F, and Up/Down. A compiler cannot prove device selection or permission UI.
 
-Generate and build with openFrameworks 0.12.1, then open the app. The course supplies
-checked commands for Linux x86-64, macOS arm64, and Windows Visual Studio 2022 x64
-Developer PowerShell. On another system, the sketch may work, but you may need to adapt
-the build steps.
+### 3. Repair an exact-boundary activity bug
 
-```sh
-scripts/section-15.sh generate --project starter
-scripts/section-15.sh build --project starter --configuration Release
-exercises/15-embodied-audio-input/starter/bin/starter
-```
+In `exercises/15-embodied-audio-input/shared/audio_input_model.cpp`, temporarily
+change `normalized > 0.0f` to `smoothed >= design.dead_zone`. Rebuild the
+solution and replay the fixture. At an input exactly on the dead-zone boundary,
+normalized level and geometry should be quiet, but the altered expression marks
+it active. Restore `normalized > 0.0f`, rebuild, and confirm the meter, label,
+and geometry agree again.
 
-On macOS, launch the generated app instead:
-
-```sh
-open exercises/15-embodied-audio-input/starter/bin/starter.app
-```
-
-On Windows:
-
-```powershell
-.\scripts\section-15.ps1 generate -Project starter
-.\scripts\section-15.ps1 build -Project starter -Configuration Release
-& .\exercises\15-embodied-audio-input\starter\bin\starter.exe
-```
-
-Press Up/Down. Confirm the circle and meter grow together and the source label says
-`NO DEVICE`. Press F to replay. P pauses, R restarts the current source, and M
-reduces repeated marks. These routes make the complete instrument usable without capture
-permission or hardware.
-
-### 3. Optionally try live amplitude
-
-Only after consent and selecting the intended OS default input, press L. A successful
-setup labels itself `LIVE MICROPHONE`; louder input should enlarge the same geometry. N
-closes the stream and restores keyboard control. On macOS, the section wrapper adds the
-required microphone-purpose string to generated application metadata; the app still
-opens no device until L. If L returns to `NO DEVICE`, use N/F/Up/Down and diagnose
-permissions or device selection outside the sketch. Unit tests and compilation do not
-prove that an actual device opened, that OS permission UI appeared, or that the graphics
-launched.
-
-## Break it on purpose
-
-In `exercises/15-embodied-audio-input/shared/audio_input_model.cpp`, temporarily change the final activity expression from `normalized > 0.0f`
-to `smoothed >= design.dead_zone`. Run the section tests. The exact-boundary case uses smoothing 1 and
-an input equal to the dead zone: its geometry must remain quiet, so the planted
-`>=` makes the test fail even though normalized level is still zero. Restore
-`normalized > 0.0f`, rerun, and make sure the boundary failure now makes sense. To discard only that file's
-uncommitted changes:
+If that was your only edit:
 
 ```sh
 git restore -- exercises/15-embodied-audio-input/shared/audio_input_model.cpp
 ```
 
-## Your turn
+That command discards every uncommitted change in the named file.
 
-Open the [audio instrument brief](../../../exercises/15-embodied-audio-input/README.md). Keep the tested input adapter, but choose response parameters in
-`starter/src/design/audio_instrument_design.cpp` and the visual grammar in `starter/src/ofApp.cpp`. Create a composition unlike
-both examples while preserving an immediately inferable mapping, visible
-source/activity, keyboard fallback, fixture replay, limited work, pause/reduced routes,
-and no retention.
+## Exercise
 
-## Check your work
+### Problem: create an amplitude-responsive visual instrument
+
+Keep the tested adapter and its three explicit sources. Choose response
+parameters in `starter/src/design/audio_instrument_design.cpp` and create a
+visual grammar in `starter/src/ofApp.cpp` whose input-to-output rule is
+immediately inferable. Preserve visible source/activity, fixture replay,
+keyboard fallback, bounded work, pause/reduced-motion routes, and no retention.
+
+Use the
+[Exercise 15 brief, starter, fixture, tests, and solution](../../../exercises/15-embodied-audio-input/README.md)
+as the authoritative specification. The exercise never requires a live device;
+absence of a microphone or permission is not failure.
+
+### Run the unit tests
+
+Linux or macOS:
 
 ```sh
 CXX=g++ tests/run-section-15-tests.sh
 CXX=clang++ tests/run-section-15-tests.sh
-scripts/check-authoring.sh
 ```
 
-Run the PowerShell suite on Windows. With a proven openFrameworks installation, generate
-and compile starter and solution in Debug and Release. Then manually launch no-device
-and fixture routes. Live microphone behavior is optional and manual; never convert its
-absence into a failed creative exercise.
+Windows Developer PowerShell:
 
-Known cases pin all fixture rows. Boundary cases cover exact quiet output, clamping,
-invalid values, invalid designs, work caps, and oversize fixtures. Property checks prove
-steady loud input cannot shrink radius and all geometry stays limited. Wrapper probes
-reject incomplete `OF_ROOT` before cleanup. Screenshots, device behavior, consent,
-and the clarity of the input-to-picture mapping still need a check in the running app.
+```powershell
+.\tests\run-section-15-tests.ps1
+```
 
-## Optional notes for future you
+Known cases pin all fixture rows and intermediate values. Boundary and property
+checks cover the exact quiet floor, clamping, invalid amplitude and design,
+work caps, oversize fixture rejection, repeatable replay, monotone geometry,
+and bounded output. Wrapper probes reject an incomplete `OF_ROOT` before
+cleanup. With a proven openFrameworks installation, generate and compile starter
+and solution in Debug and Release, then launch no-device and fixture routes.
+Live input, consent, device behavior, and the clarity of the mapping remain
+manual checks.
 
-Explain smoothing and the quiet floor with one worked value, then describe how loudness
-changes your picture. If live input matters to your version, note the consent step, what the app does not
-store, and the no-device fallback so you remember them later. Save a capture with alt text that names the
-visible input source and the quiet and loud shapes.
+You may use horizons, stacked glyphs, line weight, spacing, or symmetry instead
+of a sun, but loudness must remain monotone in at least one obvious dimension.
+Do not add recording, spectrum analysis, classification, camera input,
+unlimited history, or a second elective lane.
 
-## Make it yours
+### Quick visual check
 
-Try a wider horizon, stacked glyphs, line weight, spacing, or symmetry instead of a sun.
-Keep loudness monotonic in at least one obvious dimension. You may map silence to
-stillness, but retain the activity label and meter. Do not add spectrum analysis,
-recording, classification, camera input, unlimited history, or a second elective lane.
-
-## Quick visual check
-
-- The input-to-output rule is clear when you try the controls without instructions.
-- F and Up/Down operate without a device; N visibly identifies fallback.
-- L is opt-in; the selected default device and consent were checked first; N/exit stops
-  it.
-- No waveform, sound, identity, timestamp, or device metadata is saved or logged.
+- The input-to-output rule is clear through controls without spoken instruction.
+- F and Up/Down work without a device; N visibly identifies fallback.
+- L is opt-in after device selection and consent; N or exit stops capture.
+- No waveform, sound, identity, timestamp, or device metadata is stored or
+  logged.
 - Size/count, meter, text, and shape provide cues independent of sound and color.
-- P pauses; R replays; M reduces repeated marks; nothing flashes.
-- Below 680×360, high-contrast resize/source/stop guidance replaces the composition. The
-  adapter uses openFrameworks 0.12.1's fixed 8-pixel bitmap-glyph metric, preserves
-  distinct recorded/live/no-device labels while they fit, and progressively shortens
-  each to the essential `N` fallback key. A viewport too small for one glyph
-  is not usable, but model work remains limited.
-- Geometry, composition, response, and palette differ materially from both examples.
-- Capture alt text and reused code/assets are credited.
+- P pauses; R replays; M reduces marks; nothing flashes.
+- Below 680×360, high-contrast guidance replaces the composition and retains an
+  essential N fallback key while one fixed-size glyph still fits.
+- Geometry, composition, response, and palette differ from both examples.
+- Capture alt text names input source and quiet/loud geometry; reused work is
+  credited.
 
-## If you get stuck
+### If you get stuck
 
-Start with the recorded input. It gives you a repeatable signal while you untangle
-smoothing and mapping. Then try the no-device route before debugging permissions. Live
-audio is optional; the sketch should still be fun when the microphone is unplugged, shy,
-or being used by a video call.
+Start with recorded input because it is repeatable. Then use the no-device route
+before debugging permissions. Live audio is optional; the sketch should remain
+complete when the microphone is unplugged, shy, or busy with a video call.

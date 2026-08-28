@@ -1,5 +1,8 @@
 # Exercise 03: responsive poster
 
+Complete the [Lesson and Practice](../../authoring/sections/03-map-clamp-and-lerp/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will make a poster layout respond to the window size. Mapping turns progress in one

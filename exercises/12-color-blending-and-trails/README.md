@@ -1,5 +1,8 @@
 # Exercise 12: two-palette trail study
 
+Complete the [Lesson and Practice](../../authoring/sections/12-color-blending-and-trails/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will keep older marks and fade them to make trails. Alpha controls how strongly a

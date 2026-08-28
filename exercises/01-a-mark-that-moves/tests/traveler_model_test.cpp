@@ -61,6 +61,14 @@ void runStream(traveler::State& state, const FrameStream& stream, traveler::Inpu
     }
 }
 
+void stepDistanceCase() {
+    expect(near(traveler::stepDistance(120.0f, 1.0f / 60.0f), 2.0f),
+           "step distance multiplies pixels per second by elapsed seconds");
+    expect(near(traveler::stepDistance(-90.0f, 0.5f), -45.0f),
+           "step distance preserves the direction of a signed rate");
+    expect(near(traveler::stepDistance(300.0f, 0.0f), 0.0f),
+           "zero elapsed time produces zero distance");
+}
 void fixedDtCase() {
     auto state = traveler::makeState(known(), {800, 600});
     traveler::advanceFrame(state, known(), right(), traveler::fixedStepSeconds(), {800, 600});
@@ -167,6 +175,7 @@ int main(int argc, char** argv) {
     expect(argc == 2, "fixture path is provided");
     const std::vector<FrameStream> streams = argc == 2 ? readFrameStreams(argv[1]) : std::vector<FrameStream>{};
     expect(streams.size() == 4, "frame-stream fixture retains four explicit parsed scenarios");
+    stepDistanceCase();
     fixedDtCase();
     framePartitionCase(streams);
     pauseSpikeCase(streams);

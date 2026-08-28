@@ -1,5 +1,8 @@
 # Exercise 05: repeated phase-driven field
 
+Complete the [Lesson and Practice](../../authoring/sections/05-oscillation-circles-and-phase/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will make a field of repeated marks move in cycles. An angle says where a point is

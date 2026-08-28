@@ -27,13 +27,12 @@ whether you belong here.
 
 ## How the course works
 
-Each guided lesson:
+Each guided section follows one clear sequence:
 
-1. shows the visual result first;
-2. introduces only the C++ and math needed for that result;
-3. works through small examples with actual numbers;
-4. gives you a starter sketch to change; and
-5. includes tests for calculations and limits a computer can check.
+1. **Lesson:** learn one visual idea and the C++ and math it needs.
+2. **Practice:** apply it in small guided changes and repair one focused mistake.
+3. **Exercise:** solve one problem in a focused starter, then use unit tests to
+   check attributes that indicate correctness.
 
 Tests cannot judge your taste. They can check that a shape stays in the window
 or that reset gives the same starting values. They cannot decide whether your
@@ -76,9 +75,9 @@ The course contains:
 - three short sketch studies in section 16; and
 - one larger visual-instrument project in section 17.
 
-Every guided exercise has a starter, number-based tests, one possible solution,
-and build commands. The solution is an example to study, never the picture you
-must reproduce.
+Every guided exercise has a focused starter with clear change points,
+number-based tests, one possible solution, and build commands. The solution is
+an example to study, never the picture you must reproduce.
 
 The section 15 sound exercise always includes recorded-input and keyboard routes.
 Live microphone input is optional. You can complete it without a microphone or

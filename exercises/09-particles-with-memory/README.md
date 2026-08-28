@@ -1,5 +1,8 @@
 # Exercise 09: history-trail emitter
 
+Complete the [Lesson and Practice](../../authoring/sections/09-particles-with-memory/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will manage many small particle records. Each one has position, velocity, age,

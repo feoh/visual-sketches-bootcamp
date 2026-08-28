@@ -19,120 +19,92 @@ asset_records: assets.yaml
 
 # Color, blending, and trails
 
-## See what you're making
+This section has one path: learn how palette interpolation, alpha composition,
+and decay describe a trail, practice the arithmetic and renderer boundary, then
+solve one tested two-palette study.
+
+1. [Lesson: understand color, alpha, and age](#lesson)
+2. [Practice: calculate, compare, and repair](#practice)
+3. [Exercise: create a tested trail study](#exercise)
+
+## Lesson
+
+### Two paths reveal color and time
 
 ![On a dark navy field, a cyan-to-mint trail marked by crosses and a violet-to-amber trail marked by diamonds loop through each other; older marks are smaller and more transparent, central overlap is pale and bright, and a labeled five-step alpha key shows age without relying on color.](media/trail-preview.svg "Two palettes cross while alpha and size reveal age.")
 
 *Two palettes cross; shape identifies each path, while size and alpha reveal age and overlap.*
 
-The crosses and diamonds identify palettes without color. The labeled size key makes
-old-to-new order readable even if transparency or hue differences are hard to see. The
-preview is an original static SVG; different graphics hardware may draw the live version
-a little differently.
+Each color stores red, green, blue, and alpha. Alpha says how strongly a new
+color covers what is already there: 0 is invisible, 1 is fully opaque, and 0.5
+is halfway. A trail draws older samples with less alpha. Crosses and diamonds
+identify the two palette roles without color, while size and alpha show age.
 
-## Take a guess
+### Interpolate checked color data
 
-A half-visible red mark `(1, 0, 0, 0.5)` is drawn over solid blue `(0, 0, 1, 1)`.
-Predict the resulting alpha and RGB numbers. The formal name **straight alpha** comes
-later. A mark starts with alpha `0.75` and
-retains `0.8` each sample: what is its alpha at age 2? If a palette runs from
-`(0.1, 0.2, 0.3, 1)` to `(0.9, 0.6, 0.3, 0.5)`, what is its midpoint? Decide which answer describes
-model data and which still depends on a renderer.
-
-## Let's unpack it
-
-### Before the color vocabulary
-
-Each color has red, green, blue, and alpha values. Alpha says how strongly the new color
-covers what is already there: 0 means invisible, 1 means fully opaque, and 0.5 means
-halfway.
-
-A trail keeps older marks and draws them again with less alpha. If each age step keeps
-80% of the previous strength, the values go `1.0`, `0.8`,
-`0.64`, and so on. That repeated multiplication is called **exponential decay**.
-The name is formal; the visual result is simply a smooth fade into the past.
-
-Blending order matters because “red over blue” mixes from a different starting color
-than “blue over red.” You will work through actual channel numbers before using the
-general formula.
-
-### Color is checked data
-
-`Color` stores straight red, green, blue, and alpha channels in `[0, 1]`.
-Straight means RGB has not already been multiplied by alpha. `Palette` stores two
-colors. `paletteColor(palette, amount, output)` rejects an amount that contains `NaN`, infinity, or
-falls outside the allowed range and otherwise interpolates every channel:
+`Color` stores straight RGBA channels in `[0, 1]`; **straight** means RGB has not
+already been multiplied by alpha. A `Palette` has two endpoint colors.
+`paletteColor` interpolates every channel:
 
 ```text
 channel(t) = first_channel + (second_channel - first_channel) * t
 ```
 
-At `t = 0`, the exact first endpoint is returned. At `t = 1`, the exact
-second endpoint is returned. At `t = 0.5`, the Predict palette becomes
-`(0.5, 0.4, 0.3, 0.75)`. This is both a numerical weighted average and a small palette function.
-Tests sample 101 amounts across each palette and check that every channel
-remains between its endpoints and within `[0, 1]`.
+At `t = 0` and `t = 1`, the exact endpoints return. A palette from
+`(0.1, 0.2, 0.3, 1)` to `(0.9, 0.6, 0.3, 0.5)` has midpoint
+`(0.5, 0.4, 0.3, 0.75)`. Non-finite or out-of-range amounts reject. Tests sample
+101 amounts and require every channel to stay between its endpoints and within
+the unit interval.
 
-The plain `Color`, `Palette`, `TrailSample`, and `TrailMark` records are
-the section's data boundary. No renderer color, global random source, wall clock, or GPU
-state enters the pure C++17 model.
+Plain `Color`, `Palette`, `TrailSample`, and `TrailMark` records form the data
+boundary. No renderer color, global random source, wall clock, or GPU state
+enters the pure model.
 
-### Alpha composition is a weighted average
+### Source-over alpha is a weighted average
 
-Alpha means coverage, not brightness. Start with a concrete case: draw red at half
-strength over solid blue. Half of the result comes from red and half from blue, so the
-mixed color is purple:
+Draw half-visible red `(1, 0, 0, 0.5)` over solid blue `(0, 0, 1, 1)`. Half of
+the result comes from each, producing opaque purple:
 
 ```text
 output alpha = 0.5 + 1.0 × (1 - 0.5) = 1.0
 output color = red × 0.5 + blue × 0.5 = (0.5, 0, 0.5)
 ```
 
-The general version uses short names:
-
-- `Cs` is the new source color and `As` is its alpha;
-- `Cb` is the existing background color and `Ab` is its alpha; and
-- `Co` and `Ao` are the output color and alpha.
+The general source-over calculation is:
 
 ```text
 Ao = As + Ab × (1 - As)
 Co = (Cs × As + Cb × Ab × (1 - As)) / Ao
 ```
 
-If `Ao` is zero, the helper returns transparent black. The [W3C compositing standard](https://www.w3.org/TR/compositing-1/)
-defines this source-over operation and separates it from artistic blend modes. Real
-screen pixels also depend on color space, antialiasing, and graphics settings, so the
-course tests these channel calculations rather than comparing screenshots.
+`Cs, As` describe the new source; `Cb, Ab` describe the existing background;
+`Co, Ao` describe the result. If output alpha is zero, the helper returns
+transparent black. The [W3C compositing standard](https://www.w3.org/TR/compositing-1/)
+defines source-over and distinguishes composition from artistic blend modes.
+Real pixels also depend on color space, antialiasing, and graphics settings, so
+tests check channels rather than screenshots.
 
-### Decay turns age into controlled persistence
+### Exponential decay turns age into persistence
 
-The newest sample has age zero. If a trail retains fraction `r` of alpha per
-sample, an age-`n` mark has:
+The newest sample has age zero. If each step retains fraction `r`, an age-`n`
+mark has:
 
 ```text
 alpha(n) = initial_alpha * r^n
 ```
 
-For example, starting at alpha `0.75` and keeping 80% per age step gives
-`0.75 × 0.8 × 0.8 = 0.48` at age 2. If the keep fraction stays between 0 and 1, each older mark is
-no stronger than the mark before it. The model rejects bad numbers, limits history to
-4,096 samples, calculates age from list order, and returns ordinary color and radius
-values.
+Starting at alpha 0.75 and retaining 0.8 gives
+`0.75 × 0.8 × 0.8 = 0.48` at age 2. When retention stays in `[0, 1]`, each older
+mark is no stronger than the next. The model limits history to 4,096 samples,
+derives age from oldest-to-newest order, and leaves prior good output unchanged
+if any new sample or calculated mark is invalid.
 
-`buildTrailMarks(history, design, output)` first builds a new list on the side. It
-replaces `output` only after every sample and mark passes its checks. Bad input therefore
-leaves the previous good output unchanged. An unrelated trail, drawing style, blend
-mode, or clock value cannot change the calculated marks.
+### Model composition and renderer blending stay separate
 
-### Composition and blend mode are different decisions
-
-The pure model provides source-over arithmetic as a lesson-sized known case. The starter
-adapter requests normal alpha blending; its filled circles and open squares remain two
-non-color palette cues. The solution requests additive blending; crosses and diamonds
-form a sparse luminous star loom. Additive blending is intentionally a renderer
-decision, not smuggled into palette or decay functions.
-
-The openFrameworks adapter follows the [ofGraphics state API](https://openframeworks.cc/documentation/graphics/ofGraphics/):
+The pure model provides source-over arithmetic and repeatable `TrailMark` data.
+The starter adapter requests normal alpha blending; the solution requests
+additive blending. Blend mode is a renderer decision scoped with the
+[openFrameworks graphics state API](https://openframeworks.cc/documentation/graphics/ofGraphics/):
 
 ```cpp
 ofPushStyle();
@@ -142,58 +114,54 @@ ofDisableBlendMode();
 ofPopStyle();
 ```
 
-Matrix changes in the solution are also paired with push/pop calls. Help text uses a
-separate style scope. A draw call never owns the only copy of trail age, palette
-identity, alpha, or radius.
+Matrix changes also use matched push/pop calls. Drawing never owns the only copy
+of age, palette identity, alpha, or radius.
 
-### Two palettes require two roles, not just more hues
+Each sample carries palette index 0 or 1 and an interpolation amount. The starter
+uses circles and squares; the solution uses crosses and diamonds. P pauses, R
+clears and replays phase, and M keeps current marks only. Pointer and arrows move
+the same visible origin. Reduced motion, shape roles, and age cues preserve
+meaning without color or audio.
 
-Each input sample carries palette index 0 or 1 and interpolation amount. In the starter,
-the two repeatable paths adapt the memory idea from section 09; pointer/drag and arrows
-move their shared origin. Palette A uses circles and palette B squares. The solution
-changes path equations, history length, decay, size, background, both palettes, blend
-mode, sampling rhythm, and geometry. It uses crosses for A and diamonds for B. You must
-create a third visual grammar rather than recolor either example.
+## Practice
 
-P pauses, R clears and replays the initial phase, and M keeps current marks only.
-Pointer and keyboard routes alter the same visible origin. Very small windows suppress
-origin movement safely. Nothing flashes, and no meaning is audio-only.
+Practice is guided and has no unit-test gate. Calculate one palette, overlap, and
+decay case, compare the two adapters, then repair one visible age error.
 
-## Make it run: inspect three complete experiments
+### 1. Work the arithmetic oracle
 
-### 1. Replay the independent arithmetic oracle
+Calculate before opening the fixture:
 
-Linux x86-64 or macOS arm64:
+- midpoint between `(0.1, 0.2, 0.3, 1)` and `(0.9, 0.6, 0.3, 0.5)`;
+- half-red over solid blue; and
+- alpha 0.75 retained by 0.8 for two age steps.
+
+Then compare your answers with the independent rows. Linux or macOS:
 
 ```sh
 cat exercises/12-color-blending-and-trails/fixtures/trail-oracle.txt
-CXX=g++ tests/run-section-12-tests.sh
 ```
 
-The hand-computable rows pin palette start/middle/end, half-red over blue, and two decay
-steps. The suite also proves malformed fixture rows fail through cardinality checks
-before field indexing. Windows Visual Studio 2022 x64 Developer PowerShell:
+Windows Developer PowerShell:
 
 ```powershell
 Get-Content .\exercises\12-color-blending-and-trails\fixtures\trail-oracle.txt
-.\tests\run-section-12-tests.ps1
 ```
 
-### 2. Trace one repeatable trail plan
+The answers are `(0.5, 0.4, 0.3, 0.75)`, opaque `(0.5, 0, 0.5)`, and 0.48.
+Identify which values are model data and which final appearance still depends on
+the renderer.
 
-For three samples, model age is `2, 1, 0` from oldest to newest. With radii 2 to
-10, marks receive radii `2, 6, 10`. With opaque palette colors, base opacity
-`0.75`, and retention `0.8`, their alphas are `0.48, 0.60, 0.75`. Find
-those assertions in `color_trail_model_test.cpp`, then compare them with the symbolic decay equation.
-Palette color alpha can lower those values further.
+### 2. Trace one trail plan
 
-### 3. Compare the visibly divergent adapters
+For three oldest-to-newest samples, model ages are `2, 1, 0`. With radii 2 to
+10, the marks receive radii `2, 6, 10`. With opaque palette colors, base alpha
+0.75, and retention 0.8, their alphas are `0.48, 0.60, 0.75`. Find those steps
+in `buildTrailMarks` and explain why palette alpha can lower them further.
 
-Set `OF_ROOT` to openFrameworks 0.12.1. The course supplies checked commands for Linux
-x86-64, macOS arm64, and Windows Visual Studio 2022 x64 Developer PowerShell. On another
-system, the sketch may work, but you may need to adapt the build steps.
+### 3. Compare normal and additive adapters
 
-Linux x86-64:
+Set `OF_ROOT` to openFrameworks 0.12.1. Linux:
 
 ```sh
 scripts/section-12.sh generate --project starter
@@ -201,15 +169,8 @@ scripts/section-12.sh build --project starter --configuration Release
 exercises/12-color-blending-and-trails/starter/bin/starter
 ```
 
-macOS arm64:
-
-```sh
-scripts/section-12.sh generate --project solution
-scripts/section-12.sh build --project solution --configuration Release
-open exercises/12-color-blending-and-trails/solution/bin/solution.app
-```
-
-Windows Visual Studio 2022 x64 Developer PowerShell:
+On macOS, generate and build `solution`, then open its generated `.app`. Windows
+Developer PowerShell:
 
 ```powershell
 .\scripts\section-12.ps1 generate -Project starter
@@ -217,13 +178,16 @@ Windows Visual Studio 2022 x64 Developer PowerShell:
 & .\exercises\12-color-blending-and-trails\starter\bin\starter.exe
 ```
 
-Launch both projects, not just one. Normal-alpha paired ribbons and the additive star
-loom should be visibly divergent. Compilation cannot prove launch, contrast, additive
-appearance, or scoped state after a draw.
+Repeat the same generate/build commands with `solution` on Linux and Windows;
+on macOS, generate and build each project and open its generated `.app`. Launch
+both projects. Compare normal-alpha paired ribbons with the additive star loom.
+Look for overlap brightness, geometry, density, and any renderer state that leaks
+into drawing after the trail block.
 
-## Break it on purpose
+### 4. Repair an off-by-one age
 
-In `exercises/12-color-blending-and-trails/shared/color_trail_model.cpp`, temporarily change:
+In `exercises/12-color-blending-and-trails/shared/color_trail_model.cpp`,
+temporarily change:
 
 ```cpp
 const std::size_t age = history.size() - 1 - index;
@@ -235,29 +199,36 @@ to:
 const std::size_t age = history.size() - index;
 ```
 
-Predict why even the newest point now decays once. Run `tests/run-section-12-tests.sh` and locate the
-first age or alpha failure. Restore the original expression and rerun. If this was your
-only edit:
+Rebuild and run the starter. Even the newest mark now decays once. Restore the
+original expression and confirm the newest mark returns to full configured
+strength. If this was your only intended edit:
 
 ```sh
 git restore -- exercises/12-color-blending-and-trails/shared/color_trail_model.cpp
 ```
 
-That command discards every uncommitted change in the named file. Before moving on, make
-sure the off-by-one failure makes sense.
+That command discards every uncommitted change in the named file.
 
-## Your turn
+## Exercise
 
-Open the [two-palette trail study brief](../../../exercises/12-color-blending-and-trails/README.md). Start from the particle-memory or gesture idea: keep limited
-oldest-to-newest samples, but create two explicit palette roles and controlled
-persistence. Edit `starter/src/design/trail_design.cpp` for endpoints, decay, opacity, radii, and history. Edit
-`starter/src/ofApp.cpp` for motion/gesture source, blend mode, geometry, and composition.
-Preserve checked normalized channels, finite guards, pure plan output, keyboard access,
-reset, reduced motion, and scoped renderer state.
+### Problem: create a two-palette trail study
 
-## Check your work
+Start from a particle-memory or gesture idea. Keep limited oldest-to-newest
+samples, create two explicit palette roles, and control persistence through
+alpha, size, spacing, or geometry. Edit `starter/src/design/trail_design.cpp`
+for palette endpoints, decay, opacity, radii, and history, then edit
+`starter/src/ofApp.cpp` for motion or gesture source, blend mode, geometry, and
+composition. Preserve checked channels, finite guards, pure plan output,
+keyboard access, reset, reduced motion, and scoped renderer state.
 
-Linux x86-64 or macOS arm64:
+Use the
+[two-palette trail study exercise brief](../../../exercises/12-color-blending-and-trails/README.md)
+as the authoritative source for editable files, constraints, commands, fixtures,
+and the explained solution.
+
+### Run the unit tests
+
+Linux or macOS:
 
 ```sh
 CXX=g++ tests/run-section-12-tests.sh
@@ -267,55 +238,39 @@ shellcheck scripts/section-12.sh tests/run-section-12-tests.sh
 scripts/check-authoring.sh
 ```
 
-Use `tests/run-section-12-tests.ps1` on Windows. With `OF_ROOT`, generate and compile starter and
-solution in Debug and Release, then launch each manually. The pure suite covers known
-cases, exact boundaries, channel and composition properties, invalid/`NaN` or
-infinite safety, endpoint preservation, decay monotonicity, history caps, bad-input handling that preserves the previous output, and state-independent replay.
-It does not compare the pixels drawn by the graphics card.
+Windows Developer PowerShell:
 
-## Optional notes for future you
+```powershell
+.\tests\run-section-12-tests.ps1
+```
 
-Explain the difference between RGB and alpha, then show either your red-over-blue
-calculation or one trail-decay value. Name one non-color cue and one visual decision you
-made. Save a capture with alt text.
+The pure suite covers palette endpoints and monotonic channel bounds,
+source-over known cases and exact transparent boundaries, decay values and
+monotonicity, oldest-to-newest age and radius plans, malformed fixture
+cardinality, non-finite rejection, history caps, bad-input preservation of prior
+output, deterministic replay, and learner design ranges. Build starter and
+solution in Debug and Release, then launch both; tests do not compare graphics
+pixels.
 
-## Make it yours
+### Quick visual check
 
-Use a gesture instead of autonomous particles, map speed to interpolation amount, make
-one palette cool-to-warm and the other low-to-high value, compare normal and additive
-blend in separate panels, quantize ages into print-like bands, or use decaying line
-width while keeping alpha fixed. Preserve two non-color roles, limited history, valid
-channels, explicit age, repeatable plan output, scoped style/blend/matrix state, reset,
-keyboard access, and a reduced-motion result.
-
-## Quick visual check
-
-Automated tests cannot judge the finished picture, so open both apps and use the list
-below. If you are sharing a platform-specific rendering bug, noting your OS,
-openFrameworks version, graphics hardware, and build type may help someone reproduce
-it.
-
-- Starter uses normal alpha blending; solution uses additive blending; their overlap,
-  geometry, density, paths, and background visibly diverge.
-- Palette A and B remain identifiable from circles/squares or crosses/diamonds when
-  viewed in grayscale or with hue differences hidden.
-- Old-to-new order remains readable through alpha plus size or spacing, not color alone.
-- P pauses, R resets phase and histories, M removes persistence, and pointer/drag and
+- Two palettes remain identifiable from shape when hue differences are hidden.
+- Old-to-new order uses alpha plus size, spacing, or another non-color cue.
+- P pauses, R resets phase and history, M removes persistence, and pointer and
   arrows move the same visible origin.
-- Text contrast remains readable; no flashing or audio-only information appears.
-- Resize and very small windows remain safe; marks do not produce obvious cross-window
-  artifacts.
-- Drawing after the trail block shows no leaked blend mode, fill, line width, color, or
-  matrix transform.
-- Your result differs from both examples in path/gesture source, palette roles,
-  geometry, decay, density, composition, and blend treatment.
-- Capture alt text names both shape roles, overlap, age ordering, palette roles,
-  controls, and reduced-motion behavior.
-- Any reused palette, code, reference, or asset is credited.
+- Normal and additive treatments differ intentionally; drawing afterward shows
+  no leaked blend, fill, line width, color, or transform state.
+- Text contrast remains readable; nothing flashes or communicates through audio
+  alone.
+- Resize and tiny windows remain safe without obvious cross-window artifacts.
+- Path source, palette roles, geometry, decay, density, composition, and blend
+  treatment differ from both examples.
+- Alt text names both shape roles, overlap, age order, controls, and
+  reduced-motion behavior; reused work remains credited.
 
-## If you get stuck
+### If you get stuck
 
-If a trail becomes a muddy rectangle, check alpha, decay, and renderer state in that
-order. Clear the frame, draw one mark, then add persistence back in. Color mixing is
-weighted arithmetic with better lighting; a tiny two-color example will usually reveal
-the mistake faster than a full particle orchestra.
+If the trail becomes a muddy rectangle, clear the frame and draw one mark. Check
+its RGBA values, then decay age, then renderer state before restoring the full
+history. A two-color, three-sample example usually reveals the error faster than
+a whole particle orchestra.

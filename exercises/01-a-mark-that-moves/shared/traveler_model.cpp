@@ -29,9 +29,9 @@ Vec2 desiredVelocity(const State& state, const Design& design, const Input& inpu
 }
 void step(State& state, const Design& design, const Input& input, float dt, Viewport viewport) {
     state.velocity = desiredVelocity(state, design, input);
-    state.position.x = wrap(state.position.x + state.velocity.x * dt,
+    state.position.x = wrap(state.position.x + stepDistance(state.velocity.x, dt),
                             design.radius_pixels, viewport.width);
-    state.position.y = wrap(state.position.y + state.velocity.y * dt,
+    state.position.y = wrap(state.position.y + stepDistance(state.velocity.y, dt),
                             design.radius_pixels, viewport.height);
 }
 }

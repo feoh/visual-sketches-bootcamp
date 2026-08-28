@@ -1,5 +1,8 @@
 # Exercise 15: a clear amplitude instrument
 
+Complete the [Lesson and Practice](../../authoring/sections/15-embodied-audio-input/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will turn one loudness number from 0 to 1 into visible size and repetition. The

@@ -101,9 +101,13 @@ void learnerDesignContract() {
     }
 
     bool used_colors[3] = {false, false, false};
+    bool used_kinds[5] = {false, false, false, false, false};
     for (std::size_t index = 0; index < specs.size(); ++index) {
         const signature::PrimitiveSpec& spec = specs[index];
         expect(validKind(spec.kind), "spec " + std::to_string(index) + " has a declared primitive kind");
+        if (validKind(spec.kind)) {
+            used_kinds[static_cast<std::size_t>(spec.kind)] = true;
+        }
         expect(unitValue(spec.normalized_center.x) && unitValue(spec.normalized_center.y),
                "spec " + std::to_string(index) + " has finite normalized center fields in [0,1]");
         expect(unitValue(spec.normalized_size.x) && unitValue(spec.normalized_size.y) &&
@@ -117,6 +121,8 @@ void learnerDesignContract() {
     }
     expect(used_colors[0] && used_colors[1] && used_colors[2],
            "the five specifications use all three palette colors");
+    expect(std::count(used_kinds, used_kinds + 5, true) >= 3,
+           "the five specifications use at least three primitive kinds");
 }
 
 void learnerViewportProperty(const std::string& fixture_path) {

@@ -1,5 +1,8 @@
 # Exercise 10: switchable force instrument
 
+Complete the [Lesson and Practice](../../authoring/sections/10-forces-steering-and-springs/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will compare two kinds of motion: objects steering toward a target and objects

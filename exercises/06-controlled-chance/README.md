@@ -1,5 +1,8 @@
 # Exercise 06: six-image seeded edition
 
+Complete the [Lesson and Practice](../../authoring/sections/06-controlled-chance/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will generate six related images from saved random seeds. The same seed and rules

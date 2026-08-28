@@ -18,44 +18,34 @@ asset_records: assets.yaml
 
 # Forces, steering, and springs
 
-## See what you're making
+This section has one path: learn how small forces combine, practice with one
+seeking swarm and spring pair, then solve one tested force-system problem.
+
+1. [Lesson: understand force composition](#lesson)
+2. [Practice: calculate, run, and repair](#practice)
+3. [Exercise: design a tested force instrument](#exercise)
+
+## Lesson
+
+### One system, two behaviors
 
 ![A teal circle swarm converges on a ring target above a coral chain of diamond-shaped agents hanging from a square anchor; dark arrows show paired spring forces in opposite directions, and shape, links, and vertical placement distinguish the two behavior modes without color alone.](media/force-preview.svg "The same objects can seek a target or connect as a springy chain.")
 
 *The same limited group becomes a seeking swarm or an elastic chain by combining small forces.*
 
-The still uses circle/diamond shape, target/links, and layout as well as color.
+In this model, a **force** is a request to change velocity. Seeking compares the
+velocity an agent wants with the velocity it has. A spring measures how far two
+endpoints are from their resting distance, while damping removes motion along
+the spring so it can settle.
 
-## Take a guess
+A scoped [`enum class`](https://en.cppreference.com/w/cpp/language/enum.html)
+names the `seek` and `spring_chain` modes. The mode selects which small force
+functions contribute to one accumulator; it does not create a second simulation
+loop.
 
-Two agents lie on the x-axis at 0 and 20. Their spring rest length is 10 and stiffness
-is 2. Predict the x force on the first agent. Then the second agent moves toward the
-first at 10 units per second and axial damping is 1. Predict the new force. What should
-a radial behavior return when agent and source have exactly the same position and there
-is no direction to normalize?
+### Accumulate, limit, integrate, clear
 
-## Let's unpack it
-
-### Before the force vocabulary
-
-In this sketch, a **force** is simply a request to change velocity. Steering asks, “What
-velocity would take me toward the target?” and compares that with the velocity the
-object has now.
-
-A spring asks a different question: “How far am I from my resting length?” The farther
-it is stretched or squeezed, the stronger the pull back. Damping removes some motion
-along the spring so it settles instead of wobbling forever.
-
-The formulas give precise versions of those questions. Keep the picture in mind first:
-desired direction, current movement, stretch, and a gentle brake.
-
-### One behavior mode chooses a composition
-
-A scoped [`enum class`](https://en.cppreference.com/w/cpp/language/enum.html) names `seek` and `spring_chain` without magic integers.
-The enum and the small behavior functions form one mechanism: mode selects which
-functions contribute to the accumulator. It does not create two simulation loops.
-
-Each fixed step follows one order:
+Every fixed step follows one order:
 
 ```text
 clear force
@@ -66,128 +56,110 @@ position = position + velocity * dt
 clear force
 ```
 
-This is semi-implicit Euler because the new velocity moves position. Every agent
-receives all contributions before integration, so function order does not secretly
-update one agent early.
+The new velocity moves position, an order called semi-implicit Euler. All agents
+receive their contributions before any agent integrates, so function order does
+not secretly give one object an early update. Maximum force limits how quickly
+motion changes; maximum speed separately limits the resulting movement.
 
-### Seek is desired velocity minus current velocity
+### Seek compares desired and current velocity
 
-Let `d = target - position`. Away from the target, desired velocity is the unit direction of
-`d` times maximum speed. Inside the arrival radius, its speed is multiplied
-by `distance / arrival_radius`. Steering force points from current velocity toward that desired
-velocity:
+Let `d = target - position`. Away from the target, desired velocity is the unit
+direction of `d` multiplied by maximum speed. Inside the arrival radius, speed
+shrinks by `distance / arrival_radius`:
 
 ```text
-seek = (desired_velocity - velocity) * mass / fixed_dt
+seek force = (desired_velocity - velocity) * mass / fixed_dt
 ```
 
-The force cap prevents one large error from becoming an impulse. The speed cap is
-separate: maximum force limits how quickly motion changes; maximum speed limits the
-resulting motion.
-
-### Decide what happens exactly at the target center
-
-A direction-only inverse-square expression is singular at zero. This course uses
-softened distance:
+A radial attraction or repulsion uses softened distance:
 
 ```text
 force = unit(source - position) * strength / (distance squared + softening squared)
 ```
 
-Positive strength attracts and negative strength repels. At exact coincidence, there is
-no honest direction, so the function returns `{0, 0}`. Positive softening prevents
-enormous near-zero values. Pair repulsion applies equal and opposite results to two
-agents, preserving symmetry before caps and boundaries.
+Positive strength attracts and negative strength repels. At exact coincidence
+there is no direction to normalize, so the honest answer is `{0, 0}`. Positive
+softening prevents huge near-zero values. Pair repulsion applies equal and
+opposite forces before caps and boundaries.
 
-### A spring measures displacement from equilibrium
+### Springs restore distance and damp along their axis
 
-[Hooke-like force](https://openstax.org/books/physics/pages/16-1-hookes-law-stress-and-strain-revisited) is proportional to extension from rest length. In conventional
-one-dimensional signed coordinates, `F = -k(x - L)`: the restoring force opposes
-displacement from equilibrium. This model instead asks for the force **on the first
-endpoint** and defines its axis from first to second:
+A [Hooke-like force](https://openstax.org/books/physics/pages/16-1-hookes-law-stress-and-strain-revisited)
+is proportional to extension from rest length. This model asks for the force on
+the first endpoint and points its axis from first to second:
 
 ```text
-force_on_first = axis_first_to_second * stiffness * (distance - rest_length)
+force_on_first = axis * stiffness * (distance - rest_length)
 ```
 
-At distance 20, rest length 10, and stiffness 2, the first endpoint receives
-`+20` along that axis because a stretched second endpoint pulls it forward. The
-second receives `-20`, which is the conventional opposing sign. At exactly 10
-the force is zero. Compression makes the first scalar negative, pushing the endpoints
-apart.
+Put endpoints at x = 0 and x = 20, with rest length 10 and stiffness 2. The
+first receives `+20`; the second receives `-20`. At distance 10 the force is
+zero. Compression makes the scalar negative and pushes the pair apart.
 
-Damping uses a dot product. Here `relative_velocity` means the second endpoint's
-velocity minus the first endpoint's velocity. The spring axis points from first to
-second. A negative dot means the endpoints are approaching, zero means the motion is
-sideways, and a positive dot means they are separating. In the Predict case,
-`20 + 1 * -10 = 10`: damping opposes closing motion. The paired endpoint receives the
-negative force. Global exponential damping remains useful for motion outside the spring
-axis.
+Damping uses the dot product of relative velocity and the spring axis. If the
+second endpoint approaches the first at 10 units per second and axial damping is
+1, that dot product is `-10`, so the first endpoint's force becomes
+`20 + 1 × -10 = 10`. Sideways motion has a zero axial dot product.
 
-### Modes change only at a fixed-step boundary
+### Fixed-step transitions and adapter controls
 
-1 and 2 set an explicit `BehaviorMode`; Space toggles it. A transition clears partial
-accumulator time and old forces, so no half-step created under one mode runs under
-another. P and M also clear the accumulator. The limited accumulator uses the same
-capped catch-up and visible dropped-time rule as [fixed timestep simulation](https://gafferongames.com/post/fix_your_timestep/).
+Keys 1 and 2 choose a mode; Space toggles it. A mode change clears partial
+accumulator time and old forces so a half-step from one mode cannot run under
+the other. The bounded accumulator follows the
+[fixed-timestep technique](https://gafferongames.com/post/fix_your_timestep/)
+and reports dropped catch-up work. The model rejects unusable calculations,
+limits the system to 64 agents, includes each radius in boundary checks, and
+reverses only velocity pointing out of the window.
 
-The system has at most 64 agents. It performs force calculations with extra numeric
-room before converting them to the smaller values used by the model. Your much smaller
-`maximum_force` is still the artistic limit. If any calculation produces `NaN`,
-infinity, or another unusable number, the whole update is discarded and the previous
-state remains unchanged. Boundaries include each agent's radius and reverse only
-velocity that points out of the window.
+Pointer, drag, and arrow events move the same target or anchor through the
+[openFrameworks event adapter](https://openframeworks.cc/documentation/events/ofEvents/).
+P pauses, R resets, and M freezes motion while leaving current shapes visible.
+The renderer clamps visible controls including stroke width and draws geometry
+inside each model radius. Tests inspect forces and state, not GPU pixels.
 
-### Input and pixels are adapter concerns
+## Practice
 
-Pointer/drag and arrow keys move the same target and anchor through the openFrameworks
-[event adapter](https://openframeworks.cc/documentation/events/ofEvents/). 1, 2, and Space expose mode without requiring a pointer. P pauses, R
-resets, and M freezes the model and removes moving links while current shapes stay
-visible. The adapter clamps the ring or square by the larger of the model radius and its
-rendered half-extent including stroke; if that control cannot fit, it is not drawn.
-Agent geometry is drawn inside the model radius, including rotated or stroked marks.
-Pure tests check the clamp helper and model bounds without pretending to inspect pixels.
-Tests inspect forces, transitions, bounds, and state. They do not compare GPU pixels or
-open the finished app.
+Practice is guided and has no unit-test gate. Work one spring by hand, trace one
+seek update, run both modes, and repair one visible stale-force mistake.
 
-## Make it run: compare three small experiments
+### 1. Replay the spring arithmetic
 
-### 1. Replay the hand-calculated spring
-
-From the repository root on Linux or macOS:
+Read the independent values:
 
 ```sh
 cat exercises/10-forces-steering-and-springs/fixtures/spring-oracle.txt
-CXX=g++ tests/run-section-10-tests.sh
-```
-
-Confirm the equilibrium, stretched, and stretched-plus-damping results are 0, 20, and
-10. On Windows Developer PowerShell:
-
-```powershell
-Get-Content .\exercises\10-forces-steering-and-springs\fixtures\spring-oracle.txt
-.\tests\run-section-10-tests.ps1
-```
-
-### 2. Run the seeking swarm
-
-Set `OF_ROOT` to openFrameworks 0.12.1. On Linux:
-
-```sh
-scripts/section-10.sh generate --project starter
-scripts/section-10.sh build --project starter --configuration Release
-exercises/10-forces-steering-and-springs/starter/bin/starter
-```
-
-On macOS:
-
-```sh
-scripts/section-10.sh generate --project starter
-scripts/section-10.sh build --project starter --configuration Release
-open exercises/10-forces-steering-and-springs/starter/bin/starter.app
 ```
 
 On Windows Developer PowerShell:
+
+```powershell
+Get-Content .\exercises\10-forces-steering-and-springs\fixtures\spring-oracle.txt
+```
+
+Confirm the equilibrium, stretched, and stretched-plus-damping results are 0,
+20, and 10. Then reverse the endpoint order: the magnitudes stay the same while
+the axis and paired signs reverse.
+
+### 2. Trace one seek update
+
+Choose an agent at `(100, 100)`, a target at `(130, 100)`, zero current
+velocity, maximum speed 60, mass 1, and fixed step `1/60`. The desired velocity
+is `(60, 0)`. Before the configured force cap, the seek request is
+`(60 - 0) × 1 / (1/60) = (3600, 0)`. Locate the cap and semi-implicit update in
+`shared/force_model.cpp`, then predict why changing maximum force affects
+responsiveness without changing maximum speed.
+
+### 3. Run the two modes
+
+Set `OF_ROOT` to openFrameworks 0.12.1. Linux or macOS:
+
+```sh
+scripts/section-10.sh generate --project starter
+scripts/section-10.sh build --project starter --configuration Release
+```
+
+Launch `exercises/10-forces-steering-and-springs/starter/bin/starter` on Linux,
+or open the generated `.app` on macOS. On Windows Developer PowerShell:
 
 ```powershell
 .\scripts\section-10.ps1 generate -Project starter
@@ -195,80 +167,82 @@ On Windows Developer PowerShell:
 & .\exercises\10-forces-steering-and-springs\starter\bin\starter.exe
 ```
 
-Press 1 and move the ring with pointer and arrows. Watch arrival slow near the ring and
-pair repulsion keep overlapping agents from choosing arbitrary escape directions.
+Press 1 and move the ring with pointer and arrows. Watch arrival slow near the
+target. Press 2 and compare stretched, compressed, and rest-length links. Try
+Space, P, R, M, every edge, and a viewport narrower than one agent diameter.
 
-### 3. Run the elastic chain
+### 4. Repair stale accumulated force
 
-Press 2, move the square anchor, and compare stretched, compressed, and roughly
-rest-length links. Use Space repeatedly only after predicting the shape and link change.
-Pause for several seconds and resume; there should be no catch-up burst. Try R, M, every
-edge, and a viewport narrower than one agent diameter. After the build succeeds, open the app to check the actual behavior.
+In `exercises/10-forces-steering-and-springs/shared/force_model.cpp`, temporarily
+remove `clearForces(next);` near the start of `composeForces`. Rebuild and run
+the app. Old requests now leak into later steps, so motion keeps strengthening
+instead of responding cleanly to the current mode. Restore the call and confirm
+the behavior settles again.
 
-## Break it on purpose
-
-In `exercises/10-forces-steering-and-springs/shared/force_model.cpp`, temporarily remove `clearForces(next);` near the
-start of `composeForces`. Run `tests/run-section-10-tests.sh`; predict which accumulation or fixed-step
-property fails as old force leaks into the next step. Restore the call and rerun. If
-this was your only edit:
+If that was your only intended edit:
 
 ```sh
 git restore -- exercises/10-forces-steering-and-springs/shared/force_model.cpp
 ```
 
-That command discards every uncommitted change in that named file. Before moving on,
-make sure you can connect the failure to stale force state.
+That command discards every uncommitted change in the named file.
 
-## Your turn
+## Exercise
 
-Open the [switchable force instrument brief](../../../exercises/10-forces-steering-and-springs/README.md). Own the design record, then replace starter geometry with a
-chain or swarm unlike the starter or solution. Explain one softening, cap, equilibrium,
-damping, boundary, mode-cue, and reduced-motion choice.
+### Problem: create a switchable force instrument
 
-## Check your work
+Create a chain or swarm with seek and spring-chain modes whose geometry differs
+from both supplied examples. Choose the force caps, equilibrium, damping,
+boundaries, mode cues, and reduced-motion appearance. Preserve positive
+softening, paired spring forces, finite guards, the fixed-step/drop rule, the
+hard agent cap, keyboard mode access, pause, and reset.
+
+Use the
+[switchable force instrument exercise brief](../../../exercises/10-forces-steering-and-springs/README.md)
+as the authoritative source for editable files, controls, constraints, fixtures,
+and the explained solution.
+
+### Run the unit tests
+
+Linux or macOS:
 
 ```sh
 CXX=g++ tests/run-section-10-tests.sh
 CXX=clang++ tests/run-section-10-tests.sh
 ```
 
-Use the PowerShell test on Windows. Generate and compile starter and solution in Debug
-and Release. Manually launch both input routes and review seek, spring, mode changes,
-pause, reset, reduced motion, resize, edges, accessibility, and originality. Automated
-tests cover only the checks named above.
+Windows Developer PowerShell:
 
-## Optional notes for future you
+```powershell
+.\tests\run-section-10-tests.ps1
+```
 
-Explain the difference between force and velocity, then use your spring example to show
-what rest length and damping do. Note one zero-distance rule and one appearance you
-customized. Save a capture with alt text.
+The deterministic suite checks the independent spring oracle, exact equilibrium,
+stretched and damped pairs, zero-distance safety, softened attraction and
+repulsion, seek arrival, force and speed limits, semi-implicit order, symmetric
+pair forces, fixed-step partitions, dropped time, mode transitions, reset,
+bounds, clamp helpers, finite-state rejection, and learner design limits. Build
+starter and solution in Debug and Release, then open both apps; automated tests
+cannot judge contrast, mode legibility, or originality.
 
-## Make it yours
+### Quick visual check
 
-Use a triangular spring network, let pointer distance tune equilibrium, replace seek
-with arrive-and-orbit, or map spring extension to mark orientation. Preserve finite
-guards, positive softening, force/speed caps, paired spring forces, fixed-step/drop
-rule, hard agent cap, keyboard mode access, pause/reset, and a still reduced-motion
-view.
-
-## Quick visual check
-
-- Pointer/drag and arrows move the same visible control point.
-- 1, 2, and Space make both modes discoverable without color.
-- P pauses without a resume burst, R resets, and M produces a still view.
-- Nothing flashes; no state is communicated by audio or color alone.
-- Seek and spring remain distinguishable by shape, fill, links, or layout.
-- Text and palettes have suitable contrast.
+- Pointer, drag, and arrows move the same visible target or anchor.
+- 1, 2, and Space expose both modes without relying only on color.
+- P pauses without a resume burst, R resets, and M gives a useful still view.
+- Seek and spring remain distinct through shape, fill, links, or layout.
 - Resize and every edge keep full marks visible; tiny viewports reject safely.
+- Nothing flashes, text and palettes have suitable contrast, and no state is
+  audio-only.
 - Count, geometry, spacing, links, force response, and palette differ from both
   examples.
-- Alt text names mode, target/anchor, force relation, geometry, bounds, and palette
-  roles.
-- Reused references, code, and assets are credited.
+- Alt text names the mode, control point, force relationship, geometry, and
+  palette roles; reused work remains credited.
 
-## If you get stuck
+### If you get stuck
 
-If a force sends everything to infinity, check the zero-distance case and the force cap
-first. If a spring jitters, inspect the update order and damping. Run one
-hand-calculated pair of points before unleashing the whole swarm; physics bugs are much
-less intimidating when they only have two witnesses.
+If a force sends everything to infinity, inspect the zero-distance rule and
+force cap first. If a spring jitters, reduce the problem to two endpoints and
+check axis, extension, dot product, and update order. Run the smallest failing
+case before changing the whole swarm; physics bugs are friendlier with only two
+witnesses.

@@ -7,11 +7,11 @@
     </nav>
     <h1>{{ .Title }}</h1>
     <aside class="lesson-summary" aria-labelledby="lesson-summary-title">
-      <h2 id="lesson-summary-title">Lesson summary</h2>
-      <h3>Objectives</h3>
-      <ul>{{ range .Params.objectives }}<li>{{ . }}</li>{{ end }}</ul>
-      <h3>Prerequisites</h3>
-      <ul>{{ range .Params.prerequisites }}<li>{{ . }}</li>{{ end }}</ul>
+      <p class="lesson-summary__title" id="lesson-summary-title">Before you begin</p>
+      <p class="lesson-summary__label" id="lesson-objectives-title">Objectives</p>
+      <ul aria-labelledby="lesson-objectives-title">{{ range .Params.objectives }}<li>{{ . }}</li>{{ end }}</ul>
+      <p class="lesson-summary__label" id="lesson-prerequisites-title">Prerequisites</p>
+      <ul aria-labelledby="lesson-prerequisites-title">{{ range .Params.prerequisites }}<li>{{ . }}</li>{{ end }}</ul>
     </aside>
     <div class="lesson-content">
       {{ .Content }}

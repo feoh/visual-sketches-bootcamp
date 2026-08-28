@@ -19,126 +19,86 @@ asset_records: assets.yaml
 
 # A mark that moves
 
-## See what you're making
+This section follows the same three-step path: learn how motion is represented,
+practice the calculation and callbacks, then solve one tested traveler problem.
 
-One still cannot prove motion, so this preview uses position and ruler ticks to show the
-same traveler after equal simulation steps.
+1. [Lesson: understand state and time](#lesson)
+2. [Practice: calculate, trace, and repair](#practice)
+3. [Exercise: complete the tested traveler](#exercise)
+
+## Lesson
+
+### Motion is remembered position
 
 ![Three equal panels place a yellow traveler at panel-local ruler positions 70, 100, and 130 after zero, 30, and 60 fixed steps at 120 pixels per second; a cyan trail points left.](media/traveler-time-preview.svg "Each 30-step interval advances 30 pixels on identical panel-local rulers.")
 
 *At 120 pixels per second, each 30-step interval advances the mark by 30 pixels; position and ticks communicate the change without relying on color.*
 
-The preview is static and has no audio. In the app, a line opposite velocity is a
-non-color direction cue, pause adds a ring, and reduced motion changes speed.
+Animation is a series of still pictures. A program remembers a position, changes
+it a little, and draws the next frame. The remembered values are **state**; a
+change to them is an **update**.
 
-## Take a guess
-
-Assume `x` starts at `100.0f`, speed is `120.0f` pixels per
-second, and one update receives `1.0f / 60.0f` seconds:
-
-```cpp
-x = x + speed * dt;
-```
-
-Predict the new `x`. Then predict what the same line does if `dt`
-accidentally contains `16.67` **milliseconds** rather than `0.01667`
-seconds. Keep both answers; the repair task makes this unit mismatch visible.
-
-## Let's unpack it
-
-### Before the motion vocabulary
-
-Animation is a series of still pictures. The mark moves because the program remembers
-its position, changes that number a little, and draws the next frame.
-
-Suppose the mark starts at x = 100 and moves 120 pixels each second. If one update
-represents 1/60 of a second, it moves 2 pixels during that update because
-`120 × 1/60 = 2`. Its new x position is 102.
-
-The saved position is called **state**. Changing it is an **update**. Using the same
-small slice of time for every update is a **fixed time step**. Those names will recur,
-but the underlying idea is only “remember, add a little, draw.”
-
-### Variables and numeric types
-
-A variable names a value that can be read and changed. The [fundamental-types reference](https://en.cppreference.com/w/cpp/language/types.html) is the
-language authority; this section needs only a small working set:
-
-```cpp
-float x = 100.0f;       // fractional pixels
-float speed = 120.0f;   // pixels per second
-int pointer_x = 320;    // whole pixel supplied by a callback
-bool paused = false;    // one of two states
-```
-
-A declaration combines a type, name, and initial value. `float` is appropriate
-for fractional position, rate, and elapsed seconds. `int` matches the whole
-pixel coordinates delivered by openFrameworks input callbacks. `bool` records a
-yes/no mode. The one main C++ idea here is mutable state: variables survive from one
-callback to the next as members of `ofApp` or fields of the renderer-independent
-`traveler::State`.
-
-### Callback roles
-
-The [openFrameworks events documentation](https://openframeworks.cc/documentation/events/ofEvents.html) defines when callbacks are dispatched.
-
-- `setup()` runs once and creates the initial model.
-- `update()` changes model state once per frame; it never draws.
-- `draw()` reads state and emits graphics; it never advances time.
-- `mouseMoved()` and `mouseDragged()` store a pointer target.
-- `keyPressed()` and `keyReleased()` store fallback direction or trigger pause, reset,
-  and reduced-motion commands.
-
-Input callbacks do not move the traveler immediately. They update variables; the next
-fixed simulation step reads one complete input snapshot.
-
-The course calls this thin layer between openFrameworks and the plain C++ calculations
-an **adapter**. It receives framework events, passes ordinary values into the model, and
-draws the model's answer. Keeping it thin lets recorded input use the same calculations
-without opening a window.
-
-### Turn speed and time into movement
-
-```text
-start x                         next x
-  100 px ├────────── 2 px ───────► 102 px
-          speed = 120 px/s, time = 1/60 s
-```
-
-Numerically:
+Suppose `x` begins at 100 and the mark moves at 120 pixels per second. One
+update represents 1/60 second:
 
 ```text
 120 pixels/second × 1/60 second = 2 pixels
+100 pixels + 2 pixels = 102 pixels
 ```
 
-The reusable version of that same calculation is:
+The reusable rule is:
 
 ```text
 next position = current position + velocity × elapsed seconds
 ```
 
-In code and math notes, you may see the shorter names `p` for position,
-`v` for velocity, and `dt` (or `Δt`) for elapsed seconds.
-The names change; the `100 + 120 × 1/60 = 102` calculation does not. Seconds cancel seconds,
-leaving pixels. The adapter uses [`ofGetLastFrameTime()`](https://openframeworks.cc/documentation/utils/ofUtils.html#show_ofGetLastFrameTime), which reports seconds. Do not multiply
-it by 1000. At 120 pixels/second, `16.67` used as seconds would request roughly
-2000 pixels in one frame—the Predict unit bug.
+Code often calls elapsed time `dt`. Seconds cancel seconds, leaving pixels.
 
-### Why this exercise does not use a different time step every frame
+### Variables hold the state
 
-A direct variable-step update is compact:
+A variable has a type, a name, and a value:
+
+```cpp
+float x = 100.0f;       // fractional pixels
+float speed = 120.0f;   // pixels per second
+int pointer_x = 320;    // a whole pixel from an input callback
+bool paused = false;    // yes or no
+```
+
+`float` suits positions, rates, and elapsed seconds. `int` suits whole pointer
+coordinates. `bool` records a two-way mode. The
+[C++ fundamental-types reference](https://en.cppreference.com/w/cpp/language/types.html)
+has the formal details; these are the only types you need here.
+
+### Callbacks divide the work
+
+The [openFrameworks events documentation](https://openframeworks.cc/documentation/events/ofEvents.html)
+defines when callbacks run:
+
+- `setup()` creates the initial state once.
+- `update()` changes state; it does not draw.
+- `draw()` reads state and draws; it does not advance time.
+- pointer and keyboard callbacks update input state.
+
+The small layer that receives framework events and passes ordinary values to the
+model is an **adapter**. Keeping calculations outside the adapter lets tests run
+without a graphics window.
+
+### Why the model uses fixed steps
+
+The adapter gets the previous frame duration in seconds from
+[`ofGetLastFrameTime()`](https://openframeworks.cc/documentation/utils/ofUtils.html#show_ofGetLastFrameTime).
+It never multiplies that value by 1000.
+
+A direct variable-step update is simple:
 
 ```cpp
 position += velocity * frame_seconds;
 ```
 
-But steering direction depends on current position. One 1/30-second update can sample
-that direction fewer times than four 1/120-second updates, so the paths can differ even
-when elapsed time is equal. Floating-point rounding and collision/boundary decisions can
-also move to different frames.
-
-The course model retains `advanceVariable(...)` only for comparison. Its actual rule follows the
-fixed-step accumulator technique described in [Fix Your Timestep!](https://gafferongames.com/post/fix_your_timestep/):
+But steering and boundary decisions can differ when the same time is divided
+into differently sized frames. The exercise uses the accumulator technique from
+[Fix Your Timestep!](https://gafferongames.com/post/fix_your_timestep/):
 
 ```text
 frame = clamp(valid_seconds, 0, 0.1)
@@ -148,77 +108,77 @@ while accumulator >= 1/120:
     accumulator -= 1/120
 ```
 
-`NaN` or infinite, zero, and negative frame durations produce no motion. Every
-valid positive frame clamps to `0.1` second before accumulation, so returning
-after a long pause performs at most twelve fixed steps rather than seconds of frantic
-catch-up. Pause discards the accumulator. A remainder smaller than one fixed step waits
-for the next frame. This is a simulation rule, not a promise that the window renders at
-120 frames per second.
+A remainder waits for the next frame. Zero, negative, `NaN`, and infinite frame
+durations do not move the mark. Returning after a long pause advances at most
+0.1 second, preventing a huge catch-up jump.
 
-### Pointer, keyboard, wrap, and reduced motion
+### Input, wrap, and reduced motion
 
-At each step the pointer vector is `target - position`; the model normalizes it and
-multiplies by your chosen speed. Before a pointer event, a rightward keyboard direction
-is the fallback. Pressing an arrow key disables pointer steering and supplies a
-direction that works without a pointing device.
+At each step, the pointer direction is `target - position`. Before a pointer
+event, arrow keys provide a fallback direction. The model normalizes that
+direction and applies the chosen speed.
 
-The center may leave by one radius so the mark disappears completely. It then wraps,
-preserving overshoot, into the interval `[-radius, extent + radius)`.
-This avoids sticking at an edge. Space toggles pause, `R` resets deterministic
-motion state, and `M` uses one quarter speed. Reduced motion is a persistent
-preference, so reset does not silently turn it off.
+The mark's center may leave by one radius so it disappears fully, then wraps to
+the opposite outer edge while preserving overshoot. Space toggles pause, `R`
+resets the repeatable motion state, and `M` uses one-quarter speed. Reset keeps
+the reduced-motion preference.
 
-## Make it run
+## Practice
 
-Check the sketch in layers: test the arithmetic, generate the project, compile it,
-then open the window and look at the result.
+Practice is guided and has no unit-test gate. Work through one calculation,
+trace the callbacks, run the app, and repair one unit mistake.
 
-### Example 1: one variable-step calculation
+### 1. Calculate one update by hand
+
+Start with:
 
 ```cpp
 float x = 100.0f;
 const float speed = 120.0f;
 const float dt = 1.0f / 60.0f;
-x = x + speed * dt;  // 102.0f, within floating-point tolerance
+x = x + speed * dt;
 ```
 
-This answers Predict for seconds. It demonstrates the equation, not the final
-frame-time policy.
+Before checking the answer, calculate `speed * dt`. The new `x` is `102.0f`.
+Now imagine `dt` were `16.67` milliseconds mistakenly treated as seconds: the
+same expression would request roughly 2000 pixels of movement. Types cannot
+catch a wrong unit when both values are `float`.
 
-### Example 2: fixed-step values you can print and test
+### 2. Trace a fixed-step frame
 
 Read `advanceFrame(...)` in
-[`traveler_model.cpp`](../../../exercises/01-a-mark-that-moves/shared/traveler_model.cpp). The public test supplies exactly one
-`1/120`-second frame at 120 pixels/second and observes a one-pixel change. Then
-it compares one 1/30-second frame with four 1/120-second frames. Run it without
-openFrameworks:
+[`traveler_model.cpp`](../../../exercises/01-a-mark-that-moves/shared/traveler_model.cpp).
+Follow a frame duration of `1/30` second through the accumulator. It becomes
+four updates of `1/120` second. At 120 pixels per second, each update moves one
+pixel, for four pixels total.
+
+Next trace a frame duration of `1/240` second. It is half a fixed step, so the
+first frame moves zero pixels and keeps the remainder. A second `1/240` frame
+completes one step and moves one pixel.
+
+### 3. Build and explore the working example
+
+Use the supplied solution as a known-good practice app. You are only exploring
+its controls here; the Exercise will start from the incomplete starter.
 
 ```sh
-tests/run-section-01-tests.sh
-```
-
-### Example 3: generated starter app
-
-```sh
-scripts/section-01.sh generate --project starter
-scripts/section-01.sh build --project starter --configuration Release
+scripts/section-01.sh generate --project solution
+scripts/section-01.sh build --project solution --configuration Release
 ```
 
 On Windows Developer PowerShell:
 
 ```powershell
-.\scripts\section-01.ps1 generate -Project starter
-.\scripts\section-01.ps1 build -Project starter -Configuration Release
+.\scripts\section-01.ps1 generate -Project solution
+.\scripts\section-01.ps1 build -Project solution -Configuration Release
 ```
 
-The wrappers keep Project Generator in charge of generated files, verify which source
-files belong to the project, and reuse section 00's cleanup safeguards. These commands
-are checked on the course's named Linux, macOS, and Windows setups. A build on one system
-cannot tell you what happens on another, and no compiler can judge the picture.
+Open the app. Try pointer steering, every arrow key, Space, `R`, and `M`. Resize
+the window and watch the wrap at all four edges.
 
-## Break it on purpose
+### 4. Repair a seconds-versus-milliseconds bug
 
-In `exercises/01-a-mark-that-moves/starter/src/ofApp.cpp`, temporarily change:
+In `exercises/01-a-mark-that-moves/solution/src/ofApp.cpp`, temporarily change:
 
 ```cpp
 ofGetLastFrameTime()
@@ -230,83 +190,75 @@ to:
 ofGetLastFrameTime() * 1000.0f
 ```
 
-This compiles: types cannot identify a mistaken unit. Predict the symptom, run the app
-briefly, and observe that the 0.1-second clamp prevents an unlimited jump but motion
-still advances at the clamp on almost every frame. Repair by removing `* 1000.0f`;
-source content changed, so do not regenerate. If this was the only edit you meant to
-discard, restore exactly that file with:
+The code still compiles. Predict the symptom, run it briefly, and notice how the
+0.1-second clamp limits—but does not hide—the mistake. Remove `* 1000.0f` and
+rebuild. Do not regenerate because no source file was added or removed.
+
+If this was your only intended edit, restore it with:
 
 ```sh
-git restore -- exercises/01-a-mark-that-moves/starter/src/ofApp.cpp
+git restore -- exercises/01-a-mark-that-moves/solution/src/ofApp.cpp
 ```
 
-This command discards every uncommitted change in that file. Before moving on, make sure
-you can name the wrong unit, visible behavior, limiting rule, and repair.
+That command discards every uncommitted change in the named file.
 
-## Your turn
+## Exercise
 
-Open the [traveler brief](../../../exercises/01-a-mark-that-moves/README.md). Choose start, speed, radius, and colors in the starter design
-file, then make a silhouette of your own or geometric trail. The starter is a circle with one
-trail line; the explained solution is a diamond with two parallel trail lines. Choose
-geometry distinct from both while preserving the repeatable public model and controls:
-pointer response, arrow fallback, wrap, pause, reset, and reduced motion. There is no
-target screenshot.
+### Problem: complete a wraparound traveler
 
-## Check your work
+Implement the missing `stepDistance(rate, elapsed_seconds)` calculation, then
+choose a normalized start, speed, radius, and three colors. The mark must move
+toward pointer input, support arrow-key fallback, wrap with overshoot, pause
+without a resume jump, reset repeatably, and retain reduced-motion mode through
+reset.
 
-Run the pure C++17 test before and after each model/design change:
+The starter is intentionally incomplete: the `TODO` calculation and design
+values make its tests fail. Open the
+[Exercise 01 brief, starter, tests, and solution](../../../exercises/01-a-mark-that-moves/README.md),
+then edit `starter/src/design/traveler_design.cpp`. Keep the public model and
+function names unchanged. After the model passes, change the silhouette or trail
+in `starter/src/ofApp.cpp`; tests inspect state, not pixels.
+
+### Run the unit tests
+
+Linux or macOS:
 
 ```sh
 tests/run-section-01-tests.sh
 ```
 
-Or in Windows Developer PowerShell:
+Windows Developer PowerShell:
 
 ```powershell
 .\tests\run-section-01-tests.ps1
 ```
 
-Known cases test one fixed `dt` and reset. The frame-partition property
-compares equal elapsed time; boundary tests cover wrap with overshoot and a long run.
-Pause-spike tests cover the 0.1-second clamp, pause accumulator clearing, and
-`NaN` or infinite time. The starter tests compile the starter design and
-checks finite/ranged choices, distinct mark/background RGB values, initial state,
-quarter-speed reduced motion, and reduced-motion persistence through reset. Sufficient
-visual contrast remains a manual review item. The explicit fixture inventory names all
-four streams. No test reads the clock, pointer, window, renderer, or pixels.
+The tests check attributes that demonstrate the model rules:
 
-Then generate and build both configurations. Open the app and inspect the window; a
-successful build cannot tell you whether the motion and composition look right.
+- `stepDistance` multiplies signed rate by elapsed seconds;
+- one fixed step moves by the expected distance;
+- equal elapsed-time partitions produce the same fixed-step result;
+- invalid durations, pause, and the 0.1-second clamp behave safely;
+- all four wrap boundaries preserve a finite state;
+- reset reproduces the chosen start and preserves reduced motion; and
+- chosen speed, radius, normalized start, and RGB values are valid.
 
-## Optional notes for future you
+Once the tests pass, generate, build, and open the starter again. A green model
+suite cannot decide whether motion, contrast, or controls are visually clear.
 
-Explain what the accumulator keeps and how one 1/30-second frame becomes four
-1/120-second steps. Name one visual choice you made and one accessibility control.
-Include the unit bug you repaired and save a still capture with alt text.
+### Quick visual check
 
-## Make it yours
+- Pointer and arrow input each have an immediately legible effect.
+- Space pauses without a resume jump; `R` repeats the start.
+- `M` is visibly slower and remains enabled after reset.
+- Wrap is clean on every edge at narrow and wide window sizes.
+- A line, silhouette, or placement communicates direction without color alone.
+- The result differs from the starter and solution in more than its palette.
+- No flashing or rapid full-field changes occur.
 
-Keep the fixed-step rule and controls, but change one spatial behavior: steer away from
-the pointer, constrain velocity to horizontal/vertical axes, or map pointer distance to
-speed within the documented range. Predict how the frame-partition test should behave
-before editing. The remix must change mapping or geometry, not only palette.
+### If you get stuck
 
-## Quick visual check
-
-- Pointer and arrow fallback each produce an immediately legible response.
-- Space pauses without a resume jump; reset repeats the start; reduced motion is visibly
-  slower and remains enabled after reset.
-- Wrap is clean on all edges and after narrow/wide resize.
-- A line, silhouette, or placement communicates motion without color alone.
-- Contrast is suitable and no flashing or rapid full-field changes occur.
-- The result differs from starter, preview, and solution in silhouette, trail, mapping,
-  or spatial behavior—not merely palette.
-- The capture alt text names mark position, direction cue, and relationship.
-- Reused code and assets remain credited and licensed.
-
-## If you get stuck
-
-If the mark jumps, freezes, or vanishes, pause before rewriting everything. Print or
-inspect position, speed, and `dt` one at a time. Check the units first:
-seconds and milliseconds are not cousins who can safely share a wardrobe. Then rerun the
-smallest model test and make one change.
+Start with `stepDistance`: at 120 pixels per second and 1/60 second, the answer
+must be 2 pixels. Then run the tests again and address the first failure only.
+If the app jumps or vanishes after tests pass, inspect position, speed, and `dt`
+one at a time. Check the units before changing the accumulator.

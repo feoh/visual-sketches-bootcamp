@@ -33,6 +33,7 @@ struct State {
 
 constexpr float fixedStepSeconds() { return 1.0f / 120.0f; }
 constexpr float maximumFrameSeconds() { return 0.1f; }
+float stepDistance(float rate_pixels_per_second, float elapsed_seconds);
 State makeState(const Design& design, Viewport viewport);
 void reset(State& state, const Design& design, Viewport viewport);
 void togglePause(State& state);

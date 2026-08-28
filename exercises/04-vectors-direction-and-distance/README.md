@@ -1,5 +1,8 @@
 # Exercise 04: distance-reactive constellation
 
+Complete the [Lesson and Practice](../../authoring/sections/04-vectors-direction-and-distance/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will build a constellation around an arrow from one point to another. Here a vector

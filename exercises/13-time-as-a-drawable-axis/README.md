@@ -1,5 +1,8 @@
 # Exercise 13: spatial-temporal collage
 
+Complete the [Lesson and Practice](../../authoring/sections/13-time-as-a-drawable-axis/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will save a fixed amount of recent history and choose an older or newer entry from a

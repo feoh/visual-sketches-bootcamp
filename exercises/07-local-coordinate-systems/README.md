@@ -1,5 +1,8 @@
 # Exercise 07: three-frame hierarchical kinetic sculpture
 
+Complete the [Lesson and Practice](../../authoring/sections/07-local-coordinate-systems/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will build a small moving sculpture from parent and child parts. Each child uses its

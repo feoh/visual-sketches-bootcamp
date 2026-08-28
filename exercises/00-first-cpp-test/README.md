@@ -1,5 +1,8 @@
 # Exercise: repair and write the first C++ test
 
+Complete the [Lesson and Practice](../../authoring/sections/00-first-cpp-test-interlude/index.md#lesson)
+before starting this problem. This page is the authoritative exercise brief.
+
 ## The short version
 
 You will repair one small C++ test, then write a second test of your own. The goal is

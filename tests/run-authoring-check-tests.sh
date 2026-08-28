@@ -61,6 +61,9 @@ unknown_route_lesson(){ sed '0,/00-cross-platform-setup-and-first-frame/s//missi
 add_route_field(){ sed '2s/$/\textra/' "$1/docs/pilot/routes.tsv" > "$1/r"; mv "$1/r" "$1/docs/pilot/routes.tsv"; }
 invalid_route_sequence(){ sed '2s/\t1\t/\tone\t/' "$1/docs/pilot/routes.tsv" > "$1/r"; mv "$1/r" "$1/docs/pilot/routes.tsv"; }
 reorder_route_rows(){ awk 'NR==2{first=$0;next} NR==3{print;print first;next} {print}' "$1/docs/pilot/routes.tsv" > "$1/r"; mv "$1/r" "$1/docs/pilot/routes.tsv"; }
+remove_practice_phase(){ sed '/^## Practice$/d' "$1/authoring/sections/00-cross-platform-setup/index.md" > "$1/i"; mv "$1/i" "$1/authoring/sections/00-cross-platform-setup/index.md"; }
+misorder_phases(){ sed 's/^## Lesson$/## TEMP/;s/^## Practice$/## Lesson/;s/^## TEMP$/## Practice/' "$1/authoring/sections/00-cross-platform-setup/index.md" > "$1/i"; mv "$1/i" "$1/authoring/sections/00-cross-platform-setup/index.md"; }
+put_tests_in_lesson(){ awk '{print} /^## Lesson$/{print "\ntests/run-section-00-tests.sh"}' "$1/authoring/sections/00-cross-platform-setup/index.md" > "$1/i"; mv "$1/i" "$1/authoring/sections/00-cross-platform-setup/index.md"; }
 
 expect_failure missing-transcript "missing asset 'media/moving-mark-transcript.txt'" remove_transcript
 expect_failure missing-license "missing license" remove_license
@@ -87,6 +90,9 @@ expect_failure route-unknown-lesson "unknown lesson slug missing-lesson" unknown
 expect_failure route-extra-field "must have six tab-delimited fields" add_route_field
 expect_failure route-invalid-sequence "sequence must be an ASCII decimal integer" invalid_route_sequence
 expect_failure route-reordered-rows "sequence must be contiguous from 1" reorder_route_rows
+expect_failure phase-missing-practice "phase structure requires exactly one Lesson, Practice, and Exercise heading" remove_practice_phase
+expect_failure phase-order "phases must appear in Lesson, Practice, Exercise order" misorder_phases
+expect_failure tests-before-exercise "section unit-test commands belong in Exercise, not Lesson or Practice" put_tests_in_lesson
 
 # Force the no-realpath branch and prove it conservatively rejects a final
 # symlink. Native Windows tests omit symlink creation because runner policy can
@@ -94,4 +100,4 @@ expect_failure route-reordered-rows "sequence must be contiguous from 1" reorder
 fixture="$work/symlink-fallback"; make_fixture "$fixture"; symlink_escape "$fixture"
 if AUTHORING_CHECK_NO_REALPATH=1 "$fixture/scripts/check-authoring.sh" >"$fixture/output.log" 2>&1; then echo 'negative test unexpectedly passed: symlink-fallback' >&2; exit 1; fi
 grep -Fq "cannot resolve local link 'outside-link.txt'" "$fixture/output.log" || { cat "$fixture/output.log" >&2; exit 1; }
-printf '%s\n' 'authoring checker tests: positive Hugo fixture/publication builds and 26 negative contracts passed'
+printf '%s\n' 'authoring checker tests: positive Hugo fixture/publication builds and 29 negative contracts passed'
