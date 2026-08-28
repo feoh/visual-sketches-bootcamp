@@ -6,16 +6,22 @@ $Work = Join-Path ([IO.Path]::GetTempPath()) ("authoring-check-tests-" + [guid]:
 function Make-Fixture([string]$Name) {
     $fixture = Join-Path $Work $Name
     New-Item -ItemType Directory -Force -Path (Join-Path $fixture "scripts") | Out-Null
-    Copy-Item -LiteralPath (Join-Path $Root "authoring") -Destination (Join-Path $fixture "authoring") -Recurse
-    Copy-Item -LiteralPath (Join-Path $Root "exercises") -Destination (Join-Path $fixture "exercises") -Recurse
-    New-Item -ItemType Directory -Force -Path (Join-Path $fixture "docs") | Out-Null
-    Copy-Item -LiteralPath (Join-Path $Root "docs/pilot") -Destination (Join-Path $fixture "docs/pilot") -Recurse
-    Copy-Item -LiteralPath (Join-Path $Root "docs/pilot-protocol-and-evidence.md") -Destination (Join-Path $fixture "docs/pilot-protocol-and-evidence.md")
-    foreach ($relative in @("THIRD_PARTY_NOTICES.md", "docs/source-notes.md", "docs/foundation-harness-evidence.md", "foundation/windowed/src/ofApp.cpp")) {
+
+    # Copy only tracked and relevant untracked inputs. Recursive copies also pick
+    # up ignored native build products under exercises/, multiplying gigabytes
+    # of disposable files across every negative fixture.
+    $relativePaths = @(& git -C $Root ls-files --cached --others --exclude-standard -- `
+        authoring exercises docs/pilot docs/pilot-protocol-and-evidence.md `
+        THIRD_PARTY_NOTICES.md docs/source-notes.md docs/foundation-harness-evidence.md `
+        foundation/windowed/src/ofApp.cpp)
+    if ($LASTEXITCODE -ne 0) { throw "git ls-files failed while creating fixture '$Name'" }
+    foreach ($relative in $relativePaths) {
+        if ([string]::IsNullOrWhiteSpace($relative)) { continue }
         $destination = Join-Path $fixture $relative
         New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destination) | Out-Null
         Copy-Item -LiteralPath (Join-Path $Root $relative) -Destination $destination
     }
+
     Copy-Item -LiteralPath (Join-Path $Root "scripts/check-authoring.ps1") -Destination (Join-Path $fixture "scripts/check-authoring.ps1")
     return $fixture
 }

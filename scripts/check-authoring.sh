@@ -174,15 +174,17 @@ validate_pilot_contract() {
     [ "$(frontmatter_value course_kind "$lesson")" = instructional ] || continue
     body="$work/phase-$(basename "$(dirname "$lesson")")"
     normal_markdown "$lesson" > "$body"
-    [ "$(grep -Fxc '## Lesson' "$body" || true)" -eq 1 ] &&
-      [ "$(grep -Fxc '## Practice' "$body" || true)" -eq 1 ] &&
-      [ "$(grep -Fxc '## Exercise' "$body" || true)" -eq 1 ] ||
+    if [ "$(grep -Fxc '## Lesson' "$body" || true)" -ne 1 ] ||
+      [ "$(grep -Fxc '## Practice' "$body" || true)" -ne 1 ] ||
+      [ "$(grep -Fxc '## Exercise' "$body" || true)" -ne 1 ]; then
       fail "$lesson: phase structure requires exactly one Lesson, Practice, and Exercise heading"
+    fi
     lesson_line=$(grep -Fn '## Lesson' "$body" | cut -d: -f1)
     practice_line=$(grep -Fn '## Practice' "$body" | cut -d: -f1)
     exercise_line=$(grep -Fn '## Exercise' "$body" | cut -d: -f1)
-    [ "$lesson_line" -lt "$practice_line" ] && [ "$practice_line" -lt "$exercise_line" ] ||
+    if [ "$lesson_line" -ge "$practice_line" ] || [ "$practice_line" -ge "$exercise_line" ]; then
       fail "$lesson: phases must appear in Lesson, Practice, Exercise order"
+    fi
     awk '/^## Exercise$/{exit}{print}' "$body" | grep -Eq 'run-section-[0-9][0-9]-tests\.(sh|ps1)' &&
       fail "$lesson: section unit-test commands belong in Exercise, not Lesson or Practice"
     grep -Eq '^#{2,3} (Quick visual|Manual)' "$body" || fail "$lesson: instructional section requires a visual-review heading"
