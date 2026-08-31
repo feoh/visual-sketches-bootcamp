@@ -2,8 +2,8 @@
 
 namespace {
 ofColor colorFor(const StructuredChancePalette& palette, int role, int alpha) {
-    if (role == 0) return {palette.first_r, palette.first_g, palette.first_b, alpha};
-    return {palette.second_r, palette.second_g, palette.second_b, alpha};
+    if (role == 0) return ofColor(palette.first_r, palette.first_g, palette.first_b, alpha);
+    return ofColor(palette.second_r, palette.second_g, palette.second_b, alpha);
 }
 ofVec2f screenPoint(structuredchance::Point point) {
     return {point.x * ofGetWidth(), point.y * ofGetHeight()};

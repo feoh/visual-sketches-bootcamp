@@ -62,6 +62,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: authoring-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
 jobs:
   posix-contract:
     runs-on: ubuntu-24.04
@@ -211,6 +215,9 @@ jobs:
     name: ${{ matrix.status }}
     strategy:
       fail-fast: false
+      # Reduce package-mirror pressure: prior unthrottled Linux jobs repeatedly
+      # stalled in the upstream dependency installer until its timeout.
+      max-parallel: 12
       matrix:
         include:
           - status: section-00-linux-build
