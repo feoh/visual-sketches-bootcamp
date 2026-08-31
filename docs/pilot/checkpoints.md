@@ -24,7 +24,7 @@ symbolically.
 
 ## Complete path
 
-Use one section 17 idea and its saved replay or frame-time example. Explore one
+Use one section 19 idea and its saved replay or frame-time example. Explore one
 mechanism more deeply and make the structure your own. Keep whichever optional
 plan, test note, capture note, or credits list will genuinely help you return to
 the project.

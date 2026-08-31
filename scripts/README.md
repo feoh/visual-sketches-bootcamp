@@ -106,7 +106,7 @@ For direct Hugo flags, accessibility/release gates, and licensing behavior, see
 
 ## Section exercises
 
-Sections 00–15 use thin platform wrappers around the shared, containment-checked
+Sections 00–17 use thin platform wrappers around the shared, containment-checked
 `course-project` implementation. Their starter and solution projects
 use the same pinned root but remain separate Project Generator targets.
 Generation and compilation are separate; each renderer-independent C++17 test
@@ -124,7 +124,7 @@ tests/run-section-00-tests.sh
 .\tests\run-section-00-tests.ps1
 ```
 
-For sections 01–15, substitute the matching two-digit section number in those
+For sections 01–17, substitute the matching two-digit section number in those
 command names; tests follow `tests/run-section-NN-tests.sh` or `.ps1`.
 Sections 00 and 01 now begin intentionally red: their default commands test the
 incomplete starter. Pass `solution` to the shell runner or `-Variant solution`
@@ -135,13 +135,13 @@ native metadata and build products remain ignored.
 
 ## Synthesis projects
 
-Sections 16–17 intentionally do not add unproven generic Project Generator
+Sections 18–19 intentionally do not add unproven generic Project Generator
 wrappers. A learner keeps the checked build boundary by repurposing distinct
 existing starter directories on a learner branch: section 08 for gesture
 memory, section 05 or 07 for repetition, and section 10 or 11 for particles.
 The capstone then evolves one completed study on a separate capstone branch.
-See the [section 16 supported bootstrap](../authoring/sections/16-three-sketch-studies/index.md#reuse-three-working-starters)
-and [section 17 capstone bootstrap](../authoring/sections/17-original-visual-instrument/index.md#start-from-one-working-study)
+See the [section 18 supported bootstrap](../authoring/sections/18-three-sketch-studies/index.md#reuse-three-working-starters)
+and [section 19 capstone bootstrap](../authoring/sections/19-original-visual-instrument/index.md#start-from-one-working-study)
 for the required baseline test, generation, build, launch, and checkpoint steps.
 The selected section's existing shell/PowerShell runner remains the public test
 command; synthesis adds its pure model contract and fixtures to that checked

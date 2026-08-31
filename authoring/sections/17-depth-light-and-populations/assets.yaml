@@ -1,0 +1,17 @@
+assets:
+  - id: depth-population-preview
+    path: media/depth-population-preview.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: Hundreds of elongated pebble forms gather around six invisible cluster centers on black. Near forms are larger and overlap distant forms. Warm light reaches from the upper left and cool light reaches from the right; each cluster shares a material family and a preferred orientation.
+    caption: The population is dense but related; six cluster records organize position, orientation, scale, and material before lighting reveals the result.
+  - id: zach-lieberman-pebble-cloud-reference
+    path: media/zach-lieberman-pebble-cloud-reference.png
+    kind: image
+    creator: Zach Lieberman
+    source: https://x.com/zachlieberman (course-owner-supplied capture; exact post URL unavailable)
+    license: UNKNOWN
+    alt: A dense square reference contains thousands of softly rounded pebble and capsule forms floating on black. Their sizes, orientations, and spacing vary locally; warm pink and orange highlights gather toward the left and upper areas while cool blue highlights gather toward the lower right. Deep shadow leaves irregular voids between clusters.
+    caption: Course-owner-supplied reference attributed to Zach Lieberman and included at the project owner's direction; exact post and license metadata were not supplied.

@@ -15,7 +15,10 @@ The curriculum draws from recurring, transferable technique families visible in 
 - particles, forces, springs, and coherent flow;
 - typography and images treated as geometry;
 - camera/sound/body input mapped into immediate visual feedback; and
-- time used as material through trails, delay, frame history, and feedback.
+- time used as material through trails, delay, frame history, and feedback;
+- structured chance organized as composition, region or cluster, and mark; and
+- dense repeated 3D forms made legible through local coherence, depth, material,
+  and restrained colored light.
 
 These are mechanisms, not recipes for reproducing individual works. Lessons should cite precedents, identify collaborations, and require learners to choose original inputs, mappings, geometry, palettes, and compositions.
 
@@ -89,7 +92,7 @@ The suggested 12–18-week routes, accelerated 8+2-week option, and lesson order
 
 ## Evidence limitations
 
-- The X/Instagram feeds have not been exhaustively sampled or frequency-coded. Technique recurrence is qualitative and triangulated with creator-owned repositories and project pages.
+- The X/Instagram feeds have not been exhaustively sampled or frequency-coded. Technique recurrence is qualitative and triangulated with creator-owned repositories and project pages. Sections 16 and 17 bundle two course-owner-supplied captures attributed to Zach Lieberman at the project owner's direction. Their exact post URLs and license metadata were not supplied, so the asset records and third-party notice preserve that uncertainty rather than inferring terms.
 - Native openFrameworks render variance has not yet been measured across the course’s three target platforms.
 - Commit `f3c42f4` has repository-recorded Linux, macOS, and Windows generation,
   Debug/Release build, and foundation no-window unit proof in the

@@ -98,12 +98,12 @@ function Assert-PilotContract {
     $expectedHeader = "protocol_version`troute_id`tsequence`tlesson_slug`tstatus`tcheckpoint_after"
     if ($routeLines.Count -eq 0 -or $routeLines[0] -ne $expectedHeader) { Fail "$routePath`: invalid header" }
     $protocol = Get-Content -Raw -LiteralPath (Join-Path $Root 'docs/pilot-protocol-and-evidence.md')
-    if (-not $protocol.Contains('**Protocol version:** 1.2')) { Fail 'pilot protocol version must agree with routes.tsv' }
+    if (-not $protocol.Contains('**Protocol version:** 1.3')) { Fail 'pilot protocol version must agree with routes.tsv' }
 
     $lessons = @(Get-ChildItem -LiteralPath (Join-Path $Authoring 'sections') -Filter index.md -File -Recurse | Sort-Object -Property FullName |
         ForEach-Object { $front=Read-FrontMatter $_.FullName; if($front.draft-eq'false'){[pscustomobject]@{Slug=$front.slug;Weight=[int]$front.weight;Path=$_.FullName;Kind=$front.course_kind}} } |
         Where-Object { $null-ne$_ } | Sort-Object Weight)
-    if ($lessons.Count -ne 19) { Fail 'pilot routes require exactly 19 published lesson bundles' }
+    if ($lessons.Count -ne 21) { Fail 'pilot routes require exactly 21 published lesson bundles' }
     if (@($lessons | Group-Object Slug | Where-Object Count -gt 1).Count -gt 0) { Fail 'published lesson slugs must be unique' }
     $sequence=@{}; for($i=0;$i-lt$lessons.Count;$i++){$sequence[$lessons[$i].Slug]=$i+1}
 
@@ -113,23 +113,23 @@ function Assert-PilotContract {
         if($fields[2]-notmatch'^[0-9]+$'){Fail "$routePath`: row $($lineNumber+1) sequence must be an ASCII decimal integer"}
     }
     $rows = @($routeLines | ConvertFrom-Csv -Delimiter "`t")
-    $routeIds = @('complete-18','core-12','accelerated-8-plus-2')
+    $routeIds = @('complete-20','core-12','accelerated-8-plus-2')
     foreach($row in $rows){
-        if($row.protocol_version-ne'1.2'){Fail "$routePath`: protocol version must be 1.2"}
+        if($row.protocol_version-ne'1.3'){Fail "$routePath`: protocol version must be 1.3"}
         if($row.route_id-notin$routeIds){Fail "$routePath`: unknown route $($row.route_id)"}
         if($row.status-notin@('required','optional')){Fail "$routePath`: invalid status $($row.status)"}
         if($row.checkpoint_after-notin@('none','unit-0','unit-2','complete-path')){Fail "$routePath`: invalid checkpoint $($row.checkpoint_after)"}
         if(-not$sequence.ContainsKey($row.lesson_slug)){Fail "$routePath`: unknown lesson slug $($row.lesson_slug)"}
         if([int]$row.sequence-ne$sequence[$row.lesson_slug]){Fail "$routePath`: lesson $($row.lesson_slug) is out of published weight order"}
-        $expectedCheckpoint=switch($row.lesson_slug){'00-first-cpp-test-interlude'{'unit-0'}'08-gesture-as-geometry'{'unit-2'}'17-original-visual-instrument-capstone'{'complete-path'}default{'none'}}
+        $expectedCheckpoint=switch($row.lesson_slug){'00-first-cpp-test-interlude'{'unit-0'}'08-gesture-as-geometry'{'unit-2'}'19-original-visual-instrument-capstone'{'complete-path'}default{'none'}}
         if($row.checkpoint_after-ne$expectedCheckpoint){Fail "$routePath`: lesson $($row.lesson_slug) must use checkpoint $expectedCheckpoint"}
-        $optional=$row.route_id-ne'complete-18'-and$row.lesson_slug-in@('13-time-as-a-drawable-axis','14-images-and-type-as-geometry','15-embodied-audio-input')
+        $optional=$row.route_id-ne'complete-20'-and$row.lesson_slug-in@('13-time-as-a-drawable-axis','14-images-and-type-as-geometry','15-embodied-audio-input','16-structured-chance-and-spatial-grammar','17-depth-light-and-dense-populations')
         $expectedStatus=if($optional){'optional'}else{'required'}
         if($row.status-ne$expectedStatus){Fail "$routePath`: lesson $($row.lesson_slug) must be $expectedStatus on route $($row.route_id)"}
     }
     foreach($routeId in $routeIds){
         $routeRows=@($rows|Where-Object{$_.route_id-eq$routeId})
-        if($routeRows.Count-ne19){Fail "$routePath`: route $routeId must list all 19 bundles"}
+        if($routeRows.Count-ne21){Fail "$routePath`: route $routeId must list all 21 bundles"}
         for($i=0;$i-lt$routeRows.Count;$i++){if([int]$routeRows[$i].sequence-ne$i+1){Fail "$routePath`: route $routeId sequence must be contiguous from 1"}}
         if(@($routeRows|Group-Object lesson_slug|Where-Object{$_.Count-gt1}).Count-gt0){Fail "$routePath`: route $routeId repeats a lesson"}
     }
@@ -276,21 +276,21 @@ try{
         $traveler = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/01-a-mark-that-moves/index.html')
         if (-not $traveler.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/exercises/')) { Fail 'publication did not rewrite repository file links' }
         if (-not (Test-Path -LiteralPath (Join-Path $publication 'course/01-a-mark-that-moves/media/traveler-time-preview.svg') -PathType Leaf)) { Fail 'publication omitted representative bundle media' }
-        $section16 = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/16-three-cumulative-sketch-studies/index.html')
-        $section17 = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/17-original-visual-instrument-capstone/index.html')
-        if (-not $section16.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/templates/model-test-contract.md')) { Fail 'publication did not rewrite section 16 Markdown resource links' }
-        if (-not $section16.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/fixtures/README.md')) { Fail 'publication did not expose section 16 fixture provenance' }
-        if (-not $section17.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/17-original-visual-instrument/fixtures/README.md')) { Fail 'publication did not expose section 17 fixture provenance' }
-        if (-not $section17.Contains("href=`"${basePath}course/16-three-cumulative-sketch-studies/#reuse-three-working-starters`"")) { Fail 'publication did not resolve the section 17 sibling lesson link' }
-        if (-not $section16.Contains('CC0-1.0')) { Fail 'publication omitted section 16 fixture license notice' }
-        if (-not $section17.Contains('CC0-1.0')) { Fail 'publication omitted section 17 fixture license notice' }
+        $section18 = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/18-three-cumulative-sketch-studies/index.html')
+        $section19 = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/19-original-visual-instrument-capstone/index.html')
+        if (-not $section18.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/18-three-sketch-studies/templates/model-test-contract.md')) { Fail 'publication did not rewrite section 18 Markdown resource links' }
+        if (-not $section18.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/18-three-sketch-studies/fixtures/README.md')) { Fail 'publication did not expose section 18 fixture provenance' }
+        if (-not $section19.Contains('github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/19-original-visual-instrument/fixtures/README.md')) { Fail 'publication did not expose section 19 fixture provenance' }
+        if (-not $section19.Contains("href=`"${basePath}course/18-three-cumulative-sketch-studies/#reuse-three-working-starters`"")) { Fail 'publication did not resolve the section 19 sibling lesson link' }
+        if (-not $section18.Contains('CC0-1.0')) { Fail 'publication omitted section 18 fixture license notice' }
+        if (-not $section19.Contains('CC0-1.0')) { Fail 'publication omitted section 19 fixture license notice' }
         $courseIndex = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/index.html')
         $firstLesson = [regex]::Match($courseIndex, '<li><a href="([^"]+)"').Groups[1].Value
         if ($firstLesson -ne "${basePath}course/00-cross-platform-setup-and-first-frame/") { Fail 'publication course contents do not begin with section 00 setup' }
         $setup = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/00-cross-platform-setup-and-first-frame/index.html')
         if ($setup.Contains('<span>Previous</span><a')) { Fail 'section 00 setup unexpectedly has a previous lesson' }
         if (-not $setup.Contains("<span>Next</span><a href=`"${basePath}course/01-a-mark-that-moves/`">")) { Fail 'section 00 setup does not lead to section 01' }
-        if ($section17.Contains('<span>Next</span><a')) { Fail 'section 17 unexpectedly has a next lesson' }
+        if ($section19.Contains('<span>Next</span><a')) { Fail 'section 19 unexpectedly has a next lesson' }
         $pagination = Get-Content -Raw -LiteralPath (Join-Path $publication 'course/14-images-and-type-as-geometry/index.html')
         if (-not $pagination.Contains("<span>Previous</span><a href=`"${basePath}course/13-time-as-a-drawable-axis/`">")) { Fail 'publication Previous navigation does not follow increasing course weight' }
         if (-not $pagination.Contains("<span>Next</span><a href=`"${basePath}course/15-embodied-audio-input/`">")) { Fail 'publication Next navigation does not follow increasing course weight' }

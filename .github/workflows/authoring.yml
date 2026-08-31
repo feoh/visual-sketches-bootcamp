@@ -121,6 +121,10 @@ jobs:
         run: tests/run-section-14-tests.sh
       - name: Test section 15 audio-input model
         run: tests/run-section-15-tests.sh
+      - name: Test section 16 structured-chance model
+        run: tests/run-section-16-tests.sh
+      - name: Test section 17 depth/light population model
+        run: tests/run-section-17-tests.sh
       - name: Test starter and solution C++ known cases
         run: |
           tests/run-first-cpp-test.sh starter
@@ -191,6 +195,12 @@ jobs:
       - name: Test section 15 audio-input model
         shell: pwsh
         run: tests/run-section-15-tests.ps1
+      - name: Test section 16 structured-chance model
+        shell: pwsh
+        run: tests/run-section-16-tests.ps1
+      - name: Test section 17 depth/light population model
+        shell: pwsh
+        run: tests/run-section-17-tests.ps1
       - name: Test starter and solution C++ known cases
         shell: pwsh
         run: |
@@ -440,6 +450,36 @@ jobs:
             archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
           - status: section-15-windows-build
             section: '15'
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+          - status: section-16-linux-build
+            section: '16'
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: section-16-macos-build
+            section: '16'
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: section-16-windows-build
+            section: '16'
+            os: windows-2022
+            platform: vs
+            archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8
+          - status: section-17-linux-build
+            section: '17'
+            os: ubuntu-24.04
+            platform: linux64
+            archive_sha: d6c1dcab777665b2aa63e5e3d9122cc116f096b3421db3493f795a621b399c63
+          - status: section-17-macos-build
+            section: '17'
+            os: macos-15
+            platform: osx
+            archive_sha: e4a2dd6e75805320aac905f9f82f7b85e67a8b799137d47f35d40f7c4c195c9b
+          - status: section-17-windows-build
+            section: '17'
             os: windows-2022
             platform: vs
             archive_sha: 059f5210dd86beaee9dd17cfe4afe9eb5929376412b9baffda68ccd5d0b4d8a8

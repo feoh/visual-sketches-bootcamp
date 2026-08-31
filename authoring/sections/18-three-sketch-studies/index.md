@@ -1,7 +1,7 @@
 ---
 title: Three cumulative sketch studies
-slug: 16-three-cumulative-sketch-studies
-weight: 180
+slug: 18-three-cumulative-sketch-studies
+weight: 200
 draft: false
 course_kind: synthesis
 objectives:

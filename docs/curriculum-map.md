@@ -22,38 +22,41 @@ By the end, you should be able to:
 - use vectors, interpolation, circle helpers, transforms, randomness, noise, and
   simple forces intentionally;
 - build gesture lines, repeated geometric systems, particles, flow fields,
-  trails, and media-derived geometry;
+  trails, media-derived geometry, structured random compositions, and bounded
+  lit 3D populations;
 - diagnose ordinary compiler, linker, runtime, and frame-rate problems;
 - create and document an original, visually compelling sketch; and
 - explain how its code, math, and visual behavior connect.
 
-The course fits a **12–18 week suggested rhythm including synthesis**, but you
+The course fits a **12–20 week suggested rhythm including synthesis**, but you
 can take longer, skip an extension, or spend an entire evening making one
 circle wiggle. The calendar is a map, not a boss fight.
 
 ## Pick a pace (or make up your own)
 
 These are optional ways to organize the material. The route names refer to
-weeks, not lesson counts: each one contains 19 ordered bundles including the
+weeks, not lesson counts: each one contains 21 ordered bundles including the
 first-C++ test interlude. The checked route file simply keeps the published pages in the intended order.
 
 | Route | Provisional schedule | Scope and consequence |
 |---|---|---|
-| Complete, about 18 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4–13: one of 03–12 each week; 14: 13; 15: 14; 16: 15; 17: section 16 studies; 18: begin section 17, with as much extra capstone time as you want | Includes every lesson. Take extra time for the capstone whenever you want; unfinished sketches are allowed to remain unfinished for a while. |
-| Core, about 12 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4: 03–04; 5: 05–06; 6: 07–08; 7: 09–10; 8: 11; 9: 12; 10: section 16; 11–12: section 17 | Omits extensions 13–15. Pair sections only when that still feels fun; otherwise stretch the route. |
-| Accelerated, 8+2 weeks | 1: 00–01; 2: 02 + test interlude; 3: 03–04; 4: 05–06; 5: 07–08; 6: 09–10; 7: 11; 8: 12; synthesis weeks 1–2: sections 16–17 | Omits 13–15. This is a fast tour, not a race; extend it rather than skipping the parts that make the sketch understandable. |
+| Complete, about 20 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4–13: one of 03–12 each week; 14: 13; 15: 14; 16: 15; 17: 16; 18: 17; 19: section 18 studies; 20: begin section 19, with as much extra capstone time as you want | Includes every lesson, including structured chance and the bounded 3D lane. Take extra capstone time whenever you want. |
+| Core, about 12 weeks | 1: 00; 2: 01; 3: 02 + test interlude; 4: 03–04; 5: 05–06; 6: 07–08; 7: 09–10; 8: 11; 9: 12; 10: section 18; 11–12: section 19 | Omits extensions 13–17. Pair sections only when that still feels fun; otherwise stretch the route. |
+| Accelerated, 8+2 weeks | 1: 00–01; 2: 02 + test interlude; 3: 03–04; 4: 05–06; 5: 07–08; 6: 09–10; 7: 11; 8: 12; synthesis weeks 1–2: sections 18–19 | Omits 13–17. This is a fast tour, not a race; extend it rather than skipping the parts that make the sketch understandable. |
 
 Sections 00–12 are the core prerequisite chain. Sections 13 and 14 are
-extensions; section 15 is an elective. Section 16 requires the mechanisms from
-06–12 but does not require section 13: “temporal memory” may use the bounded
-histories introduced in sections 09 and 12. Section 17 requires section 16 or
-equivalent synthesis work. The only delivered section 15 lane is recorded
-microphone amplitude with no-device fallback.
+extensions; section 15 is an elective. Sections 16 and 17 are advanced visual
+extensions that revisit randomness and add a bounded 3D lane. Section 18
+requires the mechanisms from 06–12 but does not require sections 13–17:
+“temporal memory” may use the bounded histories introduced in sections 09 and
+12. Section 19 requires section 18 or equivalent synthesis work. The only
+delivered section 15 lane is recorded microphone amplitude with no-device
+fallback.
 
 ## The rhythm of a section
 
-Sections 00–15 use three clearly named phases. The larger projects in sections
-16–17 keep a looser synthesis path.
+Sections 00–17 use three clearly named phases. The larger projects in sections
+18–19 keep a looser synthesis path.
 
 1. **Lesson:** learn one coherent visual, mathematical, and C++ idea through an
    explanation and worked example.
@@ -291,9 +294,35 @@ optional.
 **Tests:** smoothing, dead zone, deterministic recorded input, explicit
 no-device fallback, bounded output, and reset behavior.
 
-## Part 5 — Make your own thing
+## Part 5 — Organize complexity
 
-### 16. Project: three sketch studies
+### 16. Structured chance and spatial grammar
+
+**Visual goal:** create irregular luminous panel compositions whose seeds share a clear family resemblance.
+
+**C++:** parent/child generated records, one shared node lattice, and bounded work.
+
+**Math:** correlation as shared causes, convex panel area, line clipping in a unit square, and bilinear panel mapping.
+
+**Exercise:** build a seeded warped-panel grammar with inherited angles, layered translucent marks, and one deliberate quiet region.
+
+**Tests:** deterministic replay, exact shared seams, positive area, bounded inheritance, finite clipping, quiet-space and density caps.
+
+### 17. Depth, light, and dense populations
+
+**Visual goal:** make a clustered field of elongated forms read as one lit three-dimensional mass.
+
+**C++:** deterministic 3D transform records, one reused primitive, camera/light/material renderer state, and limited populations.
+
+**Math:** 3D position, center-biased cluster offsets, inherited orientation and scale, perspective intuition, and surface normals.
+
+**Exercise:** build a bounded warm/cool-lit pebble population with orbit, pause, replay, and reduced detail.
+
+**Tests:** cluster/child replay, finite bounded transforms, inherited roles and orientation, positive scales, invalid settings, and work caps. GPU lighting remains a manual check.
+
+## Part 6 — Make your own thing
+
+### 18. Project: three sketch studies
 
 Create three compact studies, each combining two technique families:
 
@@ -305,7 +334,7 @@ Each study stays small enough for one focused sitting. A small model test, a
 capture, and a short note can make an interesting study easier to revisit. Try at
 least one visual structure that differs substantially from the worked examples.
 
-### 17. Project: an original visual instrument
+### 19. Project: an original visual instrument
 
 Create one coherent sketch that:
 
@@ -336,6 +365,8 @@ The bootcamp does not front-load manual memory management, template authoring,
 inheritance design, move-semantics theory, concurrency, custom allocators,
 calculus, hand-derived matrix multiplication, machine-learning training,
 or custom shaders. It also does not expect trig knowledge at the door: section
-05 introduces the circle vocabulary it needs. Shaders and addons appear only
-when a sketch creates a concrete need and the prerequisite CPU-side model is
-already understood and testable.
+05 introduces the circle vocabulary it needs. Section 17 adds one bounded 3D
+population without requiring matrix derivations, custom meshes, shaders, or
+hardware instancing. Shaders and addons appear only when a sketch creates a
+concrete need and the prerequisite CPU-side model is already understood and
+testable.

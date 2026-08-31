@@ -96,6 +96,28 @@ struct Edition {
 Separating records from rendering lets tests inspect values and another program
 parse saved parameters. Drawing then becomes a separate visual interpretation.
 
+### Independent choices are only the first step
+
+This exercise draws each mark's position, radius, and motif separately. That is a
+useful first model, but adding more independent random properties usually makes a
+sketch less coherent, not more artful.
+
+A richer composition can make choices in a hierarchy:
+
+```text
+composition -> region or cluster -> individual mark
+```
+
+The composition might choose one dominant direction and one deliberate empty
+area. Each region inherits that direction with a small change. Marks inherit
+their region's palette and vary only spacing or width. The random values now
+share causes, so they produce family resemblance rather than confetti.
+
+Keep this section's exercise focused on seeds, distributions, and replay. After
+the light, time, and media units, [section 16](../16-structured-chance/index.md)
+returns to chance and builds a full spatial grammar from shared panel seams,
+inherited angles, bounded variation, and intentional quiet space.
+
 ### Weighted tickets make hierarchy explicit
 
 Motifs use an integer from

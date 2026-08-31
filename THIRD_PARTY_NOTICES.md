@@ -19,6 +19,21 @@ The surrounding coordinate/seed composition, bounds, and value-noise pipeline
 are course code. Retain this notice and the BSL-1.0 text when redistributing the
 bundled expression.
 
+## Zach Lieberman visual references
+
+Two course-owner-supplied captures attributed to Zach Lieberman are bundled as
+visual references:
+
+- `authoring/sections/16-structured-chance/media/zach-lieberman-luminous-panels-reference.png`
+- `authoring/sections/17-depth-light-and-populations/media/zach-lieberman-pebble-cloud-reference.png`
+
+The supplied captures identify Zach Lieberman's X feed as their source, but no
+exact post URLs or license metadata were provided. Their asset records therefore
+state `license: UNKNOWN` rather than assigning terms that were not supplied. The
+project owner explicitly directed their inclusion. They are reference material,
+not relicensed under the repository's CC BY 4.0 scope; the accompanying course
+diagrams, prose, and code remain under the repository's stated licenses.
+
 ## Chris Wellons lowbias32 finalizer
 
 The same function uses constants and operations from Chris Wellons's

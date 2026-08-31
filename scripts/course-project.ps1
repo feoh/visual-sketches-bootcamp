@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)]
-    [ValidateSet("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15")]
+    [ValidateSet("00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17")]
     [string]$Section,
     [Parameter(Position = 0, Mandatory = $true)]
     [ValidateSet("doctor", "generate", "build")]
@@ -29,7 +29,9 @@ elseif ($Section -eq "11") { $Exercise = "11-noise-and-flow-fields"; $Design = "
 elseif ($Section -eq "12") { $Exercise = "12-color-blending-and-trails"; $Design = "trail_design"; $Shared = "color_trail_model" }
 elseif ($Section -eq "13") { $Exercise = "13-time-as-a-drawable-axis"; $Design = "temporal_design"; $Shared = "temporal_history" }
 elseif ($Section -eq "14") { $Exercise = "14-images-and-type-as-geometry"; $Design = "image_geometry_design"; $Shared = "image_geometry_model" }
-else { $Exercise = "15-embodied-audio-input"; $Design = "audio_instrument_design"; $Shared = "audio_input_model" }
+elseif ($Section -eq "15") { $Exercise = "15-embodied-audio-input"; $Design = "audio_instrument_design"; $Shared = "audio_input_model" }
+elseif ($Section -eq "16") { $Exercise = "16-structured-chance"; $Design = "structured_chance_design"; $Shared = "structured_chance_model" }
+else { $Exercise = "17-depth-light-and-populations"; $Design = "population_design"; $Shared = "population_model" }
 $Label = "section-$Section"
 $ProjectPath = Join-Path $Root "exercises\$Exercise\$Project"
 function Fail([string]$Message) { throw "${Label}: $Message" }

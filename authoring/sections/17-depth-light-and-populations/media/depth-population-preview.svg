@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Clustered pebble population under warm and cool lights</title>
+  <desc id="desc">Hundreds of elongated ellipses gather in six overlapping groups on black. Large foreground forms occlude small distant forms. Warm highlights come from upper left and cool highlights from the right.</desc>
+  <defs>
+    <radialGradient id="warm"><stop offset="0" stop-color="#ffd2c4"/><stop offset=".45" stop-color="#e36e45"/><stop offset="1" stop-color="#171410"/></radialGradient>
+    <radialGradient id="cool"><stop offset="0" stop-color="#d8f1ff"/><stop offset=".45" stop-color="#2e91b8"/><stop offset="1" stop-color="#081219"/></radialGradient>
+    <filter id="shadow"><feDropShadow dx="5" dy="7" stdDeviation="6" flood-color="#000" flood-opacity=".85"/></filter>
+  </defs>
+  <rect width="1200" height="700" fill="#000"/>
+  <g opacity=".45" filter="url(#shadow)">
+    <g fill="url(#warm)">
+      <ellipse cx="210" cy="170" rx="24" ry="12" transform="rotate(24 210 170)"/><ellipse cx="280" cy="135" rx="18" ry="9" transform="rotate(-20 280 135)"/><ellipse cx="340" cy="190" rx="30" ry="13" transform="rotate(34 340 190)"/><ellipse cx="165" cy="230" rx="17" ry="10"/><ellipse cx="300" cy="245" rx="23" ry="11" transform="rotate(15 300 245)"/><ellipse cx="390" cy="140" rx="14" ry="8"/>
+      <ellipse cx="420" cy="330" rx="27" ry="13" transform="rotate(40 420 330)"/><ellipse cx="350" cy="370" rx="19" ry="9" transform="rotate(25 350 370)"/><ellipse cx="500" cy="390" rx="31" ry="14" transform="rotate(-18 500 390)"/><ellipse cx="445" cy="445" rx="22" ry="10"/><ellipse cx="555" cy="315" rx="16" ry="8"/>
+    </g>
+    <g fill="url(#cool)">
+      <ellipse cx="770" cy="150" rx="18" ry="9" transform="rotate(-25 770 150)"/><ellipse cx="850" cy="190" rx="26" ry="11" transform="rotate(18 850 190)"/><ellipse cx="930" cy="140" rx="15" ry="8"/><ellipse cx="990" cy="220" rx="28" ry="12" transform="rotate(-14 990 220)"/><ellipse cx="820" cy="260" rx="20" ry="10"/>
+      <ellipse cx="730" cy="410" rx="22" ry="10" transform="rotate(35 730 410)"/><ellipse cx="830" cy="390" rx="29" ry="13" transform="rotate(-12 830 390)"/><ellipse cx="920" cy="450" rx="18" ry="9"/><ellipse cx="1010" cy="390" rx="24" ry="11" transform="rotate(20 1010 390)"/><ellipse cx="880" cy="510" rx="16" ry="8"/>
+    </g>
+  </g>
+  <g filter="url(#shadow)">
+    <g fill="url(#warm)">
+      <ellipse cx="260" cy="300" rx="48" ry="23" transform="rotate(25 260 300)"/><ellipse cx="340" cy="285" rx="38" ry="19" transform="rotate(-12 340 285)"/><ellipse cx="225" cy="385" rx="34" ry="17" transform="rotate(42 225 385)"/><ellipse cx="390" cy="440" rx="54" ry="25" transform="rotate(18 390 440)"/><ellipse cx="505" cy="505" rx="41" ry="21" transform="rotate(-24 505 505)"/>
+      <ellipse cx="515" cy="230" rx="43" ry="20" transform="rotate(50 515 230)"/><ellipse cx="590" cy="350" rx="60" ry="27" transform="rotate(16 590 350)"/>
+    </g>
+    <g fill="url(#cool)">
+      <ellipse cx="700" cy="260" rx="46" ry="21" transform="rotate(-18 700 260)"/><ellipse cx="785" cy="320" rx="57" ry="25" transform="rotate(22 785 320)"/><ellipse cx="910" cy="300" rx="36" ry="18" transform="rotate(-35 910 300)"/><ellipse cx="990" cy="350" rx="49" ry="23" transform="rotate(14 990 350)"/>
+      <ellipse cx="675" cy="480" rx="43" ry="20" transform="rotate(38 675 480)"/><ellipse cx="790" cy="525" rx="63" ry="29" transform="rotate(-14 790 525)"/><ellipse cx="955" cy="510" rx="45" ry="22" transform="rotate(28 955 510)"/>
+    </g>
+  </g>
+  <g fill="none" stroke-dasharray="7 7" opacity=".7"><path d="M85 70L280 250" stroke="#ff9a70" stroke-width="3"/><path d="M1110 95L900 280" stroke="#61c8ef" stroke-width="3"/></g>
+  <g font-family="sans-serif" font-size="18" fill="#f4f5f7"><text x="40" y="55">warm light</text><text x="1020" y="75">cool light</text><text x="500" y="650">six parent clusters → one bounded population</text></g>
+</svg>

@@ -21,6 +21,8 @@ case "$SECTION" in
   13) EXERCISE=13-time-as-a-drawable-axis; DESIGN=temporal_design; SHARED=temporal_history ;;
   14) EXERCISE=14-images-and-type-as-geometry; DESIGN=image_geometry_design; SHARED=image_geometry_model ;;
   15) EXERCISE=15-embodied-audio-input; DESIGN=audio_instrument_design; SHARED=audio_input_model ;;
+  16) EXERCISE=16-structured-chance; DESIGN=structured_chance_design; SHARED=structured_chance_model ;;
+  17) EXERCISE=17-depth-light-and-populations; DESIGN=population_design; SHARED=population_model ;;
   *) echo "course-project: unsupported section $SECTION" >&2; exit 2 ;;
 esac
 LABEL="section-$SECTION"

@@ -52,8 +52,10 @@ visual-sketches-bootcamp/
 │   └── sections/            # canonical mounted lesson leaf bundles
 │       ├── 00-cross-platform-setup/index.md
 │       ├── ...
-│       ├── 16-three-sketch-studies/index.md
-│       └── 17-original-visual-instrument/index.md
+│       ├── 16-structured-chance/index.md
+│       ├── 17-depth-light-and-populations/index.md
+│       ├── 18-three-sketch-studies/index.md
+│       └── 19-original-visual-instrument/index.md
 ├── site/                    # optional Hugo config, layouts, and CSS
 │   ├── hugo.toml
 │   ├── layouts/
@@ -110,15 +112,18 @@ Deliver blending/trails, temporal buffers, image/type geometry, and depth/live-i
 
 **Ready when:** a reader can make an interactive instrument whose mapping is legible and whose core can replay recorded input deterministically.
 
-### Phase 5 — Synthesis and publication
+### Phase 5 — Advanced visual systems, synthesis, and publication
 
-Deliver three sketch-study guides, a capstone guide, lightweight optional note templates, instructional reference solutions, several unfinished capstone directions, full link/license checks, and optional Hugo deployment.
+Deliver structured-chance and bounded depth/light instructional sections, then
+three sketch-study guides, a capstone guide, lightweight optional note
+templates, instructional reference solutions, several unfinished capstone
+directions, full link/license checks, and optional Hugo deployment.
 
 **Ready when:** the complete path runs, cross-platform validation is green or limitations are explicit, and a reader can finish or share an original project.
 
 ## Definition of done for an instructional section
 
-An instructional section (00–15) is **written and ready to try** when it has:
+An instructional section (00–17) is **written and ready to try** when it has:
 
 - YAML front matter and stable relative links;
 - stated prerequisites and 3–6 observable objectives;

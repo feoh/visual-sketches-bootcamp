@@ -1,4 +1,4 @@
-# Section 16 study test fixtures
+# Section 18 study test fixtures
 
 Creator: Visual Sketches Bootcamp contributors. Origin: original, hand-authored
 course test data. License: CC0-1.0; see

@@ -17,9 +17,11 @@ function Make-Fixture([string]$Name) {
     if ($LASTEXITCODE -ne 0) { throw "git ls-files failed while creating fixture '$Name'" }
     foreach ($relative in $relativePaths) {
         if ([string]::IsNullOrWhiteSpace($relative)) { continue }
+        $source = Join-Path $Root $relative
+        if (-not (Test-Path -LiteralPath $source -PathType Leaf)) { continue }
         $destination = Join-Path $fixture $relative
         New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destination) | Out-Null
-        Copy-Item -LiteralPath (Join-Path $Root $relative) -Destination $destination
+        Copy-Item -LiteralPath $source -Destination $destination
     }
 
     Copy-Item -LiteralPath (Join-Path $Root "scripts/check-authoring.ps1") -Destination (Join-Path $fixture "scripts/check-authoring.ps1")
@@ -62,7 +64,7 @@ try {
 [Not prose](https://openframeworks.cc/learning/01_basics/create_a_new_project/)
 ```
 '@; Set-Content -NoNewline -LiteralPath $p -Value ($s+$fence) }
-    Expect-Failure "route-missing-interlude" "must list all 19 bundles" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; @(Get-Content -LiteralPath $p | Where-Object {$_-notmatch"`t00-first-cpp-test-interlude`t"}) | Set-Content -LiteralPath $p }
+    Expect-Failure "route-missing-interlude" "must list all 21 bundles" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; @(Get-Content -LiteralPath $p | Where-Object {$_-notmatch"`t00-first-cpp-test-interlude`t"}) | Set-Content -LiteralPath $p }
     Expect-Failure "route-unknown-lesson" "unknown lesson slug missing-lesson" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; $s=Get-Content -Raw -LiteralPath $p; Set-Content -NoNewline -LiteralPath $p -Value ([regex]::Replace($s,'00-cross-platform-setup-and-first-frame','missing-lesson',1)) }
     Expect-Failure "route-extra-field" "must have six tab-delimited fields" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; $lines=@(Get-Content -LiteralPath $p); $lines[1]+="`textra"; $lines|Set-Content -LiteralPath $p }
     Expect-Failure "route-invalid-sequence" "sequence must be an ASCII decimal integer" { param($f) $p=Join-Path $f "docs/pilot/routes.tsv"; $s=Get-Content -Raw -LiteralPath $p; Set-Content -NoNewline -LiteralPath $p -Value ([regex]::Replace($s,"`t1`t","`tone`t",1)) }

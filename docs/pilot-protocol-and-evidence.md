@@ -1,15 +1,15 @@
 # Route definitions and optional practice notes
 
-**Protocol version:** 1.2
+**Protocol version:** 1.3
 
-**Last updated:** 2026-08-19
+**Last updated:** 2026-08-30
 **Route definitions:** [`curriculum-map.md#pick-a-pace-or-make-up-your-own`](curriculum-map.md#pick-a-pace-or-make-up-your-own)
 **Checked route contract:** [`pilot/routes.tsv`](pilot/routes.tsv)
 **Optional notes:** [`pilot/README.md`](pilot/README.md)
 
 This file documents the machine-checked order of the published lessons. The
 route names are only suggested ways to spread out the work. The checked file
-lists 19 ordered bundles, including the first-C++ test interlude.
+lists 21 ordered bundles, including the first-C++ test interlude.
 
 ## Current status
 
@@ -46,13 +46,13 @@ ideas:
 1. after Unit 0, reconstruct setup and the first test;
 2. after Unit 2, combine seeded choice, local transforms, and gesture input in a
    new small sketch; and
-3. near the end, revisit one section 17 idea with saved input.
+3. near the end, revisit one section 19 idea with saved input.
 
 Try them when they sound fun. Skip them when another experiment has your
 attention. The route file remains the source of truth for published order.
 
 ## Route contract
 
-A named route is only a convenient selection of lesson bundles. `complete-18`
+A named route is only a convenient selection of lesson bundles. `complete-20`
 includes every bundle; `core-12` and `accelerated-8-plus-2` treat sections
-13–15 as optional. Move between routes or change the pace whenever that helps.
+13–17 as optional. Move between routes or change the pace whenever that helps.

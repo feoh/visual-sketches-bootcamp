@@ -1,0 +1,25 @@
+sources:
+  - id: openframeworks-easycam
+    title: ofEasyCam documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/3d/ofEasyCam/
+    accessed: 2026-08-30
+    note: Primary framework reference for the orbit camera used to inspect the population.
+  - id: openframeworks-depth-test
+    title: ofEnableDepthTest documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/gl/ofGLRenderer/#show_ofEnableDepthTest
+    accessed: 2026-08-30
+    note: Primary framework reference for nearest-surface depth-buffer behavior.
+  - id: openframeworks-light
+    title: ofLight documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/gl/ofLight/
+    accessed: 2026-08-30
+    note: Primary framework reference for point and directional lighting.
+  - id: openframeworks-material
+    title: ofMaterial documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/gl/ofMaterial/
+    accessed: 2026-08-30
+    note: Primary framework reference for diffuse color and shininess used by the two material families.

@@ -117,14 +117,14 @@ validate_pilot_contract() {
   routes="$root/docs/pilot/routes.tsv"
   [ -f "$routes" ] || fail 'docs/pilot/routes.tsv is required'
   [ "$(sed -n '1p' "$routes")" = "protocol_version	route_id	sequence	lesson_slug	status	checkpoint_after" ] || fail "$routes: invalid header"
-  grep -Fqx '**Protocol version:** 1.2' "$root/docs/pilot-protocol-and-evidence.md" || fail 'pilot protocol version must agree with routes.tsv'
+  grep -Fqx '**Protocol version:** 1.3' "$root/docs/pilot-protocol-and-evidence.md" || fail 'pilot protocol version must agree with routes.tsv'
 
   : > "$work/pilot-lessons"
   find "$root/authoring/sections" -mindepth 2 -maxdepth 2 -name index.md -type f | sort | while IFS= read -r lesson; do
     [ "$(frontmatter_value draft "$lesson")" = false ] || continue
     printf '%s\t%s\n' "$(frontmatter_value weight "$lesson")" "$(frontmatter_value slug "$lesson")"
   done | sort -n | awk -F '\t' '{print $2 "\t" NR}' > "$work/pilot-lessons"
-  [ "$(wc -l < "$work/pilot-lessons" | tr -d ' ')" -eq 19 ] || fail 'pilot routes require exactly 19 published lesson bundles'
+  [ "$(wc -l < "$work/pilot-lessons" | tr -d ' ')" -eq 21 ] || fail 'pilot routes require exactly 21 published lesson bundles'
   cut -f1 "$work/pilot-lessons" | sort | uniq -d | grep . >/dev/null 2>&1 && fail 'published lesson slugs must be unique'
 
   awk -F '\t' -v file="$routes" '
@@ -133,8 +133,8 @@ validate_pilot_contract() {
     {
       if(NF!=6){die("row " NR " must have six tab-delimited fields");next}
       version=$1; route=$2; sequence=$3; slug=$4; status=$5; checkpoint=$6
-      if(version!="1.2")die("row " NR " protocol version must be 1.2")
-      if(route!~/^(complete-18|core-12|accelerated-8-plus-2)$/)die("row " NR " has unknown route " route)
+      if(version!="1.3")die("row " NR " protocol version must be 1.3")
+      if(route!~/^(complete-20|core-12|accelerated-8-plus-2)$/)die("row " NR " has unknown route " route)
       if(sequence!~/^[0-9]+$/)die("row " NR " sequence must be an ASCII decimal integer")
       else if(sequence!=++next_sequence[route])die("route " route " sequence must be contiguous from 1")
       if(seen_slug[route SUBSEP slug]++)die("route " route " repeats lesson " slug)
@@ -143,16 +143,16 @@ validate_pilot_contract() {
       expected_checkpoint="none"
       if(slug=="00-first-cpp-test-interlude")expected_checkpoint="unit-0"
       else if(slug=="08-gesture-as-geometry")expected_checkpoint="unit-2"
-      else if(slug=="17-original-visual-instrument-capstone")expected_checkpoint="complete-path"
+      else if(slug=="19-original-visual-instrument-capstone")expected_checkpoint="complete-path"
       if(checkpoint!=expected_checkpoint)die("lesson " slug " must use checkpoint " expected_checkpoint)
       expected_status="required"
-      if(route!="complete-18" && slug~/^(13-time-as-a-drawable-axis|14-images-and-type-as-geometry|15-embodied-audio-input)$/)expected_status="optional"
+      if(route!="complete-20" && slug~/^(13-time-as-a-drawable-axis|14-images-and-type-as-geometry|15-embodied-audio-input|16-structured-chance-and-spatial-grammar|17-depth-light-and-dense-populations)$/)expected_status="optional"
       if(status!=expected_status)die("lesson " slug " must be " expected_status " on route " route)
       count[route]++
     }
     END {
-      split("complete-18 core-12 accelerated-8-plus-2", routes, " ")
-      for(i in routes)if(count[routes[i]]!=19)die("route " routes[i] " must list all 19 bundles")
+      split("complete-20 core-12 accelerated-8-plus-2", routes, " ")
+      for(i in routes)if(count[routes[i]]!=21)die("route " routes[i] " must list all 21 bundles")
       exit bad
     }
   ' "$routes" || fail "$routes: invalid route contract"
@@ -354,20 +354,20 @@ EOF
     cut -f1 "$work/publication-weights" | sort | uniq -d | grep . >/dev/null 2>&1 && fail 'non-draft lesson weights must be unique'
     grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/exercises/' "$publication/course/01-a-mark-that-moves/index.html" || fail 'publication did not rewrite repository file links'
     [ -f "$publication/course/01-a-mark-that-moves/media/traveler-time-preview.svg" ] || fail 'publication omitted representative bundle media'
-    section16="$publication/course/16-three-cumulative-sketch-studies/index.html"
-    section17="$publication/course/17-original-visual-instrument-capstone/index.html"
-    grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/templates/model-test-contract.md' "$section16" || fail 'publication did not rewrite section 16 Markdown resource links'
-    grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/16-three-sketch-studies/fixtures/README.md' "$section16" || fail 'publication did not expose section 16 fixture provenance'
-    grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/17-original-visual-instrument/fixtures/README.md' "$section17" || fail 'publication did not expose section 17 fixture provenance'
-    grep -Fq "href=\"${base_path}course/16-three-cumulative-sketch-studies/#reuse-three-working-starters\"" "$section17" || fail 'publication did not resolve the section 17 sibling lesson link'
-    grep -Fq 'CC0-1.0' "$section16" || fail 'publication omitted section 16 fixture license notice'
-    grep -Fq 'CC0-1.0' "$section17" || fail 'publication omitted section 17 fixture license notice'
+    section18="$publication/course/18-three-cumulative-sketch-studies/index.html"
+    section19="$publication/course/19-original-visual-instrument-capstone/index.html"
+    grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/18-three-sketch-studies/templates/model-test-contract.md' "$section18" || fail 'publication did not rewrite section 18 Markdown resource links'
+    grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/18-three-sketch-studies/fixtures/README.md' "$section18" || fail 'publication did not expose section 18 fixture provenance'
+    grep -Fq 'github.com/feoh/visual-sketches-bootcamp/blob/main/authoring/sections/19-original-visual-instrument/fixtures/README.md' "$section19" || fail 'publication did not expose section 19 fixture provenance'
+    grep -Fq "href=\"${base_path}course/18-three-cumulative-sketch-studies/#reuse-three-working-starters\"" "$section19" || fail 'publication did not resolve the section 19 sibling lesson link'
+    grep -Fq 'CC0-1.0' "$section18" || fail 'publication omitted section 18 fixture license notice'
+    grep -Fq 'CC0-1.0' "$section19" || fail 'publication omitted section 19 fixture license notice'
     first_lesson=$(sed -n 's|.*<li><a href="\([^"]*\)".*|\1|p' "$publication/course/index.html" | head -n 1)
     [ "$first_lesson" = "${base_path}course/00-cross-platform-setup-and-first-frame/" ] || fail 'publication course contents do not begin with section 00 setup'
     setup="$publication/course/00-cross-platform-setup-and-first-frame/index.html"
     grep -Fq '<span>Previous</span><a' "$setup" && fail 'section 00 setup unexpectedly has a previous lesson'
     grep -Fq "<span>Next</span><a href=\"${base_path}course/01-a-mark-that-moves/\">" "$setup" || fail 'section 00 setup does not lead to section 01'
-    grep -Fq '<span>Next</span><a' "$section17" && fail 'section 17 unexpectedly has a next lesson'
+    grep -Fq '<span>Next</span><a' "$section19" && fail 'section 19 unexpectedly has a next lesson'
     pagination="$publication/course/14-images-and-type-as-geometry/index.html"
     grep -Fq "<span>Previous</span><a href=\"${base_path}course/13-time-as-a-drawable-axis/\">" "$pagination" || fail 'publication Previous navigation does not follow increasing course weight'
     grep -Fq "<span>Next</span><a href=\"${base_path}course/15-embodied-audio-input/\">" "$pagination" || fail 'publication Next navigation does not follow increasing course weight'

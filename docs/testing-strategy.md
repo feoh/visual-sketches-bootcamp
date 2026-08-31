@@ -16,7 +16,7 @@ or expect screenshots to match perfectly across different graphics hardware.
 
 ## Exercise contract
 
-Every instructional section’s exercise (00–15) will contain:
+Every instructional section’s exercise (00–17) will contain:
 
 ```text
 exercises/<section-slug>/

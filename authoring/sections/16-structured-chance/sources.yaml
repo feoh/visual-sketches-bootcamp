@@ -1,0 +1,19 @@
+sources:
+  - id: openframeworks-blend-mode
+    title: ofEnableBlendMode documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/graphics/ofGraphics/#show_ofEnableBlendMode
+    accessed: 2026-08-30
+    note: Primary framework reference for the additive and alpha blend states used by layered luminous marks.
+  - id: openframeworks-fbo
+    title: ofFbo documentation
+    creator: openFrameworks contributors
+    url: https://openframeworks.cc/documentation/gl/ofFbo/
+    accessed: 2026-08-30
+    note: Primary framework reference for the optional offscreen-buffer extension connected to the earlier time lesson.
+  - id: daily-sketches
+    title: dailySketches
+    creator: Zach Lieberman
+    url: https://github.com/ofZach/dailySketches
+    accessed: 2026-08-30
+    note: Creator-owned process reference supporting iterative sketch practice; no composition or code is copied by this lesson.

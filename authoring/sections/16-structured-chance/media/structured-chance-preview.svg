@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title desc">
+  <title id="title">Structured chance across a shared warped panel grid</title>
+  <desc id="desc">Nine dark irregular panels share seams. Parallel cyan and magenta luminous lines inherit related angles, while the upper middle panel is deliberately sparse.</desc>
+  <defs>
+    <filter id="soft" x="-25%" y="-25%" width="150%" height="150%"><feGaussianBlur stdDeviation="14"/></filter>
+    <clipPath id="p1"><path d="M20 20L390 20L414 224L20 238Z"/></clipPath>
+    <clipPath id="p2"><path d="M390 20L790 20L766 239L414 224Z"/></clipPath>
+    <clipPath id="p3"><path d="M790 20L1180 20L1180 232L766 239Z"/></clipPath>
+    <clipPath id="p4"><path d="M20 238L414 224L394 466L20 450Z"/></clipPath>
+    <clipPath id="p5"><path d="M414 224L766 239L801 464L394 466Z"/></clipPath>
+    <clipPath id="p6"><path d="M766 239L1180 232L1180 458L801 464Z"/></clipPath>
+    <clipPath id="p7"><path d="M20 450L394 466L410 680L20 680Z"/></clipPath>
+    <clipPath id="p8"><path d="M394 466L801 464L780 680L410 680Z"/></clipPath>
+    <clipPath id="p9"><path d="M801 464L1180 458L1180 680L780 680Z"/></clipPath>
+  </defs>
+  <rect width="1200" height="700" fill="#080c1e"/>
+  <g fill="#10152d" stroke="#050817" stroke-width="12">
+    <path d="M20 20L390 20L414 224L20 238Z"/><path d="M390 20L790 20L766 239L414 224Z"/><path d="M790 20L1180 20L1180 232L766 239Z"/>
+    <path d="M20 238L414 224L394 466L20 450Z"/><path d="M414 224L766 239L801 464L394 466Z"/><path d="M766 239L1180 232L1180 458L801 464Z"/>
+    <path d="M20 450L394 466L410 680L20 680Z"/><path d="M394 466L801 464L780 680L410 680Z"/><path d="M801 464L1180 458L1180 680L780 680Z"/>
+  </g>
+  <g fill="none" stroke-linecap="round">
+    <g clip-path="url(#p1)" stroke="#22c8ff"><g opacity=".33" stroke-width="34" filter="url(#soft)"><path d="M-30 230L260 -20"/><path d="M40 270L330 -20"/><path d="M130 280L410 20"/></g><g stroke-width="8"><path d="M-30 230L260 -20"/><path d="M40 270L330 -20"/><path d="M130 280L410 20"/><path d="M210 280L450 60"/></g></g>
+    <g clip-path="url(#p2)" stroke="#ff4ba8"><g opacity=".25" stroke-width="30" filter="url(#soft)"><path d="M380 210L610 -30"/><path d="M520 260L760 -20"/></g><g stroke-width="7"><path d="M380 210L610 -30"/><path d="M520 260L760 -20"/></g></g>
+    <g clip-path="url(#p3)" stroke="#22c8ff"><g opacity=".34" stroke-width="36" filter="url(#soft)"><path d="M700 280L930 -30"/><path d="M820 300L1040 -20"/><path d="M960 290L1190 20"/></g><g stroke-width="8"><path d="M700 280L930 -30"/><path d="M760 300L980 -20"/><path d="M840 310L1060 -20"/><path d="M930 300L1150 -10"/><path d="M1030 310L1220 40"/></g></g>
+    <g clip-path="url(#p4)" stroke="#ff4ba8"><g opacity=".3" stroke-width="34" filter="url(#soft)"><path d="M-20 470L260 180"/><path d="M100 500L390 190"/></g><g stroke-width="8"><path d="M-20 470L260 180"/><path d="M50 490L330 190"/><path d="M130 500L410 210"/><path d="M220 520L450 270"/></g></g>
+    <g clip-path="url(#p5)" stroke="#d5e7ff"><g opacity=".38" stroke-width="40" filter="url(#soft)"><path d="M330 500L610 190"/><path d="M470 530L750 210"/></g><g stroke-width="9"><path d="M330 500L610 190"/><path d="M410 520L690 200"/><path d="M500 540L780 230"/><path d="M600 550L830 290"/></g></g>
+    <g clip-path="url(#p6)" stroke="#22c8ff"><g opacity=".34" stroke-width="34" filter="url(#soft)"><path d="M700 500L930 190"/><path d="M880 520L1130 200"/></g><g stroke-width="8"><path d="M700 500L930 190"/><path d="M790 520L1020 200"/><path d="M880 530L1120 210"/><path d="M980 540L1220 230"/></g></g>
+    <g clip-path="url(#p7)" stroke="#22c8ff"><g opacity=".32" stroke-width="34" filter="url(#soft)"><path d="M-10 700L210 420"/><path d="M160 720L390 430"/></g><g stroke-width="8"><path d="M-10 700L210 420"/><path d="M70 710L290 430"/><path d="M160 720L390 430"/><path d="M250 720L450 470"/></g></g>
+    <g clip-path="url(#p8)" stroke="#ff4ba8"><g opacity=".3" stroke-width="36" filter="url(#soft)"><path d="M330 720L580 430"/><path d="M530 730L780 430"/></g><g stroke-width="8"><path d="M330 720L580 430"/><path d="M420 730L670 430"/><path d="M520 730L770 430"/><path d="M620 730L840 470"/></g></g>
+    <g clip-path="url(#p9)" stroke="#22c8ff"><g opacity=".32" stroke-width="34" filter="url(#soft)"><path d="M740 710L980 430"/><path d="M950 720L1190 440"/></g><g stroke-width="8"><path d="M740 710L980 430"/><path d="M830 720L1070 430"/><path d="M930 720L1170 430"/><path d="M1040 730L1220 500"/></g></g>
+  </g>
+  <g fill="#f5f7ff" font-family="sans-serif" font-size="18"><text x="40" y="55">composition</text><text x="430" y="55">quiet region</text><text x="820" y="55">inherited family</text></g>
+</svg>

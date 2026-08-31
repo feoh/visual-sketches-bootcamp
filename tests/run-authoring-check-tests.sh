@@ -13,6 +13,7 @@ make_fixture(){
   # metadata or binaries left by local CachyOS/macOS builds. A recursive copy
   # can multiply gigabytes of disposable products across every negative test.
   while IFS= read -r -d '' relative; do
+    [ -e "$root/$relative" ] || continue
     destination="$fixture/$relative"
     mkdir -p "$(dirname "$destination")"
     cp -P "$root/$relative" "$destination"
@@ -85,7 +86,7 @@ expect_failure unexpected-record-line "unexpected nonblank line" unexpected_reco
 expect_failure duplicate-source-url "duplicate source URL" duplicate_source_url
 expect_failure frontmatter-only-citation "is not cited in prose" frontmatter_only_citation
 expect_failure fenced-only-citation "is not cited in prose" fenced_only_citation
-expect_failure route-missing-interlude "must list all 19 bundles" remove_interlude_route
+expect_failure route-missing-interlude "must list all 21 bundles" remove_interlude_route
 expect_failure route-unknown-lesson "unknown lesson slug missing-lesson" unknown_route_lesson
 expect_failure route-extra-field "must have six tab-delimited fields" add_route_field
 expect_failure route-invalid-sequence "sequence must be an ASCII decimal integer" invalid_route_sequence

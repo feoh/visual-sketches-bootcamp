@@ -3,8 +3,8 @@
 Make expressive images and animations with
 [openFrameworks](https://openframeworks.cc/) while learning the C++ and math you
 need along the way. The course starts with a still image, then adds motion,
-gestures, repeated forms, particles, flow, trails, images, and optional sound
-input.
+gestures, repeated forms, particles, flow, trails, images, structured chance,
+clustered light and depth, and optional sound input.
 
 This is a learn-by-making guide for a curious adult who can edit a text file and
 follow a few terminal commands. Every new math idea appears when a sketch needs
@@ -71,9 +71,9 @@ course teaches reusable techniques rather than asking you to copy an artwork.
 
 The course contains:
 
-- 16 guided lessons, numbered 00 through 15;
-- three short sketch studies in section 16; and
-- one larger visual-instrument project in section 17.
+- 18 guided lessons, numbered 00 through 17;
+- three short sketch studies in section 18; and
+- one larger visual-instrument project in section 19.
 
 Every guided exercise has a focused starter with clear change points,
 number-based tests, one possible solution, and build commands. The solution is

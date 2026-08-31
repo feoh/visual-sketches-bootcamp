@@ -1,7 +1,7 @@
 ---
 title: Original visual-instrument capstone
-slug: 17-original-visual-instrument-capstone
-weight: 190
+slug: 19-original-visual-instrument-capstone
+weight: 210
 draft: false
 course_kind: synthesis
 objectives:
@@ -10,7 +10,7 @@ objectives:
   - Make recorded input, resize, reset, failures, and changing frame time work
   - Keep the project accessible and credited, with optional notes for sharing it
 prerequisites:
-  - Completion of the three section 16 studies or similar small combined sketches
+  - Completion of the three section 18 studies or similar small combined sketches
   - One tested interactive sketch with calculations separated from drawing and a fallback that does not need special hardware
 source_records: sources.yaml
 asset_records: assets.yaml
@@ -25,7 +25,7 @@ recorded input, or some combination of them. A control should cause a visible ch
 that a new player can discover. The project should feel like one idea, not three
 unrelated demos sharing a window.
 
-Use at least three ideas from sections 03–15. Choose **exactly one** to explore more
+Use at least three ideas from sections 03–17. Choose **exactly one** to explore more
 deeply. For example, you might try a new mapping, compare two ways of updating motion,
 improve a sampling method, or measure a real speed-versus-detail tradeoff. Use the other
 two ideas in ways you already understand. This limit is a kindness: it keeps the project
@@ -50,14 +50,14 @@ fallback are enough.
 
 ## Start from one working study
 
-Create a `capstone` branch after finishing section 16. Pick the one study whose
+Create a `capstone` branch after finishing section 18. Pick the one study whose
 calculations are closest to the idea you want to explore. Grow **that one starter** into
 the capstone. Do not try to merge three `ofApp` files or three sets of generated
 project files. Keep using the chosen section's familiar build wrapper and its tested
 model/design declarations.
 
 Before changing the study, rerun its test, generation, build, and launch commands from
-the [section 16 bootstrap](../16-three-sketch-studies/index.md#reuse-three-working-starters).
+the [section 18 bootstrap](../18-three-sketch-studies/index.md#reuse-three-working-starters).
 If they pass, you have a safe place to return to. Keep using that exercise's existing
 model header/source pair and `fixtures/` directory; the wrapper deliberately rejects
 extra source files. Add your capstone checks to the existing no-window test and platform

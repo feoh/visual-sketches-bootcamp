@@ -1,0 +1,17 @@
+assets:
+  - id: structured-chance-preview
+    path: media/structured-chance-preview.svg
+    kind: image
+    creator: Visual Sketches Bootcamp
+    source: original
+    license: CC-BY-4.0
+    alt: Nine irregular dark panels share exact seams. Each panel contains parallel cyan or magenta strokes related to one overall diagonal, while one panel remains deliberately sparse. Wide transparent under-strokes create a soft luminous edge around thin bright cores.
+    caption: The panel layout, regional families, and individual strokes use three different scales of choice. The empty space is generated deliberately, not left to luck.
+  - id: zach-lieberman-luminous-panels-reference
+    path: media/zach-lieberman-luminous-panels-reference.png
+    kind: image
+    creator: Zach Lieberman
+    source: https://x.com/zachlieberman (course-owner-supplied capture; exact post URL unavailable)
+    license: UNKNOWN
+    alt: A square abstract reference is divided into irregular dark quadrilateral panels. Soft cyan, blue, magenta, red, and pale diagonal strokes cross within the panels, with changes in direction and density held together by a dark luminous palette.
+    caption: Course-owner-supplied reference attributed to Zach Lieberman and included at the project owner's direction; exact post and license metadata were not supplied.
